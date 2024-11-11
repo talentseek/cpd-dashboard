@@ -1,10 +1,9 @@
-// src/components/abm/PricingSection.tsx
-'use client'
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check } from "lucide-react"
-import { PricingSectionProps } from "@/types/abmLandingPage"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Check } from "lucide-react";
+import { PricingSectionProps } from "@/types/abmLandingPage";
 
 export function PricingSection({
   mainHeading,
@@ -42,7 +41,7 @@ export function PricingSection({
               </CardContent>
               <CardFooter>
                 <Button className="w-full" variant={index === 1 ? "default" : "outline"}>
-                  {plan.buttonLabel}
+                  {plan.buttonLabel || "Select"}
                 </Button>
               </CardFooter>
             </Card>
@@ -50,5 +49,5 @@ export function PricingSection({
         </div>
       </div>
     </section>
-  )
+  );
 }

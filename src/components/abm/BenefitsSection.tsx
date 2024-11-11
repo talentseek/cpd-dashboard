@@ -1,7 +1,7 @@
 // src/components/abm/BenefitsSection.tsx
-'use client'
+'use client';
 
-import { CalendarIcon, BarChartIcon, UsersIcon } from "@/components/abm/icons"
+import { CalendarIcon, BarChartIcon, UsersIcon } from "@/components/abm/icons";
 
 interface BenefitsSectionProps {
   mainHeading: string;
@@ -14,6 +14,10 @@ interface BenefitsSectionProps {
 
 export function BenefitsSection({ mainHeading, items, primaryColor }: BenefitsSectionProps) {
   const iconStyle = primaryColor ? { color: primaryColor } : {};
+  const headingStyle = primaryColor ? { color: primaryColor } : {};
+
+  // Icons array for demonstration purposes
+  const icons = [CalendarIcon, BarChartIcon, UsersIcon];
 
   return (
     <section id="benefits" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
@@ -22,23 +26,18 @@ export function BenefitsSection({ mainHeading, items, primaryColor }: BenefitsSe
           {mainHeading}
         </h2>
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="flex flex-col items-center text-center space-y-2">
-            <CalendarIcon style={iconStyle} className="h-12 w-12" />
-            <h3 className="text-xl font-bold">{items[0].heading}</h3>
-            <p className="text-zinc-500 dark:text-zinc-400">{items[0].subheading}</p>
-          </div>
-          <div className="flex flex-col items-center text-center space-y-2">
-            <BarChartIcon style={iconStyle} className="h-12 w-12" />
-            <h3 className="text-xl font-bold">{items[1].heading}</h3>
-            <p className="text-zinc-500 dark:text-zinc-400">{items[1].subheading}</p>
-          </div>
-          <div className="flex flex-col items-center text-center space-y-2">
-            <UsersIcon style={iconStyle} className="h-12 w-12" />
-            <h3 className="text-xl font-bold">{items[2].heading}</h3>
-            <p className="text-zinc-500 dark:text-zinc-400">{items[2].subheading}</p>
-          </div>
+          {items.map((item, index) => {
+            const Icon = icons[index % icons.length]; // Cycles through icons if more than 3 items
+            return (
+              <div key={index} className="flex flex-col items-center text-center space-y-2">
+                <Icon style={iconStyle} className="h-12 w-12" />
+                <h3 className="text-xl font-bold" style={headingStyle}>{item.heading}</h3> {/* Apply primary color */}
+                <p className="text-zinc-500 dark:text-zinc-400">{item.subheading}</p> {/* Default styling */}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
-  )
+  );
 }

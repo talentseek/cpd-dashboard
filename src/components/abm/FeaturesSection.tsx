@@ -1,12 +1,12 @@
 // src/components/abm/FeaturesSection.tsx
-'use client'
+'use client';
 
-import { CheckCircle } from "lucide-react"
-import { FeaturesSectionProps } from "@/types/abmLandingPage"
+import { CheckCircle } from "lucide-react";
+import { FeaturesSectionProps } from "@/types/abmLandingPage";
 
 export function FeaturesSection({
   mainHeading = "Here's What You'll Get...",
-  items = [], // Default empty array to avoid issues if items is undefined
+  items = [],
 }: FeaturesSectionProps) {
   return (
     <section id="features" className="w-full py-12 md:py-24 lg:py-32">
@@ -25,5 +25,5 @@ export function FeaturesSection({
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,7 +1,7 @@
 // src/components/abm/HowItWorksSection.tsx
 'use client'
 
-import { HowItWorksSectionProps } from "@/types/abmLandingPage"
+import { HowItWorksSectionProps } from "@/types/abmLandingPage";
 
 export function HowItWorksSection({
   mainHeading = "How It Works",
@@ -49,5 +49,5 @@ export function HowItWorksSection({
         </div>
       </div>
     </section>
-  )
+  );
 }

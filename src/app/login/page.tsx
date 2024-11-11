@@ -28,7 +28,7 @@ export default function LoginPage() {
         console.error('Error fetching user profile:', profileError);
       } else {
         if (profile.role === 'admin') {
-          router.push('/admin/leadstest');
+          router.push('/admin');
         } else {
           router.push(`/dashboard/${profile.client_id}`);
         }

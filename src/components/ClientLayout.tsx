@@ -26,11 +26,11 @@ import {
 } from "@/components/ui/sheet";
 import { Rocket, LayoutDashboard, LogOut, Menu, X, Settings } from 'lucide-react';
 
-export default function ClientLayout({ children }) {
+export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-  const [clientName, setClientName] = useState('');
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [clientName, setClientName] = useState<string>('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordChangeError, setPasswordChangeError] = useState('');
@@ -58,7 +58,7 @@ export default function ClientLayout({ children }) {
         return;
       }
 
-      setUserEmail(user.email);
+      setUserEmail(user.email || '');
       setClientName(profile.client_id || 'Client');
     }
 

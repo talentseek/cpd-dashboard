@@ -1,8 +1,8 @@
 // src/components/abm/Footer.tsx
-'use client'
+'use client';
 
-import Link from "next/link"
-import { FooterProps } from "@/types/abmLandingPage"
+import Link from "next/link";
+import { FooterProps } from "@/types/abmLandingPage";
 
 export function Footer({ companyName = "Acme Inc", links = [] }: FooterProps) {
   return (
@@ -16,5 +16,5 @@ export function Footer({ companyName = "Acme Inc", links = [] }: FooterProps) {
         ))}
       </nav>
     </footer>
-  )
+  );
 }

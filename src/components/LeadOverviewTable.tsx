@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/lib/utils'; // Ensure your Supabase client is set up
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -17,24 +16,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function LeadOverviewTable() {
-  const [leads, setLeads] = useState([]);
+interface Lead {
+  id: string;
+  first_name: string;
+  last_name: string;
+  company: string;
+  client: string;
+  linkedin?: string;
+  website?: string;
+  clicks?: number;
+  position?: string;
+}
+
+interface LeadOverviewTableProps {
+  leads: Lead[];
+}
+
+export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [clientFilter, setClientFilter] = useState('All Clients');
-
-  useEffect(() => {
-    async function fetchLeads() {
-      const { data, error } = await supabase
-        .from('leads') // Replace 'leads' with your table name
-        .select('*');
-      if (error) {
-        console.error('Error fetching leads:', error);
-      } else {
-        setLeads(data);
-      }
-    }
-    fetchLeads();
-  }, []);
 
   const uniqueClients = ['All Clients', ...new Set(leads.map(lead => lead.client))];
 
@@ -88,10 +88,10 @@ export function LeadOverviewTable() {
               <TableRow key={lead.id}>
                 <TableCell className="font-medium">
                   <div className="flex items-center">
-                    <Link href={lead.linkedin} target="_blank" rel="noopener noreferrer">
+                    <Link href={lead.linkedin || '#'} target="_blank" rel="noopener noreferrer">
                       <Linkedin className="h-4 w-4 text-blue-600 mr-2" />
                     </Link>
-                    <Link href={lead.linkedin} target="_blank" rel="noopener noreferrer">
+                    <Link href={lead.linkedin || '#'} target="_blank" rel="noopener noreferrer">
                       {`${lead.first_name} ${lead.last_name}`}
                     </Link>
                   </div>

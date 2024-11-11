@@ -1,21 +1,84 @@
 // src/mocks/hotelFriendData.ts
-import { LandingPageProps } from "@/types/abmLandingPage";
 
-const hotelFriendData: LandingPageProps = {
+interface ClientDataProps {
+  hero?: {
+    title: string;
+    subheading: string;
+    heroImage: string;
+  };
+  primaryColor?: string;
+  pageTitle?: string;
+  description?: string;
+  ctaButtonText?: string;
+  ctaLink?: string;
+  logo?: string;
+  benefits?: {
+    mainHeading: string;
+    items: Array<{
+      heading: string;
+      subheading: string;
+    }>;
+  };
+  testimonials?: {
+    mainHeading: string;
+    items: Array<{
+      title: string;
+      content: string;
+      name: string;
+      jobTitle: string;
+      company: string;
+      imageUrl?: string;
+    }>;
+  };
+  howItWorks?: {
+    mainHeading: string;
+    subheading: string;
+    steps: Array<{
+      heading: string;
+      subheading: string;
+    }>;
+  };
+  pricing?: {
+    mainHeading: string;
+    description?: string;
+    plans: Array<{
+      name: string;
+      price: string;
+      description: string;
+      features: Array<string>;
+      buttonLabel?: string;
+    }>;
+  };
+  features?: {
+    mainHeading: string;
+    items: Array<{
+      heading: string;
+      subheading: string;
+    }>;
+  };
+  callToAction?: {
+    mainHeading: string;
+    subheading: string;
+    buttonText: string;
+  };
+  footer?: {
+    companyName: string;
+    links: Array<{ label: string; href: string }>;
+  };
+}
+
+const hotelFriendData: ClientDataProps = {
   primaryColor: "#24afe8",
   pageTitle: "HotelFriend - Revolutionizing Hotel Management for {company}",
   description: "Discover how HotelFriend can streamline operations and enhance guest satisfaction at {company}.",
-  socialSharingImage: "/images/hotelfriend/sharing-image.webp",
-  logo: "/images/abm/hotelfriend/logo.svg",
   ctaButtonText: "Book my tour",
-  ctaLink: "https://cal.com/hotelfriend/30min", // New field for CTA link
-
+  ctaLink: "https://cal.com/hotelfriend/30min",
+  logo: "/images/abm/hotelfriend/logo.svg",
   hero: {
-    heading: "Hi {first_name}, Manage {company} Effortlessly",
-    subheading: "Optimize {company}’s hospitality management with HotelFriend’s all-in-one platform designed for premium hotels.",
-    heroImage: "/images/abm/hotelfriend/dashboard.webp",
+    title: "Hi {first_name}, Manage {company} Effortlessly",
+    subheading: "Optimize {company}’s hospitality management with HotelFriend’s all-in-one platform.",
+    heroImage: "/images/abm/hotelfriend/dashboard2.webp",
   },
-
   benefits: {
     mainHeading: "Key Benefits",
     items: [
@@ -33,7 +96,6 @@ const hotelFriendData: LandingPageProps = {
       },
     ],
   },
-
   testimonials: {
     mainHeading: "What Our Clients Say",
     items: [
@@ -46,7 +108,7 @@ const hotelFriendData: LandingPageProps = {
         imageUrl: "/images/abm/hotelfriend/testimonial1.jpeg",
       },
       {
-        title: "Boosted Direct Bookings",
+        title: "Increased Direct Bookings",
         content: "The integrated booking engine increased our direct bookings by 30%, improving our revenue significantly.",
         name: "Emily Johnson",
         jobTitle: "Owner",
@@ -63,7 +125,6 @@ const hotelFriendData: LandingPageProps = {
       },
     ],
   },
-
   howItWorks: {
     mainHeading: "How It Works",
     subheading: "Easily manage and optimize {company}’s operations with HotelFriend.",
@@ -82,45 +143,78 @@ const hotelFriendData: LandingPageProps = {
       },
     ],
   },
-
-  features: {
-    mainHeading: "Here's What You'll Get...",
-    items: [
-      { heading: "Channel Manager", subheading: "Synchronize bookings for {company} across multiple platforms to increase reach and visibility." },
-      { heading: "Booking Engine", subheading: "Enable direct bookings on {company}’s website at zero commission, boosting profitability." },
-      // More features can be personalized as needed
-    ],
-  },
-
   pricing: {
-    mainHeading: "Choose Your Plan for {company}",
+    mainHeading: "Plans for {company}",
+    description: "Flexible and cost-effective plans to meet the unique needs of {company}.",
     plans: [
       {
         name: "Manage",
-        price: "$6.97 per room / month",
-        description: "Essential tools to handle daily operations for {company} in the cloud.",
+        price: "$6.90 per room / month",
+        description: "Get all the tools to manage the daily operations of your property in the cloud.",
         features: [
-          "Cloud-based PMS",
-          "Front Desk with drag-and-drop functionality",
-          // Additional features as needed
+          "Cloud-based PMS with drag-n-drop Front Desk",
+          "Group & Corporate bookings",
+          "Staff management",
+          "Housekeeping",
+          "Accounting & Reporting",
+          "Guest Check-in request",
+          "Multilingual interface"
         ],
         buttonLabel: "Select",
       },
-      // Other plans as necessary
+      {
+        name: "Grow",
+        price: "$10.78 per room / month",
+        description: "Sell your rooms online via booking platforms and your own website.",
+        features: [
+          "Integrated Channel Manager (Booking, HRS, Expedia)",
+          "Booking Engine (at 0% commission)",
+          "Contactless Room Opening (Salto KS)",
+          "Digital Payments (POS), (Gastronovi)",
+          "Mobile App (Guestbook, Service Ordering)",
+          "Cloud TSS"
+        ],
+        buttonLabel: "Select",
+      },
+      {
+        name: "Enterprise",
+        price: "$12.93 per room / month",
+        description: "Get access to custom development and multi-property-management.",
+        features: [
+          "Multi-property management",
+          "Order management",
+          "Department Management (wellness, restaurant, etc.)",
+          "Custom Development",
+          "Custom Integrations",
+          "Staff trainings"
+        ],
+        buttonLabel: "Select",
+      }
     ],
   },
-
+  features: {
+    mainHeading: "Here's What You'll Get...",
+    items: [
+      {
+        heading: "Channel Manager",
+        subheading: "Synchronize bookings for {company} across multiple platforms to increase reach and visibility.",
+      },
+      {
+        heading: "Booking Engine",
+        subheading: "Enable direct bookings on {company}’s website at zero commission, boosting profitability.",
+      },
+    ],
+  },
   callToAction: {
     mainHeading: "Transform {company}'s Hotel Operations",
     subheading: "Elevate {company}'s hospitality services with HotelFriend’s all-in-one platform.",
     buttonText: "Book my tour",
   },
-
   footer: {
     companyName: "HotelFriend",
     links: [
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Privacy", href: "/privacy" },
+      { label: "Terms of Service", href: "https://hotelfriend.com/b/terms-and-conditions-saas" },
+      { label: "Privacy", href: "https://hotelfriend.com/b/privacy-policy" },
     ],
   },
 };

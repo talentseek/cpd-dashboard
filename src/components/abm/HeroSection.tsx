@@ -1,11 +1,11 @@
 // src/components/abm/HeroSection.tsx
 
-'use client'
+'use client';
 
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
-import { HeroSectionProps } from "@/types/abmLandingPage"
-import Link from 'next/link'
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { HeroSectionProps } from "@/types/abmLandingPage";
+import Link from 'next/link';
 
 export function HeroSection({
   title,
@@ -16,7 +16,7 @@ export function HeroSection({
   primaryColor,
   ctaLink,
 }: HeroSectionProps) {
-  const buttonStyle = primaryColor ? { backgroundColor: primaryColor } : {}
+  const buttonStyle = primaryColor ? { backgroundColor: primaryColor } : {};
 
   return (
     <section className="w-full flex items-center justify-center min-h-screen py-12 md:py-24 lg:py-32">
@@ -54,5 +54,5 @@ export function HeroSection({
         </div>
       </div>
     </section>
-  )
+  );
 }
