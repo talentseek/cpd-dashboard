@@ -1,15 +1,21 @@
-// middleware.ts
+// /middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const host = request.headers.get('host') || '';
 
-  console.log('Host:', host); // Logs the host to check if it's correct
-
+  // Check if the host starts with 'go.' (for testing purposes)
   if (host.startsWith('go.')) {
-    console.log('Redirecting to login'); // Logs when a request is redirected
+    // For testing, route to login page
     url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
-  return NextResponse.next();
+  return NextResponse.next(); // Continue if no matching subdomain
 }
+
+// Config matcher to specifically match requests for 'go.*'
+export const config = {
+  matcher: ['/go.*'], // This matches subdomains starting with 'go.'
+};
