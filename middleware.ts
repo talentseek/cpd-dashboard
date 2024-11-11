@@ -5,11 +5,16 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const host = request.headers.get('host') || '';
 
+  // Handle requests that match the `go.` subdomain pattern
   if (host.startsWith('go.')) {
-    const clientDomain = host.replace('go.', '').split('.')[0]; // Extract the client domain
-    url.pathname = `/client/${clientDomain}`; // Redirect to the appropriate path
+    // Extract the client domain from the host
+    const clientDomain = host.replace('go.', '').split('.')[0];
+
+    // Redirect logic for the client page
+    url.pathname = `/client/${clientDomain}${url.pathname}`; // Preserve the pathname for deeper routes
     return NextResponse.rewrite(url);
   }
 
-  return NextResponse.next(); // Continue if no matching subdomain
+  // Continue processing for all other requests
+  return NextResponse.next();
 }
