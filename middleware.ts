@@ -1,22 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
-
+// middleware.ts
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const host = request.headers.get('host') || '';
 
-  console.log('Host:', host); // Log to see if it's correctly capturing the host.
+  console.log('Host:', host); // Logs the host to check if it's correct
 
-  // If the subdomain starts with "go", redirect to the login page
   if (host.startsWith('go.')) {
-    console.log('Redirecting to login page...');
-    url.pathname = '/login'; // Redirect to login
+    console.log('Redirecting to login'); // Logs when a request is redirected
+    url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
-  return NextResponse.next(); // Continue processing the request if no match
+  return NextResponse.next();
 }
-
-// Config to ensure middleware is triggered for all paths
-export const config = {
-  matcher: '/:path*', // Apply to all paths
-};
