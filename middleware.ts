@@ -3,21 +3,20 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const host = request.headers.get('host') || '';
-  console.log('Middleware called. Host:', host); // Log the host to see what is being captured
 
-  // Special rule for go.costperdemo.com
-  if (host === 'go.costperdemo.com') {
-    url.pathname = '/login'; // Redirect to the login page
-    return NextResponse.rewrite(url); // or NextResponse.redirect(url) if you prefer a redirect
-  }
+  console.log('Host:', host); // Log to see if it's correctly capturing the host.
 
-  // Existing rule for other subdomains starting with 'go.'
+  // If the subdomain starts with "go", redirect to the login page
   if (host.startsWith('go.')) {
-    const clientDomain = host.replace('go.', '').split('.')[0]; // Extract the client domain
-    console.log('Client Domain:', clientDomain); // Log the extracted client domain
-    url.pathname = `/client/${clientDomain}${url.pathname}`;
-    return NextResponse.rewrite(url);
+    console.log('Redirecting to login page...');
+    url.pathname = '/login'; // Redirect to login
+    return NextResponse.redirect(url);
   }
 
-  return NextResponse.next(); // Continue if no matching subdomain
+  return NextResponse.next(); // Continue processing the request if no match
 }
+
+// Config to ensure middleware is triggered for all paths
+export const config = {
+  matcher: '/:path*', // Apply to all paths
+};
