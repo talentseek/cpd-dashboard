@@ -1,7 +1,7 @@
-// src/middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from './lib/utils'; // Ensure you have access to supabase from the middleware
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
   const host = request.headers.get('host') || '';
@@ -13,21 +13,31 @@ export function middleware(request: NextRequest) {
 
   // Allow testing with both local and production subdomains
   if (host.startsWith('go.localhost') || host.startsWith('go.costperdemo.com')) {
-    // Handle the case where we are dealing with a dynamic landing page
     const pathSegments = pathname.split('/').filter(Boolean);
 
     if (pathSegments.length === 1) {
-      // Dynamic landing page like "/Horwood_House"
       const [landingPageName] = pathSegments;
-      const subdomain = host.split('.')[0]; // Extract the subdomain part, i.e., "go"
-      
-      // Rewrite the URL to redirect to the client-specific path dynamically
-      url.pathname = `/${subdomain}/${landingPageName}`;
+      const subdomain = host.split('.')[0]; // Extract subdomain (e.g., go)
+
+      // Fetch the client data based on the subdomain
+      const { data, error } = await supabase
+        .from('clients')
+        .select('subdomain')
+        .eq('subdomain', subdomain)
+        .single();
+
+      if (error || !data) {
+        console.error('Error fetching client data:', error);
+        return NextResponse.next(); // If error, continue as normal
+      }
+
+      // Now we can use the subdomain to redirect to the correct client path
+      // Rewrite the URL to /{client}/{landingPageName}
+      url.pathname = `/${data.subdomain}/${landingPageName}`;
       return NextResponse.rewrite(url); // Perform the rewrite
     }
   }
 
-  // For all other paths, continue processing
   return NextResponse.next();
 }
 
