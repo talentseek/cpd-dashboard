@@ -1,75 +1,81 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
 import Head from 'next/head'; // For adding OpenGraph and other meta tags
 
-import { ClientDataProps, Replacements } from '@/types/types';
+interface ClientDataProps {
+  hero?: {
+    title?: string;
+    heroImage?: string;
+  };
+  description?: string;
+}
 
 interface LeadDataProps {
   first_name?: string;
   company?: string;
 }
 
-async function fetchClientData(clientId: number) {
-  const { data, error } = await supabase
+async function fetchClientData(clientName: string) {
+  const { data: clientRecord, error: clientError } = await supabase
+    .from('clients')
+    .select('id')
+    .ilike('client_name', clientName)
+    .single();
+
+  if (clientError || !clientRecord) {
+    console.error('Error fetching client ID:', clientError || 'No client found');
+    return null;
+  }
+
+  const clientId = clientRecord.id;
+
+  const { data: clientData, error: clientDataError } = await supabase
     .from('client_content')
     .select('*')
     .eq('client_id', clientId)
     .single();
 
-  if (error) {
-    console.error('Error fetching client data:', error);
+  if (clientDataError) {
+    console.error('Error fetching client content data:', clientDataError);
     return null;
   }
-  return data;
+
+  return clientData;
 }
 
-async function fetchLeadData(leadId: number) {
+async function fetchLeadData(company: string) {
   const { data, error } = await supabase
     .from('leads')
     .select('*')
-    .eq('id', leadId)
+    .ilike('company', company)
     .single();
 
-  if (error) {
-    console.error('Error fetching lead data:', error);
+  if (error || !data) {
+    console.error('Error fetching lead data:', error || 'No lead found');
     return null;
   }
   return data;
 }
 
-export default function ClientCompanyPage() {
-  const { client } = useParams();
-  const [clientData, setClientData] = useState<ClientDataProps | null>(null);
-  const [leadData, setLeadData] = useState<LeadDataProps | null>(null);
+export default async function ClientCompanyPage(props: { params: Promise<{ client: string; company: string }> }) {
+  const resolvedParams = await props.params; // Awaiting params as it may be a promise
+  const { client, company } = resolvedParams;
 
-  useEffect(() => {
-    async function fetchData() {
-      // Dynamically determine clientId and leadId as per your logic
-      const clientId = client === 'hotelfriend' ? 1 : null; // Example, replace with dynamic logic
-      const leadId = 1; // Example, should be dynamic
+  console.log('Params:', resolvedParams);
 
-      if (clientId && leadId) {
-        const fetchedClientData = await fetchClientData(clientId);
-        const fetchedLeadData = await fetchLeadData(leadId);
-        setClientData(fetchedClientData);
-        setLeadData(fetchedLeadData);
-      }
-    }
-    fetchData();
-  }, [client]);
+  const clientData: ClientDataProps | null = await fetchClientData(client);
+  const leadData: LeadDataProps | null = await fetchLeadData(company);
 
-  if (!clientData || !leadData) return <div>Loading...</div>;
+  if (!clientData || !leadData) {
+    console.error('Client or lead data could not be fetched');
+    return <div>Unable to load data. Please try again later.</div>;
+  }
 
-  const replacements: Replacements = {
+  const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
   };
 
-  // Generate OpenGraph metadata content
   const ogTitle =
     clientData.hero?.title
       ?.replace(/{first_name}/g, replacements.first_name)
@@ -79,12 +85,11 @@ export default function ClientCompanyPage() {
   const ogDescription =
     clientData.description?.replace(/{company}/g, replacements.company) ||
     'Default page description for the lead.';
-  const ogImage = clientData.hero?.heroImage || '/default-og-image.jpg'; // Fallback OG image
+  const ogImage = clientData.hero?.heroImage || '/default-og-image.jpg';
 
   return (
     <>
       <Head>
-        {/* Static or conditionally server-side fetched meta tags */}
         <title>{ogTitle}</title>
         <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
@@ -92,19 +97,14 @@ export default function ClientCompanyPage() {
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content={
-            typeof window !== 'undefined' ? window.location.href : ''
-          }
+          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/${client}/${company}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={ogTitle} />
         <meta name="twitter:description" content={ogDescription} />
         <meta name="twitter:image" content={ogImage} />
       </Head>
-      <AbmLandingPage
-        clientData={clientData}
-        replacements={replacements} // Pass the replacements
-      />
+      <AbmLandingPage clientData={clientData} replacements={replacements} />
     </>
   );
 }
