@@ -21,16 +21,32 @@ interface Lead {
 
 interface ClientLeadTableProps {
   leads: Lead[];
+  clientSubdomain?: string; // Optional prop for the subdomain
 }
 
-export default function ClientLeadTable({ leads }: ClientLeadTableProps) {
+export default function ClientLeadTable({ leads, clientSubdomain }: ClientLeadTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Add logging to see what clientSubdomain is
+  console.log('clientSubdomain passed to ClientLeadTable:', clientSubdomain);
 
   const filteredLeads = leads.filter(lead =>
     lead.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     lead.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     lead.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Construct the full URL for the subdomain
+  const constructSubdomainURL = (subdomain: string, company: string) => {
+    const formattedCompany = company.replace(/\s/g, '_');
+    if (subdomain) {
+      const url = `https://${subdomain}/${formattedCompany}`;
+      console.log('Constructed URL:', url); // Log the URL being constructed
+      return url;
+    }
+    // Fallback URL in case no subdomain is set
+    return `http://localhost:3000/${formattedCompany}`;
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -83,7 +99,12 @@ export default function ClientLeadTable({ leads }: ClientLeadTableProps) {
                 </TableCell>
                 <TableCell>{lead.clicks || '-'}</TableCell>
                 <TableCell>
-                  <Link href={`/${lead.client}/${lead.company.replace(/\s/g, '_')}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  <Link
+                    href={constructSubdomainURL(clientSubdomain || '', lead.company)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
                     View Page
                   </Link>
                 </TableCell>

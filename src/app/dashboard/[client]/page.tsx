@@ -1,11 +1,12 @@
-// src/app/dashboard/[client]/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/utils';
 import { useRouter, useParams } from 'next/navigation';
+import { supabase } from '@/lib/utils';
 import ClientLayout from '@/components/ClientLayout';
-import ClientLeadTable from '@/components/ClientLeadTable'; // Ensure correct import
+import ClientLeadTable from '@/components/ClientLeadTable';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowDown, ArrowUp } from 'lucide-react';
 
 interface Lead {
   id: string;
@@ -20,26 +21,17 @@ interface Lead {
   created_at?: string;
 }
 
-interface UserProfile {
-  id: string;
-  role: string;
-  client_id: string;
-}
-
 export default function ClientDashboardPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [totalClicks, setTotalClicks] = useState(0);
   const [loading, setLoading] = useState(true);
-  const { client } = useParams();
   const router = useRouter();
+  const { client } = useParams(); // This will be used to ensure the correct client ID in the URL
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const {
-          data: { user },
-          error: userError,
-        } = await supabase.auth.getUser();
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
 
         if (userError || !user) {
           console.error('User not authenticated:', userError);
@@ -59,24 +51,37 @@ export default function ClientDashboardPage() {
           return;
         }
 
-        setUserProfile(profile);
+        // Fetch client data using the client_id from user profile
+        const { data: clientData, error: clientError } = await supabase
+          .from('clients')
+          .select('client_name, subdomain, status')
+          .eq('id', profile.client_id)
+          .single();
 
-        // Check for client-specific access
-        if (profile.role !== 'admin' && profile.client_id !== client) {
-          router.push('/unauthorized');
+        if (clientError || !clientData) {
+          console.error('Error fetching client data:', clientError);
           return;
         }
 
-        // Fetch leads for the client
+        // If status is pending, redirect to quick-start page
+        if (clientData.status === 'pending') {
+          router.push(`/dashboard/${client}/quick-start`);
+        }
+
+        // Fetch leads for the client based on client_id
         const { data: leadsData, error: leadsError } = await supabase
           .from('leads')
           .select('*')
-          .eq('client', client);
+          .eq('client_id', profile.client_id);
 
         if (leadsError) {
           console.error('Error fetching leads:', leadsError);
         } else {
           setLeads(leadsData || []);
+
+          // Calculate total clicks
+          const totalClicks = leadsData.reduce((sum, lead) => sum + (lead.clicks || 0), 0);
+          setTotalClicks(totalClicks);
         }
       } catch (error) {
         console.error('Error during data fetching:', error);
@@ -86,7 +91,7 @@ export default function ClientDashboardPage() {
     }
 
     fetchData();
-  }, [client, router]);
+  }, [client, router]); // Include client in the dependency array to avoid missing dependency warning
 
   if (loading) {
     return <div>Loading...</div>;
@@ -95,12 +100,33 @@ export default function ClientDashboardPage() {
   return (
     <ClientLayout>
       <div className="p-4">
-        {userProfile ? (
-          <h1>Welcome, {userProfile.client_id || 'User'}!</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Leads</CardTitle>
+              <ArrowUp className="h-4 w-4 text-green-600" />  {/* Static change indicator */}
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{leads.length}</div>
+              <p className="text-xs text-green-600">+0% from last period (static for now)</p>  {/* Placeholder change */}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Clicks</CardTitle>
+              <ArrowDown className="h-4 w-4 text-red-600" />  {/* Static change indicator */}
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{totalClicks}</div>
+              <p className="text-xs text-red-600">-0% from last period (static for now)</p>  {/* Placeholder change */}
+            </CardContent>
+          </Card>
+        </div>
+        {leads.length === 0 ? (
+          <p>No leads found for this client.</p>
         ) : (
-          <p>Error loading user profile.</p>
+          <ClientLeadTable leads={leads} />
         )}
-        <ClientLeadTable leads={leads} />
       </div>
     </ClientLayout>
   );

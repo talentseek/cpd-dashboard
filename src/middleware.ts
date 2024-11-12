@@ -1,35 +1,33 @@
+// src/middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-// Middleware function that handles requests
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
-  const host = request.headers.get('host') || '';
   const pathname = url.pathname;
-
-  // Log for debugging: Display the incoming request details
-  console.log('Host:', host);
-  console.log('Pathname:', pathname);
+  const host = request.headers.get('host') || '';
 
   // Skip processing for static assets or Next.js internal paths
   if (pathname.startsWith('/_next/')) {
     return NextResponse.next(); // Allow static asset requests to pass through
   }
 
-  // Check if the host contains 'go.' (for both local and production environments)
-  if (host.startsWith('go.')) {
-    // If already on /login, do nothing
-    if (pathname === '/login') {
-      console.log('Already on /login page, not redirecting');
-      return NextResponse.next(); // Allow the request to continue
-    }
+  // Allow testing with both local and production subdomains
+  if (host.startsWith('go.localhost') || host.startsWith('go.costperdemo.com')) {
+    // Handle the case where we are dealing with a dynamic landing page
+    const pathSegments = pathname.split('/').filter(Boolean);
 
-    // Redirect to /login if it's not already /login
-    console.log(`${host} detected, redirecting to login`);
-    url.pathname = '/login'; // Set the pathname to login
-    return NextResponse.redirect(url); // Redirect to /login
+    if (pathSegments.length === 1) {
+      // Dynamic landing page like "/Horwood_House"
+      const [landingPageName] = pathSegments;
+      const subdomain = host.split('.')[0]; // Extract the subdomain part, i.e., "go"
+      
+      // Rewrite the URL to redirect to the client-specific path dynamically
+      url.pathname = `/${subdomain}/${landingPageName}`;
+      return NextResponse.rewrite(url); // Perform the rewrite
+    }
   }
 
-  // For all other paths, let the request proceed as normal
+  // For all other paths, continue processing
   return NextResponse.next();
 }
 

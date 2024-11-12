@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/utils';
@@ -18,6 +19,8 @@ export default function LoginPage() {
         console.error('User data not available after login.');
         return;
       }
+
+      // Fetch user profile data
       const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
         .select('*')
@@ -27,10 +30,22 @@ export default function LoginPage() {
       if (profileError) {
         console.error('Error fetching user profile:', profileError);
       } else {
+        // Redirect based on user role and client_id
         if (profile.role === 'admin') {
           router.push('/admin');
         } else {
-          router.push(`/dashboard/${profile.client_id}`);
+          const { data: clientData, error: clientError } = await supabase
+            .from('clients')
+            .select('client_name')
+            .eq('id', profile.client_id)
+            .single();
+
+          if (clientError || !clientData) {
+            console.error('Error fetching client data:', clientError);
+            router.push('/unauthorized');
+          } else {
+            router.push(`/dashboard/${clientData.client_name}`);
+          }
         }
       }
     }

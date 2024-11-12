@@ -2,35 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/utils';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle
-} from "@/components/ui/sheet";
-import { Rocket, LayoutDashboard, LogOut, Menu, X, Settings } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { LayoutDashboard, LogOut, Menu, X, Rocket, Settings } from 'lucide-react'; // Make sure Settings is included
+import Image from 'next/image';
+import Link from 'next/link'; // Added missing import
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
+  const [clientName, setClientName] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string>('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  const [userEmail, setUserEmail] = useState<string>('');
-  const [clientName, setClientName] = useState<string>('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordChangeError, setPasswordChangeError] = useState('');
@@ -39,31 +23,51 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     async function fetchUserProfile() {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (error || !user) {
+          console.error('Error fetching user data:', error);
+          router.push('/login');
+          return;
+        }
 
-      if (error || !user) {
-        console.error('Error fetching user data:', error);
-        router.push('/login');
-        return;
+        const { data: profile, error: profileError } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        if (profileError || !profile) {
+          console.error('Error fetching profile data:', profileError);
+          return;
+        }
+
+        const { data: clientData, error: clientError } = await supabase
+          .from('clients')
+          .select('client_name')
+          .eq('id', profile.client_id)
+          .single();
+
+        if (clientError || !clientData) {
+          console.error('Error fetching client data:', clientError);
+          return;
+        }
+
+        setClientName(clientData.client_name || 'Client');
+        setUserEmail(user.email || '');
+      } catch (error) {
+        console.error('Error during data fetching:', error);
       }
-
-      const { data: profile, error: profileError } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (profileError) {
-        console.error('Error fetching profile data:', profileError);
-        return;
-      }
-
-      setUserEmail(user.email || '');
-      setClientName(profile.client_id || 'Client');
     }
 
     fetchUserProfile();
   }, [router]);
+
+  if (!clientName) {
+    return <div>Loading...</div>;
+  }
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -102,21 +106,13 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     }
   };
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       {/* Sidebar */}
       <aside className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
         <div className="flex items-center justify-between h-16 px-4 border-b dark:border-gray-700">
-          <Link href="/dashboard" className="flex items-center">
-            <Image
-              src="/images/logo.png"
-              alt="CostPerDemo Logo"
-              width={40}
-              height={40}
-              className="dark:invert"
-            />
+          <Link href="/" className="flex items-center">
+            <Image src="/images/logo.png" alt="CostPerDemo Logo" width={40} height={40} className="dark:invert" />
             <span className="ml-2 text-xl font-semibold dark:text-white">CostPerDemo</span>
           </Link>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={toggleSidebar}>
@@ -126,14 +122,14 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <nav className="p-4">
           <ul className="space-y-2">
             <li>
-              <Link href={`/dashboard/${clientName}`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                <LayoutDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400" />
+              <Link href={`/dashboard/${clientName}`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <LayoutDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3">Dashboard</span>
               </Link>
             </li>
             <li>
-              <Link href="/quick-start" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                <Rocket className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400" />
+              <Link href={`/dashboard/${clientName}/quick-start`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <Rocket className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3">Quick Start</span>
               </Link>
             </li>
@@ -153,7 +149,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src="/avatars/01.png" alt="User Avatar" />
-                    <AvatarFallback>{clientName.charAt(0).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback>{clientName?.charAt(0).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
@@ -161,9 +157,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">{clientName}</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {userEmail}
-                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">{userEmail}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -181,48 +175,43 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         </header>
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900">
-          {children}
+          <div className="p-4">
+            <h1>Hello, {clientName}!</h1>
+            {children}
+          </div>
         </main>
       </div>
 
-      {/* Edit Profile Sheet */}
-      <Sheet open={isEditProfileOpen} onOpenChange={setIsEditProfileOpen}>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Change Password</SheetTitle>
-            <SheetDescription>Enter your current password and a new password to update.</SheetDescription>
-          </SheetHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="old-password" className="text-right">
-                Current Password
-              </Label>
-              <Input
-                id="old-password"
-                type="password"
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="new-password" className="text-right">
-                New Password
-              </Label>
-              <Input
-                id="new-password"
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                className="col-span-3"
-              />
-            </div>
-            {passwordChangeError && <p className="text-red-500">{passwordChangeError}</p>}
-            {passwordChangeSuccess && <p className="text-green-500">{passwordChangeSuccess}</p>}
-          </div>
-          <Button onClick={handleChangePassword}>Change Password</Button>
-        </SheetContent>
-      </Sheet>
+      {/* Edit Profile Sheet (Password Change Popup) */}
+      <div className={`fixed top-0 right-0 w-1/3 bg-white dark:bg-gray-800 p-4 transition-transform ${isEditProfileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex justify-between items-center border-b pb-2">
+          <h3 className="text-xl font-semibold">Change Password</h3>
+          <Button variant="ghost" onClick={() => setIsEditProfileOpen(false)}>
+            <X className="h-6 w-6" />
+          </Button>
+        </div>
+        <div className="mt-4">
+          <input
+            type="password"
+            placeholder="Old Password"
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded mb-2"
+          />
+          <input
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="block w-full p-2 border border-gray-300 rounded mb-2"
+          />
+          {passwordChangeError && <p className="text-red-500">{passwordChangeError}</p>}
+          {passwordChangeSuccess && <p className="text-green-500">{passwordChangeSuccess}</p>}
+        </div>
+        <Button onClick={handleChangePassword} className="w-full mt-4">
+          Change Password
+        </Button>
+      </div>
     </div>
   );
 }

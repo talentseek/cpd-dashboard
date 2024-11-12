@@ -1,4 +1,5 @@
 // src/components/admindashboard.tsx
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -7,19 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import LeadOverviewTable from '@/components/LeadOverviewTable'; // Ensure this import is correct
-
-interface Lead {
-  id: string;
-  created_at: string;
-  client: string;
-  company: string;
-  first_name: string;
-  last_name: string;
-  position?: string;
-  website?: string;
-  linkedin?: string;
-  clicks?: number;
-}
+import { Lead } from '@/types/lead'; // Now importing Lead type from src/types/lead
 
 export default function DashboardComponent() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -27,7 +16,9 @@ export default function DashboardComponent() {
 
   useEffect(() => {
     async function fetchLeads() {
-      const { data, error } = await supabase.from('leads').select('*');
+      const { data, error } = await supabase
+        .from('leads')
+        .select('id, created_at, client, client_id, company, first_name, last_name, position, website, linkedin, clicks'); // Including client_id in the select query
       if (error) {
         console.error('Error fetching leads:', error);
       } else {

@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -21,11 +22,16 @@ interface Lead {
   first_name: string;
   last_name: string;
   company: string;
-  client: string;
+  client_id: number | null; // client_id can be null
   linkedin?: string;
   website?: string;
   clicks?: number;
   position?: string;
+}
+
+interface Client {
+  id: number;
+  client_name: string;
 }
 
 interface LeadOverviewTableProps {
@@ -35,14 +41,30 @@ interface LeadOverviewTableProps {
 export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [clientFilter, setClientFilter] = useState('All Clients');
+  const [clients, setClients] = useState<Client[]>([]);
 
-  const uniqueClients = ['All Clients', ...new Set(leads.map(lead => lead.client))];
+  // Fetch unique clients for the dropdown
+  useEffect(() => {
+    async function fetchClients() {
+      const { data, error } = await supabase.from('clients').select('id, client_name');
+      if (error) {
+        console.error('Error fetching clients:', error);
+      } else {
+        setClients(data || []);
+      }
+    }
+    fetchClients();
+  }, []);
 
+  // Prepare unique clients, including "All Clients" option
+  const uniqueClients = [{ id: -1, client_name: 'All Clients' }, ...clients];
+
+  // Filter leads based on search term and client filter
   const filteredLeads = leads.filter(lead =>
     (lead.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lead.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lead.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    (clientFilter === 'All Clients' || lead.client === clientFilter)
+      lead.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
+    (clientFilter === 'All Clients' || (lead.client_id && lead.client_id === parseInt(clientFilter)))
   );
 
   return (
@@ -64,7 +86,9 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
           </SelectTrigger>
           <SelectContent>
             {uniqueClients.map((client) => (
-              <SelectItem key={client} value={client}>{client}</SelectItem>
+              <SelectItem key={client.id} value={client.id === -1 ? 'All Clients' : client.id.toString()}>
+                {client.client_name}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -106,10 +130,12 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
                     lead.company
                   )}
                 </TableCell>
-                <TableCell>{lead.client}</TableCell>
+                <TableCell>
+                  {clients.find(client => client.id === lead.client_id)?.client_name || 'Unknown Client'}
+                </TableCell>
                 <TableCell>{lead.clicks || '-'}</TableCell>
                 <TableCell>
-                  <Link href={`/${lead.client}/${lead.company.replace(/\s/g, '_')}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  <Link href={`/dashboard/${lead.client_id === null ? 'unknown' : lead.client_id}/${lead.company.replace(/\s/g, '_')}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                     View Page
                   </Link>
                 </TableCell>
