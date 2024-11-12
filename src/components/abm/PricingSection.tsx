@@ -29,7 +29,7 @@ export function PricingSection({
                 <CardDescription>{plan.description}</CardDescription>
               </CardHeader>
               <CardContent className="flex-grow">
-                <div className="text-4xl font-bold mb-4">{plan.price}</div>
+                <div className="text-2xl font-bold mb-4">{plan.price}</div> {/* Reduced size from text-4xl to text-2xl */}
                 <ul className="space-y-2 text-sm">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">

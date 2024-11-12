@@ -1,4 +1,3 @@
-// src/components/abm/FeaturesSection.tsx
 'use client';
 
 import { CheckCircle } from "lucide-react";

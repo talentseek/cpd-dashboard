@@ -1,20 +1,18 @@
-// src/components/abm/CallToActionSection.tsx
+'use client';
 
-'use client'
-
-import { Button } from "@/components/ui/button"
-import Link from 'next/link'
+import { Button } from "@/components/ui/button";
+import Link from 'next/link';
 
 interface CallToActionProps {
-  mainHeading: string
-  subheading: string
-  ctaButtonText: string
-  primaryColor?: string
-  ctaLink?: string
+  mainHeading: string;
+  subheading: string;
+  ctaButtonText: string;
+  primaryColor?: string;
+  ctaLink?: string;
 }
 
 export function CallToActionSection({ mainHeading, subheading, ctaButtonText, primaryColor, ctaLink }: CallToActionProps) {
-  const buttonStyle = primaryColor ? { backgroundColor: primaryColor, color: '#fff' } : {}
+  const buttonStyle = primaryColor ? { backgroundColor: primaryColor, color: '#fff' } : {};
 
   return (
     <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
@@ -32,5 +30,5 @@ export function CallToActionSection({ mainHeading, subheading, ctaButtonText, pr
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -4,7 +4,20 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import Image from "next/image";
-import { TestimonialsSectionProps } from "@/types/abmLandingPage";
+
+interface TestimonialItem {
+  title: string;
+  content: string;
+  name: string;
+  jobTitle?: string;
+  company: string;
+  imageUrl?: string;
+}
+
+interface TestimonialsSectionProps {
+  mainHeading: string;
+  items: TestimonialItem[];
+}
 
 export function TestimonialsSection({ mainHeading, items }: TestimonialsSectionProps) {
   return (
@@ -30,16 +43,23 @@ export function TestimonialsSection({ mainHeading, items }: TestimonialsSectionP
                   <Image
                     alt={testimonial.name}
                     className="rounded-full"
-                    height="40"
+                    height={40}
+                    width={40}
                     src={testimonial.imageUrl || "/placeholder.svg"}
-                    style={{ aspectRatio: "1 / 1", objectFit: "cover" }}
-                    width="40"
+                    style={{ objectFit: "cover" }}
                   />
                   <div className="text-left">
                     <p className="text-sm font-medium">{testimonial.name}</p>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                      {testimonial.jobTitle}, {testimonial.company}
-                    </p>
+                    {testimonial.company && (
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                        {testimonial.company}
+                      </p>
+                    )}
+                    {testimonial.jobTitle && (
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                        {testimonial.jobTitle}
+                      </p>
+                    )}
                   </div>
                 </div>
               </CardContent>

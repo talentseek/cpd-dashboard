@@ -4,15 +4,26 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { HeroSectionProps } from "@/types/abmLandingPage";
 import Link from 'next/link';
+
+export interface HeroSectionProps {
+  title: string;
+  subheading?: string;
+  ctaText?: string;
+  learnMoreText?: string;
+  heroImage?: string;
+  heroVideo?: string;
+  primaryColor?: string;
+  ctaLink?: string;
+}
 
 export function HeroSection({
   title,
-  subheading,
+  subheading = '',
   ctaText = "Book my tour",
   learnMoreText = "Learn more",
-  heroImage,
+  heroImage = '/images/default-hero-image.jpg',
+  heroVideo,
   primaryColor,
   ctaLink,
 }: HeroSectionProps) {
@@ -43,13 +54,28 @@ export function HeroSection({
             </div>
           </div>
           <div className="flex justify-center lg:justify-end">
-            <Image
-              alt="Hero"
-              className="aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:w-auto"
-              height={500}
-              width={500}
-              src={heroImage}
-            />
+            {heroVideo ? (
+              <video
+                controls
+                autoPlay
+                loop
+                muted
+                className="rounded-xl overflow-hidden sm:w-full lg:w-auto"
+                style={{ maxHeight: '500px', width: '100%' }}
+                preload="metadata"
+              >
+                <source src={heroVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <Image
+                alt="Hero"
+                className="aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:w-auto"
+                height={500}
+                width={500}
+                src={heroImage}
+              />
+            )}
           </div>
         </div>
       </div>

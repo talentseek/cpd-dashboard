@@ -1,25 +1,12 @@
 // src/components/abm/HowItWorksSection.tsx
-'use client'
+'use client';
 
 import { HowItWorksSectionProps } from "@/types/abmLandingPage";
 
 export function HowItWorksSection({
   mainHeading = "How It Works",
   subheading = "Our streamlined process ensures you get the most out of every demo.",
-  steps = [
-    {
-      heading: "Personalized Outreach",
-      subheading: "We tailor our approach to your specific needs and industry.",
-    },
-    {
-      heading: "Schedule Your Demo",
-      subheading: "Choose a time that works best for you with our easy booking system.",
-    },
-    {
-      heading: "Experience the Difference",
-      subheading: "See firsthand how our solution can transform your business.",
-    },
-  ],
+  steps = [],
   primaryColor = "#000000",
 }: HowItWorksSectionProps & { primaryColor?: string }) {
   return (
