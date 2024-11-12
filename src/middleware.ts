@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from './lib/utils'; // Ensure you have access to supabase from the middleware
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const pathname = url.pathname;
   const host = request.headers.get('host') || '';
@@ -11,33 +10,27 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next(); // Allow static asset requests to pass through
   }
 
-  // Extract the subdomain from the host
-  const subdomain = host.split('.')[0]; // For example, "go" or "hotelfriend"
+  // Extract subdomain from the host
+  const subdomain = host.split('.')[0]; // e.g., "go" from go.costperdemo.com
 
-  // If we are dealing with a dynamic landing page, like "/Horwood_House"
-  const pathSegments = pathname.split('/').filter(Boolean);
+  // We assume the subdomain corresponds to a client
+  if (subdomain) {
+    // Handle the case where we are dealing with a dynamic landing page like /Horwood_House
+    const pathSegments = pathname.split('/').filter(Boolean);
 
-  // Check if the path is just the landing page name
-  if (pathSegments.length === 1) {
-    const [landingPageName] = pathSegments;
+    if (pathSegments.length === 1) {
+      // Dynamic landing page like "/Horwood_House"
+      const [landingPageName] = pathSegments;
 
-    // Fetch client details from the database using the subdomain
-    const { data, error } = await supabase
-      .from('clients')
-      .select('subdomain')
-      .eq('subdomain', subdomain)
-      .single();
+      // Rewrite the URL to `/subdomain/landingPageName`
+      url.pathname = `/${subdomain}/${landingPageName}`;
 
-    if (error || !data) {
-      console.error('Error fetching client data:', error);
-      return NextResponse.next(); // If error, continue without rewriting
+      // Rewrite the request to the new URL
+      return NextResponse.rewrite(url); // Perform the rewrite
     }
-
-    // Rewrite the URL to the correct client-specific path
-    url.pathname = `/${subdomain}/${landingPageName}`; // Ensure it rewrites to "/go/{landingPageName}"
-    return NextResponse.rewrite(url); // Perform the rewrite
   }
 
+  // For all other paths, continue processing
   return NextResponse.next();
 }
 
