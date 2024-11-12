@@ -37,15 +37,14 @@ export default function ClientLeadTable({ leads, clientSubdomain }: ClientLeadTa
   );
 
   // Construct the full URL for the subdomain
-  const constructSubdomainURL = (subdomain: string, company: string) => {
+  const constructSubdomainURL = (subdomain: string, clientName: string, company: string) => {
     const formattedCompany = company.replace(/\s/g, '_');
     if (subdomain) {
-      const url = `https://${subdomain}/${formattedCompany}`;
-      console.log('Constructed URL:', url); // Log the URL being constructed
-      return url;
+      // Construct the production URL with the subdomain
+      return `https://${subdomain}/${clientName}/${formattedCompany}`;
     }
-    // Fallback URL in case no subdomain is set
-    return `http://localhost:3000/${formattedCompany}`;
+    // If no subdomain is provided, just fallback to a direct client page with clientName and company
+    return `/${clientName}/${formattedCompany}`;
   };
 
   return (
@@ -100,7 +99,7 @@ export default function ClientLeadTable({ leads, clientSubdomain }: ClientLeadTa
                 <TableCell>{lead.clicks || '-'}</TableCell>
                 <TableCell>
                   <Link
-                    href={constructSubdomainURL(clientSubdomain || '', lead.company)}
+                    href={constructSubdomainURL(clientSubdomain || '', 'hotelfriend', lead.company)}  // Use dynamic client name here
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
