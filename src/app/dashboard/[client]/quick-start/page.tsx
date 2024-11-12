@@ -8,6 +8,7 @@ import Link from 'next/link';
 interface ClientData {
   subdomain: string;
   status: string;
+  client_name: string; // Added client name to dynamically link to dashboard
 }
 
 interface UserProfile {
@@ -53,7 +54,7 @@ const QuickStartPage = () => {
     try {
       const { data, error } = await supabase
         .from('clients')
-        .select('subdomain, status')
+        .select('subdomain, status, client_name')  // Fetch client_name dynamically
         .eq('id', clientId)  // Use dynamic client_id
         .single();
 
@@ -134,7 +135,7 @@ const QuickStartPage = () => {
           {/* After successful verification, include a link to the dashboard */}
           {message.includes('success') && (
             <div className="mt-6">
-              <Link href={`/dashboard/${clientData.subdomain}`} className="text-blue-600 hover:underline">
+              <Link href={`/dashboard/${clientData.client_name}`} className="text-blue-600 hover:underline">
                 Go to your Dashboard
               </Link>
             </div>

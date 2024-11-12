@@ -25,6 +25,7 @@ export default function ClientDashboardPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [totalClicks, setTotalClicks] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [subdomain, setSubdomain] = useState<string | null>(null); // State to store subdomain
   const router = useRouter();
   const { client } = useParams(); // This will be used to ensure the correct client ID in the URL
 
@@ -62,6 +63,9 @@ export default function ClientDashboardPage() {
           console.error('Error fetching client data:', clientError);
           return;
         }
+
+        // Store subdomain in state for usage in the child component
+        setSubdomain(clientData.subdomain);
 
         // If status is pending, redirect to quick-start page
         if (clientData.status === 'pending') {
@@ -125,7 +129,8 @@ export default function ClientDashboardPage() {
         {leads.length === 0 ? (
           <p>No leads found for this client.</p>
         ) : (
-          <ClientLeadTable leads={leads} />
+          // Pass subdomain as a prop to ClientLeadTable (ensure subdomain is a valid string or undefined)
+          <ClientLeadTable leads={leads} clientSubdomain={subdomain || undefined} />
         )}
       </div>
     </ClientLayout>
