@@ -87,6 +87,12 @@ export default async function ClientCompanyPage(props: { params: Promise<{ clien
     'Default page description for the lead.';
   const ogImage = clientData.hero?.heroImage || '/default-og-image.jpg';
 
+  // Determine current URL for custom domains
+  const currentUrl =
+    typeof window !== 'undefined'
+      ? window.location.href
+      : `https://${process.env.NEXT_PUBLIC_DOMAIN}/${client}/${company}`;
+
   return (
     <>
       <Head>
@@ -95,10 +101,7 @@ export default async function ClientCompanyPage(props: { params: Promise<{ clien
         <meta property="og:description" content={ogDescription} />
         <meta property="og:image" content={ogImage} />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={`https://${process.env.NEXT_PUBLIC_DOMAIN}/${client}/${company}`}
-        />
+        <meta property="og:url" content={currentUrl} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={ogTitle} />
         <meta name="twitter:description" content={ogDescription} />
