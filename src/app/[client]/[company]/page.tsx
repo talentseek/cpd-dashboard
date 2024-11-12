@@ -48,7 +48,8 @@ export default function ClientCompanyPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const clientId = client === 'hotelfriend' ? 1 : null; // Adjust for different clients
+      // Dynamically determine clientId and leadId as per your logic
+      const clientId = client === 'hotelfriend' ? 1 : null; // Example, replace with dynamic logic
       const leadId = 1; // Example, should be dynamic
 
       if (clientId && leadId) {
@@ -68,7 +69,7 @@ export default function ClientCompanyPage() {
     company: leadData.company || 'Your Company',
   };
 
-  // OpenGraph metadata
+  // Generate OpenGraph metadata content
   const ogTitle =
     clientData.hero?.title
       ?.replace(/{first_name}/g, replacements.first_name)
@@ -83,6 +84,7 @@ export default function ClientCompanyPage() {
   return (
     <>
       <Head>
+        {/* Static or conditionally server-side fetched meta tags */}
         <title>{ogTitle}</title>
         <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
