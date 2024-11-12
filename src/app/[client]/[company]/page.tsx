@@ -1,4 +1,4 @@
-'use client';
+'use client'; // Mark this component as a client component
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
@@ -68,7 +68,7 @@ interface ClientDataProps {
     buttonText: string;
   };
   footer?: {
-    companyName: string;
+    companyName: string; // Made sure this is always defined
     links: Array<{ label: string; href: string }>;
   };
 }
@@ -153,7 +153,7 @@ export default function ClientCompanyPage() {
       buttonText: "Default CTA Button",
     },
     footer: {
-      companyName: "HotelFriend",
+      companyName: "Default Company", // Ensured default companyName is always present
       links: [],
     },
   };
@@ -163,13 +163,11 @@ export default function ClientCompanyPage() {
     return text.replace(/{(\w+)}/g, (_, key) => replacements[key] || '');
   };
 
-  // Ensure `company` is correctly passed to replacements
   const replacements = {
     first_name: leadData?.first_name || '',
     company: leadData?.company || '',
   };
 
-  // Apply replacements consistently
   const personalizedData: ClientDataProps = {
     ...clientData,
     hero: clientData.hero

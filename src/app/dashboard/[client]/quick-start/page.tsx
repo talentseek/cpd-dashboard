@@ -95,46 +95,68 @@ const QuickStartPage = () => {
     return (
       <ClientLayout>
         <div className="container mx-auto p-6">
-          <h1 className="text-3xl font-bold">Quick Start Guide</h1>
-          <div className="mt-6">
-            <p>Your subdomain is: {clientData.subdomain}</p>
-            <p>Status: {clientData.status}</p>
+          <h1 className="text-3xl font-bold mb-6 text-center">Quick Start Guide</h1>
+          
+          {/* Instructions for setting up DNS */}
+          <div className="bg-gray-50 p-6 rounded-md shadow-md mb-8">
+            <h2 className="text-xl font-bold mb-4">Domain Setup Instructions</h2>
+            <p className="text-lg">
+              To complete the setup, you need to point your subdomain to the correct address. Follow these steps:
+            </p>
+            <ol className="list-decimal list-inside mt-4 text-lg">
+              <li>Login to your DNS provider&#39;s management dashboard.</li>
+              <li>Create a new DNS record:
+                <ul className="list-inside">
+                  <li><strong>Type:</strong> CNAME</li>
+                  <li><strong>Name:</strong> go</li>
+                  <li><strong>Value:</strong> cname.vercel-dns.com.</li>
+                </ul>
+              </li>
+              <li>Save the DNS changes. The update may take a few minutes to propagate.</li>
+              <li>Once your DNS is set up, come back here to verify the domain.</li>
+            </ol>
           </div>
 
-          {/* If the domain is not verified, show the input field */}
+          {/* Current Subdomain & Status */}
+          <div className="bg-gray-50 p-6 rounded-md shadow-md mb-8">
+            <p className="text-lg">Your subdomain is: <strong>{clientData.subdomain}</strong></p>
+            <p className="text-lg mt-2">Status: <strong>{clientData.status}</strong></p>
+          </div>
+
+          {/* Domain Verification */}
           {clientData.status === 'pending' && (
             <>
-              <div className="mt-6">
-                <label htmlFor="domain" className="block text-lg">Enter your subdomain:</label>
+              <div className="mb-6">
+                <label htmlFor="domain" className="block text-lg font-medium">Enter your subdomain:</label>
                 <input
                   type="text"
                   id="domain"
                   value={domain}
                   onChange={(e) => setDomain(e.target.value)}
-                  className="mt-2 p-2 border border-gray-300 rounded"
-                  placeholder="e.g. go.costperdemo.com"
+                  className="mt-2 p-3 border border-gray-300 rounded-lg w-full"
+                  placeholder="e.g. go.yourdomain.com"
                 />
               </div>
 
               <button
                 onClick={handleDomainVerification}
-                className="mt-4 p-2 bg-blue-500 text-white rounded"
+                className="w-full p-3 bg-blue-500 text-white rounded-lg"
               >
                 Verify Domain
               </button>
             </>
           )}
 
-          {/* Display verification status message */}
+          {/* Verification Message */}
           {message && (
-            <div className={`mt-4 p-4 ${message.includes('success') ? 'bg-green-100' : 'bg-red-100'} rounded`}>
-              <p>{message}</p>
+            <div className={`mt-4 p-4 ${message.includes('success') ? 'bg-green-100' : 'bg-red-100'} rounded-lg`}>
+              <p className="text-center">{message}</p>
             </div>
           )}
 
-          {/* After successful verification, include a link to the dashboard */}
+          {/* After successful verification, show link to Dashboard */}
           {message.includes('success') && (
-            <div className="mt-6">
+            <div className="mt-6 text-center">
               <Link href={`/dashboard/${clientData.client_name}`} className="text-blue-600 hover:underline">
                 Go to your Dashboard
               </Link>
@@ -146,7 +168,7 @@ const QuickStartPage = () => {
   }
 
   return (
-    <div>Loading...</div> // Show loading state until client data is fetched
+    <div className="text-center py-8">Loading...</div> // Show loading state until client data is fetched
   );
 };
 

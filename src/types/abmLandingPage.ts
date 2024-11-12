@@ -9,7 +9,7 @@ export interface FeaturesSectionProps {
 }
 
 export interface FooterProps {
-  companyName?: string;
+  companyName: string; // Updated to make companyName a required field
   links?: Array<{ label: string; href: string }>;
 }
 

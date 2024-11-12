@@ -108,7 +108,7 @@ export function AbmLandingPage(props: AbmLandingPageProps) {
           />
         )}
       </main>
-      <Footer {...props.footer} />
+      <Footer {...{ ...props.footer, companyName: props.footer?.companyName || 'Default Company' }} />
     </div>
   );
 }
