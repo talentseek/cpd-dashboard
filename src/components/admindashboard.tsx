@@ -1,5 +1,3 @@
-// src/components/admindashboard.tsx
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -8,30 +6,74 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import LeadOverviewTable from '@/components/LeadOverviewTable'; // Ensure this import is correct
-import { Lead } from '@/types/lead'; // Now importing Lead type from src/types/lead
+
+interface Lead {
+  id: string;
+  created_at: string;
+  client_id: number | null;
+  company: string;
+  first_name: string;
+  last_name: string;
+  linkedin?: string;
+  website?: string;
+  position?: string;
+  clicks?: number;
+}
+
+interface Client {
+  id: number;
+  client_name: string;
+}
 
 export default function DashboardComponent() {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchLeads() {
-      const { data, error } = await supabase
-        .from('leads')
-        .select('id, created_at, client, client_id, company, first_name, last_name, position, website, linkedin, clicks'); // Including client_id in the select query
-      if (error) {
-        console.error('Error fetching leads:', error);
-      } else {
-        setLeads(data || []);
+    async function fetchData() {
+      try {
+        // Fetch leads data
+        const { data: leadsData, error: leadsError } = await supabase
+          .from('leads')
+          .select('*');
+
+        if (leadsError) {
+          console.error('Error fetching leads:', leadsError);
+          setError('Error fetching leads');
+        } else {
+          setLeads(leadsData || []);
+        }
+
+        // Fetch clients data
+        const { data: clientsData, error: clientsError } = await supabase
+          .from('clients')
+          .select('*');
+
+        if (clientsError) {
+          console.error('Error fetching clients:', clientsError);
+          setError('Error fetching clients');
+        } else {
+          setClients(clientsData || []);
+        }
+      } catch (fetchError) {
+        console.error('Unexpected error fetching data:', fetchError);
+        setError('Unexpected error occurred');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
 
-    fetchLeads();
+    fetchData();
   }, []);
 
   if (loading) {
-    return <div>Loading Lead Overview Table...</div>;
+    return <div>Loading Dashboard...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -52,11 +94,9 @@ export default function DashboardComponent() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {[
-          { title: "Total Clients", value: 50, change: 5 },
-          { title: "Total Leads", value: 150, change: -3 },
-          { title: "Total Clicks", value: 1200, change: 10 },
-          { title: "Demos Booked", value: 25, change: 2 },
-          { title: "Replies", value: 75, change: 8 },
+          { title: "Total Clients", value: clients.length, change: 5 }, // Dynamically use fetched clients length
+          { title: "Total Leads", value: leads.length, change: -3 },
+          { title: "Total Clicks", value: leads.reduce((sum, lead) => sum + (lead.clicks || 0), 0), change: 10 }
         ].map((metric, index) => (
           <Card key={index}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

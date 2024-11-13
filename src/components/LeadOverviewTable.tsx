@@ -51,6 +51,7 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
         console.error('Error fetching clients:', error);
       } else {
         setClients(data || []);
+        console.log('Fetched clients:', data); // Log fetched clients
       }
     }
     fetchClients();
@@ -64,7 +65,7 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
     (lead.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    (clientFilter === 'All Clients' || (lead.client_id && lead.client_id === parseInt(clientFilter)))
+    (clientFilter === 'All Clients' || (lead.client_id && lead.client_id.toString() === clientFilter))
   );
 
   return (
