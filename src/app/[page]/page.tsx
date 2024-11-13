@@ -1,20 +1,8 @@
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
-import Head from 'next/head';
+import { Metadata } from 'next';
 
-interface ClientDataProps {
-  hero?: {
-    title?: string;
-    heroImage?: string;
-  };
-  description?: string;
-}
-
-interface LeadDataProps {
-  first_name?: string;
-  company?: string;
-}
-
+// Fetch Client Data from Supabase
 async function fetchClientData(clientName: string) {
   const { data: clientRecord, error: clientError } = await supabase
     .from('clients')
@@ -43,6 +31,7 @@ async function fetchClientData(clientName: string) {
   return clientData;
 }
 
+// Fetch Lead Data from Supabase
 async function fetchLeadData(company: string) {
   const { data, error } = await supabase
     .from('leads')
@@ -57,16 +46,95 @@ async function fetchLeadData(company: string) {
   return data;
 }
 
-export const revalidate = 604800; // Correct, using a direct value
+// Static Revalidation Time (7 days)
+export const revalidate = 604800; // 7 days in seconds
 
-export default async function Page(props: { params: Promise<{ page: string }> }) {
-  const resolvedParams = await props.params; // Await params as they are treated as a Promise
-  const { page } = resolvedParams;
-
+// Dynamic Metadata generation
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ page: string }>;
+}): Promise<Metadata> => {
+  // Await the params since it's now a Promise
+  const { page } = await params;
   const [client, company] = page.split('-');
 
-  const clientData: ClientDataProps | null = await fetchClientData(client);
-  const leadData: LeadDataProps | null = await fetchLeadData(company);
+  // Fetch data for metadata generation
+  const clientData = await fetchClientData(client);
+  const leadData = await fetchLeadData(company);
+
+  if (!clientData || !leadData) {
+    console.error('Client or lead data could not be fetched for metadata');
+    return {
+      title: 'Error loading data',
+      description: 'Unable to fetch client or lead data for the requested page.',
+      openGraph: {
+        title: 'Error',
+        description: 'There was an error fetching data for this page.',
+        images: ['/default-og-image.jpg'],
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Error',
+        description: 'There was an error fetching data for this page.',
+        images: ['/default-og-image.jpg'],
+      },
+    };
+  }
+
+  // Replacements for dynamic values in metadata
+  const replacements = {
+    first_name: leadData.first_name || 'Guest',
+    company: leadData.company || 'Your Company',
+  };
+
+  // Dynamic Open Graph and Twitter meta information
+  const ogTitle =
+    clientData.hero?.title
+      ?.replace(/{first_name}/g, replacements.first_name)
+      .replace(/{company}/g, replacements.company)
+      .trim() || 'Custom Page Title';
+
+  const ogDescription =
+    clientData.description?.replace(/{company}/g, replacements.company) ||
+    'Default page description for the lead.';
+  const ogImage = clientData.hero?.heroImage || '/default-og-image.jpg';
+
+  const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}/${client}-${company}`;
+
+  return {
+    title: ogTitle,
+    description: ogDescription,
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      images: [ogImage],
+      type: 'website',
+      url: currentUrl,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: ogTitle,
+      description: ogDescription,
+      images: [ogImage],
+    },
+  };
+};
+
+// Page Component to display content
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ page: string }>;
+}) {
+  // Await the params since it's now a Promise
+  const { page } = await params;
+  const [client, company] = page.split('-');
+
+  // Fetch data for page content
+  const clientData = await fetchClientData(client);
+  const leadData = await fetchLeadData(company);
 
   if (!clientData || !leadData) {
     console.error('Client or lead data could not be fetched');
@@ -78,30 +146,9 @@ export default async function Page(props: { params: Promise<{ page: string }> })
     company: leadData.company || 'Your Company',
   };
 
-  const ogTitle = clientData.hero?.title
-    ?.replace(/{first_name}/g, replacements.first_name)
-    .replace(/{company}/g, replacements.company)
-    .trim() || 'Custom Page Title';
-
-  const ogDescription = clientData.description?.replace(/{company}/g, replacements.company) || 'Default page description for the lead.';
-  const ogImage = clientData.hero?.heroImage || '/default-og-image.jpg';
-
-  const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}/${client}-${company}`;
-
   return (
     <>
-      <Head>
-        <title>{ogTitle}</title>
-        <meta property="og:title" content={ogTitle} />
-        <meta property="og:description" content={ogDescription} />
-        <meta property="og:image" content={ogImage} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={currentUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={ogTitle} />
-        <meta name="twitter:description" content={ogDescription} />
-        <meta name="twitter:image" content={ogImage} />
-      </Head>
+      {/* Dynamic content */}
       <AbmLandingPage clientData={clientData} replacements={replacements} />
     </>
   );
