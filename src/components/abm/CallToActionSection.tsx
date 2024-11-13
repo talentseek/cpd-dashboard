@@ -1,3 +1,4 @@
+// src/components/abm/CallToActionSection.tsx
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -9,10 +10,25 @@ interface CallToActionProps {
   ctaButtonText: string;
   primaryColor?: string;
   ctaLink?: string;
+  scrollTargetId?: string; // Optional prop to scroll to a target element
 }
 
-export function CallToActionSection({ mainHeading, subheading, ctaButtonText, primaryColor, ctaLink }: CallToActionProps) {
+export function CallToActionSection({
+  mainHeading,
+  subheading,
+  ctaButtonText,
+  primaryColor,
+  ctaLink,
+  scrollTargetId
+}: CallToActionProps) {
   const buttonStyle = primaryColor ? { backgroundColor: primaryColor, color: '#fff' } : {};
+
+  // Conditionally handle button click behavior
+  const handleButtonClick = () => {
+    if (scrollTargetId) {
+      document.getElementById(scrollTargetId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
@@ -25,7 +41,9 @@ export function CallToActionSection({ mainHeading, subheading, ctaButtonText, pr
               <Button size="lg" style={buttonStyle}>{ctaButtonText}</Button>
             </Link>
           ) : (
-            <Button size="lg" style={buttonStyle}>{ctaButtonText}</Button>
+            <Button size="lg" style={buttonStyle} onClick={scrollTargetId ? handleButtonClick : undefined}>
+              {ctaButtonText}
+            </Button>
           )}
         </div>
       </div>

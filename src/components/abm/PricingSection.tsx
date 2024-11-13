@@ -1,3 +1,4 @@
+// src/components/abm/PricingSection.tsx
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,11 @@ export function PricingSection({
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" variant={index === 1 ? "default" : "outline"}>
+                <Button
+                  className="w-full"
+                  variant={index === 1 ? "default" : "outline"}
+                  onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                >
                   {plan.buttonLabel || "Select"}
                 </Button>
               </CardFooter>
