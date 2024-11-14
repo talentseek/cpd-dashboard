@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Search, Linkedin } from 'lucide-react';
+import { constructLandingPageURL } from '@/utils/urlHelpers';
+import { supabase } from '@/lib/utils'; // Import Supabase client
 
 interface Lead {
   id: string;
@@ -21,31 +23,46 @@ interface Lead {
 
 interface ClientLeadTableProps {
   leads: Lead[];
-  clientSubdomain?: string; // Optional prop for the subdomain
 }
 
-export default function ClientLeadTable({ leads, clientSubdomain }: ClientLeadTableProps) {
+export default function ClientLeadTable({ leads }: ClientLeadTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [visitCounts, setVisitCounts] = useState<{ [key: string]: number }>({});
 
-  // Add logging to see what clientSubdomain is
-  console.log('clientSubdomain passed to ClientLeadTable:', clientSubdomain);
+  useEffect(() => {
+    const fetchVisitCounts = async () => {
+      const counts: { [key: string]: number } = {};
+
+      for (const lead of leads) {
+        try {
+          const { data, error } = await supabase
+            .from('abm_page_visits')
+            .select('id', { count: 'exact' })
+            .eq('lead_id', lead.id);
+
+          if (error) {
+            console.error(`Error fetching visit count for lead ${lead.id}:`, error);
+            counts[lead.id] = 0;
+          } else {
+            counts[lead.id] = data ? data.length : 0;
+          }
+        } catch (error) {
+          console.error(`Unexpected error fetching visit count for lead ${lead.id}:`, error);
+          counts[lead.id] = 0;
+        }
+      }
+
+      setVisitCounts(counts);
+    };
+
+    fetchVisitCounts();
+  }, [leads]);
 
   const filteredLeads = leads.filter(lead =>
     lead.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     lead.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     lead.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  // Construct the full URL for the subdomain
-  const constructSubdomainURL = (subdomain: string, clientName: string, company: string) => {
-    const formattedCompany = company.replace(/\s/g, '_');
-    if (subdomain) {
-      // Construct the production URL with the subdomain
-      return `https://${subdomain}/${clientName}/${formattedCompany}`;
-    }
-    // If no subdomain is provided, just fallback to a direct client page with clientName and company
-    return `/${clientName}/${formattedCompany}`;
-  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -70,7 +87,7 @@ export default function ClientLeadTable({ leads, clientSubdomain }: ClientLeadTa
               <TableHead>Lead Name</TableHead>
               <TableHead>Position</TableHead>
               <TableHead>Company</TableHead>
-              <TableHead>Clicks</TableHead>
+              <TableHead>Visits</TableHead>
               <TableHead>Landing Page</TableHead>
             </TableRow>
           </TableHeader>
@@ -96,10 +113,10 @@ export default function ClientLeadTable({ leads, clientSubdomain }: ClientLeadTa
                     lead.company
                   )}
                 </TableCell>
-                <TableCell>{lead.clicks || '-'}</TableCell>
+                <TableCell>{visitCounts[lead.id] || 0}</TableCell>
                 <TableCell>
                   <Link
-                    href={constructSubdomainURL(clientSubdomain || '', 'hotelfriend', lead.company)}  // Use dynamic client name here
+                    href={constructLandingPageURL(lead)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"

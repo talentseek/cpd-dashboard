@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, LogOut, Menu, X, Rocket, Settings } from 'lucide-react'; // Make sure Settings is included
+import { LayoutDashboard, LogOut, Menu, X, Rocket, Settings } from 'lucide-react'; // Ensure all icons used are imported
 import Image from 'next/image';
-import Link from 'next/link'; // Added missing import
+import Link from 'next/link'; // Added missing import for `Link`
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [clientName, setClientName] = useState<string | null>(null);

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/utils';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { constructLandingPageURL } from '@/utils/urlHelpers';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, MoreHorizontal, Linkedin } from 'lucide-react';
@@ -25,7 +26,6 @@ interface Lead {
   client_id: number | null; // client_id can be null
   linkedin?: string;
   website?: string;
-  clicks?: number;
   position?: string;
 }
 
@@ -42,8 +42,8 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [clientFilter, setClientFilter] = useState('All Clients');
   const [clients, setClients] = useState<Client[]>([]);
+  const [viewsCount, setViewsCount] = useState<{ [key: string]: number }>({});
 
-  // Fetch unique clients for the dropdown
   useEffect(() => {
     async function fetchClients() {
       const { data, error } = await supabase.from('clients').select('id, client_name');
@@ -51,16 +51,37 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
         console.error('Error fetching clients:', error);
       } else {
         setClients(data || []);
-        console.log('Fetched clients:', data); // Log fetched clients
       }
     }
     fetchClients();
   }, []);
 
-  // Prepare unique clients, including "All Clients" option
-  const uniqueClients = [{ id: -1, client_name: 'All Clients' }, ...clients];
+  useEffect(() => {
+    async function fetchViewCounts() {
+      const counts: { [key: string]: number } = {};
+      for (const lead of leads) {
+        try {
+          const { count, error } = await supabase
+            .from('abm_page_visits')
+            .select('id', { count: 'exact' })
+            .eq('lead_id', lead.id);
 
-  // Filter leads based on search term and client filter
+          if (error) {
+            console.error(`Error fetching visit count for lead ${lead.id}:`, error);
+          } else {
+            counts[lead.id] = count || 0;
+          }
+        } catch (error) {
+          console.error(`Error fetching visit count for lead ${lead.id}:`, error);
+        }
+      }
+      setViewsCount(counts);
+    }
+
+    fetchViewCounts();
+  }, [leads]);
+
+  const uniqueClients = [{ id: -1, client_name: 'All Clients' }, ...clients];
   const filteredLeads = leads.filter(lead =>
     (lead.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -103,7 +124,7 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
               <TableHead>Position</TableHead>
               <TableHead>Company</TableHead>
               <TableHead>Client</TableHead>
-              <TableHead>Clicks</TableHead>
+              <TableHead>Views</TableHead>
               <TableHead>Landing Page</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
@@ -134,9 +155,14 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
                 <TableCell>
                   {clients.find(client => client.id === lead.client_id)?.client_name || 'Unknown Client'}
                 </TableCell>
-                <TableCell>{lead.clicks || '-'}</TableCell>
+                <TableCell>{viewsCount[lead.id] || 0}</TableCell>
                 <TableCell>
-                  <Link href={`/dashboard/${lead.client_id === null ? 'unknown' : lead.client_id}/${lead.company.replace(/\s/g, '_')}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                  <Link
+                    href={constructLandingPageURL(lead)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
                     View Page
                   </Link>
                 </TableCell>

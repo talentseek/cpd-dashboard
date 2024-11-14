@@ -16,16 +16,14 @@ interface Lead {
   company: string;
   linkedin?: string;
   website?: string;
-  clicks?: number;
   position?: string;
   created_at?: string;
 }
 
 export default function ClientDashboardPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [totalClicks, setTotalClicks] = useState(0);
+  const [totalPageViews, setTotalPageViews] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [subdomain, setSubdomain] = useState<string | null>(null); // State to store subdomain
   const router = useRouter();
   const { client } = useParams(); // This will be used to ensure the correct client ID in the URL
 
@@ -52,10 +50,9 @@ export default function ClientDashboardPage() {
           return;
         }
 
-        // Fetch client data using the client_id from user profile
         const { data: clientData, error: clientError } = await supabase
           .from('clients')
-          .select('client_name, subdomain, status')
+          .select('client_name, status')
           .eq('id', profile.client_id)
           .single();
 
@@ -64,15 +61,10 @@ export default function ClientDashboardPage() {
           return;
         }
 
-        // Store subdomain in state for usage in the child component
-        setSubdomain(clientData.subdomain);
-
-        // If status is pending, redirect to quick-start page
         if (clientData.status === 'pending') {
           router.push(`/dashboard/${client}/quick-start`);
         }
 
-        // Fetch leads for the client based on client_id
         const { data: leadsData, error: leadsError } = await supabase
           .from('leads')
           .select('*')
@@ -83,9 +75,23 @@ export default function ClientDashboardPage() {
         } else {
           setLeads(leadsData || []);
 
-          // Calculate total clicks
-          const totalClicks = leadsData.reduce((sum, lead) => sum + (lead.clicks || 0), 0);
-          setTotalClicks(totalClicks);
+          // Fetch total page views for each lead
+          let totalViews = 0;
+
+          for (const lead of leadsData) {
+            const { count, error } = await supabase
+              .from('abm_page_visits')
+              .select('id', { count: 'exact' })
+              .eq('lead_id', lead.id);
+
+            if (error) {
+              console.error(`Error fetching visit count for lead ${lead.id}:`, error);
+            } else {
+              totalViews += count || 0;
+            }
+          }
+
+          setTotalPageViews(totalViews);
         }
       } catch (error) {
         console.error('Error during data fetching:', error);
@@ -95,7 +101,7 @@ export default function ClientDashboardPage() {
     }
 
     fetchData();
-  }, [client, router]); // Include client in the dependency array to avoid missing dependency warning
+  }, [client, router]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -117,11 +123,11 @@ export default function ClientDashboardPage() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Clicks</CardTitle>
+              <CardTitle className="text-sm font-medium">Total Page Views</CardTitle>
               <ArrowDown className="h-4 w-4 text-red-600" />  {/* Static change indicator */}
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalClicks}</div>
+              <div className="text-2xl font-bold">{totalPageViews}</div>
               <p className="text-xs text-red-600">-0% from last period (static for now)</p>  {/* Placeholder change */}
             </CardContent>
           </Card>
@@ -129,8 +135,7 @@ export default function ClientDashboardPage() {
         {leads.length === 0 ? (
           <p>No leads found for this client.</p>
         ) : (
-          // Pass subdomain as a prop to ClientLeadTable (ensure subdomain is a valid string or undefined)
-          <ClientLeadTable leads={leads} clientSubdomain={subdomain || undefined} />
+          <ClientLeadTable leads={leads} />
         )}
       </div>
     </ClientLayout>

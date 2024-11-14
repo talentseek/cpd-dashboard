@@ -17,7 +17,6 @@ interface Lead {
   linkedin?: string;
   website?: string;
   position?: string;
-  clicks?: number;
 }
 
 interface Client {
@@ -28,6 +27,7 @@ interface Client {
 export default function DashboardComponent() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
+  const [totalPageViews, setTotalPageViews] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,6 +44,7 @@ export default function DashboardComponent() {
           setError('Error fetching leads');
         } else {
           setLeads(leadsData || []);
+          await calculatePageViews(leadsData || []);
         }
 
         // Fetch clients data
@@ -63,6 +64,27 @@ export default function DashboardComponent() {
       } finally {
         setLoading(false);
       }
+    }
+
+    async function calculatePageViews(leads: Lead[]) {
+      let totalViews = 0;
+      for (const lead of leads) {
+        try {
+          const { data, error } = await supabase
+            .from('abm_page_visits')
+            .select('id', { count: 'exact' })
+            .eq('lead_id', lead.id);
+
+          if (error) {
+            console.error(`Error fetching visit count for lead ${lead.id}:`, error);
+          } else {
+            totalViews += data?.length || 0;
+          }
+        } catch (error) {
+          console.error(`Unexpected error fetching visit count for lead ${lead.id}:`, error);
+        }
+      }
+      setTotalPageViews(totalViews);
     }
 
     fetchData();
@@ -96,7 +118,7 @@ export default function DashboardComponent() {
         {[
           { title: "Total Clients", value: clients.length, change: 5 }, // Dynamically use fetched clients length
           { title: "Total Leads", value: leads.length, change: -3 },
-          { title: "Total Clicks", value: leads.reduce((sum, lead) => sum + (lead.clicks || 0), 0), change: 10 }
+          { title: "Total Page Views", value: totalPageViews, change: 10 }
         ].map((metric, index) => (
           <Card key={index}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
