@@ -131,18 +131,21 @@ export default function LeadOverviewTable({ leads: initialLeads }: LeadOverviewT
 };
 
   const copyMessageToClipboard = (lead: Lead) => {
-    const client = clients.find(client => client.id === lead.client_id);
-    const baseMessage = client?.initial_message_template || "Hello {first_name} at {company}, we have a great opportunity to discuss.";
-    const personalizedMessage = baseMessage
-      .replace('{first_name}', lead.first_name)
-      .replace('{company}', lead.company)
-      .concat(` You can learn more at: ${constructURLWithSubdomain(lead, '?linkedin=true')}`);
+  const client = clients.find(client => client.id === lead.client_id);
+  const baseMessage = client?.initial_message_template || "Hello {first_name} at {company}, we have a great opportunity to discuss.";
 
-    navigator.clipboard.writeText(personalizedMessage)
-      .catch(err => {
-        console.error('Error copying message:', err);
-      });
-  };
+  // Replace placeholders and preserve newlines
+  const personalizedMessage = baseMessage
+    .replace('{first_name}', lead.first_name)
+    .replace('{company}', lead.company)
+    .concat(` ${constructURLWithSubdomain(lead, '?linkedin=true')}`)
+    .replace(/\\n/g, '\n'); // Replace escaped newline characters with actual newlines
+
+  navigator.clipboard.writeText(personalizedMessage)
+    .catch(err => {
+      console.error('Error copying message:', err);
+    });
+};
 
   const markMessageAsSent = async (lead: Lead) => {
     setLeads(prevLeads =>
