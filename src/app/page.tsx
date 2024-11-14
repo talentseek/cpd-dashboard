@@ -4,35 +4,30 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function HomePage() {
-  const [subdomain, setSubdomain] = useState<string | null>(null);
+  const [fullDomain, setFullDomain] = useState('');
 
   useEffect(() => {
-    // Parse subdomain from window location
     if (typeof window !== 'undefined') {
+      // Get the full hostname, including subdomains if present
       const hostname = window.location.hostname;
-      const parts = hostname.split('.');
-      if (parts.length > 2) {
-        setSubdomain(parts[0]);
-      }
+      setFullDomain(hostname);
     }
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <main className="text-center">
-        <h1 className="text-4xl font-bold mb-4">
-          {subdomain ? `Welcome! Your subdomain '${subdomain}' has been successfully set up!` : 'Welcome!'}
-        </h1>
-        <p className="text-lg mb-6">
-          Your subdomain is ready. To continue, please log in.
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">Welcome!</h1>
+      {fullDomain && (
+        <p className="text-lg">
+          You have successfully set up your subdomain: <strong>{fullDomain}</strong>
         </p>
-        <Link href="/login">
-          {/* No <a> needed inside Link */}
-          <span className="px-4 py-2 bg-blue-600 text-white rounded cursor-pointer hover:bg-blue-700">
-            Go to Login
-          </span>
-        </Link>
-      </main>
+      )}
+      <Link
+        href="/login"
+        className="mt-4 inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+      >
+        Go to Login
+      </Link>
     </div>
   );
 }
