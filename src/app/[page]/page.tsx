@@ -1,8 +1,18 @@
+// src/app/[page]/page.tsx
+
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
-import TrackVisit from '@/components/TrackVisit'; // Importing the client component
+
+// Utility to ensure full URL for OG Image
+function constructFullUrl(relativePath: string): string {
+  if (relativePath.startsWith('http')) {
+    return relativePath; // Already a full URL
+  }
+  const domain = process.env.NEXT_PUBLIC_DOMAIN || 'app.costperdemo.com'; // Fallback to 'example.com'
+  return `https://${domain}${relativePath.startsWith('/') ? '' : '/'}${relativePath}`;
+}
 
 // Fetch Lead Data from Supabase
 async function fetchLeadData(firstName: string, surnameInitial: string, companyName: string) {
@@ -58,10 +68,8 @@ export const revalidate = 604800; // 7 days in seconds
 export const generateMetadata = async ({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> => {
   const { page } = await params;
 
-  // Parsing the new URL structure using utility function
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
 
-  // Fetch lead data
   const leadData = await fetchLeadData(firstName, surnameInitial, companyName);
 
   if (!leadData) {
@@ -84,7 +92,6 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
     };
   }
 
-  // Fetch client data using client_id from leadData
   const clientData = await fetchClientData(leadData.client_id);
 
   if (!clientData) {
@@ -107,20 +114,20 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
     };
   }
 
-  // Replacements for dynamic values in metadata
   const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
   };
 
-  // Dynamic Open Graph and Twitter meta information
   const ogTitle = clientData.hero?.title
     ?.replace(/{first_name}/g, replacements.first_name)
     .replace(/{company}/g, replacements.company)
     .trim() || 'Custom Page Title';
 
   const ogDescription = clientData.description?.replace(/{company}/g, replacements.company) || 'Default page description for the lead.';
-  const ogImage = clientData.hero?.heroImage || '/default-og-image.jpg';
+  
+  // Use the utility function to ensure a full URL for the OG image
+  const ogImage = constructFullUrl(clientData.hero?.heroImage || '/default-og-image.jpg');
 
   const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}/${page}`;
 
@@ -147,10 +154,8 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
 export default async function Page({ params }: { params: Promise<{ page: string }> }) {
   const { page } = await params;
 
-  // Parsing the new URL structure using utility function
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
 
-  // Fetch lead data
   const leadData = await fetchLeadData(firstName, surnameInitial, companyName);
 
   if (!leadData) {
@@ -158,7 +163,6 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     return <div>Unable to load data. Please try again later.</div>;
   }
 
-  // Fetch client data using client_id from leadData
   const clientData = await fetchClientData(leadData.client_id);
 
   if (!clientData) {
@@ -173,10 +177,6 @@ export default async function Page({ params }: { params: Promise<{ page: string 
 
   return (
     <>
-      {/* Client-side visit tracking */}
-      <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
-
-      {/* Dynamic content */}
       <AbmLandingPage clientData={clientData} replacements={replacements} />
     </>
   );

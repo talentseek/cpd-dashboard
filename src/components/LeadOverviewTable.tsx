@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { constructLandingPageURL } from '@/utils/urlHelpers';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MoreHorizontal, Linkedin } from 'lucide-react';
+import { Search, MoreHorizontal, Linkedin, Clipboard, CheckCircle } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,32 +27,63 @@ interface Lead {
   linkedin?: string;
   website?: string;
   position?: string;
+  message_sent?: boolean; // New field for message status
 }
 
 interface Client {
   id: number;
   client_name: string;
+  subdomain?: string;
+  status?: string;
+  initial_message_template?: string; // New field for the customizable message template
 }
 
 interface LeadOverviewTableProps {
   leads: Lead[];
 }
 
-export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
+export default function LeadOverviewTable({ leads: initialLeads }: LeadOverviewTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [clientFilter, setClientFilter] = useState('All Clients');
   const [clients, setClients] = useState<Client[]>([]);
   const [viewsCount, setViewsCount] = useState<{ [key: string]: number }>({});
+  const [leads, setLeads] = useState<Lead[]>(initialLeads);
 
   useEffect(() => {
     async function fetchClients() {
-      const { data, error } = await supabase.from('clients').select('id, client_name');
-      if (error) {
-        console.error('Error fetching clients:', error);
-      } else {
-        setClients(data || []);
+      try {
+        const { data: clientData, error: clientError } = await supabase
+          .from('clients')
+          .select('id, client_name, subdomain, status');
+
+        if (clientError) {
+          console.error('Error fetching clients:', clientError.message || clientError);
+          return;
+        }
+
+        const { data: contentData, error: contentError } = await supabase
+          .from('client_content')
+          .select('id, client_id, initial_message_template');
+
+        if (contentError) {
+          console.error('Error fetching client content:', contentError.message || contentError);
+          return;
+        }
+
+        const mergedData = clientData.map(client => {
+          const content = contentData.find(content => content.client_id === client.id);
+          return {
+            ...client,
+            initial_message_template: content?.initial_message_template || ''
+          };
+        });
+
+        setClients(mergedData);
+      } catch (error) {
+        console.error('Unexpected error fetching data:', error);
       }
     }
+
     fetchClients();
   }, []);
 
@@ -82,12 +113,67 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
   }, [leads]);
 
   const uniqueClients = [{ id: -1, client_name: 'All Clients' }, ...clients];
+
   const filteredLeads = leads.filter(lead =>
     (lead.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
     (clientFilter === 'All Clients' || (lead.client_id && lead.client_id.toString() === clientFilter))
   );
+
+  const constructURLWithSubdomain = (lead: Lead, queryParam = '') => {
+  const client = clients.find(client => client.id === lead.client_id);
+  const url = constructLandingPageURL(lead).replace(/^\/+/, ''); // Changed from `let` to `const`
+  if (client && client.subdomain && client.status === 'verified') {
+    return `https://${client.subdomain}/${url}${queryParam}`;
+  }
+  return `${url}${queryParam}`;
+};
+
+  const copyMessageToClipboard = (lead: Lead) => {
+    const client = clients.find(client => client.id === lead.client_id);
+    const baseMessage = client?.initial_message_template || "Hello {first_name} at {company}, we have a great opportunity to discuss.";
+    const personalizedMessage = baseMessage
+      .replace('{first_name}', lead.first_name)
+      .replace('{company}', lead.company)
+      .concat(` You can learn more at: ${constructURLWithSubdomain(lead, '?linkedin=true')}`);
+
+    navigator.clipboard.writeText(personalizedMessage)
+      .catch(err => {
+        console.error('Error copying message:', err);
+      });
+  };
+
+  const markMessageAsSent = async (lead: Lead) => {
+    setLeads(prevLeads =>
+      prevLeads.map(prevLead =>
+        prevLead.id === lead.id ? { ...prevLead, message_sent: true } : prevLead
+      )
+    );
+
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .update({ message_sent: true })
+        .eq('id', lead.id);
+
+      if (error) {
+        console.error('Error updating message status:', error);
+        setLeads(prevLeads =>
+          prevLeads.map(prevLead =>
+            prevLead.id === lead.id ? { ...prevLead, message_sent: false } : prevLead
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Unexpected error updating message status:', error);
+      setLeads(prevLeads =>
+        prevLeads.map(prevLead =>
+          prevLead.id === lead.id ? { ...prevLead, message_sent: false } : prevLead
+        )
+      );
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -125,6 +211,7 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
               <TableHead>Company</TableHead>
               <TableHead>Client</TableHead>
               <TableHead>Views</TableHead>
+              <TableHead>Message Sent</TableHead>
               <TableHead>Landing Page</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
@@ -157,8 +244,15 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
                 </TableCell>
                 <TableCell>{viewsCount[lead.id] || 0}</TableCell>
                 <TableCell>
+                  {lead.message_sent ? (
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                  ) : (
+                    'Not Sent'
+                  )}
+                </TableCell>
+                <TableCell>
                   <Link
-                    href={constructLandingPageURL(lead)}
+                    href={constructURLWithSubdomain(lead)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
@@ -176,8 +270,15 @@ export default function LeadOverviewTable({ leads }: LeadOverviewTableProps) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit Lead</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => copyMessageToClipboard(lead)}>
+                        <Clipboard className="mr-2 h-4 w-4" />
+                        Copy Message
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => markMessageAsSent(lead)}>
+                        <CheckCircle className="mr-2 h-4 w-4" />
+                        Message Sent
+                      </DropdownMenuItem>
                       <DropdownMenuItem className="text-red-600">Delete Lead</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
