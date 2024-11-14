@@ -4,13 +4,14 @@ import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
+import TrackVisit from '@/components/TrackVisit'; // Importing TrackVisit component
 
 // Utility to ensure full URL for OG Image
 function constructFullUrl(relativePath: string): string {
   if (relativePath.startsWith('http')) {
     return relativePath; // Already a full URL
   }
-  const domain = process.env.NEXT_PUBLIC_DOMAIN || 'app.costperdemo.com'; // Fallback to 'example.com'
+  const domain = process.env.NEXT_PUBLIC_DOMAIN || 'app.costperdemo.com';
   return `https://${domain}${relativePath.startsWith('/') ? '' : '/'}${relativePath}`;
 }
 
@@ -29,20 +30,12 @@ async function fetchLeadData(firstName: string, surnameInitial: string, companyN
     return null;
   }
 
-  console.log('Fetched leads:', leads);
-
   const matchingLead = leads.find((lead) => {
     const dbCompanyName = normalizeString(lead.company);
     return dbCompanyName === normalizeString(companyName);
   });
 
-  if (!matchingLead) {
-    console.error('No lead found matching company name');
-    return null;
-  }
-
-  console.log('Matching lead:', matchingLead);
-  return matchingLead;
+  return matchingLead || null;
 }
 
 // Fetch Client Data from Supabase
@@ -55,128 +48,78 @@ async function fetchClientData(clientId: number) {
 
   if (clientDataError) {
     console.error('Error fetching client content data:', clientDataError);
-    return null;
   }
 
-  return clientData;
+  return clientData || null;
 }
 
+
 // Static Revalidation Time (7 days)
-export const revalidate = 604800; // 7 days in seconds
+export const revalidate = 604800;
 
 // Dynamic Metadata generation
 export const generateMetadata = async ({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> => {
   const { page } = await params;
-
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
-
   const leadData = await fetchLeadData(firstName, surnameInitial, companyName);
 
   if (!leadData) {
-    console.error('Lead data could not be fetched for metadata');
     return {
       title: 'Error loading data',
       description: 'Unable to fetch lead data for the requested page.',
-      openGraph: {
-        title: 'Error',
-        description: 'There was an error fetching data for this page.',
-        images: ['/default-og-image.jpg'],
-        type: 'website',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: 'Error',
-        description: 'There was an error fetching data for this page.',
-        images: ['/default-og-image.jpg'],
-      },
+      openGraph: { title: 'Error', description: 'There was an error fetching data.', images: ['/default-og-image.jpg'], type: 'website' },
+      twitter: { card: 'summary_large_image', title: 'Error', description: 'There was an error fetching data.', images: ['/default-og-image.jpg'] },
     };
   }
 
   const clientData = await fetchClientData(leadData.client_id);
 
   if (!clientData) {
-    console.error('Client data could not be fetched for metadata');
     return {
       title: 'Error loading data',
       description: 'Unable to fetch client data for the requested page.',
-      openGraph: {
-        title: 'Error',
-        description: 'There was an error fetching data for this page.',
-        images: ['/default-og-image.jpg'],
-        type: 'website',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: 'Error',
-        description: 'There was an error fetching data for this page.',
-        images: ['/default-og-image.jpg'],
-      },
+      openGraph: { title: 'Error', description: 'There was an error fetching data.', images: ['/default-og-image.jpg'], type: 'website' },
+      twitter: { card: 'summary_large_image', title: 'Error', description: 'There was an error fetching data.', images: ['/default-og-image.jpg'] },
     };
   }
 
-  const replacements = {
-    first_name: leadData.first_name || 'Guest',
-    company: leadData.company || 'Your Company',
-  };
-
-  const ogTitle = clientData.hero?.title
-    ?.replace(/{first_name}/g, replacements.first_name)
-    .replace(/{company}/g, replacements.company)
-    .trim() || 'Custom Page Title';
-
+  const replacements = { first_name: leadData.first_name || 'Guest', company: leadData.company || 'Your Company' };
+  const ogTitle = clientData.hero?.title?.replace(/{first_name}/g, replacements.first_name).replace(/{company}/g, replacements.company).trim() || 'Custom Page Title';
   const ogDescription = clientData.description?.replace(/{company}/g, replacements.company) || 'Default page description for the lead.';
-  
-  // Use the utility function to ensure a full URL for the OG image
   const ogImage = constructFullUrl(clientData.hero?.heroImage || '/default-og-image.jpg');
-
   const currentUrl = `https://${process.env.NEXT_PUBLIC_DOMAIN}/${page}`;
 
   return {
     title: ogTitle,
     description: ogDescription,
-    openGraph: {
-      title: ogTitle,
-      description: ogDescription,
-      images: [ogImage],
-      type: 'website',
-      url: currentUrl,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: ogTitle,
-      description: ogDescription,
-      images: [ogImage],
-    },
+    openGraph: { title: ogTitle, description: ogDescription, images: [ogImage], type: 'website', url: currentUrl },
+    twitter: { card: 'summary_large_image', title: ogTitle, description: ogDescription, images: [ogImage] },
   };
 };
 
 // Page Component to display content
 export default async function Page({ params }: { params: Promise<{ page: string }> }) {
   const { page } = await params;
-
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
-
   const leadData = await fetchLeadData(firstName, surnameInitial, companyName);
 
   if (!leadData) {
-    console.error('Lead data could not be fetched');
     return <div>Unable to load data. Please try again later.</div>;
   }
 
   const clientData = await fetchClientData(leadData.client_id);
 
   if (!clientData) {
-    console.error('Client data could not be fetched');
     return <div>Unable to load data. Please try again later.</div>;
   }
 
-  const replacements = {
-    first_name: leadData.first_name || 'Guest',
-    company: leadData.company || 'Your Company',
-  };
+  const replacements = { first_name: leadData.first_name || 'Guest', company: leadData.company || 'Your Company' };
 
   return (
     <>
+      {/* TrackVisit component for visit tracking */}
+      <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+
       <AbmLandingPage clientData={clientData} replacements={replacements} />
     </>
   );
