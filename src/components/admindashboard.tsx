@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/utils'; // Ensure the path is correct and configured properly
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { UserCheck, FileUser, MessageSquare, Eye } from 'lucide-react'; // Updated icons
 import LeadOverviewTable from '@/components/LeadOverviewTable'; // Ensure this import is correct
 
 interface Lead {
@@ -17,6 +17,7 @@ interface Lead {
   linkedin?: string;
   website?: string;
   position?: string;
+  message_sent?: boolean;
 }
 
 interface Client {
@@ -28,13 +29,13 @@ export default function DashboardComponent() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [totalPageViews, setTotalPageViews] = useState(0);
+  const [totalLeadsContacted, setTotalLeadsContacted] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Fetch leads data
         const { data: leadsData, error: leadsError } = await supabase
           .from('leads')
           .select('*');
@@ -44,10 +45,10 @@ export default function DashboardComponent() {
           setError('Error fetching leads');
         } else {
           setLeads(leadsData || []);
+          setTotalLeadsContacted(leadsData?.filter(lead => lead.message_sent).length || 0);
           await calculatePageViews(leadsData || []);
         }
 
-        // Fetch clients data
         const { data: clientsData, error: clientsError } = await supabase
           .from('clients')
           .select('*');
@@ -90,6 +91,9 @@ export default function DashboardComponent() {
     fetchData();
   }, []);
 
+  const calculatePercentage = (partial: number, total: number) =>
+    total > 0 ? Math.round((partial / total) * 100) : 0;
+
   if (loading) {
     return <div>Loading Dashboard...</div>;
   }
@@ -116,24 +120,33 @@ export default function DashboardComponent() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {[
-          { title: "Total Clients", value: clients.length, change: 5 }, // Dynamically use fetched clients length
-          { title: "Total Leads", value: leads.length, change: -3 },
-          { title: "Total Page Views", value: totalPageViews, change: 10 }
+          { title: "Total Clients", value: clients.length, icon: <UserCheck className="h-6 w-6 text-blue-500" /> },
+          { title: "Total Leads", value: leads.length, icon: <FileUser className="h-6 w-6 text-green-500" /> },
+          {
+            title: "Total Leads Contacted",
+            value: totalLeadsContacted,
+            percentage: calculatePercentage(totalLeadsContacted, leads.length),
+            icon: <MessageSquare className="h-6 w-6 text-purple-500" />
+          },
+          {
+            title: "Total Page Views",
+            value: totalPageViews,
+            percentage: calculatePercentage(totalPageViews, totalLeadsContacted),
+            icon: <Eye className="h-6 w-6 text-yellow-500" />
+          }
         ].map((metric, index) => (
           <Card key={index}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{metric.title}</CardTitle>
-              {metric.change > 0 ? (
-                <ArrowUp className="h-4 w-4 text-green-600" />
-              ) : (
-                <ArrowDown className="h-4 w-4 text-red-600" />
-              )}
+              {metric.icon}
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{metric.value}</div>
-              <p className={`text-xs ${metric.change > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {metric.change > 0 ? '+' : ''}{metric.change}% from last period
-              </p>
+              {metric.percentage !== undefined && (
+                <p className="text-xs text-green-600">
+                  {metric.percentage}% of {metric.title.includes("Page Views") ? "Total Leads Contacted" : "Total Leads"}
+                </p>
+              )}
             </CardContent>
           </Card>
         ))}
