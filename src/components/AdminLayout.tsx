@@ -6,8 +6,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, Users, LogOut, Menu, X } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  LayoutDashboard, 
+  Users, 
+  LogOut, 
+  Menu, 
+  X, 
+  FileText, 
+  ClipboardList 
+} from 'lucide-react'; // Added ClipboardList
 import { supabase } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
@@ -56,6 +71,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             <X className="h-6 w-6" />
           </Button>
         </div>
+
         <nav className="p-4">
           <ul className="space-y-2">
             <li>
@@ -68,6 +84,18 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               <Link href="/admin/clients" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <Users className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3">Clients</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/leads" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FileText className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <span className="ml-3">Leads</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin/tasks" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <ClipboardList className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <span className="ml-3">Tasks</span>
               </Link>
             </li>
           </ul>
