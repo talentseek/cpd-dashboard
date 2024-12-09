@@ -14,7 +14,7 @@ export function FeaturesSection({
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
           {items.map((feature, index) => (
             <div key={index} className="flex items-center space-x-4">
-              <CheckCircle className="w-6 h-6 text-green-500" />
+              <CheckCircle className="w-6 h-6 min-w-[1.5rem] min-h-[1.5rem] text-green-500 shrink-0" />
               <div>
                 <h3 className="text-xl font-bold">{feature.heading}</h3>
                 <p className="text-zinc-500 dark:text-zinc-400">{feature.subheading}</p>
