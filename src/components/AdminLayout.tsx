@@ -93,9 +93,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               </Link>
             </li>
             <li>
-              <Link href="/admin/tasks" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link href="/admin/campaigns" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <ClipboardList className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                <span className="ml-3">Tasks</span>
+                <span className="ml-3">Campaigns</span>
               </Link>
             </li>
           </ul>

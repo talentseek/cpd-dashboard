@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/utils'; // Ensure the path is correct and configured properly
+import { useState, useEffect } from "react";
+import { supabase } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { UserCheck, FileUser, MessageSquare, Eye } from 'lucide-react'; // Updated icons
-import LeadOverviewTable from '@/components/LeadOverviewTable'; // Ensure this import is correct
+import { UserCheck, FileUser, MessageSquare, Eye } from 'lucide-react';
+import LeadOverviewTable from '@/components/LeadOverviewTable';
 
 interface Lead {
   id: string;
@@ -32,6 +32,7 @@ export default function DashboardComponent() {
   const [totalLeadsContacted, setTotalLeadsContacted] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [filter, setFilter] = useState<string>('all'); // Filter state: 'all', 'sent', 'not_sent'
 
   useEffect(() => {
     async function fetchData() {
@@ -44,6 +45,7 @@ export default function DashboardComponent() {
           console.error('Error fetching leads:', leadsError);
           setError('Error fetching leads');
         } else {
+          console.log("Fetched leads:", leadsData); // Debug log
           setLeads(leadsData || []);
           setTotalLeadsContacted(leadsData?.filter(lead => lead.message_sent).length || 0);
           await calculatePageViews(leadsData || []);
@@ -91,6 +93,20 @@ export default function DashboardComponent() {
     fetchData();
   }, []);
 
+  const filteredLeads = (() => {
+    console.log("Filter value:", filter);
+    console.log("Leads before filtering:", leads); // Debug log
+    if (filter === 'sent') {
+      return leads.filter(lead => lead.message_sent);
+    }
+    if (filter === 'not_sent') {
+      return leads.filter(lead => !lead.message_sent);
+    }
+    return leads;
+  })();
+
+  console.log("Filtered leads:", filteredLeads); // Debug log
+
   const calculatePercentage = (partial: number, total: number) =>
     total > 0 ? Math.round((partial / total) * 100) : 0;
 
@@ -106,14 +122,14 @@ export default function DashboardComponent() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <Select defaultValue="last7days">
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select date range" />
+        <Select value={filter} onValueChange={(value) => setFilter(value)}>
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Filter Leads" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="last7days">Last 7 Days</SelectItem>
-            <SelectItem value="last30days">Last 30 Days</SelectItem>
-            <SelectItem value="custom">Custom Date Range</SelectItem>
+            <SelectItem value="all">All Leads</SelectItem>
+            <SelectItem value="sent">Message Sent</SelectItem>
+            <SelectItem value="not_sent">Message Not Sent</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -152,7 +168,7 @@ export default function DashboardComponent() {
         ))}
       </div>
 
-      <LeadOverviewTable leads={leads} />
+      <LeadOverviewTable leads={filteredLeads} />
     </div>
   );
 }
