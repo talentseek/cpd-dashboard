@@ -27,10 +27,11 @@ const ManageCookiesModal: React.FC<ManageCookiesModalProps> = ({
 
         if (response.ok) {
           const { cookies } = await response.json();
-          setLiA(cookies.li_a || '');
-          setLiAt(cookies.li_at || '');
+          setLiA(cookies?.li_a || ''); // Handle missing li_a gracefully
+          setLiAt(cookies?.li_at || ''); // Handle missing li_at gracefully
         } else {
-          setStatusMessage('Failed to fetch cookies');
+          const { error } = await response.json();
+          setStatusMessage(error || 'Failed to fetch cookies');
         }
       } catch (error: unknown) {
         console.error('Error fetching cookies:', error);
@@ -104,7 +105,7 @@ const ManageCookiesModal: React.FC<ManageCookiesModalProps> = ({
         <h2 className="text-lg font-semibold mb-4">
           Manage Cookies for {campaign.name}
         </h2>
-        {statusMessage && <p className="mb-2 text-sm">{statusMessage}</p>}
+        {statusMessage && <p className="mb-2 text-sm text-red-500">{statusMessage}</p>}
         <form
           onSubmit={(e) => {
             e.preventDefault();

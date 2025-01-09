@@ -7,16 +7,22 @@ interface ScrapeResultsTableProps {
     url: string;
     leadsFound: number;
     duplicatesFound: number;
+    premiumProfiles: number;
+    openProfiles: number;
     status: "In Progress" | "Completed" | "Failed";
   }[];
   totalLeads: number;
   totalDuplicates: number;
+  totalPremiumProfiles: number;
+  totalOpenProfiles: number;
 }
 
 const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
   results,
   totalLeads,
   totalDuplicates,
+  totalPremiumProfiles,
+  totalOpenProfiles,
 }) => {
   return (
     <div className="mt-6 bg-white shadow-md rounded-md p-4">
@@ -26,6 +32,8 @@ const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
       <div className="mb-4">
         <p>Total Leads: {totalLeads}</p>
         <p>Total Duplicates: {totalDuplicates}</p>
+        <p>Total Premium Profiles: {totalPremiumProfiles}</p>
+        <p>Total Open Profiles: {totalOpenProfiles}</p>
       </div>
 
       {/* Table */}
@@ -36,6 +44,8 @@ const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
               <th className="px-4 py-2 border border-gray-300 text-left">Search URL</th>
               <th className="px-4 py-2 border border-gray-300 text-left">Leads Found</th>
               <th className="px-4 py-2 border border-gray-300 text-left">Duplicates</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Premium Profiles</th>
+              <th className="px-4 py-2 border border-gray-300 text-left">Open Profiles</th>
               <th className="px-4 py-2 border border-gray-300 text-left">Status</th>
             </tr>
           </thead>
@@ -49,6 +59,8 @@ const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
                 </td>
                 <td className="px-4 py-2 border border-gray-300">{result.leadsFound}</td>
                 <td className="px-4 py-2 border border-gray-300">{result.duplicatesFound}</td>
+                <td className="px-4 py-2 border border-gray-300">{result.premiumProfiles}</td>
+                <td className="px-4 py-2 border border-gray-300">{result.openProfiles}</td>
                 <td className="px-4 py-2 border border-gray-300">
                   {result.status === "In Progress" ? (
                     <span className="text-yellow-500">In Progress...</span>

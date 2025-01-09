@@ -1,87 +1,64 @@
-import { NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
-import { supabase } from '@/lib/utils';
+import { NextResponse } from "next/server";
+import { supabase } from "@/lib/utils";
+import { testCookies } from "@/utils/scrapers/testCookies";
 
-export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
+export async function POST(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id: campaignId } = await context.params;
+
   try {
-    // Await the params
-    const { id: campaignId } = await context.params;
-
-    if (!campaignId) {
-      return NextResponse.json({ error: 'Campaign ID is required' }, { status: 400 });
-    }
-
-    // Fetch cookies from the database
     const { data, error } = await supabase
-      .from('campaigns')
-      .select('cookies')
-      .eq('id', campaignId)
+      .from("campaigns")
+      .select("cookies, cookies_status")
+      .eq("id", campaignId)
       .single();
 
-    if (error || !data || !data.cookies) {
-      return NextResponse.json(
-        { error: 'Campaign not found or cookies missing' },
-        { status: 404 }
-      );
+    if (error || !data?.cookies) {
+      console.error("Error fetching campaign cookies:", error || "No cookies found");
+      return NextResponse.json({ error: "Failed to fetch cookies" }, { status: 404 });
     }
 
-    const cookies = data.cookies;
-    if (!cookies.li_a || !cookies.li_at) {
-      return NextResponse.json({ error: 'Invalid cookies in database' }, { status: 400 });
-    }
-
-    // Puppeteer validation
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
+    const { li_a, li_at } = data.cookies;
 
     try {
-      // Set cookies
-      await page.setCookie(
-        { name: 'li_a', value: cookies.li_a, domain: '.linkedin.com' },
-        { name: 'li_at', value: cookies.li_at, domain: '.linkedin.com' }
-      );
+      const message = await testCookies(li_a, li_at);
 
-    // Navigate to the target URL
-    const response = await page.goto('https://www.linkedin.com/sales/home', {
-    waitUntil: 'networkidle2',
-    });
+      await supabase
+        .from("campaigns")
+        .update({ cookies_status: "valid" })
+        .eq("id", campaignId);
 
-    if (!response) {
+      return NextResponse.json({ message });
+    } catch (validationError) {
+    const errorMessage = 
+        validationError && 
+        typeof validationError === 'object' && 
+        'message' in validationError && 
+        typeof validationError.message === 'string'
+        ? validationError.message
+        : 'Invalid cookies detected.';
+
+    console.warn("Cookie validation failed:", errorMessage);
+
+    await supabase
+        .from("campaigns")
+        .update({ cookies_status: "invalid" })
+        .eq("id", campaignId);
+
     return NextResponse.json(
-        { error: 'Failed to navigate to LinkedIn Sales Navigator' },
-        { status: 500 }
+        {
+        error: errorMessage,
+        },
+        { status: 400 }
     );
     }
+  } catch (error) {
+    console.error("Unexpected error during cookie validation:", error);
 
-    const finalUrl = response.url();
-    console.log('Final URL after navigation:', finalUrl);
-
-      if (finalUrl === 'https://www.linkedin.com/sales/home') {
-        return NextResponse.json({ message: 'Cookies are valid!' }, { status: 200 });
-      } else if (finalUrl === 'https://www.linkedin.com/sales/login') {
-        return NextResponse.json(
-          { error: 'Cookies are invalid. Redirected to login page.' },
-          { status: 400 }
-        );
-      } else {
-        return NextResponse.json(
-          { error: `Unexpected navigation behavior: ${finalUrl}` },
-          { status: 400 }
-        );
-      }
-    } catch (err) {
-      console.error('Puppeteer validation error:', err);
-      return NextResponse.json(
-        { error: 'Failed to validate cookies with Puppeteer' },
-        { status: 500 }
-      );
-    } finally {
-      await browser.close();
-    }
-  } catch (err) {
-    console.error('Unexpected server error:', err);
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: "Internal Server Error. Please try again later." },
       { status: 500 }
     );
   }

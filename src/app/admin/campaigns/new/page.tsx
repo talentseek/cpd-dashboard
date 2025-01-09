@@ -1,12 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/utils';
 import { AdminLayout } from '@/components/AdminLayout';
 
+interface Client {
+  id: number;
+  client_name: string;
+}
+
 export default function NewCampaignPage() {
+  const [clients, setClients] = useState<Client[]>([]);
   const [clientId, setClientId] = useState('');
   const [campaignName, setCampaignName] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Fetch clients on component mount
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const { data, error } = await supabase.from('clients').select('id, client_name');
+        if (error) {
+          console.error('Error fetching clients:', error.message || error);
+        } else {
+          setClients(data || []);
+        }
+      } catch (err) {
+        console.error('Unexpected error fetching clients:', err);
+      }
+    };
+
+    fetchClients();
+  }, []);
 
   const handleCreateCampaign = async () => {
     // Validate inputs
@@ -16,10 +41,12 @@ export default function NewCampaignPage() {
     }
 
     try {
+      setLoading(true);
+
       // Insert new campaign into the database
       const { error } = await supabase.from('campaigns').insert({
         name: campaignName,
-        client_id: clientId,
+        client_id: parseInt(clientId, 10),
         campaign_type: 'Sales Navigator Open Profiles',
         status: 'draft',
       });
@@ -36,6 +63,8 @@ export default function NewCampaignPage() {
     } catch (err) {
       console.error('Unexpected error creating campaign:', err);
       alert('An unexpected error occurred while creating the campaign.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,18 +73,26 @@ export default function NewCampaignPage() {
       <div className="p-6">
         <h1 className="text-3xl font-bold">Create New Campaign</h1>
         <div className="mt-6 space-y-4">
-          {/* Client ID Input */}
+          {/* Client Dropdown */}
           <div>
             <label htmlFor="client" className="block text-sm font-medium text-gray-700">
-              Client ID
+              Select Client
             </label>
-            <input
-              type="text"
+            <select
               id="client"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={clientId}
               onChange={(e) => setClientId(e.target.value)}
-            />
+            >
+              <option value="" disabled>
+                Select a client
+              </option>
+              {clients.map((client) => (
+                <option key={client.id} value={client.id}>
+                  {client.client_name} (ID: {client.id})
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Campaign Name Input */}
@@ -75,10 +112,13 @@ export default function NewCampaignPage() {
           {/* Create Campaign Button */}
           <button
             type="button"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white ${
+              loading ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700'
+            }`}
             onClick={handleCreateCampaign}
+            disabled={loading}
           >
-            Create Campaign
+            {loading ? 'Creating...' : 'Create Campaign'}
           </button>
         </div>
       </div>
