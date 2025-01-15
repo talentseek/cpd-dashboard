@@ -1,31 +1,31 @@
+// /src/app/api/tasks/route.ts
 import { NextResponse } from "next/server";
 import { redis } from "@/lib/redis";
+import { randomUUID } from "crypto";
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
+    const body = await request.json();
 
-    // Validate task structure
-    if (!body.type || typeof body.type !== "string") {
-      return NextResponse.json({ error: "Task type is required" }, { status: 400 });
+    // Basic validation
+    if (typeof body.type !== "string") {
+      return NextResponse.json({ error: "Missing or invalid 'type'" }, { status: 400 });
     }
 
-    // Add additional validation for specific task types
-    if (body.type === "cookie-validation") {
-      if (!body.li_a || !body.li_at) {
-        return NextResponse.json(
-          { error: "li_a and li_at are required for cookie-validation tasks" },
-          { status: 400 }
-        );
-      }
-    }
+    // Create a consistent shape for the task
+    const task = {
+      id: randomUUID(),                // unique ID
+      type: body.type,
+      campaignId: body.campaignId,     // or "payload", or anything else
+      addedAt: new Date().toISOString(),
+    };
 
-    // Add the task to the Redis queue as a JSON string
-    await redis.rpush("task-queue", JSON.stringify(body));
+    // Store the task as a string
+    await redis.rpush("task-queue", JSON.stringify(task));
 
     return NextResponse.json({ message: "Task added to queue!" });
   } catch (error) {
-    console.error("Error adding task to queue:", error);
-    return NextResponse.json({ error: "Failed to add task to queue" }, { status: 500 });
+    console.error("Error in POST /api/tasks:", error);
+    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }
