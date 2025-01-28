@@ -6,23 +6,19 @@ interface ScrapeResultsTableProps {
   results: {
     url: string;
     leadsFound: number;
-    duplicatesFound: number;
-    premiumProfiles: number;
     openProfiles: number;
-    status: "In Progress" | "Completed" | "Failed";
+    status: string; // Changed to string to match exact API response
   }[];
   totalLeads: number;
-  totalDuplicates: number;
-  totalPremiumProfiles: number;
   totalOpenProfiles: number;
+  totalOtherProfiles: number;
 }
 
 const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
   results,
   totalLeads,
-  totalDuplicates,
-  totalPremiumProfiles,
   totalOpenProfiles,
+  totalOtherProfiles,
 }) => {
   return (
     <div className="mt-6 bg-white shadow-md rounded-md p-4">
@@ -31,9 +27,8 @@ const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
       {/* Summary */}
       <div className="mb-4">
         <p>Total Leads: {totalLeads}</p>
-        <p>Total Duplicates: {totalDuplicates}</p>
-        <p>Total Premium Profiles: {totalPremiumProfiles}</p>
         <p>Total Open Profiles: {totalOpenProfiles}</p>
+        <p>Total Other Profiles: {totalOtherProfiles}</p>
       </div>
 
       {/* Table */}
@@ -43,8 +38,6 @@ const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
             <tr className="bg-gray-100">
               <th className="px-4 py-2 border border-gray-300 text-left">Search URL</th>
               <th className="px-4 py-2 border border-gray-300 text-left">Leads Found</th>
-              <th className="px-4 py-2 border border-gray-300 text-left">Duplicates</th>
-              <th className="px-4 py-2 border border-gray-300 text-left">Premium Profiles</th>
               <th className="px-4 py-2 border border-gray-300 text-left">Open Profiles</th>
               <th className="px-4 py-2 border border-gray-300 text-left">Status</th>
             </tr>
@@ -58,13 +51,11 @@ const ScrapeResultsTable: React.FC<ScrapeResultsTableProps> = ({
                   </a>
                 </td>
                 <td className="px-4 py-2 border border-gray-300">{result.leadsFound}</td>
-                <td className="px-4 py-2 border border-gray-300">{result.duplicatesFound}</td>
-                <td className="px-4 py-2 border border-gray-300">{result.premiumProfiles}</td>
                 <td className="px-4 py-2 border border-gray-300">{result.openProfiles}</td>
                 <td className="px-4 py-2 border border-gray-300">
-                  {result.status === "In Progress" ? (
+                  {result.status.toLowerCase() === "in progress" ? (
                     <span className="text-yellow-500">In Progress...</span>
-                  ) : result.status === "Completed" ? (
+                  ) : result.status.toLowerCase() === "completed" ? (
                     <span className="text-green-500">Completed</span>
                   ) : (
                     <span className="text-red-500">Failed</span>

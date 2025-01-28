@@ -1,27 +1,10 @@
-// /src/tasks/taskRegistry.ts
-import { handleCookieValidationTask } from "./handlers/cookieValidation";
-// import { handleAnotherTaskType } from "./handlers/anotherTask";
-// ... etc.
-
-export interface TaskData {
-    campaignId: string;
-    cookies?: {
-        li_a: string;
-        li_at: string;
-    };
-    searchUrl?: string;
-}
-
-export interface TaskResult {
-success: boolean;
-message?: string;
-data?: unknown;
-error?: string;
-}
-type TaskHandler = (taskData: TaskData) => Promise<TaskResult>;
+import { handleCookieValidationTask } from "@/tasks/handlers/cookieValidation";
+import { handleScrapeLinkedInProfilesTask } from "@/tasks/handlers/scrapeLinkedInProfiles";
+import { handleSendMessagesTask } from "@/tasks/handlers/sendMessages";
+import type { TaskHandler } from "@/types/tasks";
 
 export const taskHandlers: Record<string, TaskHandler> = {
   "cookie-validation": handleCookieValidationTask,
-  // "another-task": handleAnotherTaskType,
-  // etc...
+  "scrape-linkedin-profiles": handleScrapeLinkedInProfilesTask,
+  "send-messages": handleSendMessagesTask as TaskHandler,
 };

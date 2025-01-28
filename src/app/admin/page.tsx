@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/utils'; // Ensure correct path
 import AdminLayout from '@/components/AdminLayout';
-import DashboardComponent from '@/components/admindashboard'; // Import the DashboardComponent
+import DashboardComponent from '@/components/admindashboard';
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -13,11 +13,14 @@ export default function AdminPage() {
   useEffect(() => {
     async function fetchUserProfile() {
       try {
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
 
         if (userError || !user) {
           console.error('User not authenticated:', userError);
-          router.push('/login'); // Redirect to login if not authenticated
+          router.push('/login');
           return;
         }
 
@@ -29,12 +32,12 @@ export default function AdminPage() {
 
         if (profileError || !profile) {
           console.error('Error fetching user profile:', profileError);
-          router.push('/unauthorized'); // Redirect if profile fetch fails
+          router.push('/unauthorized');
           return;
         }
 
         if (profile.role !== 'admin') {
-          router.push('/unauthorized'); // Redirect to unauthorized page if not admin
+          router.push('/unauthorized');
           return;
         }
 
@@ -54,7 +57,7 @@ export default function AdminPage() {
 
   return (
     <AdminLayout>
-      <DashboardComponent /> {/* Render the DashboardComponent within the AdminLayout */}
+      <DashboardComponent />
     </AdminLayout>
   );
 }

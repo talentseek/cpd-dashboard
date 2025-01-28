@@ -1,4 +1,3 @@
-// src/components/AdminLayout.tsx
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
@@ -15,14 +14,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  LayoutDashboard, 
-  Users, 
-  LogOut, 
-  Menu, 
-  X, 
-  FileText, 
-  ClipboardList 
-} from 'lucide-react'; // Added ClipboardList
+  LayoutDashboard,
+  Users,
+  LogOut,
+  Menu,
+  X,
+  FileText,
+  ClipboardList
+} from 'lucide-react';
 import { supabase } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
@@ -37,7 +36,10 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   useEffect(() => {
     async function fetchUserProfile() {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
       if (error || !user) {
         router.push('/login');
         return;
@@ -61,13 +63,30 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       {/* Sidebar */}
-      <aside className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
+      <aside
+        className={`${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
+      >
         <div className="flex items-center justify-between h-16 px-4 border-b dark:border-gray-700">
           <Link href="/admin" className="flex items-center">
-            <Image src="/images/logo.png" alt="CostPerDemo Logo" width={40} height={40} className="dark:invert" />
-            <span className="ml-2 text-xl font-semibold dark:text-white">CostPerDemo</span>
+            <Image
+              src="/images/logo.png"
+              alt="CostPerDemo Logo"
+              width={40}
+              height={40}
+              className="dark:invert"
+            />
+            <span className="ml-2 text-xl font-semibold dark:text-white">
+              CostPerDemo
+            </span>
           </Link>
-          <Button variant="ghost" size="icon" className="lg:hidden" onClick={toggleSidebar}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            onClick={toggleSidebar}
+          >
             <X className="h-6 w-6" />
           </Button>
         </div>
@@ -75,25 +94,37 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <nav className="p-4">
           <ul className="space-y-2">
             <li>
-              <Link href="/admin" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link
+                href="/admin"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <LayoutDashboard className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3">Dashboard</span>
               </Link>
             </li>
             <li>
-              <Link href="/admin/clients" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link
+                href="/admin/clients"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <Users className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3">Clients</span>
               </Link>
             </li>
             <li>
-              <Link href="/admin/leads" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link
+                href="/admin/leads"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <FileText className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3">Leads</span>
               </Link>
             </li>
             <li>
-              <Link href="/admin/campaigns" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link
+                href="/admin/campaigns"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <ClipboardList className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3">Campaigns</span>
               </Link>
@@ -122,7 +153,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">Admin</p>
-                    <p className="text-xs leading-none text-muted-foreground">{userEmail}</p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {userEmail}
+                    </p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />

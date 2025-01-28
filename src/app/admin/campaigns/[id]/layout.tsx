@@ -44,13 +44,14 @@ export default function CampaignLayout({
   }, [params]);
 
   const tabs = id
-    ? [
-        { name: 'Progress', href: `/admin/campaigns/${id}/progress` },
-        { name: 'Leads', href: `/admin/campaigns/${id}/leads` },
-        { name: 'Sequence', href: `/admin/campaigns/${id}/sequence` },
-        { name: 'Setup', href: `/admin/campaigns/${id}/setup` },
-      ]
-    : [];
+  ? [
+      { name: 'Progress', href: `/admin/campaigns/${id}/progress` },
+      { name: 'Leads', href: `/admin/campaigns/${id}/leads` },
+      { name: 'Sequence', href: `/admin/campaigns/${id}/sequence` },
+      { name: 'Setup', href: `/admin/campaigns/${id}/setup` },
+      { name: 'Preview', href: `/admin/campaigns/${id}/preview` }, // New Tab
+    ]
+  : [];
 
   return (
     <AdminLayout>

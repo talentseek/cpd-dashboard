@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { MessagingSettingsState } from '@/types/messaging';
 
 interface MessagingSettingsProps {
+  // Updated to match the shape returned by your GET route
   initialSettings?: {
     maxMessagesPerDay: number;
-    timeDelay: number;
+    timeDelayBetweenMessages: number; // <--- consistent name
     startTime: string;
     endTime: string;
     timeZone: string;
@@ -14,22 +15,35 @@ interface MessagingSettingsProps {
   onSave: (settings: MessagingSettingsState) => void;
 }
 
-interface ExtendedMessagingSettingsState extends MessagingSettingsState {
-startTime: string;
-endTime: string;
-timeZone: string;
-}
-
+// You could keep an extended interface if you want, but here's a direct approach:
 export default function MessagingSettings({ initialSettings, onSave }: MessagingSettingsProps) {
-const [settings, setSettings] = useState<ExtendedMessagingSettingsState>({
+  const [settings, setSettings] = useState<MessagingSettingsState>({
     maxMessagesPerDay: initialSettings?.maxMessagesPerDay || 50,
-    timeDelayBetweenMessages: initialSettings?.timeDelay || 30,
+    timeDelayBetweenMessages: initialSettings?.timeDelayBetweenMessages || 30,
     startTime: initialSettings?.startTime || '09:00',
     endTime: initialSettings?.endTime || '17:00',
     timeZone: initialSettings?.timeZone || 'UTC',
   });
 
-const handleChange = (field: keyof ExtendedMessagingSettingsState, value: string | number) => {
+  // Calculate the maximum messages possible based on time delay and timeframe
+  const maxMessagesBasedOnTime = useMemo(() => {
+    const [startHours, startMinutes] = settings.startTime.split(':').map(Number);
+    const [endHours, endMinutes] = settings.endTime.split(':').map(Number);
+
+    const startInMinutes = startHours * 60 + startMinutes;
+    const endInMinutes = endHours * 60 + endMinutes;
+    const availableMinutes = endInMinutes - startInMinutes;
+
+    // If timeDelayBetweenMessages is 0 or negative, we avoid dividing by 0
+    if (settings.timeDelayBetweenMessages <= 0) {
+      return 0;
+    }
+
+    const messages = Math.floor(availableMinutes / settings.timeDelayBetweenMessages);
+    return Math.max(messages, 0); // Ensure non-negative
+  }, [settings.startTime, settings.endTime, settings.timeDelayBetweenMessages]);
+
+  const handleChange = (field: keyof MessagingSettingsState, value: string | number) => {
     setSettings((prev) => ({
       ...prev,
       [field]: value,
@@ -38,6 +52,8 @@ const handleChange = (field: keyof ExtendedMessagingSettingsState, value: string
 
   const handleSave = () => {
     onSave(settings);
+    // We'll show an alert here, but note your parent also shows an alert after saving successfully
+    // It's optional if you want to keep both or only keep the parent's alert
     alert('Settings saved successfully!');
   };
 
@@ -63,15 +79,19 @@ const handleChange = (field: keyof ExtendedMessagingSettingsState, value: string
       {/* Time Delay Between Messages */}
       <div>
         <label htmlFor="timeDelayBetweenMessages" className="block text-sm font-medium text-gray-700">
-        Time Delay Between Messages (minutes)
+          Time Delay Between Messages (minutes)
         </label>
         <input
-        type="number"
-        id="timeDelayBetweenMessages"
-        value={settings.timeDelayBetweenMessages}
-        onChange={(e) => handleChange('timeDelayBetweenMessages', parseInt(e.target.value, 10))}
+          type="number"
+          id="timeDelayBetweenMessages"
+          value={settings.timeDelayBetweenMessages}
+          onChange={(e) => handleChange('timeDelayBetweenMessages', parseInt(e.target.value, 10))}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
         />
+        <p className="text-sm text-gray-500 mt-2">
+          Based on the current time delay and timeframe, you can send up to{' '}
+          <strong>{maxMessagesBasedOnTime}</strong> messages.
+        </p>
       </div>
 
       {/* Start and End Time */}
@@ -117,7 +137,7 @@ const handleChange = (field: keyof ExtendedMessagingSettingsState, value: string
           <option value="America/New_York">America/New_York</option>
           <option value="Europe/London">Europe/London</option>
           <option value="Asia/Tokyo">Asia/Tokyo</option>
-          {/* Add more time zones as needed */}
+          {/* Add more as you need */}
         </select>
       </div>
 

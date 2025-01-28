@@ -8,7 +8,7 @@ interface SequenceSettingsProps {
 }
 
 interface Message {
-  id: number;
+  id?: number; // Optional for new messages
   subject: string;
   body: string;
   delay: number; // Delay in days
@@ -17,10 +17,10 @@ interface Message {
 export default function SequenceSettings({ initialMessages = [], onSave }: SequenceSettingsProps) {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
 
-  const handleFieldChange = (id: number, field: keyof Message, value: string | number) => {
+  const handleFieldChange = (index: number, field: keyof Message, value: string | number) => {
     setMessages((prev) =>
-      prev.map((msg) =>
-        msg.id === id
+      prev.map((msg, i) =>
+        i === index
           ? {
               ...msg,
               [field]: value,
@@ -34,7 +34,7 @@ export default function SequenceSettings({ initialMessages = [], onSave }: Seque
     setMessages((prev) => [
       ...prev,
       {
-        id: prev.length + 1,
+        id: undefined, // New messages don't have an ID
         subject: '',
         body: '',
         delay: 1,
@@ -42,8 +42,8 @@ export default function SequenceSettings({ initialMessages = [], onSave }: Seque
     ]);
   };
 
-  const handleRemoveMessage = (id: number) => {
-    setMessages((prev) => prev.filter((msg) => msg.id !== id));
+  const handleRemoveMessage = (index: number) => {
+    setMessages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSave = () => {
@@ -53,54 +53,45 @@ export default function SequenceSettings({ initialMessages = [], onSave }: Seque
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Sequence Settings</h2>
+      <h2 className="text-xl font-semibold">Craft Sequence</h2>
       <p className="text-gray-600">
-        Configure the sequence of messages for this campaign. Each message can include a subject, body, and delay.
+        <p>This campaign isn&apos;t ready to &quot;go live&quot; yet.</p>
       </p>
 
-      {messages.map((message) => (
-        <div key={message.id} className="border border-gray-300 p-4 rounded-md space-y-4">
+      {messages.map((message, index) => (
+        <div key={index} className="border border-gray-300 p-4 rounded-md space-y-4">
           <div>
-            <label htmlFor={`subject-${message.id}`} className="block text-sm font-medium text-gray-700">
-              Subject Line
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Subject Line</label>
             <input
               type="text"
-              id={`subject-${message.id}`}
               value={message.subject}
-              onChange={(e) => handleFieldChange(message.id, 'subject', e.target.value)}
+              onChange={(e) => handleFieldChange(index, 'subject', e.target.value)}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
           <div>
-            <label htmlFor={`body-${message.id}`} className="block text-sm font-medium text-gray-700">
-              Message Body
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Message Body</label>
             <textarea
-              id={`body-${message.id}`}
               value={message.body}
-              onChange={(e) => handleFieldChange(message.id, 'body', e.target.value)}
+              onChange={(e) => handleFieldChange(index, 'body', e.target.value)}
               rows={4}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
           <div>
-            <label htmlFor={`delay-${message.id}`} className="block text-sm font-medium text-gray-700">
-              Delay Before Sending (in days)
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Delay (days)</label>
             <input
               type="number"
-              id={`delay-${message.id}`}
               value={message.delay}
-              onChange={(e) => handleFieldChange(message.id, 'delay', parseInt(e.target.value, 10))}
+              onChange={(e) => handleFieldChange(index, 'delay', parseInt(e.target.value, 10))}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
           <button
-            onClick={() => handleRemoveMessage(message.id)}
+            onClick={() => handleRemoveMessage(index)}
             className="mt-2 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
           >
             Remove Message
@@ -108,23 +99,19 @@ export default function SequenceSettings({ initialMessages = [], onSave }: Seque
         </div>
       ))}
 
-      <div>
-        <button
-          onClick={handleAddMessage}
-          className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-        >
-          Add Message
-        </button>
-      </div>
+      <button
+        onClick={handleAddMessage}
+        className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+      >
+        Add Message
+      </button>
 
-      <div>
-        <button
-          onClick={handleSave}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-        >
-          Save Sequence
-        </button>
-      </div>
+      <button
+        onClick={handleSave}
+        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+      >
+        Save Sequence
+      </button>
     </div>
   );
 }
