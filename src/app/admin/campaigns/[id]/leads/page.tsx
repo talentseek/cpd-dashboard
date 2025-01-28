@@ -4,13 +4,33 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import ImportLeads from "@/components/campaigns/ImportLeads";
 import ScrapeResultsTable from "@/components/campaigns/ScrapeResultsTable";
-import { ScrapeResult, SearchUrlResult as LeadResult } from "@/types/campaign";
+
+// Define the types for the API response
+interface ApiResult {
+  url: string;
+  openProfiles: number;
+  otherProfiles: number;
+  status: string;
+}
+
+interface ApiResponse {
+  results: ApiResult[];
+  totals: {
+    openProfiles: number;
+    otherProfiles: number;
+  };
+}
+
+// Define the type for the results state
+interface Result extends ApiResult {
+  leadsFound: number;
+}
 
 const CampaignLeadsPage: React.FC = () => {
   const params = useParams();
   const campaignId = parseInt(params.id as string, 10); // Dynamically extract campaignId from the URL
 
-  const [results, setResults] = useState<ScrapeResult[]>([]);
+  const [results, setResults] = useState<Result[]>([]);
   const [totalLeads, setTotalLeads] = useState<number>(0);
   const [totalOpenProfiles, setTotalOpenProfiles] = useState<number>(0);
   const [totalOtherProfiles, setTotalOtherProfiles] = useState<number>(0);
@@ -23,37 +43,18 @@ const CampaignLeadsPage: React.FC = () => {
           throw new Error("Failed to fetch leads data");
         }
 
-        const data = await response.json();
+        const data: ApiResponse = await response.json(); // Use the ApiResponse type
 
-        // Map results and calculate totals
-        const mappedResults = data.results.map((result: LeadResult) => ({
-            url: result.url,
-            leadsFound: (result.open_profiles_found || 0) + (result.other_profiles_found || 0),
-            openProfiles: result.open_profiles_found || 0,
-            status: result.status,
+        // Map API response to include leadsFound for each result
+        const mappedResults: Result[] = data.results.map((result) => ({
+          ...result,
+          leadsFound: result.openProfiles + result.otherProfiles, // Calculate leadsFound
         }));
 
         setResults(mappedResults);
-
-        setTotalLeads(
-          data.results.reduce(
-            (sum: number, result: LeadResult) =>
-            sum + (result.open_profiles_found || 0) + (result.other_profiles_found || 0),
-            0
-          )
-        );
-        setTotalOpenProfiles(
-          data.results.reduce(
-            (sum: number, result: LeadResult) => sum + (result.open_profiles_found || 0),
-            0
-          )
-        );
-        setTotalOtherProfiles(
-          data.results.reduce(
-            (sum: number, result: LeadResult) => sum + (result.other_profiles_found || 0),
-            0
-          )
-        );
+        setTotalLeads(data.totals.openProfiles + data.totals.otherProfiles);
+        setTotalOpenProfiles(data.totals.openProfiles);
+        setTotalOtherProfiles(data.totals.otherProfiles);
       } catch (error) {
         console.error("Error fetching leads data:", error);
       }
@@ -65,10 +66,11 @@ const CampaignLeadsPage: React.FC = () => {
   }, [campaignId]);
 
   const handleAddSearch = async (url: string) => {
-    const newResult: ScrapeResult = {
+    const newResult: Result = {
       url,
-      leadsFound: 0,
       openProfiles: 0,
+      otherProfiles: 0,
+      leadsFound: 0, // Initialize with 0
       status: "In Progress",
     };
 
@@ -111,9 +113,9 @@ const CampaignLeadsPage: React.FC = () => {
       {/* Scrape Results Table */}
       <ScrapeResultsTable
         results={results}
-        totalLeads={totalLeads || 0} // Ensure no NaN
-        totalOpenProfiles={totalOpenProfiles || 0} // Ensure no NaN
-        totalOtherProfiles={totalOtherProfiles || 0} // Ensure no NaN
+        totalLeads={totalLeads || 0}
+        totalOpenProfiles={totalOpenProfiles || 0}
+        totalOtherProfiles={totalOtherProfiles || 0}
       />
     </div>
   );
