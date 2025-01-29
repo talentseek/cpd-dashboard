@@ -188,29 +188,37 @@ export default function LeadOverviewTable({
   // ==================
   // 6) HELPER: Copy message to clipboard using DB template
   // ==================
-  const copyMessageToClipboard = (lead: Lead) => {
-    // Find the matching client object
-    const client = clients.find((c) => c.id === lead.client_id);
+ const copyMessageToClipboard = (lead: Lead) => {
+  // Find the matching client object
+  const client = clients.find((c) => c.id === lead.client_id);
 
-    // Use the client’s message template from DB, fallback if none
-    const baseMessage =
-      client?.initial_message_template ||
-      "Hello {first_name} at {company}, we have a great opportunity to discuss.";
+  if (!client) {
+    console.error("Client not found for lead:", lead);
+    return;
+  }
 
-    const safeFirstName = lead.first_name ?? 'there';
-    const safeCompany = lead.company ?? 'your company';
+  // Use the message template stored in the client_content table from the DB
+  const baseMessage =
+    client.initial_message_template ||
+    "Hello {first_name} at {company}, we have a great opportunity to discuss.";
 
-    const personalizedMessage = baseMessage
-      .replace('{first_name}', safeFirstName)
-      .replace('{company}', safeCompany)
-      .concat(` ${constructURLWithSubdomain(lead, '?linkedin=true')}`)
-      // If the DB stores \n as literal backslash-n, replace them with real newlines
-      .replace(/\\n/g, '\n');
+  const safeFirstName = lead.first_name ?? "there";
+  const safeCompany = lead.company ?? "your company";
 
-    navigator.clipboard.writeText(personalizedMessage).catch((err) => {
-      console.error('Error copying message:', err);
-    });
-  };
+  // Replace placeholders with real values
+  const personalizedMessage = baseMessage
+    .replace("{first_name}", safeFirstName)
+    .replace("{company}", safeCompany)
+    .concat(` ${constructURLWithSubdomain(lead, "?linkedin=true")}`)
+    // If the DB stores \n as literal backslash-n, replace them with real newlines
+    .replace(/\\n/g, "\n");
+
+  // Copy to clipboard
+  navigator.clipboard
+    .writeText(personalizedMessage)
+    .then(() => console.log("Message copied:", personalizedMessage))
+    .catch((err) => console.error("Error copying message:", err));
+};
 
   // ==================
   // 7) ACTION: Mark lead as message sent

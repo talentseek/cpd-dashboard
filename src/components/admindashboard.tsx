@@ -11,6 +11,9 @@ import type { PostgrestError } from '@supabase/supabase-js'; // For error handli
 interface Client {
   id: number;
   client_name: string;
+  subdomain?: string;
+  status?: string;
+  initial_message_template?: string; // we'll merge from client_content
 }
 
 export default function DashboardComponent() {
@@ -23,7 +26,7 @@ export default function DashboardComponent() {
   const [error, setError] = useState<string | null>(null);
 
   // If you want to filter leads from the parent, define it here
-  const [filter, setFilter] = useState<string>('all'); // 'all', 'sent', or 'not_sent'
+  const [filter, setFilter] = useState<string>('all'); // 'all', 'sent', 'not_sent'
 
   useEffect(() => {
     async function fetchData() {
@@ -47,18 +50,46 @@ export default function DashboardComponent() {
           .select('id', { count: 'exact', head: true });
         if (pageViewsError) throw pageViewsError;
 
-        // 4) fetch clients
-        const { data: clientsData, error: clientsError, count: clientsCount } = await supabase
+        // 4) Fetch main clients table (id, client_name, subdomain, etc.)
+        const {
+          data: baseClients,
+          error: baseClientsError,
+          count: baseClientsCount
+        } = await supabase
           .from('clients')
-          .select('*', { count: 'exact' });
-        if (clientsError) throw clientsError;
+          .select('id, client_name, subdomain, status', { count: 'exact' });
 
-        // Update states
+        if (baseClientsError) throw baseClientsError;
+
+        // 5) Fetch client_content for each client to get initial_message_template
+        const {
+          data: contentData,
+          error: contentError
+        } = await supabase
+          .from('client_content')
+          .select('client_id, initial_message_template');
+
+        if (contentError) throw contentError;
+
+        // 6) Merge the template from client_content into each client
+        //    so that "client.initial_message_template" is set
+        const mergedClients = (baseClients || []).map((client) => {
+          const content = contentData?.find(
+            (item) => item.client_id === client.id
+          );
+          return {
+            ...client,
+            // If missing, fallback to empty string
+            initial_message_template: content?.initial_message_template || ''
+          };
+        });
+
+        // 7) Update states
         setTotalLeads(leadsCount || 0);
         setTotalLeadsContacted(contactedCount || 0);
         setTotalPageViews(pageViewsCount || 0);
-        setClients(clientsData || []);
-        setTotalClients(clientsCount || 0);
+        setClients(mergedClients);
+        setTotalClients(baseClientsCount || 0);
 
       } catch (fetchError) {
         console.error('Unexpected error fetching data:', fetchError);
@@ -105,7 +136,7 @@ export default function DashboardComponent() {
         </Select>
       </div>
 
-      {/* Cards */}
+      {/* Quick stats cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         {[
           {
