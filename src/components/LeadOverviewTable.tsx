@@ -197,27 +197,28 @@ export default function LeadOverviewTable({
     return;
   }
 
-  // Use the message template stored in the client_content table from the DB
-  const baseMessage =
-    client.initial_message_template ||
-    "Hello {first_name} at {company}, we have a great opportunity to discuss.";
+// Use the message template stored in the client_content table from the DB
+const baseMessage =
+  client.initial_message_template ||
+  "Hello {first_name} at {company}, we have a great opportunity to discuss: {landingpage}";
 
-  const safeFirstName = lead.first_name ?? "there";
-  const safeCompany = lead.company ?? "your company";
+// Fallbacks for missing values
+const safeFirstName = lead.first_name ?? "there";
+const safeCompany = lead.company ?? "your company";
+const customLandingPage = constructURLWithSubdomain(lead, "?linkedin=true");
 
-  // Replace placeholders with real values
-  const personalizedMessage = baseMessage
-    .replace("{first_name}", safeFirstName)
-    .replace("{company}", safeCompany)
-    .concat(` ${constructURLWithSubdomain(lead, "?linkedin=true")}`)
-    // If the DB stores \n as literal backslash-n, replace them with real newlines
-    .replace(/\\n/g, "\n");
+// Replace placeholders with real values
+const personalizedMessage = baseMessage
+  .replace("{first_name}", safeFirstName)
+  .replace("{company}", safeCompany)
+  .replace("{landingpage}", customLandingPage) // Replace landing page placeholder
+  .replace(/\\n/g, "\n"); // Ensure \n renders as newlines
 
-  // Copy to clipboard
-  navigator.clipboard
-    .writeText(personalizedMessage)
-    .then(() => console.log("Message copied:", personalizedMessage))
-    .catch((err) => console.error("Error copying message:", err));
+// Copy to clipboard
+navigator.clipboard
+  .writeText(personalizedMessage)
+  .then(() => console.log("Message copied:", personalizedMessage))
+  .catch((err) => console.error("Error copying message:", err));
 };
 
   // ==================
