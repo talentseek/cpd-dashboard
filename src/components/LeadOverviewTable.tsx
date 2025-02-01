@@ -41,6 +41,7 @@ interface Lead {
   position?: string;
   message_sent?: boolean;
   is_open_profile?: boolean; // if you have a bool for open/closed
+  personalization?: string | null; // ✅ Add this
 }
 
 /**
@@ -197,7 +198,7 @@ export default function LeadOverviewTable({
     return;
   }
 
-// Use the message template stored in the client_content table from the DB
+/// Use the message template stored in the client_content table from the DB
 const baseMessage =
   client.initial_message_template ||
   "Hello {first_name} at {company}, we have a great opportunity to discuss: {landingpage}";
@@ -207,12 +208,31 @@ const safeFirstName = lead.first_name ?? "there";
 const safeCompany = lead.company ?? "your company";
 const customLandingPage = constructURLWithSubdomain(lead, "?linkedin=true");
 
-// Replace placeholders with real values
-const personalizedMessage = baseMessage
+// Parse personalization JSON safely
+let customFields: Record<string, string> = {};
+try {
+  if (typeof lead.personalization === "string") {
+    customFields = JSON.parse(lead.personalization);
+  } else if (typeof lead.personalization === "object" && lead.personalization !== null) {
+    customFields = lead.personalization; // Already an object
+  }
+} catch (error) {
+  console.error("Error parsing personalization JSON:", error);
+}
+
+// Replace standard placeholders
+let personalizedMessage = baseMessage
   .replace("{first_name}", safeFirstName)
   .replace("{company}", safeCompany)
-  .replace("{landingpage}", customLandingPage) // Replace landing page placeholder
-  .replace(/\\n/g, "\n"); // Ensure \n renders as newlines
+  .replace("{landingpage}", customLandingPage);
+
+// Replace {custom.KEY} placeholders with values from `personalization` column
+personalizedMessage = personalizedMessage.replace(/\{custom\.(.*?)\}/g, (_, key) => {
+  return customFields[key] ?? `{custom.${key}}`; // Keep placeholder if missing
+});
+
+// Ensure \n renders as newlines
+personalizedMessage = personalizedMessage.replace(/\\n/g, "\n");
 
 // Copy to clipboard
 navigator.clipboard
