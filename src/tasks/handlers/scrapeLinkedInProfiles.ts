@@ -1,6 +1,7 @@
 // src/tasks/handlers/scrapeLinkedInProfiles.ts
 
 import { supabase } from "@/lib/utils";
+import { NODE_API_URL } from "@/lib/apiConfig"; // Import centralized API config
 import type { TaskData, ScrapeResult } from "@/types/tasks"; // Import TaskData and ScrapeResult types
 
 interface LinkedInProfile {
@@ -57,8 +58,8 @@ export async function handleScrapeLinkedInProfilesTask(
       clientId,
     });
 
-    // Call the scraping API
-    const response = await fetch("http://localhost:4000/api/scrape", {
+    // ✅ Call the scraping API using the centralized API URL
+    const response = await fetch(`${NODE_API_URL}/api/scrape`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

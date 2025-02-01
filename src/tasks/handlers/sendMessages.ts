@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/utils";
+import { NODE_API_URL } from "@/lib/apiConfig"; // Import centralized API config
 import type { SendMessageTaskData, MessageResult } from "@/types/tasks";
 
 export async function handleSendMessagesTask(task: SendMessageTaskData): Promise<MessageResult> {
@@ -42,12 +43,12 @@ export async function handleSendMessagesTask(task: SendMessageTaskData): Promise
     const leadUrl = leadData.linkedin;
     console.log(`Fetched lead URL for leadId ${task.leadId}: ${leadUrl}`);
 
-    // Call the external /send-message API
-    const response = await fetch("http://localhost:4000/api/send-message", {
+    // ✅ Call the external /send-message API using the centralized URL
+    const response = await fetch(`${NODE_API_URL}/api/send-message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        cookies, // pass an object with li_a, li_at
+        cookies, // Pass an object with li_a, li_at
         leadUrl,
         message: {
           subject: task.subject,
@@ -66,7 +67,7 @@ export async function handleSendMessagesTask(task: SendMessageTaskData): Promise
       throw new Error(`Message API did not return success: ${result.error}`);
     }
 
-    console.log(`Message sent successfully for leadId ${task.leadId}:`, result);
+    console.log(`✅ Message sent successfully for leadId ${task.leadId}:`, result);
 
     return { success: true, messageId: result.messageId };
   } catch (error: unknown) {

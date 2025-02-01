@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/utils";
-import { testCookies } from "@/utils/scrapers/testCookies";
+import { NODE_API_URL } from "@/lib/apiConfig"; // Import centralized API config
 
 export async function POST(
   request: Request,
@@ -9,6 +9,7 @@ export async function POST(
   const { id: campaignId } = await context.params;
 
   try {
+    // Fetch cookies from the database
     const { data, error } = await supabase
       .from("campaigns")
       .select("cookies, cookies_status")
@@ -22,38 +23,35 @@ export async function POST(
 
     const { li_a, li_at } = data.cookies;
 
-    try {
-      const message = await testCookies(li_a, li_at);
+    // ✅ Call Node.js API to validate cookies
+    const response = await fetch(`${NODE_API_URL}/api/validate-cookies`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ li_a, li_at }),
+    });
+
+    if (!response.ok) {
+      const errorMsg = await response.text();
+      console.warn("Cookie validation failed:", errorMsg);
 
       await supabase
-        .from("campaigns")
-        .update({ cookies_status: "valid" })
-        .eq("id", campaignId);
-
-      return NextResponse.json({ message });
-    } catch (validationError) {
-    const errorMessage = 
-        validationError && 
-        typeof validationError === 'object' && 
-        'message' in validationError && 
-        typeof validationError.message === 'string'
-        ? validationError.message
-        : 'Invalid cookies detected.';
-
-    console.warn("Cookie validation failed:", errorMessage);
-
-    await supabase
         .from("campaigns")
         .update({ cookies_status: "invalid" })
         .eq("id", campaignId);
 
-    return NextResponse.json(
-        {
-        error: errorMessage,
-        },
-        { status: 400 }
-    );
+      return NextResponse.json({ error: errorMsg }, { status: 400 });
     }
+
+    const { message } = await response.json();
+
+    // ✅ Update Supabase with the validation status
+    const status = message.includes("valid") ? "valid" : "invalid";
+    await supabase
+      .from("campaigns")
+      .update({ cookies_status: status })
+      .eq("id", campaignId);
+
+    return NextResponse.json({ message });
   } catch (error) {
     console.error("Unexpected error during cookie validation:", error);
 

@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/utils";
+import { NODE_API_URL } from "@/lib/apiConfig"; // Import centralized API config
 import { 
     DatabaseLead, 
     ScrapedLead, 
@@ -12,7 +13,7 @@ export async function scrapeLinkedInProfiles(
     searchUrl: string,
     cookies: LinkedInCookies
 ): Promise<ScrapedLead[]> {
-    const response = await fetch("http://localhost:4000/api/scrape", {
+    const response = await fetch(`${NODE_API_URL}/api/scrape`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -60,8 +61,8 @@ export async function handleScrapeLinkedInProfilesTask({
 
         console.log(`Fetched cookies for campaignId ${campaignId}:`, cookies);
 
-        // Call your scraping API
-        const response = await fetch("http://localhost:4000/api/scrape", {
+        // Call the external scraping API
+        const response = await fetch(`${NODE_API_URL}/api/scrape`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -89,7 +90,7 @@ export async function handleScrapeLinkedInProfilesTask({
             created_at: new Date().toISOString(),
             company: lead.company,
             first_name: lead.fullName.split(" ")[0],
-            last_name: lead.fullName.split(" ")[1] || "",
+            last_name: lead.fullName.split(" ").slice(1).join(" ") || "",
             linkedin: lead.profileLink,
             website: lead.companyLink,
             position: lead.jobTitle,
