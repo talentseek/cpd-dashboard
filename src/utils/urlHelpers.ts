@@ -8,35 +8,35 @@ export function constructLandingPageURL(lead: {
   last_name?: string | null;
   company?: string | null;
 }): string {
-  // Fallback to 'unknown' if first_name is missing or empty
-  const safeFirstName = lead.first_name && lead.first_name.trim()
-    ? lead.first_name.trim().toLowerCase()
-    : 'unknown';
+  // Ensure first name is valid
+  const safeFirstName = lead.first_name?.trim()?.toLowerCase() || 'unknown';
 
-  // Fallback to 'X' if last_name is missing or empty
-  const safeLastName = lead.last_name && lead.last_name.trim()
-    ? lead.last_name.trim()
-    : 'X';
+  // Ensure last name is valid before extracting initial
+  let safeLastName = lead.last_name?.trim() || '';
 
-  // Take only the first character, uppercase it
-  const surnameInitial = encodeURIComponent(safeLastName.charAt(0).toUpperCase());
+  // Remove non-ASCII characters that might break encodeURIComponent
+  safeLastName = safeLastName.replace(/[^\x00-\x7F]/g, '');
 
-  // Fallback to 'company' if company is missing or empty
-  const safeCompany = lead.company && lead.company.trim()
-    ? lead.company.trim().replace(/\s+/g, '').toLowerCase()
-    : 'company';
+  // Ensure the last name still has valid characters before extracting initial
+  const surnameInitial = safeLastName.length > 0 
+    ? encodeURIComponent(safeLastName.charAt(0).toUpperCase()) 
+    : ''; // ✅ Always return a string
 
-  // Encode the firstName and company portions
+  // Ensure company name is valid
+  const safeCompany = lead.company?.trim()?.replace(/\s+/g, '').toLowerCase() || 'company';
+
+  // Encode first name and company
   const firstName = encodeURIComponent(safeFirstName);
   const companyName = encodeURIComponent(safeCompany);
 
-  return `/${firstName}${surnameInitial}.${companyName}`;
+  // Construct URL without extra dots if `surnameInitial` is missing
+  return surnameInitial 
+    ? `/${firstName}${surnameInitial}.${companyName}` 
+    : `/${firstName}.${companyName}`;
 }
 
 /**
  * Parse a landing page URL back into its component parts.
- * Example input: "/johnD.microsoft"
- * Returns { firstName: 'john', surnameInitial: 'D', companyName: 'microsoft' }
  */
 export function parseLandingPageURL(page: string): {
   firstName: string;
@@ -45,13 +45,13 @@ export function parseLandingPageURL(page: string): {
 } {
   const [leadPartEncoded, companyNameEncoded] = page.split('.');
 
-  // Decode URL components
-  const leadPart = decodeURIComponent(leadPartEncoded);
-  const companyName = decodeURIComponent(companyNameEncoded);
+  // Decode URL components safely
+  const leadPart = decodeURIComponent(leadPartEncoded || '');
+  const companyName = decodeURIComponent(companyNameEncoded || '');
 
-  // Everything up to the last character is the first name, last char is the initial
-  const firstName = leadPart.slice(0, -1);
-  const surnameInitial = leadPart.slice(-1);
+  // Extract first name & last initial, ensuring `surnameInitial` is always a string
+  const firstName = leadPart.length > 1 ? leadPart.slice(0, -1) : leadPart;
+  const surnameInitial = leadPart.length > 1 ? leadPart.slice(-1) : ''; // ✅ Always return a string
 
   return { firstName, surnameInitial, companyName };
 }
@@ -61,6 +61,5 @@ export function parseLandingPageURL(page: string): {
  * If the string is null or empty, returns an empty string.
  */
 export function normalizeString(str: string | null | undefined): string {
-  if (!str) return '';
-  return str.replace(/\s+/g, '').toLowerCase();
+  return str?.replace(/\s+/g, '').toLowerCase() || '';
 }
