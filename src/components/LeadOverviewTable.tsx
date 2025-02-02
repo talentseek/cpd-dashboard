@@ -189,7 +189,7 @@ export default function LeadOverviewTable({
   // ==================
   // 6) HELPER: Copy message to clipboard using DB template
   // ==================
- const copyMessageToClipboard = (lead: Lead) => {
+const copyMessageToClipboard = (lead: Lead) => {
   // Find the matching client object
   const client = clients.find((c) => c.id === lead.client_id);
 
@@ -198,47 +198,51 @@ export default function LeadOverviewTable({
     return;
   }
 
-/// Use the message template stored in the client_content table from the DB
-const baseMessage =
-  client.initial_message_template ||
-  "Hello {first_name} at {company}, we have a great opportunity to discuss: {landingpage}";
+  /// Use the message template stored in the client_content table from the DB
+  const baseMessage =
+    client.initial_message_template ||
+    "Hello {first_name} at {company}, we have a great opportunity to discuss: {landingpage}";
 
-// Fallbacks for missing values
-const safeFirstName = lead.first_name ?? "there";
-const safeCompany = lead.company ?? "your company";
-const customLandingPage = constructURLWithSubdomain(lead, "?linkedin=true");
+  // Fallbacks for missing values
+  const safeFirstName = lead.first_name ?? "there";
+  const safeCompany = lead.company ?? "your company";
+  const customLandingPage = constructURLWithSubdomain(lead, "?linkedin=true");
 
-// Parse personalization JSON safely
-let customFields: Record<string, string> = {};
-try {
-  if (typeof lead.personalization === "string") {
-    customFields = JSON.parse(lead.personalization);
-  } else if (typeof lead.personalization === "object" && lead.personalization !== null) {
-    customFields = lead.personalization; // Already an object
+  // ✅ Construct `{cpdlanding}` using CostPerDemo base domain
+  const cpdLandingPage = `https://costperdemo.com${constructLandingPageURL(lead)}`;
+
+  // Parse personalization JSON safely
+  let customFields: Record<string, string> = {};
+  try {
+    if (typeof lead.personalization === "string") {
+      customFields = JSON.parse(lead.personalization);
+    } else if (typeof lead.personalization === "object" && lead.personalization !== null) {
+      customFields = lead.personalization; // Already an object
+    }
+  } catch (error) {
+    console.error("Error parsing personalization JSON:", error);
   }
-} catch (error) {
-  console.error("Error parsing personalization JSON:", error);
-}
 
-// Replace standard placeholders
-let personalizedMessage = baseMessage
-  .replace("{first_name}", safeFirstName)
-  .replace("{company}", safeCompany)
-  .replace("{landingpage}", customLandingPage);
+  // Replace standard placeholders
+  let personalizedMessage = baseMessage
+    .replace("{first_name}", safeFirstName)
+    .replace("{company}", safeCompany)
+    .replace("{landingpage}", customLandingPage)
+    .replace("{cpdlanding}", cpdLandingPage); // ✅ Replace {cpdlanding}
 
-// Replace {custom.KEY} placeholders with values from `personalization` column
-personalizedMessage = personalizedMessage.replace(/\{custom\.(.*?)\}/g, (_, key) => {
-  return customFields[key] ?? `{custom.${key}}`; // Keep placeholder if missing
-});
+  // Replace {custom.KEY} placeholders with values from `personalization` column
+  personalizedMessage = personalizedMessage.replace(/\{custom\.(.*?)\}/g, (_, key) => {
+    return customFields[key] ?? `{custom.${key}}`; // Keep placeholder if missing
+  });
 
-// Ensure \n renders as newlines
-personalizedMessage = personalizedMessage.replace(/\\n/g, "\n");
+  // Ensure \n renders as newlines
+  personalizedMessage = personalizedMessage.replace(/\\n/g, "\n");
 
-// Copy to clipboard
-navigator.clipboard
-  .writeText(personalizedMessage)
-  .then(() => console.log("Message copied:", personalizedMessage))
-  .catch((err) => console.error("Error copying message:", err));
+  // Copy to clipboard
+  navigator.clipboard
+    .writeText(personalizedMessage)
+    .then(() => console.log("Message copied:", personalizedMessage))
+    .catch((err) => console.error("Error copying message:", err));
 };
 
   // ==================

@@ -13,6 +13,7 @@ interface Lead {
   linkedin?: string;
   position?: string;
   client_id: number;
+  personalization?: string | Record<string, string>;
 }
 
 interface Client {
@@ -23,29 +24,30 @@ interface Client {
 /**
  * Function to construct landing page URL in `{firstNameLastInitial}.{companySlug}` format.
  */
-function constructLandingPageURL(lead: Lead, client: Client) {
+function constructLandingPageURL(lead: Lead) {
   if (!lead.first_name || !lead.last_name || !lead.company) {
     console.warn("🚨 Missing lead details for landing page:", lead);
     return `/landing-page/${encodeURIComponent(lead.id)}?linkedin=true`; // Fallback
   }
 
-  // Extract first name and first initial of last name
   const firstName = lead.first_name.toLowerCase();
   const lastInitial = lead.last_name.charAt(0).toLowerCase();
-
-  // Convert company name to a clean slug (remove spaces, special chars)
   const companySlug = lead.company.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-  // Construct the personalized landing page path
-  const landingPagePath = `${firstName}${lastInitial}.${companySlug}`;
+  return `/${firstName}${lastInitial}.${companySlug}`;
+}
 
-  // If client has a verified subdomain, use it
+/**
+ * Function to construct the correct landing page URL.
+ */
+function constructURLWithSubdomain(lead: Lead, client: Client, queryParam = '') {
+  const basePath = constructLandingPageURL(lead);
+
   if (client?.subdomain && client.status === "verified") {
-    return `https://${client.subdomain}/${landingPagePath}?linkedin=true`;
+    return `https://${client.subdomain}${basePath}${queryParam}`;
   }
-
-  // Default fallback if no verified subdomain exists
-  return `https://default-landing-page.com/${landingPagePath}?linkedin=true`;
+  
+  return `https://default-landing-page.com${basePath}${queryParam}`;
 }
 
 export async function POST(req: Request) {
@@ -57,23 +59,10 @@ export async function POST(req: Request) {
 
     console.log(`🚀 Starting message sequence for campaign ${campaignId}`);
 
-    // Fetch leads for this campaign that haven't been messaged and have an open profile
-    const { data: searchUrls, error: searchError } = await supabase
-      .from("search_urls")
-      .select("id")
-      .eq("campaign_id", campaignId);
-
-    if (searchError || !searchUrls || searchUrls.length === 0) {
-      console.error(`❌ No search URLs found for campaign ${campaignId}`);
-      return NextResponse.json({ message: "No matching search URLs found" });
-    }
-
-    const searchUrlIds = searchUrls.map(url => url.id);
-
+    // Fetch leads for this campaign
     const { data: leads, error: leadsError } = await supabase
       .from("leads")
-      .select("id, first_name, last_name, company, linkedin, position, client_id")
-      .in("search_url_id", searchUrlIds)
+      .select("id, first_name, last_name, company, linkedin, position, client_id, personalization")
       .eq("message_sent", false)
       .eq("is_open_profile", true);
 
@@ -93,10 +82,10 @@ export async function POST(req: Request) {
 
       if (clientError) {
         console.error(`❌ Error fetching client details for lead ${lead.id}:`, clientError);
-        continue; // Skip this lead if client details can't be retrieved
+        continue;
       }
 
-      // Fetch the initial message template and subject
+      // Fetch message template
       const { data: clientContent, error: contentError } = await supabase
         .from("client_content")
         .select("initial_message_template, initial_message_subject")
@@ -108,23 +97,44 @@ export async function POST(req: Request) {
         continue;
       }
 
-      // Construct the correct landing page URL
-      const landingPageURL = constructLandingPageURL(lead, client);
+      // ✅ Construct landing page URLs
+      const landingPageURL = constructURLWithSubdomain(lead, client, "?linkedin=true");
+      const cpdLandingPage = `https://costperdemo.com${constructLandingPageURL(lead)}`;
 
-      // Personalize message
+      // ✅ Parse personalization JSON safely
+      let customFields: Record<string, string> = {};
+      try {
+        if (typeof lead.personalization === "string") {
+          customFields = JSON.parse(lead.personalization);
+        } else if (typeof lead.personalization === "object" && lead.personalization !== null) {
+          customFields = lead.personalization;
+        }
+      } catch (error) {
+        console.error("Error parsing personalization JSON:", error);
+      }
+
+      // ✅ Personalize the message
       const baseMessage = clientContent.initial_message_template || 
         "Hello {first_name} at {company}, check this out: {landingpage}";
       const subject = clientContent.initial_message_subject || "Quick Opportunity";
 
-      const personalizedMessage = baseMessage
+      let personalizedMessage = baseMessage
         .replace("{first_name}", lead.first_name ?? "there")
         .replace("{company}", lead.company ?? "your company")
         .replace("{landingpage}", landingPageURL)
-        .replace(/\\n/g, "\n"); // Ensure newlines render correctly
+        .replace("{cpdlanding}", cpdLandingPage); // ✅ Replace {cpdlanding}
+
+   // ✅ Replace {custom.KEY} placeholders with values from personalization
+personalizedMessage = personalizedMessage.replace(/\{custom\.(.*?)\}/g, (_: string, key: string) => {
+  return customFields[key] ?? `{custom.${key}}`; // Keep placeholder if missing
+});
+
+      // ✅ Ensure \n renders as newlines
+      personalizedMessage = personalizedMessage.replace(/\\n/g, "\n");
 
       console.log(`📩 Sending message to ${lead.first_name} at ${lead.company}`);
 
-      // Fetch cookies for LinkedIn session
+      // Fetch LinkedIn session cookies
       const { data: campaignData, error: campaignError } = await supabase
         .from("campaigns")
         .select("cookies")
@@ -141,7 +151,7 @@ export async function POST(req: Request) {
         li_at: campaignData.cookies.li_at,
       };
 
-      // Call the external message-sending API
+      // Call external API to send message
       const response = await fetch("http://localhost:4000/api/send-message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -162,10 +172,10 @@ export async function POST(req: Request) {
 
       console.log(`✅ Successfully sent message to ${lead.first_name}`);
 
-      // Mark lead as messaged
+      // ✅ Mark lead as messaged
       await supabase.from("leads").update({ message_sent: true }).eq("id", lead.id);
 
-      // Wait before sending the next message
+      // ✅ Wait before sending the next message
       console.log("⏳ Waiting 30 seconds before sending the next message...");
       await delay(30000);
     }
