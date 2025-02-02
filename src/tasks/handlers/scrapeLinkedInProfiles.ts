@@ -110,20 +110,21 @@ export async function handleScrapeLinkedInProfilesTask(
 
     const searchUrlId = searchUrlData.id;
 
-    // Insert leads, skipping duplicates
-    const leads = data.map((profile: LinkedInProfile) => ({
-      company: profile.company,
-      first_name: profile.fullName.split(" ")[0] || null,
-      last_name: profile.fullName.split(" ").slice(1).join(" ") || null,
-      linkedin: profile.profileLink,
-      website: profile.companyLink,
-      position: profile.jobTitle,
-      client_id: clientId,
-      is_open_profile: profile.isOpen,
-      is_premium_profile: profile.isPremium,
-      search_url_id: searchUrlId,
-      connection_level: profile.connectionLevel,
-    }));
+   // Insert leads, skipping duplicates
+const leads = data.map((profile: LinkedInProfile) => ({
+  company: profile.company,
+  first_name: profile.fullName.split(" ")[0] || null,
+  last_name: profile.fullName.split(" ").slice(1).join(" ") || null,
+  linkedin: profile.profileLink,
+  website: profile.companyLink,
+  position: profile.jobTitle,
+  client_id: clientId,
+  is_open_profile: profile.isOpen,
+  is_premium_profile: profile.isPremium,
+  search_url_id: searchUrlId,
+  connection_level: profile.connectionLevel,
+  status: "not_replied", // ✅ Ensure valid default status
+}));
 
     for (const lead of leads) {
       const { data: existingLead, error: leadError } = await supabase
