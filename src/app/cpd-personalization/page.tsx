@@ -16,7 +16,7 @@ type Lead = {
   last_name: string;
   company: string;
   position: string;
-  personalization: string | null;
+  personalization: string | object | null;
   linkedin?: string;
   client_id?: number;
 };
@@ -49,7 +49,7 @@ export default function CpdPersonalizationPage() {
   const [loading, setLoading] = useState<boolean>(true);
 
   // -----------------------------------------------
-  // Fetch Leads
+  // Fetch Leads (from /api/cpd-update-personalization)
   // -----------------------------------------------
   useEffect(() => {
     const fetchLeads = async () => {
@@ -95,7 +95,7 @@ Would you be open to a quick meeting?
     const safeCompany = updatedCompany || "your company";
 
     // Parse the personalization JSON safely:
-    let customFields: Record<string, string> = {};
+    let customFields: Record<string, unknown> = {};
     if (typeof updatedPersonalization === "string") {
       try {
         customFields = JSON.parse(updatedPersonalization);
@@ -107,7 +107,7 @@ Would you be open to a quick meeting?
     }
 
     // Construct the landing page URL using the helper.
-    // Create a "preview" lead that uses the updated first name and company.
+    // Create a "preview" lead that uses the updated first name and company so changes show immediately.
     let cpdLandingPage = "https://costperdemo.com";
     if (selectedLead) {
       const previewLead: Lead = {
@@ -124,9 +124,17 @@ Would you be open to a quick meeting?
       .replace("{company}", safeCompany)
       .replace("{cpdlanding}", cpdLandingPage);
 
-    // Replace any {custom.KEY} placeholders with values from the parsed personalization JSON:
+    // Replace any {custom.KEY} placeholders.
+    // If the value is an array, join its elements; otherwise, use the value directly.
     message = message.replace(/\{custom\.(.*?)\}/g, (_, key) => {
-      return customFields[key] ?? `{custom.${key}}`;
+      const value = customFields[key];
+      if (value === undefined || value === null) {
+        return `{custom.${key}}`;
+      }
+      if (Array.isArray(value)) {
+        return value.join(", ");
+      }
+      return String(value);
     });
 
     return message;
@@ -138,13 +146,25 @@ Would you be open to a quick meeting?
   const handleUpdateLead = async () => {
     if (!selectedLead) return;
 
+    // Try to parse and then re-stringify the personalization JSON.
+    // This minifies the JSON (removing extra whitespace/newlines)
+    let minifiedPersonalization = updatedPersonalization;
+    try {
+      const parsed = JSON.parse(updatedPersonalization);
+      minifiedPersonalization = JSON.stringify(parsed);
+    } catch (error) {
+      console.error("Error parsing personalization JSON before update:", error);
+      toast.error("Personalization JSON is invalid");
+      return;
+    }
+
     try {
       const response = await fetch("/api/cpd-update-personalization", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           leadId: selectedLead.id,
-          personalization: updatedPersonalization,
+          personalization: minifiedPersonalization,
           first_name: updatedFirstName,
           company: updatedCompany,
         }),
@@ -157,13 +177,14 @@ Would you be open to a quick meeting?
             lead.id === selectedLead.id
               ? {
                   ...lead,
-                  personalization: updatedPersonalization,
+                  personalization: minifiedPersonalization,
                   first_name: updatedFirstName,
                   company: updatedCompany,
                 }
               : lead
           )
         );
+        // Reset the editor:
         setSelectedLead(null);
         setUpdatedPersonalization("{}");
       } else {
@@ -199,7 +220,14 @@ Would you be open to a quick meeting?
                   className="cursor-pointer hover:bg-gray-100"
                   onClick={() => {
                     setSelectedLead(lead);
-                    setUpdatedPersonalization(lead.personalization || "{}");
+                    // Check if personalization is a string or an object, then pretty-print it.
+                    setUpdatedPersonalization(
+                      lead.personalization
+                        ? typeof lead.personalization === "string"
+                          ? JSON.stringify(JSON.parse(lead.personalization), null, 2)
+                          : JSON.stringify(lead.personalization, null, 2)
+                        : "{}"
+                    );
                     setUpdatedFirstName(lead.first_name);
                     setUpdatedCompany(lead.company);
                   }}
@@ -265,7 +293,9 @@ Would you be open to a quick meeting?
               />
 
               {/* Editable Personalization JSON */}
-              <label className="block mt-4 font-semibold">Personalization JSON</label>
+              <label className="block mt-4 font-semibold">
+                Personalization JSON
+              </label>
               <Textarea
                 rows={6}
                 value={updatedPersonalization}

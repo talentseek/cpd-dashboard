@@ -2,7 +2,6 @@ import { supabase } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 // ✅ GET: Fetch CostPerDemo leads that have an empty personalization field AND are open profiles
-
 export async function GET() {
   try {
     const { data, error } = await supabase
@@ -30,9 +29,21 @@ export async function PATCH(req: Request) {
   try {
     const { leadId, personalization, first_name, company } = await req.json();
 
+    // Instead of stringifying the JSON, parse it (if needed) and update with the object.
+    let parsedPersonalization;
+    try {
+      parsedPersonalization =
+        typeof personalization === "string"
+          ? JSON.parse(personalization)
+          : personalization;
+    } catch (error) {
+      console.error("Error parsing personalization JSON:", error);
+      return NextResponse.json({ error: "Invalid personalization JSON format" }, { status: 400 });
+    }
+
     const { error } = await supabase
       .from("leads")
-      .update({ personalization, first_name, company })
+      .update({ personalization: parsedPersonalization, first_name, company })
       .eq("id", leadId);
 
     if (error) {
