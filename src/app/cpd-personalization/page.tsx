@@ -22,13 +22,12 @@ type Lead = {
 };
 
 // -----------------------------------------------
-// Helper: Constructs the landing page URL path in
-// the "{firstName}{lastInitial}.{companySlug}" format.
+// Helper: Constructs the landing page URL path
 // -----------------------------------------------
 function constructLandingPageURL(lead: Lead): string {
   if (!lead.first_name || !lead.last_name || !lead.company) {
     console.warn("🚨 Missing lead details for landing page:", lead);
-    return `/landing-page/${encodeURIComponent(lead.id)}?linkedin=true`; // Fallback URL
+    return `/landing-page/${encodeURIComponent(lead.id)}?linkedin=true`; // Fallback
   }
 
   const firstName = lead.first_name.toLowerCase();
@@ -47,9 +46,10 @@ export default function CpdPersonalizationPage() {
   const [updatedFirstName, setUpdatedFirstName] = useState<string>("");
   const [updatedCompany, setUpdatedCompany] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   // -----------------------------------------------
-  // Fetch Leads (from /api/cpd-update-personalization)
+  // Fetch Leads
   // -----------------------------------------------
   useEffect(() => {
     const fetchLeads = async () => {
@@ -90,11 +90,10 @@ Would you be open to a quick meeting?
 {cpdlanding}
     `.trim();
 
-    // Use the updated fields (or fallback values) for placeholders:
     const safeFirstName = updatedFirstName || "there";
     const safeCompany = updatedCompany || "your company";
 
-    // Parse the personalization JSON safely:
+    // Parse the personalization JSON safely
     let customFields: Record<string, unknown> = {};
     if (typeof updatedPersonalization === "string") {
       try {
@@ -102,12 +101,14 @@ Would you be open to a quick meeting?
       } catch (error) {
         console.error("Error parsing personalization JSON:", error);
       }
-    } else if (typeof updatedPersonalization === "object" && updatedPersonalization !== null) {
+    } else if (
+      typeof updatedPersonalization === "object" &&
+      updatedPersonalization !== null
+    ) {
       customFields = updatedPersonalization;
     }
 
-    // Construct the landing page URL using the helper.
-    // Create a "preview" lead that uses the updated first name and company so changes show immediately.
+    // Construct the landing page URL using the helper
     let cpdLandingPage = "https://costperdemo.com";
     if (selectedLead) {
       const previewLead: Lead = {
@@ -118,18 +119,17 @@ Would you be open to a quick meeting?
       cpdLandingPage += constructLandingPageURL(previewLead);
     }
 
-    // Replace placeholders in the base message:
+    // Replace placeholders
     let message = baseMessage
       .replace("{first_name}", safeFirstName)
       .replace("{company}", safeCompany)
       .replace("{cpdlanding}", cpdLandingPage);
 
-    // Replace any {custom.KEY} placeholders.
-    // If the value is an array, join its elements; otherwise, use the value directly.
+    // Replace any {custom.KEY} placeholders with JSON data
     message = message.replace(/\{custom\.(.*?)\}/g, (_, key) => {
       const value = customFields[key];
       if (value === undefined || value === null) {
-        return `{custom.${key}}`;
+        return `{custom.${key}}`; // fallback
       }
       if (Array.isArray(value)) {
         return value.join(", ");
@@ -146,8 +146,7 @@ Would you be open to a quick meeting?
   const handleUpdateLead = async () => {
     if (!selectedLead) return;
 
-    // Try to parse and then re-stringify the personalization JSON.
-    // This minifies the JSON (removing extra whitespace/newlines)
+    // Validate & minify the JSON
     let minifiedPersonalization = updatedPersonalization;
     try {
       const parsed = JSON.parse(updatedPersonalization);
@@ -184,7 +183,7 @@ Would you be open to a quick meeting?
               : lead
           )
         );
-        // Reset the editor:
+        // Reset the editor
         setSelectedLead(null);
         setUpdatedPersonalization("{}");
       } else {
@@ -193,6 +192,54 @@ Would you be open to a quick meeting?
     } catch (error) {
       console.error("❌ Update error:", error);
       toast.error("Failed to update lead");
+    }
+  };
+
+  // -----------------------------------------------
+  // Generate JSON via OpenAI (GPT-4)
+  // -----------------------------------------------
+  const handleGeneratePersonalization = async () => {
+    if (!selectedLead) return;
+
+    try {
+      setIsGenerating(true);
+
+      // Make a POST request to your custom /api/generate-personalization
+      const response = await fetch("/api/generate-personalization", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lead: {
+            first_name: updatedFirstName,
+            last_name: selectedLead.last_name,
+            company: updatedCompany,
+            position: selectedLead.position,
+            linkedin: selectedLead.linkedin,
+            // ...any other relevant info for the prompt
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        toast.error("Failed to generate JSON");
+        return;
+      }
+
+      const data = await response.json();
+      // data.generatedPersonalization is what your API returns
+      if (data?.generatedPersonalization) {
+        setUpdatedPersonalization(
+          JSON.stringify(data.generatedPersonalization, null, 2)
+        );
+        toast.success("Generated personalization from GPT-4!");
+      } else {
+        toast.error("No personalization generated");
+      }
+    } catch (error) {
+      console.error("Error generating personalization:", error);
+      toast.error("Error generating personalization");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -220,11 +267,15 @@ Would you be open to a quick meeting?
                   className="cursor-pointer hover:bg-gray-100"
                   onClick={() => {
                     setSelectedLead(lead);
-                    // Check if personalization is a string or an object, then pretty-print it.
+                    // Check if personalization is a string or object, then pretty-print it
                     setUpdatedPersonalization(
                       lead.personalization
                         ? typeof lead.personalization === "string"
-                          ? JSON.stringify(JSON.parse(lead.personalization), null, 2)
+                          ? JSON.stringify(
+                              JSON.parse(lead.personalization),
+                              null,
+                              2
+                            )
                           : JSON.stringify(lead.personalization, null, 2)
                         : "{}"
                     );
@@ -303,12 +354,22 @@ Would you be open to a quick meeting?
                 className="w-full mt-2 border rounded p-2"
               />
 
-              <Button
-                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={handleUpdateLead}
-              >
-                Save Changes
-              </Button>
+              {/* Buttons Row */}
+              <div className="flex items-center gap-2 mt-4">
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  onClick={handleUpdateLead}
+                >
+                  Save Changes
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleGeneratePersonalization}
+                  disabled={isGenerating}
+                >
+                  {isGenerating ? "Generating..." : "Generate JSON"}
+                </Button>
+              </div>
 
               {/* Message Preview */}
               <div className="mt-6">
