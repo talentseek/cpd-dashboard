@@ -23,9 +23,9 @@ Company: ${lead.company}
 Position: ${lead.position}
 LinkedIn: ${lead.linkedin ?? "N/A"}
 
-You are provided with lead information from sources such as LinkedIn and Sales Navigator. Your task is to generate a JSON object that encapsulates the following details for each lead:
+You are provided with lead information from sources such as LinkedIn and Sales Navigator. Your task is to research thoroughly and generate a JSON object that encapsulates the following details for each lead:
 
-- **roll1, roll2, roll3:** Three role titles representing ideal job titles within the target companies that the lead would want to reach.
+- **roll1, roll2, roll3:** Three role titles representing ideal job titles within the target companies that the lead would want to reach. (their Ideal Customer Profile).
 - **solution:** A concise description of the solution or value proposition offered by the lead’s company. This should be written in a way that it can be directly inserted into marketing phrases.
 - **industry1, industry2, industry3:** Three target industries or market sectors the lead’s company serves.
 - **painPoints:** An array of pain points that the target customers likely experience, which the lead’s solution can address. (Note: Each pain point can start with a capital letter.)

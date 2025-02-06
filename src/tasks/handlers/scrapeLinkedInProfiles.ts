@@ -1,9 +1,9 @@
 // src/tasks/handlers/scrapeLinkedInProfiles.ts
 
-import { supabase } from "@/lib/utils";
-import { NODE_API_URL } from "@/lib/apiConfig"; // Import centralized API config
-import type { TaskData, ScrapeResult } from "@/types/tasks"; // Import TaskData and ScrapeResult types
+import { NODE_API_URL } from "@/lib/apiConfig"; // centralized API URL
+import type { TaskData, ScrapeResult } from "@/types/tasks"; 
 
+// Define an interface for the items returned in `data`
 interface LinkedInProfile {
   isOpen: boolean;
   isPremium: boolean;
@@ -15,12 +15,21 @@ interface LinkedInProfile {
   connectionLevel: number;
 }
 
-interface ScrapingTaskData extends TaskData {
-  id: string; // Ensure id is required
-  searchUrl: string; // Ensure searchUrl is required
+// Extend the shape of the JSON returned by your Node API
+interface ScrapeResponse {
+  success: boolean;
+  data: LinkedInProfile[];
+  error?: string;
+  profilesScraped?: number;
+  successCount?: number;
+  failureCount?: number;
 }
 
-// Type guard to check if a TaskData object is a ScrapingTaskData
+interface ScrapingTaskData extends TaskData {
+  id: string;
+  searchUrl: string;
+}
+
 function isScrapingTaskData(task: TaskData): task is ScrapingTaskData {
   return typeof task.id === "string" && typeof task.searchUrl === "string";
 }
@@ -37,135 +46,51 @@ export async function handleScrapeLinkedInProfilesTask(
       `Starting scraping for campaignId ${task.campaignId}, searchUrl: ${task.searchUrl}`
     );
 
-    // Fetch campaign data
-    const { data: campaignData, error: campaignError } = await supabase
-      .from("campaigns")
-      .select("cookies, client_id")
-      .eq("id", task.campaignId)
-      .single();
-
-    if (campaignError || !campaignData?.cookies || !campaignData?.client_id) {
-      throw new Error(
-        `Failed to fetch campaign data for campaignId ${task.campaignId}`
-      );
-    }
-
-    const cookies = campaignData.cookies;
-    const clientId = campaignData.client_id;
-
-    console.log(`Fetched cookies and client_id for campaignId ${task.campaignId}:`, {
-      cookies,
-      clientId,
-    });
-
-    // ✅ Call the scraping API using the centralized API URL
+    // Call your Node API (which handles all DB logic internally)
     const response = await fetch(`${NODE_API_URL}/api/scrape`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        cookies: [
-          { name: "li_a", value: cookies.li_a, domain: ".linkedin.com" },
-          { name: "li_at", value: cookies.li_at, domain: ".linkedin.com" },
-        ],
+        // Pass the essentials to the Node API:
+        campaignId: task.campaignId,
         searchUrl: task.searchUrl,
         checkOpenProfiles: true,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch scraping data: ${response.statusText}`);
+      throw new Error(`Failed to scrape data: ${response.statusText}`);
     }
 
-    const { success, data } = await response.json();
-    if (!success) {
-      throw new Error("Scraping API did not return success");
+    // Use the ScrapeResponse interface to avoid "any"
+    const json: ScrapeResponse = await response.json();
+
+    if (!json.success) {
+      throw new Error(json.error || "Scraping API did not return success");
     }
 
+    // Extract the scraping result counts from the response
     console.log(
-      `Scraping task completed for campaignId ${task.campaignId}. Found ${data.length} profiles.`
+      `Scraping completed. Found ${json.data.length} profiles. ` +
+        `profilesScraped: ${json.profilesScraped}, ` +
+        `successCount: ${json.successCount}, ` +
+        `failureCount: ${json.failureCount}`
     );
 
-    // Count open vs. other profiles
-    const openProfilesCount = data.filter(
-      (profile: LinkedInProfile) => profile.isOpen
-    ).length;
-    const otherProfilesCount = data.length - openProfilesCount;
-
-    // Insert row into "search_urls"
-    const { data: searchUrlData, error: searchUrlError } = await supabase
-      .from("search_urls")
-      .insert({
-        url: task.searchUrl,
-        campaign_id: task.campaignId,
-        status: "completed",
-        open_profiles_found: openProfilesCount,
-        other_profiles_found: otherProfilesCount,
-      })
-      .select("id")
-      .single();
-
-    if (searchUrlError) {
-      throw new Error(`Failed to insert search URL: ${searchUrlError.message}`);
-    }
-
-    const searchUrlId = searchUrlData.id;
-
-   // Insert leads, skipping duplicates
-const leads = data.map((profile: LinkedInProfile) => ({
-  company: profile.company,
-  first_name: profile.fullName.split(" ")[0] || null,
-  last_name: profile.fullName.split(" ").slice(1).join(" ") || null,
-  linkedin: profile.profileLink,
-  website: profile.companyLink,
-  position: profile.jobTitle,
-  client_id: clientId,
-  is_open_profile: profile.isOpen,
-  is_premium_profile: profile.isPremium,
-  search_url_id: searchUrlId,
-  connection_level: profile.connectionLevel,
-  status: "not_replied", // ✅ Ensure valid default status
-}));
-
-    for (const lead of leads) {
-      const { data: existingLead, error: leadError } = await supabase
-        .from("leads")
-        .select("id")
-        .eq("linkedin", lead.linkedin)
-        .eq("client_id", lead.client_id)
-        .single();
-
-      if (leadError || !existingLead) {
-        // Insert
-        const { error: insertError } = await supabase.from("leads").insert(lead);
-        if (insertError) {
-          console.error(`Failed to insert lead: ${insertError.message}`);
-        }
-      } else {
-        console.log(`Duplicate lead skipped: ${lead.linkedin}`);
-      }
-    }
-
-    console.log(`Inserted or skipped leads for campaignId ${task.campaignId}`);
-
-    // Return a ScrapeResult
+    // Return the desired ScrapeResult
     return {
-      profilesScraped: data.length,
-      successCount: openProfilesCount,
-      failureCount: otherProfilesCount,
+      profilesScraped: json.profilesScraped || 0,
+      successCount: json.successCount || 0,
+      failureCount: json.failureCount || 0,
     };
   } catch (error: unknown) {
     let errorMessage = "Failed to process scraping task";
-
     if (error instanceof Error) {
       console.error("Error in handleScrapeLinkedInProfilesTask:", error.message);
       errorMessage = error.message;
     } else {
-      console.error(
-        "Error in handleScrapeLinkedInProfilesTask (non-Error):",
-        error
-      );
+      console.error("Unknown error in handleScrapeLinkedInProfilesTask:", error);
     }
-
     throw new Error(errorMessage);
   }
 }
