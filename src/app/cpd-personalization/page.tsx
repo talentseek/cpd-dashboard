@@ -81,7 +81,7 @@ export default function CpdPersonalizationPage() {
     const baseMessage = `
 Hi {first_name},
 
-I took a look at {company}, and it seems like we could connect you with prospects such as {custom.roll1}, {custom.roll2}, and {custom.roll3}. Reaching out to {custom.industry1}, {custom.industry2}, and {custom.industry3} needing {custom.solution}.
+I took a look at {company}, and it seems like we could connect you with prospects such as {custom.roll1}, {custom.roll2}, and {custom.roll3}. Reaching out to {custom.industry1}, {custom.industry2}, and {custom.industry3} companies needing {custom.solution}.
 
 We work on a performance-based model, billing only when we deliver results.
 
