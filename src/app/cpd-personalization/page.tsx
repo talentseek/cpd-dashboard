@@ -372,6 +372,15 @@ Would you be open to a quick meeting?
                   {computePreviewMessage()}
                 </pre>
               </div>
+
+              <div className="mt-6">
+                <h3 className="font-semibold mb-2">Company Data:</h3>
+                <pre className="bg-gray-100 p-4 rounded whitespace-pre-wrap text-sm">
+                  {selectedLead.company_data
+                    ? JSON.stringify(selectedLead.company_data, null, 2)
+                    : "No company data"}
+                </pre>
+              </div>
             </div>
           )}
         </div>
