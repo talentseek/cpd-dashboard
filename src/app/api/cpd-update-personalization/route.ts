@@ -1,12 +1,20 @@
 import { supabase } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
+interface UpdateObj {
+  personalization: unknown;
+  first_name: string;
+  company: string;
+  website?: string;
+  company_data?: unknown;
+}
+
 // ✅ GET: Fetch CostPerDemo leads that have an empty personalization field AND are open profiles
 export async function GET() {
   try {
     const { data, error } = await supabase
       .from("leads")
-      .select("id, first_name, last_name, company, position, personalization, linkedin")
+      .select("id, first_name, last_name, company, position, personalization, linkedin, website, company_data")
       .eq("client_id", 22)
       .eq("is_open_profile", true)
       .or("personalization.is.null,personalization.eq.{}");
@@ -24,13 +32,13 @@ export async function GET() {
   }
 }
 
-// PATCH: Now updates personalization, first_name, and company
+// PATCH: Now updates personalization, first_name, company, and optionally website and company_data
 export async function PATCH(req: Request) {
   try {
-    const { leadId, personalization, first_name, company } = await req.json();
+    const { leadId, personalization, first_name, company, website, company_data } = await req.json();
 
-    // Instead of stringifying the JSON, parse it (if needed) and update with the object.
-    let parsedPersonalization;
+    // Parse the personalization data (if it is a string) so we update with an object.
+    let parsedPersonalization: unknown;
     try {
       parsedPersonalization =
         typeof personalization === "string"
@@ -41,9 +49,23 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Invalid personalization JSON format" }, { status: 400 });
     }
 
+    // Build the update object using our defined interface.
+    const updateObj: UpdateObj = {
+      personalization: parsedPersonalization,
+      first_name,
+      company,
+    };
+
+    if (website !== undefined) {
+      updateObj.website = website;
+    }
+    if (company_data !== undefined) {
+      updateObj.company_data = company_data;
+    }
+
     const { error } = await supabase
       .from("leads")
-      .update({ personalization: parsedPersonalization, first_name, company })
+      .update(updateObj)
       .eq("id", leadId);
 
     if (error) {

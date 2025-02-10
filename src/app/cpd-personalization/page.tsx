@@ -19,6 +19,8 @@ type Lead = {
   personalization: string | object | null;
   linkedin?: string;
   client_id?: number;
+  website?: string; // New: optional website field
+  company_data?: Record<string, unknown>; // Updated: use Record<string, unknown> instead of any
 };
 
 // -----------------------------------------------
@@ -215,8 +217,10 @@ Would you be open to a quick meeting?
             company: updatedCompany,
             position: selectedLead.position,
             linkedin: selectedLead.linkedin,
-            // ...any other relevant info for the prompt
+            website: selectedLead.website || "",
+            company_data: selectedLead.company_data || null,
           },
+          debug: true,
         }),
       });
 
@@ -226,7 +230,6 @@ Would you be open to a quick meeting?
       }
 
       const data = await response.json();
-      // data.generatedPersonalization is what your API returns
       if (data?.generatedPersonalization) {
         setUpdatedPersonalization(
           JSON.stringify(data.generatedPersonalization, null, 2)
@@ -267,7 +270,6 @@ Would you be open to a quick meeting?
                   className="cursor-pointer hover:bg-gray-100"
                   onClick={() => {
                     setSelectedLead(lead);
-                    // Check if personalization is a string or object, then pretty-print it
                     setUpdatedPersonalization(
                       lead.personalization
                         ? typeof lead.personalization === "string"
@@ -303,7 +305,6 @@ Would you be open to a quick meeting?
                 <h2 className="text-xl font-bold mb-2">
                   Editing {selectedLead.first_name} {selectedLead.last_name}
                 </h2>
-                {/* Render LinkedIn icon with link if available */}
                 {selectedLead.linkedin && (
                   <a
                     href={selectedLead.linkedin}
@@ -327,7 +328,6 @@ Would you be open to a quick meeting?
               </div>
               <p className="text-gray-600 text-sm">{selectedLead.position}</p>
 
-              {/* Editable First Name */}
               <label className="block mt-4 font-semibold">First Name</label>
               <Input
                 value={updatedFirstName}
@@ -335,7 +335,6 @@ Would you be open to a quick meeting?
                 className="w-full mt-2"
               />
 
-              {/* Editable Company */}
               <label className="block mt-4 font-semibold">Company</label>
               <Input
                 value={updatedCompany}
@@ -343,10 +342,7 @@ Would you be open to a quick meeting?
                 className="w-full mt-2"
               />
 
-              {/* Editable Personalization JSON */}
-              <label className="block mt-4 font-semibold">
-                Personalization JSON
-              </label>
+              <label className="block mt-4 font-semibold">Personalization JSON</label>
               <Textarea
                 rows={6}
                 value={updatedPersonalization}
@@ -354,7 +350,6 @@ Would you be open to a quick meeting?
                 className="w-full mt-2 border rounded p-2"
               />
 
-              {/* Buttons Row */}
               <div className="flex items-center gap-2 mt-4">
                 <Button
                   className="bg-blue-600 hover:bg-blue-700 text-white"
@@ -371,7 +366,6 @@ Would you be open to a quick meeting?
                 </Button>
               </div>
 
-              {/* Message Preview */}
               <div className="mt-6">
                 <h3 className="font-semibold mb-2">Message Preview:</h3>
                 <pre className="bg-gray-100 p-4 rounded whitespace-pre-wrap text-sm">
