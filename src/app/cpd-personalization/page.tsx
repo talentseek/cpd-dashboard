@@ -247,6 +247,38 @@ Would you be open to a quick meeting?
   };
 
   // -----------------------------------------------
+  // Handle Lead Deletion (DELETE request)
+  // -----------------------------------------------
+  const handleDeleteLead = async () => {
+    if (!selectedLead) return;
+
+    // Confirm deletion
+    const confirmDelete = confirm(
+      `Are you sure you want to delete ${selectedLead.first_name} ${selectedLead.last_name}?`
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch("/api/cpd-update-personalization", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: selectedLead.id }),
+      });
+      if (response.ok) {
+        toast.success("Lead deleted successfully!");
+        // Remove the deleted lead from the state
+        setLeads((prev) => prev.filter((lead) => lead.id !== selectedLead.id));
+        setSelectedLead(null);
+      } else {
+        toast.error("Error deleting lead");
+      }
+    } catch (error) {
+      console.error("❌ Delete error:", error);
+      toast.error("Failed to delete lead");
+    }
+  };
+
+  // -----------------------------------------------
   // Render
   // -----------------------------------------------
   return (
@@ -273,11 +305,7 @@ Would you be open to a quick meeting?
                     setUpdatedPersonalization(
                       lead.personalization
                         ? typeof lead.personalization === "string"
-                          ? JSON.stringify(
-                              JSON.parse(lead.personalization),
-                              null,
-                              2
-                            )
+                          ? JSON.stringify(JSON.parse(lead.personalization), null, 2)
                           : JSON.stringify(lead.personalization, null, 2)
                         : "{}"
                     );
@@ -363,6 +391,12 @@ Would you be open to a quick meeting?
                   disabled={isGenerating}
                 >
                   {isGenerating ? "Generating..." : "Generate JSON"}
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={handleDeleteLead}
+                >
+                  Delete Lead
                 </Button>
               </div>
 

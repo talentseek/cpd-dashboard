@@ -77,7 +77,7 @@ Generate the JSON based on the lead information provided. Make sure the JSON is 
 
 This means it needs to read well pay close attention to how it would look especially this sentence it seems like we could connect you with prospects such as {custom.roll1}, {custom.roll2}, and {custom.roll3}. Reaching out to {custom.industry1}, {custom.industry2}, and {custom.industry3} needing {custom.solution}.
 
-remember the work needing is just before the solution. 
+Remember the word "needing" is just before the solution so for example "needing a custom solution". 
 
 `;
 

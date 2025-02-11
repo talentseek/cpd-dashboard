@@ -80,3 +80,26 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
+// DELETE: Delete a lead based on the provided leadId
+export async function DELETE(req: Request) {
+  try {
+    const { leadId } = await req.json();
+
+    const { error } = await supabase
+      .from("leads")
+      .delete()
+      .eq("id", leadId);
+
+    if (error) {
+      console.error("❌ Error deleting lead:", error);
+      return NextResponse.json({ error: "Failed to delete lead" }, { status: 500 });
+    }
+
+    console.log(`✅ Successfully deleted lead ID: ${leadId}`);
+    return NextResponse.json({ message: "Lead deleted successfully" });
+  } catch (error) {
+    console.error("❌ Unexpected error while deleting lead:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
