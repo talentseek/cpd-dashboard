@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // -----------------------------------------------
 // Type definitions
@@ -19,8 +20,8 @@ type Lead = {
   personalization: string | object | null;
   linkedin?: string;
   client_id?: number;
-  website?: string; // New: optional website field
-  company_data?: Record<string, unknown>; // Updated: use Record<string, unknown> instead of any
+  website?: string;
+  company_data?: Record<string, unknown>;
 };
 
 // -----------------------------------------------
@@ -31,7 +32,6 @@ function constructLandingPageURL(lead: Lead): string {
     console.warn("🚨 Missing lead details for landing page:", lead);
     return `/landing-page/${encodeURIComponent(lead.id)}?linkedin=true`; // Fallback
   }
-
   const firstName = lead.first_name.toLowerCase();
   const lastInitial = lead.last_name.charAt(0).toLowerCase();
   const companySlug = lead.company.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -49,9 +49,10 @@ export default function CpdPersonalizationPage() {
   const [updatedCompany, setUpdatedCompany] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const router = useRouter();
 
   // -----------------------------------------------
-  // Fetch Leads
+  // Fetch Leads (excludes those marked as unqualified)
   // -----------------------------------------------
   useEffect(() => {
     const fetchLeads = async () => {
@@ -72,7 +73,6 @@ export default function CpdPersonalizationPage() {
         setLoading(false);
       }
     };
-
     fetchLeads();
   }, []);
 
@@ -95,7 +95,6 @@ Would you be open to a quick meeting?
     const safeFirstName = updatedFirstName || "there";
     const safeCompany = updatedCompany || "your company";
 
-    // Parse the personalization JSON safely
     let customFields: Record<string, unknown> = {};
     if (typeof updatedPersonalization === "string") {
       try {
@@ -103,14 +102,10 @@ Would you be open to a quick meeting?
       } catch (error) {
         console.error("Error parsing personalization JSON:", error);
       }
-    } else if (
-      typeof updatedPersonalization === "object" &&
-      updatedPersonalization !== null
-    ) {
+    } else if (typeof updatedPersonalization === "object" && updatedPersonalization !== null) {
       customFields = updatedPersonalization;
     }
 
-    // Construct the landing page URL using the helper
     let cpdLandingPage = "https://costperdemo.com";
     if (selectedLead) {
       const previewLead: Lead = {
@@ -121,17 +116,15 @@ Would you be open to a quick meeting?
       cpdLandingPage += constructLandingPageURL(previewLead);
     }
 
-    // Replace placeholders
     let message = baseMessage
       .replace("{first_name}", safeFirstName)
       .replace("{company}", safeCompany)
       .replace("{cpdlanding}", cpdLandingPage);
 
-    // Replace any {custom.KEY} placeholders with JSON data
     message = message.replace(/\{custom\.(.*?)\}/g, (_, key) => {
       const value = customFields[key];
       if (value === undefined || value === null) {
-        return `{custom.${key}}`; // fallback
+        return `{custom.${key}}`;
       }
       if (Array.isArray(value)) {
         return value.join(", ");
@@ -148,7 +141,6 @@ Would you be open to a quick meeting?
   const handleUpdateLead = async () => {
     if (!selectedLead) return;
 
-    // Validate & minify the JSON
     let minifiedPersonalization = updatedPersonalization;
     try {
       const parsed = JSON.parse(updatedPersonalization);
@@ -185,7 +177,6 @@ Would you be open to a quick meeting?
               : lead
           )
         );
-        // Reset the editor
         setSelectedLead(null);
         setUpdatedPersonalization("{}");
       } else {
@@ -205,8 +196,6 @@ Would you be open to a quick meeting?
 
     try {
       setIsGenerating(true);
-
-      // Make a POST request to your custom /api/generate-personalization
       const response = await fetch("/api/generate-personalization", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -231,9 +220,7 @@ Would you be open to a quick meeting?
 
       const data = await response.json();
       if (data?.generatedPersonalization) {
-        setUpdatedPersonalization(
-          JSON.stringify(data.generatedPersonalization, null, 2)
-        );
+        setUpdatedPersonalization(JSON.stringify(data.generatedPersonalization, null, 2));
         toast.success("Generated personalization from GPT-4!");
       } else {
         toast.error("No personalization generated");
@@ -247,34 +234,32 @@ Would you be open to a quick meeting?
   };
 
   // -----------------------------------------------
-  // Handle Lead Deletion (DELETE request)
+  // Handle Marking Lead as Unqualified (PATCH request)
   // -----------------------------------------------
-  const handleDeleteLead = async () => {
+  const handleMarkUnqualified = async () => {
     if (!selectedLead) return;
 
-    // Confirm deletion
-    const confirmDelete = confirm(
-      `Are you sure you want to delete ${selectedLead.first_name} ${selectedLead.last_name}?`
+    const confirmUpdate = confirm(
+      `Are you sure you want to mark ${selectedLead.first_name} ${selectedLead.last_name} as unqualified?`
     );
-    if (!confirmDelete) return;
+    if (!confirmUpdate) return;
 
     try {
       const response = await fetch("/api/cpd-update-personalization", {
-        method: "DELETE",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ leadId: selectedLead.id }),
+        body: JSON.stringify({ leadId: selectedLead.id, status: "unqualified" }),
       });
       if (response.ok) {
-        toast.success("Lead deleted successfully!");
-        // Remove the deleted lead from the state
-        setLeads((prev) => prev.filter((lead) => lead.id !== selectedLead.id));
-        setSelectedLead(null);
+        toast.success("Lead marked as unqualified successfully!");
+        // Force a full page reload
+        window.location.reload();
       } else {
-        toast.error("Error deleting lead");
+        toast.error("Error marking lead as unqualified");
       }
     } catch (error) {
-      console.error("❌ Delete error:", error);
-      toast.error("Failed to delete lead");
+      console.error("❌ Update error:", error);
+      toast.error("Failed to mark lead as unqualified");
     }
   };
 
@@ -394,9 +379,9 @@ Would you be open to a quick meeting?
                 </Button>
                 <Button
                   variant="destructive"
-                  onClick={handleDeleteLead}
+                  onClick={handleMarkUnqualified}
                 >
-                  Delete Lead
+                  Mark as unqualified
                 </Button>
               </div>
 

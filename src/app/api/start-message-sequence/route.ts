@@ -73,7 +73,8 @@ export async function POST(req: Request) {
       .select("id, first_name, last_name, company, linkedin, position, client_id, personalization")
       .eq("message_sent", false)
       .eq("is_open_profile", true)
-      .eq("client_id", campaign.client_id);
+      .eq("client_id", campaign.client_id)
+      .neq("status", "unqualified");  // Exclude unqualified leads
 
     if (leadsError || !leads || leads.length === 0) {
       return NextResponse.json({ message: "No unsent leads found for this campaign" });
