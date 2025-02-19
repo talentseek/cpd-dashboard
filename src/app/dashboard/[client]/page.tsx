@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { supabase } from '@/lib/utils';
 import ClientLayout from '@/components/ClientLayout';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown, ArrowUp, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 // -----------------------------------------------
@@ -24,7 +24,7 @@ interface Lead {
 }
 
 // -----------------------------------------------
-// Helper: Constructs the landing page URL path
+// Helper: Constructs the landing page URL slug
 // -----------------------------------------------
 function constructLandingPageURL(lead: Lead): string {
   if (!lead.first_name || !lead.last_name || !lead.company) {
@@ -59,6 +59,7 @@ export default function ClientDashboardPage() {
           router.push('/login');
           return;
         }
+
         // Get user profile
         const { data: profile, error: profileError } = await supabase
           .from('user_profiles')
@@ -142,6 +143,7 @@ export default function ClientDashboardPage() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, [client, router]);
 
@@ -188,24 +190,54 @@ export default function ClientDashboardPage() {
 // -----------------------------------------------
 function QualificationSection({ leads }: { leads: Lead[] }) {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [editedCompany, setEditedCompany] = useState<string>('');
   const router = useRouter();
 
-  // Compute a simple preview message using lead data
+  // When a lead is selected, initialize editedCompany with its current company
+  useEffect(() => {
+    if (selectedLead) {
+      setEditedCompany(selectedLead.company);
+    }
+  }, [selectedLead]);
+
+  // Compute a simple preview message using lead data.
+  // Note: Uses "wearepayaca.com" as the base domain.
   const computePreviewMessage = (lead: Lead): string => {
     return `
 Hi ${lead.first_name},
 
-I took a look at ${lead.company} and it seems like we could connect you with prospects who might be interested in our solutions.
+I took a look at ${editedCompany} and it seems like we could connect you with prospects who might be interested in our solutions.
 
 We work on a performance-based model, billing only when we deliver results.
 
 Would you be open to a quick meeting?
 
-https://costperdemo.com${constructLandingPageURL(lead)}
+https://wearepayaca.com${constructLandingPageURL(lead)}
     `.trim();
   };
 
-  // Handler for marking lead as qualified (status "interested")
+  // Handler for updating the company name
+  const handleUpdateCompany = async () => {
+    if (!selectedLead) return;
+    try {
+      const response = await fetch("/api/cpd-update-personalization", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leadId: selectedLead.id, company: editedCompany }),
+      });
+      if (response.ok) {
+        alert("Company name updated!");
+        window.location.reload();
+      } else {
+        alert("Error updating company name");
+      }
+    } catch (error) {
+      console.error("Update company error:", error);
+      alert("Failed to update company name");
+    }
+  };
+
+  // Handler for marking a lead as qualified (status "interested")
   const handleQualify = async () => {
     if (!selectedLead) return;
     const confirmQualify = confirm(
@@ -230,7 +262,7 @@ https://costperdemo.com${constructLandingPageURL(lead)}
     }
   };
 
-  // Handler for marking lead as unqualified (status "unqualified")
+  // Handler for marking a lead as unqualified (status "unqualified")
   const handleUnqualify = async () => {
     if (!selectedLead) return;
     const confirmUnqualify = confirm(
@@ -269,9 +301,21 @@ https://costperdemo.com${constructLandingPageURL(lead)}
               onClick={() => setSelectedLead(lead)}
             >
               <CardContent className="p-4">
-                <h3 className="text-lg font-semibold">
-                  {lead.first_name} {lead.last_name}
-                </h3>
+                <div className="flex items-center">
+                  <h3 className="text-lg font-semibold">
+                    {lead.first_name} {lead.last_name}
+                  </h3>
+                  {lead.linkedin && (
+                    <a
+                      href={lead.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2"
+                    >
+                      <Linkedin className="h-5 w-5 text-blue-500" />
+                    </a>
+                  )}
+                </div>
                 <p className="text-sm text-gray-600">
                   {lead.position} at {lead.company}
                 </p>
@@ -288,6 +332,23 @@ https://costperdemo.com${constructLandingPageURL(lead)}
           <p className="mb-2 text-gray-600">
             {selectedLead.position} at {selectedLead.company}
           </p>
+          {/* Editable Company Name */}
+          <div className="mt-4">
+            <label className="block font-semibold">Company Name:</label>
+            <input
+              type="text"
+              value={editedCompany}
+              onChange={(e) => setEditedCompany(e.target.value)}
+              className="w-full border rounded p-2 mt-2"
+            />
+            <Button
+              variant="outline"
+              className="mt-2"
+              onClick={handleUpdateCompany}
+            >
+              Update Company
+            </Button>
+          </div>
           <div className="mt-4">
             <h4 className="font-semibold">Message Preview:</h4>
             <pre className="bg-gray-100 p-4 rounded whitespace-pre-wrap text-sm">
