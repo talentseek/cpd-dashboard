@@ -111,16 +111,16 @@ export default function ClientDashboardPage() {
         setTotalUnqualified(unqualifiedCount || 0);
 
         // Fetch pending leads details (only those with status "not_replied")
-const { data: leadsData, error: leadsError } = await supabase
-  .from('leads')
-  .select('*')
-  .eq('client_id', clientIdNum)
-  .eq('status', 'not_replied');
-if (leadsError) {
-  console.error('Error fetching pending leads:', leadsError);
-} else {
-  setPendingLeads(leadsData || []);
-}
+        const { data: leadsData, error: leadsError } = await supabase
+          .from('leads')
+          .select('*')
+          .eq('client_id', clientIdNum)
+          .eq('status', 'not_replied');
+        if (leadsError) {
+          console.error('Error fetching pending leads:', leadsError);
+        } else {
+          setPendingLeads(leadsData || []);
+        }
       } catch (error) {
         console.error('Error during data fetching:', error);
       } finally {
@@ -167,7 +167,6 @@ if (leadsError) {
             pendingLeads={pendingLeads}
             setPendingLeads={setPendingLeads}
             onProcessed={(action: 'qualified' | 'unqualified') => {
-              // Update summary counts locally
               if (action === 'qualified') {
                 setTotalQualified((prev) => prev + 1);
               } else {
@@ -185,9 +184,9 @@ if (leadsError) {
 // Qualification Section Component (for Client 23)
 // -----------------------------------------------
 interface QualificationSectionProps {
-pendingLeads: Lead[];
-setPendingLeads: React.Dispatch<React.SetStateAction<Lead[]>>;
-onProcessed: (action: 'qualified' | 'unqualified') => void;
+  pendingLeads: Lead[];
+  setPendingLeads: React.Dispatch<React.SetStateAction<Lead[]>>;
+  onProcessed: (action: 'qualified' | 'unqualified') => void;
 }
 
 function QualificationSection({
@@ -199,7 +198,7 @@ function QualificationSection({
   const [editedCompany, setEditedCompany] = useState<string>('');
   const router = useRouter();
 
-  // When a lead is expanded, initialize editedCompany with its current company.
+  // Toggle expansion; when expanding, initialize editedCompany
   const handleToggleExpand = (lead: Lead) => {
     if (expandedLeadId === lead.id) {
       setExpandedLeadId(null);
@@ -213,13 +212,11 @@ function QualificationSection({
   // Uses "wearepayaca.com" as the base domain.
   const computePreviewMessage = (lead: Lead): string => {
     return `
-Hi ${lead.first_name},
+Hi ${lead.first_name}, is ${editedCompany} struggling with streamlining project management and CRM processes for renewable installations?
 
-I took a look at ${editedCompany} and it seems like we could connect you with prospects who might be interested in our solutions.
+Payaca is the only software system dedicated to renewable energy businesses. We help companies like ${editedCompany} automate workflows, manage teams efficiently, and improve customer communication—all in one platform.
 
-We work on a performance-based model, billing only when we deliver results.
-
-Would you be open to a quick meeting?
+Would you be open to a quick meeting to see how Payaca can simplify your renewable energy projects at ${editedCompany}?
 
 https://wearepayaca.com${constructLandingPageURL(lead)}
     `.trim();
@@ -234,7 +231,6 @@ https://wearepayaca.com${constructLandingPageURL(lead)}
         body: JSON.stringify({ leadId: lead.id, company: editedCompany }),
       });
       if (response.ok) {
-        // Update the lead locally:
         setPendingLeads((prev) =>
           prev.map((l) => (l.id === lead.id ? { ...l, company: editedCompany } : l))
         );
@@ -256,7 +252,6 @@ https://wearepayaca.com${constructLandingPageURL(lead)}
         body: JSON.stringify({ leadId: lead.id, status: 'interested' }),
       });
       if (response.ok) {
-        // Remove lead from pending list
         setPendingLeads((prev) => prev.filter((l) => l.id !== lead.id));
         onProcessed('qualified');
         if (expandedLeadId === lead.id) {
@@ -340,6 +335,7 @@ https://wearepayaca.com${constructLandingPageURL(lead)}
                         type="text"
                         value={editedCompany}
                         onChange={(e) => setEditedCompany(e.target.value)}
+                        onClick={(e) => e.stopPropagation()} // Prevent collapse when clicking the input
                         className="w-full border rounded p-2 mt-2"
                       />
                       <Button
