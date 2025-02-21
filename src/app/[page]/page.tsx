@@ -20,10 +20,11 @@ function constructFullUrl(relativePath: string): string {
 // ============ 1) Fetch client by subdomain
 async function fetchClientByHost(host: string) {
   console.log('DEBUG: Looking for client with subdomain =', host);
+
   const { data: client, error } = await supabase
     .from('clients')
     .select('*')
-    .eq('subdomain', host)
+    .eq('subdomain', host) // must match exactly what's in the DB
     .single();
 
   if (error) {
@@ -41,7 +42,12 @@ async function fetchLeadDataForClient(
   companyName: string,
   clientId: number
 ) {
-  console.log('DEBUG: fetchLeadDataForClient =>', { firstName, surnameInitial, companyName, clientId });
+  console.log('DEBUG: fetchLeadDataForClient =>', {
+    firstName,
+    surnameInitial,
+    companyName,
+    clientId,
+  });
   const { data: leads, error } = await supabase
     .from('leads')
     .select('*')
@@ -80,7 +86,7 @@ async function fetchClientData(clientId: number) {
 }
 
 // ============ Example: revalidate after 7 days
-export const revalidate = 604800; // 7 days in seconds
+export const revalidate = 604800; // 7 * 24 * 60 * 60
 
 // ============ 4) Generate dynamic metadata (optional)
 export const generateMetadata = async ({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> => {
@@ -171,7 +177,6 @@ export default async function Page({ params }: { params: Promise<{ page: string 
   const host = headersList.get('host') ?? '';
   console.log('DEBUG: Page => host =', host);
 
-  // Optional fallback if on main domain
   if (host === 'app.costperdemo.com') {
     console.log('DEBUG: main domain fallback => custom approach');
   }
@@ -196,8 +201,8 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     company: leadData.company || 'Your Company',
   };
 
-  // Conditional rendering: check if the client should use a custom landing page
-  if (clientData.landing_page_type === "custom" && clientData.landing_page_template === "proforecast") {
+  // Check the client record rather than clientData for landing page type/template
+  if (client.landing_page_type === "custom" && client.landing_page_template === "proforecast") {
     return (
       <>
         <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
@@ -206,7 +211,7 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     );
   }
 
-  // Otherwise, render the default landing page
+  // Otherwise, render the default ABM landing page
   return (
     <>
       <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
