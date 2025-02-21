@@ -5,26 +5,38 @@ import { Card } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { LineChart } from "@/components/ui/chart"
 
+const generateRandomData = (initial: number, length: number) => {
+  let value = initial
+  return Array.from({ length }, () => {
+    // Generate a random change between -10 and +10
+    const change = (Math.random() - 0.5) * 20
+    value = value + change
+    // Ensure value doesn't drop below 0 (optional)
+    if (value < 0) value = 0
+    return Number(value.toFixed(2))
+  })
+}
+
 const WhatIfScenarios: React.FC = () => {
   const [marketGrowth, setMarketGrowth] = useState(50)
   const [operationalEfficiency, setOperationalEfficiency] = useState(50)
 
   const labels = ["January", "February", "March", "April", "May", "June", "July"]
 
-  // Build dynamic data using slider values.
+  // Use the helper function to simulate data with realistic fluctuations.
   const chartData = {
     labels,
     datasets: [
       {
         label: "Market Growth",
-        data: labels.map((_, i) => marketGrowth + i * 2), // Example transformation
+        data: generateRandomData(marketGrowth, labels.length),
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderColor: "rgba(255, 99, 132, 1)",
         fill: false,
       },
       {
         label: "Operational Efficiency",
-        data: labels.map((_, i) => operationalEfficiency + i * 3), // Example transformation
+        data: generateRandomData(operationalEfficiency, labels.length),
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         borderColor: "rgba(53, 162, 235, 1)",
         fill: false,
