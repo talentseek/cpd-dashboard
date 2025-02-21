@@ -20,11 +20,10 @@ function constructFullUrl(relativePath: string): string {
 // ============ 1) Fetch client by subdomain
 async function fetchClientByHost(host: string) {
   console.log('DEBUG: Looking for client with subdomain =', host);
-
   const { data: client, error } = await supabase
     .from('clients')
     .select('*')
-    .eq('subdomain', host) // must match exactly what's in the DB
+    .eq('subdomain', host)
     .single();
 
   if (error) {
@@ -42,12 +41,7 @@ async function fetchLeadDataForClient(
   companyName: string,
   clientId: number
 ) {
-  console.log('DEBUG: fetchLeadDataForClient =>', {
-    firstName,
-    surnameInitial,
-    companyName,
-    clientId,
-  });
+  console.log('DEBUG: fetchLeadDataForClient =>', { firstName, surnameInitial, companyName, clientId });
   const { data: leads, error } = await supabase
     .from('leads')
     .select('*')
@@ -86,7 +80,7 @@ async function fetchClientData(clientId: number) {
 }
 
 // ============ Example: revalidate after 7 days
-export const revalidate = 604800; // 7 * 24 * 60 * 60
+export const revalidate = 604800; // 7 days in seconds
 
 // ============ 4) Generate dynamic metadata (optional)
 export const generateMetadata = async ({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> => {
@@ -131,9 +125,11 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
     };
   }
 
+  // Merge personalization JSON into a "custom" object in replacements.
   const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
+    custom: leadData.personalization || {}  // This dynamically contains any key such as mission, industry, usp, etc.
   };
 
   const ogTitle =
@@ -196,12 +192,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     return <div>Unable to load client data from client_content table.</div>;
   }
 
+  // Merge personalization JSON into the replacements under a "custom" key
   const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
+    custom: leadData.personalization || {}
   };
 
-  // Check the client record rather than clientData for landing page type/template
+  // Check the client record for landing page type/template
   if (client.landing_page_type === "custom" && client.landing_page_template === "proforecast") {
     return (
       <>
