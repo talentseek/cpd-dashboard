@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import InteractiveCard from '@/components/InteractiveCard'
 import { ArrowRight } from "lucide-react"
 import FloatingNav from "@/components/FloatingNav"
 import FullScreenSection from "@/components/FullScreenSection"
@@ -10,50 +11,27 @@ import TerrainMap from "@/components/TerrainMap"
 import WhatIfScenarios from "@/components/WhatIfScenarios"
 import IntegrationSection from "@/components/IntegrationSection"
 import TransformationSection from "@/components/TransformationSection"
-import { useState } from "react"
 import Link from "next/link"
 
 // Dynamically import AnimatedBackground without SSR
 const AnimatedBackground = dynamic(() => import("@/components/AnimatedBackground"), { ssr: false })
 
-// InteractiveCard Component with conditional z-index
-interface InteractiveCardProps {
-  title: string
-  description: string
-  imageSrc: string
+type ClientData = object; // Using object type instead of empty interface
+
+interface ProForecastLandingPageProps {
+clientData: ClientData;
+replacements: {
+    first_name: string;
+    company: string;
+    // Optionally add more custom fields (mission, industry, usp, etc.)
+  };
 }
 
-const InteractiveCard: React.FC<InteractiveCardProps> = ({ title, description, imageSrc }) => {
-  const [enlarged, setEnlarged] = useState(false)
-  const toggleEnlarge = () => setEnlarged((prev) => !prev)
-
-  return (
-    <div
-      onClick={toggleEnlarge}
-      className={`group relative bg-[#0654c4]/80 backdrop-blur-md p-6 rounded-lg overflow-hidden cursor-pointer transform transition-transform duration-300 ${
-        enlarged ? "scale-150 z-50" : "scale-100 z-0"
-      }`}
-    >
-      <Image
-        src={imageSrc}
-        alt={title}
-        fill
-        className="object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-      />
-      <div className="relative z-10 transition-opacity duration-300 group-hover:opacity-0">
-        <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">{title}</h3>
-        <p className="text-white">{description}</p>
-      </div>
-    </div>
-  )
-}
-
-export default function LandingPage() {
+export default function ProForecastLandingPage({ clientData, replacements }: ProForecastLandingPageProps) {
   return (
     <div className="bg-[#00334B] text-white">
       <FloatingNav />
-
-      {/* Header with logo */}
+      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#00334B]/80 backdrop-blur-md">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Image src="/images/abm/proforecast/logo.svg" alt="ProForecast Logo" width={150} height={20} />
@@ -68,11 +46,11 @@ export default function LandingPage() {
         <AnimatedBackground />
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h1 className="text-5xl font-bold mb-6 animate-fade-in-up">
-            Hello <span className="text-[#9dc423]">{"{first_name}"}</span>, Welcome to your Financial Odyssey at{" "}
-            <span className="text-[#67b1e3]">{"{company}"}</span>
+            Hello <span className="text-[#9dc423]">{replacements.first_name}</span>, Welcome to your Financial Odyssey at{" "}
+            <span className="text-[#67b1e3]">{replacements.company}</span>
           </h1>
           <p className="text-xl animate-fade-in-up animation-delay-300 mb-8">
-            Embark on a journey of financial transformation where data drives decisions and precision paves the way to success.
+            Embark on a journey of financial transformation where data drives decisions and precision creates opportunities.
           </p>
           <Button
             className="animate-fade-in-up animation-delay-600 bg-[#f29102] hover:bg-[#f29102]/90 text-white"
@@ -88,9 +66,8 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Your Vision & Mission</h2>
           <p className="text-xl mb-12">
-            At <span className="text-[#9ecc3b]">{"{company}"}</span>, your mission—<span className="text-[#c4d0ff]">{"{custom.mission}"}</span>—
-            is not only to drive innovation, but to lead the industry in <span className="text-[#9ecc3b]">{"{custom.industry}"}</span>.
-            Imagine a future where every financial decision is powered by real-time insights and proactive strategies.
+            At <span className="text-[#9ecc3b]">{replacements.company}</span>, your mission—{"{custom.mission}"}—drives every decision.
+            Imagine a future where every financial action is powered by real-time insights and smart, proactive strategies.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
@@ -116,34 +93,36 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Mapping the Landscape: Challenges & Opportunities</h2>
           <p className="text-xl mb-12">
-            Navigate the complex terrain of <span className="text-[#9ecc3b]">{"{custom.industry}"}</span> with precision and foresight,
+            Navigate the complex terrain of {"{custom.industry}"} with precision and foresight,
             uncovering hidden risks and emerging opportunities that impact your bottom line.
           </p>
+          {/* Assuming TerrainMap is used here */}
           <TerrainMap />
         </div>
       </FullScreenSection>
 
-      {/* 4. What-If Scenarios: Explore Your Future Possibilities */}
+      {/* 4. What-If Scenarios */}
       <FullScreenSection id="scenarios" className="bg-gradient-to-b from-[#0654c4] to-[#00334B]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">What-If Scenarios: Explore Your Future Possibilities</h2>
           <p className="text-xl mb-12">
             What if you could predict the impact of every decision? Explore multiple future scenarios—from market shifts to operational tweaks—
-            and visualize how each possibility reshapes <span className="text-[#9ecc3b]">{"{company}"}</span>&apos;s financial trajectory.
+            and visualize how each possibility reshapes {replacements.company}&apos;s financial trajectory.
           </p>
           <WhatIfScenarios />
         </div>
       </FullScreenSection>
 
-      {/* 5. Transforming Data into Actionable Intelligence with Rollover & Click Enlargement */}
+      {/* 5. Transforming Data into Actionable Intelligence */}
       <FullScreenSection id="data" className="bg-[#00334B]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Transforming Data into Actionable Intelligence</h2>
           <p className="text-xl mb-12">
-            Unlock real-time, customized dashboards that convert raw data into strategic insights for <span className="text-[#9ecc3b]">{"{company}"}</span>.
+            Unlock real-time, customized dashboards that convert raw data into strategic insights for {replacements.company}.
             Leverage detailed analytics to recognize opportunities, manage risks, and drive sustainable growth.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Example Interactive Cards */}
             <InteractiveCard
               title="Revenue Insights"
               description="Accurately track revenue trends and forecast growth with real-time data."
@@ -169,8 +148,8 @@ export default function LandingPage() {
           <h2 className="text-4xl font-bold mb-8">Your Unique Financial Blueprint</h2>
           <p className="text-xl mb-12">
             Discover a tailor-made financial blueprint that leverages your strengths – like your industry-leading {"{custom.usp}"} –
-            and positions <span className="text-[#9ecc3b]">{"{company}"}</span> as a leader in <span className="text-[#9ecc3b]">{"{custom.industry}"}</span>.
-            Our solution drives innovation, improves forecasting accuracy, and unlocks long-term value.
+            and positions {replacements.company} as a leader in {"{custom.industry}"}. Our solution drives innovation,
+            improves forecasting accuracy, and unlocks long-term value.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
@@ -217,10 +196,9 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Driving Financial Mastery & Strategic Transformation</h2>
           <p className="text-xl mb-12">
-            Imagine a world where every decision is backed by precise, forward-looking insights. At <span className="text-[#9ecc3b]">{"{company}"}</span>, these insights empower you to navigate uncertainty,
+            Imagine a world where every decision is backed by precise, forward-looking insights. At {replacements.company}, these insights empower you to navigate uncertainty,
             optimize cash flow, and drive transformative growth.
           </p>
-          {/* New KPMG Data Block */}
           <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg text-left mb-12">
             <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">The Power of Accurate Forecasting</h3>
             <ul className="list-disc list-inside text-white space-y-2">
@@ -242,7 +220,6 @@ export default function LandingPage() {
       {/* 9. Call-to-Action – Begin Your Transformation */}
       <FullScreenSection id="cta" className="bg-[#00334B]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          {/* Embedded Vimeo Video at the Top */}
           <div className="mb-8">
             <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg">
               <iframe
@@ -255,9 +232,9 @@ export default function LandingPage() {
               ></iframe>
             </div>
           </div>
-          <h2 className="text-4xl font-bold mb-8">Begin Your Transformation, {"{first_name}"}!</h2>
+          <h2 className="text-4xl font-bold mb-8">Begin Your Transformation, {replacements.first_name}!</h2>
           <p className="text-xl mb-12">
-            Take the first step towards transforming <span className="text-[#9dc423]">{"{company}"}</span>&apos;s financial future.
+            Take the first step towards transforming {replacements.company}&apos;s financial future.
             Begin your personalized journey to strategic clarity and operational excellence today.
           </p>
           <Button variant="default" size="lg" className="bg-[#f29102] hover:bg-[#f29102]/90 text-white">
@@ -271,7 +248,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Your Continuous Journey</h2>
           <p className="text-xl mb-12">
-            Every day brings new opportunities. Let ProForecast be your trusted partner in transforming challenges into actionable insights and turning potential into performance at <span className="text-[#67b1e3]">{"{company}"}</span>.
+            Every day brings new opportunities. Let ProForecast be your trusted partner in transforming challenges into actionable insights and turning potential into performance at <span className="text-[#67b1e3]">{replacements.company}</span>.
           </p>
           <Link href="https://proforecast.com/tutorials/" target="_blank" legacyBehavior>
             <a>

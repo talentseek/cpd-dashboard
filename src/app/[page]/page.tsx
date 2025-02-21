@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
+import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Import your custom template component
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -19,11 +20,10 @@ function constructFullUrl(relativePath: string): string {
 // ============ 1) Fetch client by subdomain
 async function fetchClientByHost(host: string) {
   console.log('DEBUG: Looking for client with subdomain =', host);
-
   const { data: client, error } = await supabase
     .from('clients')
     .select('*')
-    .eq('subdomain', host) // must match exactly what's in the DB
+    .eq('subdomain', host)
     .single();
 
   if (error) {
@@ -41,12 +41,7 @@ async function fetchLeadDataForClient(
   companyName: string,
   clientId: number
 ) {
-  console.log('DEBUG: fetchLeadDataForClient =>', {
-    firstName,
-    surnameInitial,
-    companyName,
-    clientId,
-  });
+  console.log('DEBUG: fetchLeadDataForClient =>', { firstName, surnameInitial, companyName, clientId });
   const { data: leads, error } = await supabase
     .from('leads')
     .select('*')
@@ -59,7 +54,6 @@ async function fetchLeadDataForClient(
     return null;
   }
 
-  // find the one that has a matching normalized company
   const matchingLead = leads.find((lead) => {
     const dbCompanyName = normalizeString(lead.company);
     return dbCompanyName === normalizeString(companyName);
@@ -86,33 +80,22 @@ async function fetchClientData(clientId: number) {
 }
 
 // ============ Example: revalidate after 7 days
-export const revalidate = 604800; // 7 * 24 * 60 * 60
+export const revalidate = 604800; // 7 days in seconds
 
 // ============ 4) Generate dynamic metadata (optional)
 export const generateMetadata = async ({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> => {
   const { page } = await params;
-const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
-const headersList = await headers();
-const host = headersList.get('host') ?? '';
-console.log('DEBUG: generateMetadata => host =', host);
+  const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
+  const headersList = await headers();
+  const host = headersList.get('host') ?? '';
+  console.log('DEBUG: generateMetadata => host =', host);
 
-  // If the user is on your main domain and you want fallback:
   if (host === 'app.costperdemo.com') {
-    // EITHER do old logic, or skip subdomain matching, or set defaultClientId
-    // For example:
     console.log('DEBUG: On main domain => fallback logic...');
-    // If you skip subdomain logic entirely here, you might do your older approach:
-    //   1) Just fetch all leads matching the name
-    //   2) pick the first that matches the company
-    //   3) (No eq('client_id', X))
-    // This code is omitted for brevity. 
-    // We'll continue with subdomain approach for everything else...
   }
 
-  // Otherwise do subdomain approach
   const client = await fetchClientByHost(host);
   if (!client) {
-    // Return some minimal error metadata
     return {
       title: 'Error loading data',
       description: `No client found for subdomain: ${host}`,
@@ -124,7 +107,6 @@ console.log('DEBUG: generateMetadata => host =', host);
     };
   }
 
-  // fetch the lead
   const leadData = await fetchLeadDataForClient(firstName, surnameInitial, companyName, client.id);
   if (!leadData) {
     return {
@@ -134,7 +116,6 @@ console.log('DEBUG: generateMetadata => host =', host);
     };
   }
 
-  // fetch client content
   const clientData = await fetchClientData(client.id);
   if (!clientData) {
     return {
@@ -144,13 +125,11 @@ console.log('DEBUG: generateMetadata => host =', host);
     };
   }
 
-  // Build final metadata
   const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
   };
 
-  // Example: use placeholders in the hero title, or fallback if missing
   const ogTitle =
     clientData.hero?.title
       ?.replace(/{first_name}/g, replacements.first_name)
@@ -188,45 +167,46 @@ console.log('DEBUG: generateMetadata => host =', host);
 export default async function Page({ params }: { params: Promise<{ page: string }> }) {
   const { page } = await params;
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
+  const headersList = await headers();
+  const host = headersList.get('host') ?? '';
+  console.log('DEBUG: Page => host =', host);
 
-// 1) Determine host
-const headersList = await headers();
-const host = headersList.get('host') ?? '';
-console.log('DEBUG: Page => host =', host);
-
-  // 2) (Optional) Fallback if on main domain
+  // Optional fallback if on main domain
   if (host === 'app.costperdemo.com') {
-    console.log('DEBUG: main domain fallback => either do old logic or custom approach');
-    // If you want to keep the old logic for old links,
-    // you could do your original fetchLeadData with no eq('client_id'...) etc. 
-    // For brevity, skip that approach here. 
-    // We'll continue subdomain approach for everything else...
+    console.log('DEBUG: main domain fallback => custom approach');
   }
 
-  // 3) Find the matching client by subdomain
   const client = await fetchClientByHost(host);
   if (!client) {
     return <div>No matching client found for subdomain: {host}</div>;
   }
 
-  // 4) Now fetch the lead (client restricted)
   const leadData = await fetchLeadDataForClient(firstName, surnameInitial, companyName, client.id);
   if (!leadData) {
     return <div>Unable to load lead data. Possibly no match for this client + page slug.</div>;
   }
 
-  // 5) Fetch the client content
   const clientData = await fetchClientData(client.id);
   if (!clientData) {
     return <div>Unable to load client data from client_content table.</div>;
   }
 
-  // 6) Render the ABM page
   const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
   };
 
+  // Conditional rendering: check if the client should use a custom landing page
+  if (clientData.landing_page_type === "custom" && clientData.landing_page_template === "proforecast") {
+    return (
+      <>
+        <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+        <ProForecastLandingPage clientData={clientData} replacements={replacements} />
+      </>
+    );
+  }
+
+  // Otherwise, render the default landing page
   return (
     <>
       <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
