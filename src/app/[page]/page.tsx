@@ -2,22 +2,20 @@
 
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
-import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Import your custom template component
+import ProForecastLandingPage from '@/components/ProForecastLandingPage';
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
 import { headers } from 'next/headers';
 
-// ============ Utility: Construct full URL for OG Image
 function constructFullUrl(relativePath: string): string {
   if (relativePath.startsWith('http')) {
-    return relativePath; // Already absolute
+    return relativePath;
   }
   const domain = process.env.NEXT_PUBLIC_DOMAIN || 'app.costperdemo.com';
   return `https://${domain}${relativePath.startsWith('/') ? '' : '/'}${relativePath}`;
 }
 
-// ============ 1) Fetch client by subdomain
 async function fetchClientByHost(host: string) {
   console.log('DEBUG: Looking for client with subdomain =', host);
   const { data: client, error } = await supabase
@@ -34,7 +32,6 @@ async function fetchClientByHost(host: string) {
   return client;
 }
 
-// ============ 2) Fetch a single lead for that client
 async function fetchLeadDataForClient(
   firstName: string,
   surnameInitial: string,
@@ -65,7 +62,6 @@ async function fetchLeadDataForClient(
   return matchingLead || null;
 }
 
-// ============ 3) Fetch client content from client_content
 async function fetchClientData(clientId: number) {
   const { data: clientData, error: clientDataError } = await supabase
     .from('client_content')
@@ -79,10 +75,8 @@ async function fetchClientData(clientId: number) {
   return clientData || null;
 }
 
-// ============ Example: revalidate after 7 days
-export const revalidate = 604800; // 7 days in seconds
+export const revalidate = 604800;
 
-// ============ 4) Generate dynamic metadata (optional)
 export const generateMetadata = async ({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> => {
   const { page } = await params;
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
@@ -125,11 +119,11 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
     };
   }
 
-  // Merge personalization JSON into a "custom" object in replacements.
+  // Here we merge the personalization JSON into a "custom" key in replacements.
   const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
-    custom: leadData.personalization || {}  // This dynamically contains any key such as mission, industry, usp, etc.
+    custom: leadData.personalization || {}
   };
 
   const ogTitle =
@@ -165,7 +159,6 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
   };
 };
 
-// ============ 5) The main Page component
 export default async function Page({ params }: { params: Promise<{ page: string }> }) {
   const { page } = await params;
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
@@ -192,14 +185,13 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     return <div>Unable to load client data from client_content table.</div>;
   }
 
-  // Merge personalization JSON into the replacements under a "custom" key
   const replacements = {
     first_name: leadData.first_name || 'Guest',
     company: leadData.company || 'Your Company',
     custom: leadData.personalization || {}
   };
 
-  // Check the client record for landing page type/template
+  // Use the client's own landing_page_type and landing_page_template fields to determine which template to render.
   if (client.landing_page_type === "custom" && client.landing_page_template === "proforecast") {
     return (
       <>
@@ -209,7 +201,6 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     );
   }
 
-  // Otherwise, render the default ABM landing page
   return (
     <>
       <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
