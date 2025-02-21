@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import InteractiveCard from "@/components/InteractiveCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import FloatingNav from "@/components/FloatingNav";
@@ -140,18 +141,30 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         </div>
       </FullScreenSection>
 
-      {/* 5. Transforming Data into Actionable Intelligence */}
+      {/* 5. Transforming Data into Actionable Intelligence with Rollover & Click Enlargement */}
       <FullScreenSection id="data" className="bg-[#00334B]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Transforming Data into Actionable Intelligence</h2>
           <p className="text-xl mb-12">
-            <ReplaceText
-              text="Unlock real-time, customized dashboards that convert raw data into strategic insights for {company}. Leverage detailed analytics to recognize opportunities, manage risks, and drive sustainable growth."
-              replacements={replacements}
-            />
+            Unlock real-time, customized dashboards that convert raw data into strategic insights for <span className="text-[#9ecc3b]">{"{company}"}</span>.
+            Leverage detailed analytics to recognize opportunities, manage risks, and drive sustainable growth.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Insert your InteractiveCard components here */}
+            <InteractiveCard
+              title="Revenue Insights"
+              description="Accurately track revenue trends and forecast growth with real-time data."
+              imageSrc="/images/abm/proforecast/dashboards/sales.jpeg"
+            />
+            <InteractiveCard
+              title="Expense Analysis"
+              description="Identify cost drivers and optimize spending patterns with detailed breakdowns."
+              imageSrc="/images/abm/proforecast/dashboards/budget.jpg"
+            />
+            <InteractiveCard
+              title="Cash Flow Projections"
+              description="Anticipate future cash flows and mitigate risks with predictive modeling."
+              imageSrc="/images/abm/proforecast/dashboards/pl.jpg"
+            />
           </div>
         </div>
       </FullScreenSection>
