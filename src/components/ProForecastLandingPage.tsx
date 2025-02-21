@@ -1,18 +1,22 @@
 "use client"
 
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
-import FloatingNav from "@/components/FloatingNav"
-import FullScreenSection from "@/components/FullScreenSection"
-import TerrainMap from "@/components/TerrainMap"
-import WhatIfScenarios from "@/components/WhatIfScenarios"
-import IntegrationSection from "@/components/IntegrationSection"
-import TransformationSection from "@/components/TransformationSection"
-import Link from "next/link"
-import { ReplaceText } from "@/components/ReplaceText"
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import FloatingNav from "@/components/FloatingNav";
+import FullScreenSection from "@/components/FullScreenSection";
+import TerrainMap from "@/components/TerrainMap";
+import WhatIfScenarios from "@/components/WhatIfScenarios";
+import IntegrationSection from "@/components/IntegrationSection";
+import TransformationSection from "@/components/TransformationSection";
+import Link from "next/link";
+import { ReplaceText } from "@/components/ReplaceText";
 
+// Dynamically import AnimatedBackground without SSR
+const AnimatedBackground = dynamic(() => import("@/components/AnimatedBackground"), { ssr: false });
+
+// Define the types for replacements
 export interface CustomReplacements {
 first_name: string;
 company: string;
@@ -25,27 +29,31 @@ custom: {
 }
 
 interface ClientData {
-id: string;
-name: string;
-email: string;
+  id: string;
+  name: string;
+  email: string;
+  // Add any additional fields as needed
 }
 
-// Dynamically import AnimatedBackground without SSR
-const AnimatedBackground = dynamic(() => import("@/components/AnimatedBackground"), { ssr: false })
-
 interface ProForecastLandingPageProps {
-clientData: ClientData;
-replacements: CustomReplacements;
+  clientData: ClientData;
+  replacements: CustomReplacements;
 }
 
 export default function ProForecastLandingPage({ clientData, replacements }: ProForecastLandingPageProps) {
   return (
     <div className="bg-[#00334B] text-white">
       <FloatingNav />
+
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#00334B]/80 backdrop-blur-md">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Image src="/images/abm/proforecast/logo.svg" alt="ProForecast Logo" width={150} height={20} />
+          <Image
+            src="/images/abm/proforecast/logo.svg"
+            alt="ProForecast Logo"
+            width={150}
+            height={20}
+          />
           <Button variant="default" size="sm" className="bg-[#f29102] hover:bg-[#f29102]/90 text-white">
             Book a Demo
           </Button>
@@ -85,17 +93,153 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
               replacements={replacements}
             />
           </p>
-          {/* Other sections remain unchanged */}
-          {/* ... */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4 text-[#9ecc3b]">Purpose</h3>
+              <p className="text-white">Drive financial innovation with cutting-edge tools and strategic foresight.</p>
+            </div>
+            <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4 text-[#9ecc3b]">Vision</h3>
+              <p className="text-white">Shape a future where data and insight fuel growth and long-term value.</p>
+            </div>
+            <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4 text-[#9ecc3b]">Strategy</h3>
+              <p className="text-white">
+                Transform challenges into opportunities through precise forecasting and detailed scenario planning.
+              </p>
+            </div>
+          </div>
         </div>
       </FullScreenSection>
 
-      {/* ... (Other sections, updated similarly if needed) ... */}
+      {/* 3. Mapping the Landscape: Challenges & Opportunities */}
+      <FullScreenSection id="landscape" className="bg-[#0654c4]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-8">Mapping the Landscape: Challenges & Opportunities</h2>
+          <p className="text-xl mb-12">
+            <ReplaceText
+              text="Navigate the complex terrain of {custom.industry} with precision and foresight, uncovering hidden risks and emerging opportunities that impact your bottom line."
+              replacements={replacements}
+            />
+          </p>
+          <TerrainMap />
+        </div>
+      </FullScreenSection>
+
+      {/* 4. What-If Scenarios: Explore Your Future Possibilities */}
+      <FullScreenSection id="scenarios" className="bg-gradient-to-b from-[#0654c4] to-[#00334B]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-8">What-If Scenarios: Explore Your Future Possibilities</h2>
+          <p className="text-xl mb-12">
+            <ReplaceText
+              text="What if you could predict the impact of every decision? Explore multiple future scenarios—from market shifts to operational tweaks—and visualize how each possibility reshapes {company}'s financial trajectory."
+              replacements={replacements}
+            />
+          </p>
+          <WhatIfScenarios />
+        </div>
+      </FullScreenSection>
+
+      {/* 5. Transforming Data into Actionable Intelligence */}
+      <FullScreenSection id="data" className="bg-[#00334B]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-8">Transforming Data into Actionable Intelligence</h2>
+          <p className="text-xl mb-12">
+            <ReplaceText
+              text="Unlock real-time, customized dashboards that convert raw data into strategic insights for {company}. Leverage detailed analytics to recognize opportunities, manage risks, and drive sustainable growth."
+              replacements={replacements}
+            />
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Insert your InteractiveCard components here */}
+          </div>
+        </div>
+      </FullScreenSection>
+
+      {/* 6. Your Unique Financial Blueprint */}
+      <FullScreenSection id="blueprint" className="bg-gradient-to-b from-[#00334B] to-[#0654c4]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-8">Your Unique Financial Blueprint</h2>
+          <p className="text-xl mb-12">
+            <ReplaceText
+              text="Discover a tailor-made financial blueprint that leverages your strengths – like your industry-leading {custom.usp} – and positions {company} as a leader in {custom.industry}. Our solution drives innovation, improves forecasting accuracy, and unlocks long-term value."
+              replacements={replacements}
+            />
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">Core Strengths</h3>
+              <ul className="list-disc list-inside animate-list text-white">
+                <li>{'{custom.usp}'}</li>
+                <li>Innovative financial strategies</li>
+                <li>Robust risk management</li>
+              </ul>
+            </div>
+            <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">Key Products</h3>
+              <ul className="list-disc list-inside animate-list text-white">
+                <li>Real-time financial dashboards</li>
+                <li>Predictive analytics tools</li>
+                <li>Automated reporting systems</li>
+              </ul>
+            </div>
+            <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg">
+              <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">Strategic Objectives</h3>
+              <ul className="list-disc list-inside animate-list text-white">
+                <li>Increase operational efficiency</li>
+                <li>Enhance decision-making accuracy</li>
+                <li>Drive sustainable growth</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </FullScreenSection>
+
+      {/* 7. Seamless Integration & Intelligent Automation */}
+      <FullScreenSection id="integration" className="bg-[#0654c4]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-8">Seamless Integration & Intelligent Automation</h2>
+          <p className="text-xl mb-12">
+            <ReplaceText
+              text="Experience a unified platform that streamlines your operations, automates routine processes, and empowers you to focus on what truly matters: strategic leadership."
+              replacements={replacements}
+            />
+          </p>
+          <IntegrationSection />
+        </div>
+      </FullScreenSection>
+
+      {/* 8. Driving Financial Mastery & Strategic Transformation */}
+      <FullScreenSection id="transformation" className="bg-gradient-to-b from-[#0654c4] to-[#00334B]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-8">Driving Financial Mastery & Strategic Transformation</h2>
+          <p className="text-xl mb-12">
+            <ReplaceText
+              text="Imagine a world where every decision is backed by precise, forward-looking insights. At {company}, these insights empower you to navigate uncertainty, optimize cash flow, and drive transformative growth."
+              replacements={replacements}
+            />
+          </p>
+          <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg text-left mb-12">
+            <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">The Power of Accurate Forecasting</h3>
+            <ul className="list-disc list-inside text-white space-y-2">
+              <li>Only 1 in 5 senior executives produce accurate forecasts.</li>
+              <li>On average, forecasts deviate by 13%.</li>
+              <li>Poor forecasting erodes investor confidence and share prices.</li>
+              <li>Organizations with forecasts within 5% accuracy experience share price increases.</li>
+              <li>Accurate forecasting enables better risk management, opportunity recognition, and milestone setting.</li>
+              <li>Leaders who reward forecast accuracy and employ advanced scenario planning achieve superior performance.</li>
+            </ul>
+            <p className="mt-4 text-sm text-gray-300">
+              Source: KPMG survey of 540 senior executives (including 168 CFOs)
+            </p>
+          </div>
+          <TransformationSection />
+        </div>
+      </FullScreenSection>
 
       {/* 9. Call-to-Action – Begin Your Transformation */}
       <FullScreenSection id="cta" className="bg-[#00334B]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          {/* Embedded Vimeo Video at the Top */}
           <div className="mb-8">
             <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg">
               <iframe
