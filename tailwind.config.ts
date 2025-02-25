@@ -50,6 +50,11 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        aapoon: {
+          DEFAULT: "#E25630",
+          light: "#FF7B57",
+          dark: "#B33D1E",
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

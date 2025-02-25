@@ -2,12 +2,12 @@
 
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
-import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Custom template component
+import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Custom ProForecast template
+import AapoonDynamicLanding from '@/components/AapoonLandingPage'; // Custom Aapoon template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
 import { headers } from 'next/headers';
-
 
 // ============ Utility: Construct full URL for OG Image
 function constructFullUrl(relativePath: string): string {
@@ -132,11 +132,12 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
     };
   }
 
-  const replacements = {
-    first_name: leadData.first_name || 'Guest',
-    company: leadData.company || 'Your Company',
-    custom: leadData.personalization || {}
-  };
+const replacements = {
+first_name: leadData.first_name || 'Guest',
+company: leadData.company || 'Your Company',
+custom: leadData.personalization || {},
+vc: leadData.vc || {}
+};
 
   const ogTitle =
     clientData.hero?.title
@@ -198,20 +199,31 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     return <div>Unable to load client data from client_content table.</div>;
   }
 
-  const replacements = {
-    first_name: leadData.first_name || 'Guest',
-    company: leadData.company || 'Your Company',
-    custom: leadData.personalization || {}
-  };
+const replacements = {
+first_name: leadData.first_name || 'Guest',
+company: leadData.company || 'Your Company',
+custom: leadData.personalization || {},
+vc: leadData.vc || {}
+};
 
-  // Check the client record for landing page type/template
-  if (client.landing_page_type === "custom" && client.landing_page_template === "proforecast") {
-    return (
-      <>
-        <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
-        <ProForecastLandingPage clientData={clientData} replacements={replacements} />
-      </>
-    );
+  // Check the client record for landing page type/template.
+  if (client.landing_page_type === "custom") {
+    if (client.landing_page_template === "proforecast") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <ProForecastLandingPage clientData={clientData} replacements={replacements} />
+        </>
+      );
+    }
+    if (client.landing_page_template === "aapoon") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <AapoonDynamicLanding replacements={replacements} />
+        </>
+      );
+    }
   }
 
   // Otherwise, render the default ABM landing page
