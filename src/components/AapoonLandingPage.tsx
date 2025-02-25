@@ -251,13 +251,10 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
               <h2 className="text-4xl font-bold text-white mb-8">Ready to Join Our Journey?</h2>
               <div className="space-y-4">
                 <Button size="lg" variant="default" className="w-full py-6 text-xl">
-                  Request Investor Presentation
+                  Download Investor Presentation
                 </Button>
                 <Button size="lg" variant="outline" className="w-full py-6 text-xl">
-                  Schedule a Demo
-                </Button>
-                <Button size="lg" variant="secondary" className="w-full py-6 text-xl">
-                  Contact Investment Team
+                  Schedule an Introduction
                 </Button>
               </div>
               <p className="text-white/80 text-lg">
