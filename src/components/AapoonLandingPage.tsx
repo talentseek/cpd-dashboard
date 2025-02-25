@@ -9,21 +9,21 @@ import Link from "next/link"
 import { ReplaceText } from "@/components/ReplaceText"
 
 interface Replacements {
-first_name: string;
-company: string;
-vc: {
+  first_name: string;
+  company: string;
+  vc: {
     tagline: string;
     investmentFocus: string;
     fundSize: string;
-};
-custom: {
+  };
+  custom: {
     mission: string;
     industry: string;
     usp: string;
     investment: string;
     technology: string;
     marketSize: string;
-};
+  };
 }
 
 // Default dynamic placeholders (for testing/demo purposes)
@@ -118,14 +118,14 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                 />
               </motion.div>
               <h1 className="text-5xl font-bold text-white mb-6">
-                Welcome to the Future of Secure Communication
+                <ReplaceText text="Hi {first_name}, Welcome to the Future of Secure Communication" replacements={replacements} />
               </h1>
               <p className="text-xl text-white/90 max-w-3xl mx-auto">
                 In a world of rising cyber threats and data breaches, Aapoon provides B2B and B2G organizations with secure, sovereign messaging solutions that ensure complete data control and compliance.
               </p>
               <div className="flex justify-center gap-4 mt-8">
                 <Button size="lg" className="text-lg">
-                  Explore Investment Opportunity <ArrowRight className="ml-2" />
+                  <ReplaceText text="Explore Investment Opportunity for {company}" replacements={replacements} /> <ArrowRight className="ml-2" />
                 </Button>
               </div>
             </div>
