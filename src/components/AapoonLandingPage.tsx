@@ -248,7 +248,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
 
           {currentSection === 5 && (
             <div className="max-w-4xl mx-auto text-center space-y-8">
-              <h2 className="text-4xl font-bold text-white mb-8">Ready to Join Our Journey?</h2>
+              <h2 className="text-4xl font-bold text-white mb-8">Ready to Join Our Journey</h2>
               <div className="space-y-4">
                 <Button size="lg" variant="default" className="w-full py-6 text-xl">
                   Download Investor Presentation
