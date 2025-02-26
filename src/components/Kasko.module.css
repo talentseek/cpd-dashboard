@@ -1,0 +1,89 @@
+/* Kasko.module.css */
+
+.header {
+  @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white h-screen overflow-hidden;
+}
+
+.nav {
+  @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300;
+}
+
+.navScrolled {
+  @apply bg-white/90 backdrop-blur-md shadow-md py-2;
+}
+
+.navTransparent {
+  @apply bg-transparent py-4;
+}
+
+.navLink {
+  @apply text-sm font-medium text-gray-600 hover:text-[#ECBB2C] transition-colors;
+}
+
+.getStartedButton {
+  @apply bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black;
+}
+
+.heroSection {
+  @apply pt-32 pb-16 md:pt-40 md:pb-24;
+}
+
+.heroContainer {
+  @apply container mx-auto px-4;
+}
+
+.heroGrid {
+  @apply grid lg:grid-cols-2 gap-12 items-center;
+}
+
+.heroText {
+  @apply space-y-6;
+}
+
+.heroTitle {
+  @apply text-5xl font-bold text-white mb-6;
+}
+
+.heroSubtitle {
+  @apply text-2xl md:text-3xl text-muted-foreground font-medium;
+}
+
+.heroDescription {
+  @apply text-xl text-white/90 max-w-3xl mx-auto;
+}
+
+.ctaButton {
+  @apply text-lg bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black;
+}
+
+.sectionTitle {
+  @apply text-4xl font-bold text-white mb-8;
+}
+
+.sectionContainer {
+  @apply container mx-auto px-4;
+}
+
+.sectionTextCenter {
+  @apply text-center;
+}
+
+.card {
+  @apply p-6 bg-white/10 backdrop-blur rounded-xl;
+}
+
+.benefitItem {
+  @apply flex items-center gap-2 text-white/80;
+}
+
+.valueImage {
+  @apply relative rounded-2xl object-cover;
+}
+
+.ctaSection {
+  @apply bg-muted/50 px-6 py-24 lg:px-8;
+}
+
+.footer {
+  @apply border-t bg-white;
+}

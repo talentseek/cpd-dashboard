@@ -1,7 +1,13 @@
 // src/components/ReplaceText.tsx
 import React from "react";
 
-import { CustomReplacements } from "./ProForecastLandingPage";
+/**
+* Interface for custom text replacements
+* This allows for nested objects with string values
+*/
+export interface CustomReplacements {
+[key: string]: string | number | boolean | CustomReplacements;
+}
 
 interface ReplaceTextProps {
 text: string;

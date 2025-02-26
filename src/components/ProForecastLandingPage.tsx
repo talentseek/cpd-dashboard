@@ -12,28 +12,17 @@ import WhatIfScenarios from "@/components/WhatIfScenarios";
 import IntegrationSection from "@/components/IntegrationSection";
 import TransformationSection from "@/components/TransformationSection";
 import Link from "next/link";
-import { ReplaceText } from "@/components/ReplaceText";
+import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 
 // Dynamically import AnimatedBackground without SSR
 const AnimatedBackground = dynamic(() => import("@/components/AnimatedBackground"), { ssr: false });
 
-// Define the types for replacements
-export interface CustomReplacements {
-first_name: string;
-company: string;
-custom: {
-    mission?: string;
-    industry?: string;
-    usp?: string;
-    [key: string]: string | undefined;
-};
-}
-
+// Using CustomReplacements interface imported from ReplaceText.tsx
 interface ClientData {
-  id: string;
-  name: string;
-  email: string;
-  // Add any additional fields as needed
+id: string;
+name: string;
+email: string;
+// Add any additional fields as needed
 }
 
 interface ProForecastLandingPageProps {
@@ -66,8 +55,8 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         <AnimatedBackground />
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h1 className="text-5xl font-bold mb-6 animate-fade-in-up">
-            Hello <span className="text-[#9dc423]">{replacements.first_name}</span>, Welcome to your Financial Odyssey at{" "}
-            <span className="text-[#67b1e3]">{replacements.company}</span>
+            Hello <span className="text-[#9dc423]">{String(replacements.first_name)}</span>, Welcome to your Financial Odyssey at{" "}
+            <span className="text-[#67b1e3]">{String(replacements.company)}</span>
           </h1>
           <p className="text-xl animate-fade-in-up animation-delay-300 mb-8">
             <ReplaceText
@@ -146,7 +135,7 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Transforming Data into Actionable Intelligence</h2>
           <p className="text-xl mb-12">
-            Unlock real-time, customized dashboards that convert raw data into strategic insights for <span className="text-[#9ecc3b]">{"{company}"}</span>.
+            Unlock real-time, customized dashboards that convert raw data into strategic insights for <span className="text-[#9ecc3b]">{String(replacements.company)}</span>.
             Leverage detailed analytics to recognize opportunities, manage risks, and drive sustainable growth.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Shield, Lock, Users, Globe, Cpu, ScrollText } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { ReplaceText } from "@/components/ReplaceText"
+import { ReplaceText, CustomReplacements } from "@/components/ReplaceText"
 
-interface Replacements {
+interface Replacements extends CustomReplacements {
   first_name: string;
   company: string;
   vc: {

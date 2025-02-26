@@ -4,21 +4,34 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { ArrowRight, Shield, Lock, Users, Globe, Cpu, ScrollText, Building2, CheckCircle, Timer, ShieldCheck } from "lucide-react"
+import {
+  ArrowRight,
+  Shield,
+  Lock,
+  Users,
+  Globe,
+  Cpu,
+  ScrollText,
+  Building2,
+  CheckCircle,
+  Timer,
+  ShieldCheck,
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { ReplaceText } from "@/components/ReplaceText"
+import { ReplaceText, CustomReplacements } from "@/components/ReplaceText"
+import styles from "./Kasko.module.css"
 
 interface Replacements {
-first_name: string;
-company: string;
-vc?: {
+  first_name: string;
+  company: string;
+  vc?: {
     tagline: string;
     investmentFocus: string;
     fundSize: string;
-};
-custom: {
+  };
+  custom?: {
     mission?: string;
     industry?: string;
     usp?: string;
@@ -26,26 +39,38 @@ custom: {
     technology?: string;
     marketSize?: string;
     [key: string]: string | undefined;
-};
+  };
 }
 
 // Default dynamic placeholders for testing/demo purposes
 const defaultReplacements: Replacements = {
-first_name: "{first_name}",
-company: "{company}",
-vc: {
+  first_name: "{first_name}",
+  company: "{company}",
+  vc: {
     tagline: "{vc.tagline}",
     investmentFocus: "{vc.investmentFocus}",
     fundSize: "{vc.fundSize}",
-},
-custom: {
+  },
+  custom: {
     mission: "{custom.mission}",
     industry: "{custom.industry}",
     usp: "{custom.usp}",
     investment: "{custom.investment}",
     technology: "{custom.technology}",
     marketSize: "{custom.marketSize}",
-},
+  },
+};
+
+// Helper function to filter out undefined values from an object
+// Helper function to filter out undefined values from an object
+const filterUndefined = (obj: Record<string, string | undefined> = {}) => {
+const filtered: Record<string, string> = {};
+for (const key in obj) {
+    if (obj[key] !== undefined) {
+    filtered[key] = obj[key] as string;
+    }
+}
+return filtered;
 };
 
 export default function KaskoLandingPage({ replacements = defaultReplacements }: { replacements?: Replacements }) {
@@ -84,19 +109,14 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
   }, [currentSection, sections.length])
 
   return (
-    <div className="h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className={styles.header}>
       {/* Floating Navigation */}
-      <nav
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isScrolled ? "bg-white/90 backdrop-blur-md shadow-md py-2" : "bg-transparent py-4"
-        )}
-      >
+      <nav className={cn(styles.nav, isScrolled ? styles.navScrolled : styles.navTransparent)}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <Link href="/">
               <Image
-                src="/kasko-logo.svg" // Replace with the actual KASKO logo
+                src="/kasko-logo.svg" // Replace with your actual KASKO logo
                 alt="KASKO"
                 width={140}
                 height={40}
@@ -105,16 +125,16 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
               />
             </Link>
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="#solutions" className="text-sm font-medium text-gray-600 hover:text-[#ECBB2C] transition-colors">
+              <Link href="#solutions" className={styles.navLink}>
                 Solutions
               </Link>
-              <Link href="#benefits" className="text-sm font-medium text-gray-600 hover:text-[#ECBB2C] transition-colors">
+              <Link href="#benefits" className={styles.navLink}>
                 Benefits
               </Link>
-              <Link href="#contact" className="text-sm font-medium text-gray-600 hover:text-[#ECBB2C] transition-colors">
+              <Link href="#contact" className={styles.navLink}>
                 Contact
               </Link>
-              <Button className="bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black">Get Started</Button>
+              <Button className={styles.getStartedButton}>Get Started</Button>
             </div>
           </div>
         </div>
@@ -141,18 +161,18 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
                   className="h-16 w-auto mx-auto mb-8"
                 />
               </motion.div>
-              <h1 className="text-5xl font-bold text-white mb-6">
-                <ReplaceText text="Hi {first_name}, does {company} have a Brexit solution in place?" replacements={replacements} />
-              </h1>
-              <h2 className="text-2xl md:text-3xl text-muted-foreground font-medium">
+            <h1 className={styles.heroTitle}>
+                <ReplaceText text="Hi {first_name}, does {company} have a Brexit solution in place?" replacements={{...replacements, custom: filterUndefined(replacements.custom)}} />
+            </h1>
+              <h2 className={styles.heroSubtitle}>
                 Your Gateway to EU Market Access
               </h2>
-              <p className="text-xl text-white/90 max-w-3xl mx-auto">
+              <p className={styles.heroDescription}>
                 We simplify the complexities of market expansion. KASKO offers a turnkey solution—from licensing and compliance to banking and tax—ensuring your seamless entry into the EU and UK markets.
               </p>
               <div className="flex justify-center gap-4 mt-8">
-                <Button size="lg" className="text-lg bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black">
-                  <ReplaceText text="Explore Investment Opportunity for {company}" replacements={replacements} /> <ArrowRight className="ml-2" />
+                <Button size="lg" className={styles.ctaButton}>
+                <ReplaceText text="Explore Investment Opportunity for {company}" replacements={{...replacements, custom: filterUndefined(replacements.custom)}} /> <ArrowRight className="ml-2" />
                 </Button>
               </div>
             </div>
@@ -161,28 +181,28 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
           {/* Section 1: Solutions */}
           {currentSection === 1 && (
             <div className="max-w-5xl mx-auto text-center space-y-8" id="solutions">
-              <h2 className="text-4xl font-bold text-white mb-8">
-                <ReplaceText text="Your Complete Brexit Solution for {company}" replacements={replacements} />
-              </h2>
+            <h2 className={styles.sectionTitle}>
+                <ReplaceText text="Your Complete Brexit Solution for {company}" replacements={{...replacements, custom: filterUndefined(replacements.custom)}} />
+            </h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                Since Brexit, we&#39;ve helped over 40 MGAs and brokers establish fully regulated intermediaries, enabling seamless EU and UK market entry.
+                Since Brexit, we’ve helped over 40 MGAs and brokers establish fully regulated intermediaries, enabling seamless EU and UK market entry.
               </p>
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                <Card className="p-6">
+                <Card className={styles.card}>
                   <Timer className="mb-4 h-8 w-8 text-[#ECBB2C]" />
                   <h3 className="mb-2 text-xl font-semibold">Quick Setup</h3>
                   <p className="text-muted-foreground">
                     Light-touch regulatory regime and a go-live time of around 3 months.
                   </p>
                 </Card>
-                <Card className="p-6">
+                <Card className={styles.card}>
                   <Globe className="mb-4 h-8 w-8 text-[#ECBB2C]" />
                   <h3 className="mb-2 text-xl font-semibold">EEA Passporting</h3>
                   <p className="text-muted-foreground">
                     A German intermediary license granting access to 31 countries.
                   </p>
                 </Card>
-                <Card className="p-6">
+                <Card className={styles.card}>
                   <ShieldCheck className="mb-4 h-8 w-8 text-[#ECBB2C]" />
                   <h3 className="mb-2 text-xl font-semibold">Complete Support</h3>
                   <p className="text-muted-foreground">
@@ -196,7 +216,7 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
           {/* Section 2: Benefits */}
           {currentSection === 2 && (
             <div className="max-w-5xl mx-auto text-center space-y-8" id="benefits">
-              <h2 className="text-4xl font-bold text-white mb-8">Key Benefits</h2>
+              <h2 className={styles.sectionTitle}>Key Benefits</h2>
               <ul className="grid gap-4 sm:grid-cols-2">
                 {[
                   "No ongoing regulatory reporting obligations",
@@ -204,7 +224,7 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
                   "100% success rate in market entry",
                   "Minimum £50,000 GWP requirement in the first year",
                 ].map((benefit, index) => (
-                  <li key={index} className="flex items-center gap-2 text-white/80">
+                  <li key={index} className={styles.benefitItem}>
                     <CheckCircle className="h-5 w-5 text-[#ECBB2C]" />
                     <span>{benefit}</span>
                   </li>
@@ -216,18 +236,18 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
           {/* Section 3: Value Proposition */}
           {currentSection === 3 && (
             <div className="max-w-5xl mx-auto text-center space-y-8" id="value">
-              <h2 className="text-4xl font-bold text-white mb-8">Why Choose KASKO?</h2>
+              <h2 className={styles.sectionTitle}>Why Choose KASKO?</h2>
               <div className="grid gap-12 lg:grid-cols-2">
                 <div className="space-y-8 text-left">
                   <div className="flex gap-4">
                     <Building2 className="h-6 w-6 text-[#ECBB2C]" />
                     <div>
                       <h3 className="mb-2 text-xl font-semibold">Turnkey Solution</h3>
-                      <p className="text-muted-foreground">
-                        We handle everything from licensing and compliance to banking and tax, so <ReplaceText text="{company}" replacements={replacements} /> can focus on growth.
-                      </p>
-                    </div>
-                  </div>
+                    <p className="text-muted-foreground">
+                    We handle everything from licensing and compliance to banking and tax, so <ReplaceText text="{company}" replacements={{...replacements, custom: filterUndefined(replacements.custom)}} /> can focus on growth.
+                    </p>
+                </div>
+                </div>
                   <div className="flex gap-4">
                     <Lock className="h-6 w-6 text-[#ECBB2C]" />
                     <div>
@@ -245,7 +265,7 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
                     alt="KASKO Value Proposition"
                     width={600}
                     height={400}
-                    className="relative rounded-2xl object-cover"
+                    className={styles.valueImage}
                   />
                 </div>
               </div>
@@ -255,14 +275,14 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
           {/* Section 4: CTA */}
           {currentSection === 4 && (
             <div className="max-w-5xl mx-auto text-center space-y-8" id="cta">
-              <h2 className="text-4xl font-bold text-white mb-8">
-                <ReplaceText text="Contact us to discuss how KASKO can help {company} expand into the EU and UK markets" replacements={replacements} />
-              </h2>
+            <h2 className={styles.sectionTitle}>
+                <ReplaceText text="Contact us to discuss how KASKO can help {company} expand into the EU and UK markets" replacements={{...replacements, custom: filterUndefined(replacements.custom)}} />
+            </h2>
               <p className="mb-8 text-lg text-muted-foreground">
                 Begin your expansion journey, {replacements.first_name}!
               </p>
               <div className="flex flex-col gap-4 sm:flex-row justify-center">
-                <Button className="bg-[#ECBB2C] hover:bg-[#ECBB2C]/90" size="lg">
+                <Button className={styles.getStartedButton} size="lg">
                   Schedule a Call
                 </Button>
                 <Button variant="outline" size="lg">
