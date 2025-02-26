@@ -26,7 +26,6 @@ interface Replacements extends CustomReplacements {
   };
 }
 
-// Default dynamic placeholders (for testing/demo purposes)
 const defaultReplacements: Replacements = {
   first_name: "{first_name}",
   company: "{company}",
@@ -89,7 +88,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
               key={section.id}
               variant={currentSection === index ? "default" : "ghost"}
               onClick={() => setCurrentSection(index)}
-              className="text-base"
+              className="text-base text-white hover:text-aapoon"
             >
               {section.title}
             </Button>
@@ -106,6 +105,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
           transition={{ duration: 0.5 }}
           className="h-screen flex items-center justify-center px-4 pt-20"
         >
+          {/* Hero Section */}
           {currentSection === 0 && (
             <div className="max-w-5xl mx-auto text-center space-y-8">
               <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
@@ -124,13 +124,14 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                 In a world of rising cyber threats and data breaches, Aapoon provides B2B and B2G organizations with secure, sovereign messaging solutions that ensure complete data control and compliance.
               </p>
               <div className="flex justify-center gap-4 mt-8">
-                <Button size="lg" className="text-lg">
+                <Button size="lg" className="text-lg bg-aapoon hover:bg-aapoon/90 text-white">
                   <ReplaceText text="Explore Investment Opportunity for {company}" replacements={replacements} /> <ArrowRight className="ml-2" />
                 </Button>
               </div>
             </div>
           )}
 
+          {/* Products Section */}
           {currentSection === 1 && (
             <div className="max-w-5xl mx-auto text-center space-y-8">
               <h2 className="text-4xl font-bold text-white mb-8">Our Products</h2>
@@ -153,6 +154,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
             </div>
           )}
 
+          {/* Patents Section */}
           {currentSection === 2 && (
             <div className="max-w-5xl mx-auto text-center space-y-8">
               <h2 className="text-4xl font-bold text-white mb-8">Patent-Protected Technology</h2>
@@ -183,6 +185,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
             </div>
           )}
 
+          {/* Security Section */}
           {currentSection === 3 && (
             <div className="max-w-5xl mx-auto text-center space-y-8">
               <h2 className="text-4xl font-bold text-white mb-8">Advanced Security Features</h2>
@@ -195,7 +198,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                 <div className="bg-white/10 backdrop-blur p-6 rounded-xl">
                   <Lock className="w-10 h-10 text-aapoon mb-4 mx-auto" />
                   <h3 className="text-xl font-semibold text-white mb-2">Data Sovereignty</h3>
-                <p className="text-white/80">Complete control over your organization&apos;s data.</p>
+                <p className="text-white/80">Complete control over your organization&#39;s data.</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur p-6 rounded-xl">
                   <Cpu className="w-10 h-10 text-aapoon mb-4 mx-auto" />
@@ -206,6 +209,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
             </div>
           )}
 
+          {/* Opportunity Section */}
           {currentSection === 4 && (
             <div className="max-w-5xl mx-auto text-center space-y-8">
               <h2 className="text-4xl font-bold text-white mb-8">Investment Opportunity</h2>
@@ -246,14 +250,15 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
             </div>
           )}
 
+          {/* CTA Section */}
           {currentSection === 5 && (
             <div className="max-w-4xl mx-auto text-center space-y-8">
-              <h2 className="text-4xl font-bold text-white mb-8">Ready to Join Our Journey</h2>
+            <h2 className="text-4xl font-bold text-white mb-8">Ready to Join Our Journey</h2>
               <div className="space-y-4">
-                <Button size="lg" variant="default" className="w-full py-6 text-xl">
+                <Button size="lg" variant="default" className="w-full py-6 text-xl bg-aapoon hover:bg-aapoon/90 text-white">
                   Download Investor Presentation
                 </Button>
-                <Button size="lg" variant="outline" className="w-full py-6 text-xl">
+                <Button size="lg" variant="outline" className="w-full py-6 text-xl text-white border-white hover:bg-white/10">
                   Schedule an Introduction
                 </Button>
               </div>
