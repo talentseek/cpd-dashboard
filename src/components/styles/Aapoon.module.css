@@ -1,0 +1,165 @@
+/* src/components/styles/Aapoon.module.css */
+
+.container {
+  @apply h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+}
+
+.nav {
+  @apply fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-6 bg-black/20 backdrop-blur-sm;
+}
+
+.navButton {
+  @apply text-base text-white;
+}
+
+.navButtonHover {
+  @apply text-aapoon;
+}
+
+.section {
+  @apply h-screen flex items-center justify-center px-4 pt-20;
+}
+
+.heroContainer {
+  @apply max-w-5xl mx-auto text-center space-y-8;
+}
+
+.heroLogo {
+  @apply h-16 w-auto mx-auto mb-8;
+}
+
+.heroTitle {
+  @apply text-5xl font-bold text-white mb-6;
+}
+
+.heroDescription {
+  @apply text-xl text-white/90 max-w-3xl mx-auto;
+}
+
+.ctaButton {
+  @apply text-lg bg-aapoon hover:bg-aapoon/90 text-white;
+}
+
+.productsTitle {
+  @apply text-4xl font-bold text-white mb-8;
+}
+
+.productGrid {
+  @apply grid md:grid-cols-2 gap-8;
+}
+
+.productCard {
+  @apply bg-white/10 backdrop-blur p-8 rounded-xl;
+}
+
+.productIcon {
+  @apply w-12 h-12 text-aapoon mb-4 mx-auto;
+}
+
+.productTitle {
+  @apply text-2xl font-semibold text-white mb-4;
+}
+
+.productDescription {
+  @apply text-white/90;
+}
+
+.patentsTitle {
+  @apply text-4xl font-bold text-white mb-8;
+}
+
+.patentGrid {
+  @apply grid md:grid-cols-2 gap-8;
+}
+
+.patentCard {
+  @apply bg-white/10 backdrop-blur p-8 rounded-xl text-left;
+}
+
+.patentIcon {
+  @apply w-12 h-12 text-aapoon mb-4;
+}
+
+.patentTitle {
+  @apply text-2xl font-semibold text-white mb-4;
+}
+
+.patentDescription {
+  @apply text-white/90 mb-4;
+}
+
+.patentList {
+  @apply text-white/80 space-y-2 list-disc list-inside;
+}
+
+.securityTitle {
+  @apply text-4xl font-bold text-white mb-8;
+}
+
+.securityGrid {
+  @apply grid md:grid-cols-3 gap-8;
+}
+
+.securityCard {
+  @apply bg-white/10 backdrop-blur p-6 rounded-xl;
+}
+
+.securityIcon {
+  @apply w-10 h-10 text-aapoon mb-4 mx-auto;
+}
+
+.securityTitleCard {
+  @apply text-xl font-semibold text-white mb-2;
+}
+
+.securityDescription {
+  @apply text-white/80;
+}
+
+.opportunityTitle {
+  @apply text-4xl font-bold text-white mb-8;
+}
+
+.opportunityCard {
+  @apply bg-white/10 backdrop-blur p-8 rounded-xl text-left;
+}
+
+.opportunityGrid {
+  @apply grid md:grid-cols-2 gap-8;
+}
+
+.opportunitySubtitle {
+  @apply text-2xl font-semibold text-white mb-4;
+}
+
+.opportunityList {
+  @apply text-white/80 space-y-3;
+}
+
+.opportunityListItem {
+  @apply flex items-start gap-2;
+}
+
+.opportunityIcon {
+  @apply w-6 h-6 text-aapoon mt-1 flex-shrink-0;
+}
+
+.ctaTitle {
+  @apply text-4xl font-bold text-white mb-8;
+}
+
+.ctaContainer {
+  @apply max-w-4xl mx-auto text-center space-y-8;
+}
+
+.ctaButtonFull {
+  @apply w-full py-6 text-xl bg-aapoon hover:bg-aapoon/90 text-white;
+}
+
+.ctaButtonOutline {
+  @apply w-full py-6 text-xl text-white border-white hover:bg-white/10;
+}
+
+.ctaDescription {
+  @apply text-white/80 text-lg;
+}

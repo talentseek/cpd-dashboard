@@ -1,7 +1,177 @@
+/* src/components/styles/Kasko.module.css */
+
 .container {
   @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden;
 }
 
 .nav {
   @apply fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md;
+}
+
+.navContainer {
+  @apply container mx-auto px-4 py-4 flex justify-between items-center;
+}
+
+.navButton {
+  @apply text-white;
+}
+
+.navButtonHover {
+  @apply text-kasko;
+}
+
+.section {
+  @apply h-screen flex items-center justify-center px-4 pt-20;
+}
+
+.heroContainer {
+  @apply max-w-5xl mx-auto text-center space-y-8;
+}
+
+.heroTitle {
+  @apply text-5xl font-bold text-white;
+}
+
+.heroSubtitle {
+  @apply text-3xl text-white/90 font-medium;
+}
+
+.heroDescription {
+  @apply text-xl text-white/80 max-w-3xl mx-auto;
+}
+
+.ctaButton {
+  @apply bg-kasko hover:bg-kasko/90 text-black;
+}
+
+.ctaButtonOutline {
+  @apply text-white border-white hover:bg-white/10;
+}
+
+.solutionsTitle {
+  @apply text-4xl font-bold text-white;
+}
+
+.solutionsDescription {
+  @apply text-xl text-white/80 max-w-3xl mx-auto;
+}
+
+.solutionGrid {
+  @apply grid md:grid-cols-3 gap-8;
+}
+
+.solutionCard {
+  @apply p-6 bg-white/10 backdrop-blur-md;
+}
+
+.solutionIcon {
+  @apply h-8 w-8 text-kasko mb-4 mx-auto;
+}
+
+.solutionTitle {
+  @apply text-xl font-semibold text-white mb-2;
+}
+
+.solutionDescription {
+  @apply text-white/80;
+}
+
+.benefitsTitle {
+  @apply text-4xl font-bold text-white;
+}
+
+.benefitList {
+  @apply grid md:grid-cols-2 gap-4 text-white/80;
+}
+
+.benefitItem {
+  @apply flex items-center gap-2;
+}
+
+.benefitIcon {
+  @apply h-5 w-5 text-kasko;
+}
+
+.valueTitle {
+  @apply text-4xl font-bold text-white;
+}
+
+.valueGrid {
+  @apply grid md:grid-cols-2 gap-12 items-center;
+}
+
+.valueCard {
+  @apply text-left space-y-8;
+}
+
+.valueItem {
+  @apply flex gap-4;
+}
+
+.valueIcon {
+  @apply h-6 w-6 text-kasko;
+}
+
+.valueSubtitle {
+  @apply text-xl font-semibold text-white mb-2;
+}
+
+.valueDescription {
+  @apply text-white/80;
+}
+
+.valueImageContainer {
+  @apply relative;
+}
+
+.valueImageGradient {
+  @apply absolute inset-0 bg-gradient-to-br from-kasko/20 to-transparent rounded-2xl;
+}
+
+.valueImage {
+  @apply relative rounded-2xl object-cover;
+}
+
+.ctaTitle {
+  @apply text-4xl font-bold text-white;
+}
+
+.ctaDescription {
+  @apply text-xl text-white/80;
+}
+
+.footer {
+  @apply bg-white py-12;
+}
+
+.footerContainer {
+  @apply container mx-auto px-4 text-center space-y-4;
+}
+
+.footerLogos {
+  @apply flex justify-center space-x-12 mb-12;
+}
+
+.footerLogo {
+@apply h-16 w-auto;
+}
+
+.footerText {
+  @apply text-sm text-gray-600;
+}
+
+.footerAddress {
+  @apply text-sm text-gray-500 max-w-2xl mx-auto;
+}
+
+.footerLinks {
+  @apply flex justify-center space-x-6;
+}
+
+.footerLink {
+  @apply text-sm text-gray-500;
+}
+
+.footerLinkHover {
+  @apply text-kasko;
 }

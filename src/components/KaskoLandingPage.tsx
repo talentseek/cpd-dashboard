@@ -7,7 +7,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight, Building2, CheckCircle, Globe, Lock, ShieldCheck, Timer } from "lucide-react"
-import styles from "./Kasko.module.css"
+import styles from "./styles/Kasko.module.css" // Import the CSS module
 
 interface Replacements {
   first_name: string
@@ -18,8 +18,6 @@ const defaultReplacements: Replacements = {
   first_name: "{first_name}",
   company: "{company}",
 }
-
-const cn = (...classes: (string | boolean | undefined)[]) => classes.filter(Boolean).join(" ")
 
 export default function KaskoLandingPage({ replacements = defaultReplacements }: { replacements?: Replacements }) {
   const [currentSection, setCurrentSection] = useState(0)
@@ -50,8 +48,8 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
   return (
     <div className={styles.container}>
       {/* Fixed Navigation */}
-      <nav className={cn(styles.nav, "fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md")}>
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <nav className={styles.nav}>
+        <div className={styles.navContainer}>
           <Link href="/" className="flex items-center">
             <Image
               src="/images/abm/kasko/logo.svg"
@@ -68,7 +66,7 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
                 key={section.id}
                 variant={currentSection === index ? "default" : "ghost"}
                 onClick={() => setCurrentSection(index)}
-                className="text-white hover:text-kasko"
+                className={`${styles.navButton} hover:${styles.navButtonHover}`}
               >
                 {section.title}
               </Button>
@@ -85,26 +83,26 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: scrollDirection === "down" ? -20 : 20 }}
           transition={{ duration: 0.5 }}
-          className="h-screen flex items-center justify-center px-4 pt-20"
+          className={styles.section}
         >
           {/* Hero Section */}
           {currentSection === 0 && (
-            <div className="max-w-5xl mx-auto text-center space-y-8">
-              <h1 className="text-5xl font-bold text-white">
+            <div className={styles.heroContainer}>
+              <h1 className={styles.heroTitle}>
                 Hi {replacements.first_name}, does {replacements.company} have a Brexit solution in place?
               </h1>
-              <h2 className="text-3xl text-white/90 font-medium">Your Gateway to EU Market Access</h2>
-              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              <h2 className={styles.heroSubtitle}>Your Gateway to EU Market Access</h2>
+              <p className={styles.heroDescription}>
                 Let us help {replacements.company} navigate the post-Brexit landscape. Our comprehensive solution handles
                 everything—from licensing and compliance to banking and tax—so you can focus on growing your business in
                 the EU market.
               </p>
               <div className="flex justify-center gap-4">
-                <Button size="lg" className="bg-kasko hover:bg-kasko/90 text-black">
+                <Button size="lg" className={styles.ctaButton}>
                   Start Your EU Journey
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/10">
+                <Button variant="outline" size="lg" className={styles.ctaButtonOutline}>
                   Schedule a Call
                 </Button>
               </div>
@@ -113,33 +111,33 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
 
           {/* Solutions Section */}
           {currentSection === 1 && (
-            <div className="max-w-5xl mx-auto text-center space-y-8">
-              <h2 className="text-4xl font-bold text-white">
+            <div className={styles.heroContainer}>
+              <h2 className={styles.solutionsTitle}>
                 Your Complete Brexit Solution for {replacements.company}
               </h2>
-              <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              <p className={styles.solutionsDescription}>
                 Since Brexit, we’ve helped over 40 MGAs/brokers establish a fully regulated intermediary in Germany,
                 enabling EU-wide operations.
               </p>
-              <div className="grid md:grid-cols-3 gap-8">
-                <Card className="p-6 bg-white/10 backdrop-blur-md">
-                  <Timer className="h-8 w-8 text-kasko mb-4 mx-auto" />
-                  <h3 className="text-xl font-semibold text-white mb-2">Quick Setup</h3>
-                  <p className="text-white/80">
+              <div className={styles.solutionGrid}>
+                <Card className={styles.solutionCard}>
+                  <Timer className={styles.solutionIcon} />
+                  <h3 className={styles.solutionTitle}>Quick Setup</h3>
+                  <p className={styles.solutionDescription}>
                     Light-touch regulatory regime with approximately 3 months to go live.
                   </p>
                 </Card>
-                <Card className="p-6 bg-white/10 backdrop-blur-md">
-                  <Globe className="h-8 w-8 text-kasko mb-4 mx-auto" />
-                  <h3 className="text-xl font-semibold text-white mb-2">EEA Passporting</h3>
-                  <p className="text-white/80">
+                <Card className={styles.solutionCard}>
+                  <Globe className={styles.solutionIcon} />
+                  <h3 className={styles.solutionTitle}>EEA Passporting</h3>
+                  <p className={styles.solutionDescription}>
                     German insurance intermediary license providing access to 31 countries.
                   </p>
                 </Card>
-                <Card className="p-6 bg-white/10 backdrop-blur-md">
-                  <ShieldCheck className="h-8 w-8 text-kasko mb-4 mx-auto" />
-                  <h3 className="text-xl font-semibold text-white mb-2">Complete Support</h3>
-                  <p className="text-white/80">
+                <Card className={styles.solutionCard}>
+                  <ShieldCheck className={styles.solutionIcon} />
+                  <h3 className={styles.solutionTitle}>Complete Support</h3>
+                  <p className={styles.solutionDescription}>
                     Local directors, banking solutions, and compliance services included.
                   </p>
                 </Card>
@@ -149,17 +147,17 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
 
           {/* Benefits Section */}
           {currentSection === 2 && (
-            <div className="max-w-5xl mx-auto text-center space-y-8">
-              <h2 className="text-4xl font-bold text-white">Key Benefits</h2>
-              <ul className="grid md:grid-cols-2 gap-4 text-white/80">
+            <div className={styles.heroContainer}>
+              <h2 className={styles.benefitsTitle}>Key Benefits</h2>
+              <ul className={styles.benefitList}>
                 {[
                   "No ongoing reporting obligations to the regulator",
                   "Proven track record with 40+ successful expansions",
                   "100% success rate in market expansion",
                   "Minimum £50,000 GWP requirement in first year",
                 ].map((benefit, index) => (
-                  <li key={index} className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-kasko" />
+                  <li key={index} className={styles.benefitItem}>
+                    <CheckCircle className={styles.benefitIcon} />
                     <span>{benefit}</span>
                   </li>
                 ))}
@@ -169,39 +167,39 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
 
           {/* Value Proposition Section */}
           {currentSection === 3 && (
-            <div className="max-w-5xl mx-auto text-center space-y-8">
-              <h2 className="text-4xl font-bold text-white">Why Choose KASKO?</h2>
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="text-left space-y-8">
-                  <div className="flex gap-4">
-                    <Building2 className="h-6 w-6 text-kasko" />
+            <div className={styles.heroContainer}>
+              <h2 className={styles.valueTitle}>Why Choose KASKO?</h2>
+              <div className={styles.valueGrid}>
+                <div className={styles.valueCard}>
+                  <div className={styles.valueItem}>
+                    <Building2 className={styles.valueIcon} />
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Turnkey Solution</h3>
-                      <p className="text-white/80">
+                      <h3 className={styles.valueSubtitle}>Turnkey Solution</h3>
+                      <p className={styles.valueDescription}>
                         We simplify complex regulatory and operational challenges, enabling rapid market entry within 12
                         weeks.
                       </p>
                     </div>
                   </div>
-                  <div className="flex gap-4">
-                    <Lock className="h-6 w-6 text-kasko" />
+                  <div className={styles.valueItem}>
+                    <Lock className={styles.valueIcon} />
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">Cost-Effective & Predictable</h3>
-                      <p className="text-white/80">
+                      <h3 className={styles.valueSubtitle}>Cost-Effective & Predictable</h3>
+                      <p className={styles.valueDescription}>
                         Our pricing model reduces administrative burden and provides clear cost structures, allowing you
                         to focus on growth.
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-kasko/20 to-transparent rounded-2xl" />
+                <div className={styles.valueImageContainer}>
+                  <div className={styles.valueImageGradient} />
                   <Image
                     src="/images/abm/kasko/value-prop.jpg"
                     alt="KASKO Value Proposition"
                     width={600}
                     height={400}
-                    className="relative rounded-2xl object-cover"
+                    className={styles.valueImage}
                   />
                 </div>
               </div>
@@ -210,18 +208,18 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
 
           {/* CTA Section */}
           {currentSection === 4 && (
-            <div className="max-w-5xl mx-auto text-center space-y-8">
-              <h2 className="text-4xl font-bold text-white">
+            <div className={styles.heroContainer}>
+              <h2 className={styles.ctaTitle}>
                 Ready to help {replacements.company} access the EU market?
               </h2>
-              <p className="text-xl text-white/80">
+              <p className={styles.ctaDescription}>
                 Let’s discuss your EU expansion strategy, {replacements.first_name}!
               </p>
               <div className="flex justify-center gap-4">
-                <Button size="lg" className="bg-kasko hover:bg-kasko/90 text-black">
+                <Button size="lg" className={styles.ctaButton}>
                   Schedule a Call
                 </Button>
-                <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/10">
+                <Button variant="outline" size="lg" className={styles.ctaButtonOutline}>
                   Download Our Brochure
                 </Button>
               </div>
@@ -231,37 +229,37 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="bg-white py-12">
-        <div className="container mx-auto px-4 text-center space-y-4">
-          <div className="flex justify-center space-x-12 mb-12">
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerLogos}>
             <Image
               src="/images/abm/kasko/iso27001.svg"
               alt="ISO27001 Certified"
               width={120}
               height={60}
-              className="h-15 w-auto"
+              className={styles.footerLogo}
             />
             <Image
               src="/images/abm/kasko/eu-funded.svg"
               alt="Co-funded by the European Union"
               width={180}
               height={60}
-              className="h-15 w-auto"
+              className={styles.footerLogo}
             />
           </div>
-          <p className="text-sm text-gray-600">© 2024 KASKO LTD</p>
-          <p className="text-sm text-gray-500 max-w-2xl mx-auto">
+          <p className={styles.footerText}>© 2024 KASKO LTD</p>
+          <p className={styles.footerAddress}>
             Registered in England and Wales No. 09607496. Registered address: 78 York Street, London, United Kingdom,
             W1H 1DP
           </p>
-          <div className="flex justify-center space-x-6">
-            <Link href="/privacy" className="text-sm text-gray-500 hover:text-kasko">
+          <div className={styles.footerLinks}>
+            <Link href="/privacy" className={`${styles.footerLink} hover:${styles.footerLinkHover}`}>
               Privacy Notice
             </Link>
-            <Link href="/terms" className="text-sm text-gray-500 hover:text-kasko">
+            <Link href="/terms" className={`${styles.footerLink} hover:${styles.footerLinkHover}`}>
               Terms & Conditions
             </Link>
-            <Link href="/legal" className="text-sm text-gray-500 hover:text-kasko">
+            <Link href="/legal" className={`${styles.footerLink} hover:${styles.footerLinkHover}`}>
               Legal Notice
             </Link>
           </div>

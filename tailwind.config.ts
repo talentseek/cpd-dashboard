@@ -7,14 +7,6 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [
-    "bg-kasko",
-    "text-kasko",
-    "hover:bg-kasko/90",
-    "bg-kasko/light",
-    "bg-kasko/dark",
-    // Add any other `kasko`-related classes you’re using
-  ],
   theme: {
     extend: {
       colors: {
