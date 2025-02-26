@@ -1,4 +1,3 @@
-// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -7,6 +6,14 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  safelist: [
+    "bg-kasko",
+    "text-kasko",
+    "hover:bg-kasko/90",
+    "bg-kasko/light",
+    "bg-kasko/dark",
+    // Add any other `kasko`-related classes you’re using
   ],
   theme: {
     extend: {
