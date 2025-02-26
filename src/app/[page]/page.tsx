@@ -3,7 +3,8 @@
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
 import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Custom ProForecast template
-import AapoonDynamicLanding from '@/components/AapoonLandingPage'; // Custom Aapoon template
+import AapoonLandingPage from '@/components/AapoonLandingPage'; // Custom Aapoon template
+import KaskoLandingPage from '@/components/KaskoLandingPage'; // Custom KASKO template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -21,11 +22,10 @@ function constructFullUrl(relativePath: string): string {
 // ============ 1) Fetch client by subdomain
 async function fetchClientByHost(host: string) {
   console.log('DEBUG: Looking for client with subdomain =', host);
-
   const { data: client, error } = await supabase
     .from('clients')
     .select('*')
-    .eq('subdomain', host) // must match exactly what's in the DB
+    .eq('subdomain', host)
     .single();
 
   if (error) {
@@ -132,12 +132,12 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
     };
   }
 
-const replacements = {
-first_name: leadData.first_name || 'Guest',
-company: leadData.company || 'Your Company',
-custom: leadData.personalization || {},
-vc: leadData.vc || {}
-};
+  const replacements = {
+    first_name: leadData.first_name || 'Guest',
+    company: leadData.company || 'Your Company',
+    custom: leadData.personalization || {},
+    vc: leadData.vc || {}
+  };
 
   const ogTitle =
     clientData.hero?.title
@@ -199,12 +199,12 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     return <div>Unable to load client data from client_content table.</div>;
   }
 
-const replacements = {
-first_name: leadData.first_name || 'Guest',
-company: leadData.company || 'Your Company',
-custom: leadData.personalization || {},
-vc: leadData.vc || {}
-};
+  const replacements = {
+    first_name: leadData.first_name || 'Guest',
+    company: leadData.company || 'Your Company',
+    custom: leadData.personalization || {},
+    vc: leadData.vc || {}
+  };
 
   // Check the client record for landing page type/template.
   if (client.landing_page_type === "custom") {
@@ -220,7 +220,15 @@ vc: leadData.vc || {}
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
-          <AapoonDynamicLanding replacements={replacements} />
+          <AapoonLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (client.landing_page_template === "kasko") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <KaskoLandingPage replacements={replacements} />
         </>
       );
     }
