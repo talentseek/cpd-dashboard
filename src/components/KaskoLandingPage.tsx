@@ -9,17 +9,16 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { ReplaceText } from "@/components/ReplaceText"
-import { CustomReplacements } from "@/components/ProForecastLandingPage"
 
 interface Replacements {
-  first_name: string;
-  company: string;
-  vc?: {
+first_name: string;
+company: string;
+vc?: {
     tagline: string;
     investmentFocus: string;
     fundSize: string;
-  };
-  custom?: {
+};
+custom: {
     mission?: string;
     industry?: string;
     usp?: string;
@@ -27,26 +26,26 @@ interface Replacements {
     technology?: string;
     marketSize?: string;
     [key: string]: string | undefined;
-  };
+};
 }
 
 // Default dynamic placeholders for testing/demo purposes
 const defaultReplacements: Replacements = {
-  first_name: "{first_name}",
-  company: "{company}",
-  vc: {
+first_name: "{first_name}",
+company: "{company}",
+vc: {
     tagline: "{vc.tagline}",
     investmentFocus: "{vc.investmentFocus}",
     fundSize: "{vc.fundSize}",
-  },
-  custom: {
+},
+custom: {
     mission: "{custom.mission}",
     industry: "{custom.industry}",
     usp: "{custom.usp}",
     investment: "{custom.investment}",
     technology: "{custom.technology}",
     marketSize: "{custom.marketSize}",
-  },
+},
 };
 
 export default function KaskoLandingPage({ replacements = defaultReplacements }: { replacements?: Replacements }) {
@@ -143,14 +142,17 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
                 />
               </motion.div>
               <h1 className="text-5xl font-bold text-white mb-6">
-                <ReplaceText text="Hi {first_name}, Welcome to the Future of Secure Communication" replacements={replacements as CustomReplacements} />
+                <ReplaceText text="Hi {first_name}, does {company} have a Brexit solution in place?" replacements={replacements} />
               </h1>
+              <h2 className="text-2xl md:text-3xl text-muted-foreground font-medium">
+                Your Gateway to EU Market Access
+              </h2>
               <p className="text-xl text-white/90 max-w-3xl mx-auto">
-                In today&apos;s challenging regulatory landscape, KASKO empowers MGAs and brokers with a seamless Brexit solution for expanding into the EU and UK.
+                We simplify the complexities of market expansion. KASKO offers a turnkey solution—from licensing and compliance to banking and tax—ensuring your seamless entry into the EU and UK markets.
               </p>
               <div className="flex justify-center gap-4 mt-8">
                 <Button size="lg" className="text-lg bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black">
-                <ReplaceText text="Explore Investment Opportunity for {company}" replacements={replacements as CustomReplacements} /> <ArrowRight className="ml-2" />
+                  <ReplaceText text="Explore Investment Opportunity for {company}" replacements={replacements} /> <ArrowRight className="ml-2" />
                 </Button>
               </div>
             </div>
@@ -160,10 +162,10 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
           {currentSection === 1 && (
             <div className="max-w-5xl mx-auto text-center space-y-8" id="solutions">
               <h2 className="text-4xl font-bold text-white mb-8">
-                <ReplaceText text="Your Complete Brexit Solution for {company}" replacements={replacements as CustomReplacements} />
+                <ReplaceText text="Your Complete Brexit Solution for {company}" replacements={replacements} />
               </h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                Since Brexit, we’ve helped over 40 MGAs and brokers establish fully regulated intermediaries, enabling seamless EU and UK market entry.
+                Since Brexit, we&#39;ve helped over 40 MGAs and brokers establish fully regulated intermediaries, enabling seamless EU and UK market entry.
               </p>
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <Card className="p-6">
@@ -222,7 +224,7 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
                     <div>
                       <h3 className="mb-2 text-xl font-semibold">Turnkey Solution</h3>
                       <p className="text-muted-foreground">
-                        We handle everything from licensing and compliance to banking and tax, so <ReplaceText text="{company}" replacements={replacements as CustomReplacements} /> can focus on growth.
+                        We handle everything from licensing and compliance to banking and tax, so <ReplaceText text="{company}" replacements={replacements} /> can focus on growth.
                       </p>
                     </div>
                   </div>
@@ -254,7 +256,7 @@ export default function KaskoLandingPage({ replacements = defaultReplacements }:
           {currentSection === 4 && (
             <div className="max-w-5xl mx-auto text-center space-y-8" id="cta">
               <h2 className="text-4xl font-bold text-white mb-8">
-                <ReplaceText text="Contact us to discuss how KASKO can help {company} expand into the EU and UK markets" replacements={replacements as CustomReplacements} />
+                <ReplaceText text="Contact us to discuss how KASKO can help {company} expand into the EU and UK markets" replacements={replacements} />
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
                 Begin your expansion journey, {replacements.first_name}!
