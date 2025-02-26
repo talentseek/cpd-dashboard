@@ -22,6 +22,7 @@ function constructFullUrl(relativePath: string): string {
 // ============ 1) Fetch client by subdomain
 async function fetchClientByHost(host: string) {
   console.log('DEBUG: Looking for client with subdomain =', host);
+
   const { data: client, error } = await supabase
     .from('clients')
     .select('*')
@@ -62,7 +63,6 @@ async function fetchLeadDataForClient(
     return dbCompanyName === normalizeString(companyName);
   });
 
-  // Log the entire lead object to verify personalization data is present
   console.log('DEBUG: Full lead data:', matchingLead);
 
   if (!matchingLead) {
@@ -96,7 +96,6 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
   const host = headersList.get('host') ?? '';
   console.log('DEBUG: generateMetadata => host =', host);
 
-  // Fallback logic for main domain if needed
   if (host === 'app.costperdemo.com') {
     console.log('DEBUG: On main domain => fallback logic...');
   }
@@ -206,9 +205,11 @@ export default async function Page({ params }: { params: Promise<{ page: string 
     vc: leadData.vc || {}
   };
 
-  // Check the client record for landing page type/template.
+  // Normalize landing_page_template value for comparison
+  const template = client.landing_page_template?.toLowerCase().trim();
+
   if (client.landing_page_type === "custom") {
-    if (client.landing_page_template === "proforecast") {
+    if (template === "proforecast") {
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
@@ -216,7 +217,7 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         </>
       );
     }
-    if (client.landing_page_template === "aapoon") {
+    if (template === "aapoon") {
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
@@ -224,7 +225,7 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         </>
       );
     }
-    if (client.landing_page_template === "kasko") {
+    if (template === "kasko") {
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
