@@ -1,87 +1,120 @@
 /* src/components/styles/Kasko.module.css */
 
+
 .container {
-  @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden;
+  @apply flex min-h-screen flex-col;
 }
 
 .nav {
-  @apply fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md;
+  @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300;
+}
+
+.navScrolled {
+  @apply bg-white/90 backdrop-blur-md shadow-md py-2;
+}
+
+.navTransparent {
+  @apply bg-transparent py-4;
 }
 
 .navContainer {
-  @apply container mx-auto px-4 py-4 flex justify-between items-center;
+  @apply container mx-auto px-4;
 }
 
-.navButton {
-  @apply text-white;
+.navFlex {
+  @apply flex items-center justify-between;
 }
 
-.navButtonHover {
-  @apply text-kasko;
+.navLink {
+  @apply text-sm font-medium text-gray-600 transition-colors;
 }
 
-.section {
-  @apply h-screen flex items-center justify-center px-4 pt-20;
+.navLinkHover {
+  @apply hover:text-[#ECBB2C];
+}
+
+.getStartedButton {
+  @apply bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black;
+}
+
+.heroSection {
+  @apply pt-32 pb-16 md:pt-40 md:pb-24;
 }
 
 .heroContainer {
-  @apply max-w-5xl mx-auto text-center space-y-8;
+  @apply container mx-auto px-4;
+}
+
+.heroGrid {
+  @apply grid lg:grid-cols-2 gap-12 items-center;
+}
+
+.heroText {
+  @apply space-y-6;
 }
 
 .heroTitle {
-  @apply text-5xl font-bold text-white;
+  @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
 }
 
 .heroSubtitle {
-  @apply text-3xl text-white/90 font-medium;
+  @apply text-2xl md:text-3xl text-muted-foreground font-medium;
 }
 
 .heroDescription {
-  @apply text-xl text-white/80 max-w-3xl mx-auto;
+  @apply text-lg text-muted-foreground;
 }
 
 .ctaButton {
-  @apply bg-kasko hover:bg-kasko/90 text-black;
+  @apply bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black;
 }
 
 .ctaButtonOutline {
-  @apply text-white border-white hover:bg-white/10;
+  @apply border-gray-300 text-black hover:bg-gray-100;
 }
 
-.solutionsTitle {
-  @apply text-4xl font-bold text-white;
+.featuresSection {
+  @apply py-16 md:py-24 bg-muted/50;
 }
 
-.solutionsDescription {
-  @apply text-xl text-white/80 max-w-3xl mx-auto;
+.featuresContainer {
+  @apply container mx-auto px-4;
 }
 
-.solutionGrid {
-  @apply grid md:grid-cols-3 gap-8;
+.featuresTitle {
+  @apply text-3xl md:text-4xl font-bold mb-6;
 }
 
-.solutionCard {
-  @apply p-6 bg-white/10 backdrop-blur-md;
+.featuresDescription {
+  @apply text-lg text-muted-foreground max-w-3xl mx-auto;
 }
 
-.solutionIcon {
-  @apply h-8 w-8 text-kasko mb-4 mx-auto;
+.featureGrid {
+  @apply grid gap-8 sm:grid-cols-2 lg:grid-cols-3;
 }
 
-.solutionTitle {
-  @apply text-xl font-semibold text-white mb-2;
+.featureCard {
+  @apply p-6;
 }
 
-.solutionDescription {
-  @apply text-white/80;
+.featureIcon {
+  @apply mb-4 h-8 w-8 text-[#ECBB2C];
+}
+
+.featureTitle {
+  @apply mb-2 text-xl font-semibold;
+}
+
+.featureDescription {
+  @apply text-muted-foreground;
 }
 
 .benefitsTitle {
-  @apply text-4xl font-bold text-white;
+  @apply mb-6 text-2xl font-semibold;
 }
 
 .benefitList {
-  @apply grid md:grid-cols-2 gap-4 text-white/80;
+  @apply grid gap-4 sm:grid-cols-2;
 }
 
 .benefitItem {
@@ -89,19 +122,23 @@
 }
 
 .benefitIcon {
-  @apply h-5 w-5 text-kasko;
+  @apply h-5 w-5 text-[#ECBB2C];
 }
 
-.valueTitle {
-  @apply text-4xl font-bold text-white;
+.valueSection {
+  @apply py-16 md:py-24;
+}
+
+.valueContainer {
+  @apply container mx-auto px-4;
 }
 
 .valueGrid {
-  @apply grid md:grid-cols-2 gap-12 items-center;
+  @apply grid gap-12 lg:grid-cols-2;
 }
 
-.valueCard {
-  @apply text-left space-y-8;
+.valueTitle {
+  @apply mb-6 text-3xl font-bold sm:text-4xl;
 }
 
 .valueItem {
@@ -109,15 +146,15 @@
 }
 
 .valueIcon {
-  @apply h-6 w-6 text-kasko;
+  @apply h-6 w-6 text-[#ECBB2C];
 }
 
 .valueSubtitle {
-  @apply text-xl font-semibold text-white mb-2;
+  @apply mb-2 text-xl font-semibold;
 }
 
 .valueDescription {
-  @apply text-white/80;
+  @apply text-muted-foreground;
 }
 
 .valueImageContainer {
@@ -125,27 +162,35 @@
 }
 
 .valueImageGradient {
-  @apply absolute inset-0 bg-gradient-to-br from-kasko/20 to-transparent rounded-2xl;
+  @apply absolute inset-0 bg-gradient-to-br from-[#ECBB2C]/20 to-transparent rounded-2xl;
 }
 
 .valueImage {
   @apply relative rounded-2xl object-cover;
 }
 
+.ctaSection {
+  @apply bg-muted/50 py-16 md:py-24;
+}
+
+.ctaContainer {
+  @apply container mx-auto px-4 text-center;
+}
+
 .ctaTitle {
-  @apply text-4xl font-bold text-white;
+  @apply mb-4 text-3xl font-bold sm:text-4xl;
 }
 
 .ctaDescription {
-  @apply text-xl text-white/80;
+  @apply mb-8 text-lg text-muted-foreground;
 }
 
 .footer {
-  @apply bg-white py-12;
+  @apply border-t bg-white;
 }
 
 .footerContainer {
-  @apply container mx-auto px-4 text-center space-y-4;
+  @apply container mx-auto px-4 py-12;
 }
 
 .footerLogos {
@@ -157,11 +202,15 @@
 }
 
 .footerText {
-  @apply text-sm text-gray-600;
+  @apply text-center space-y-4;
+}
+
+.footerCopyright {
+  @apply text-sm;
 }
 
 .footerAddress {
-  @apply text-sm text-gray-500 max-w-2xl mx-auto;
+  @apply text-sm text-muted-foreground max-w-2xl mx-auto;
 }
 
 .footerLinks {
@@ -169,9 +218,9 @@
 }
 
 .footerLink {
-  @apply text-sm text-gray-500;
+  @apply text-sm text-muted-foreground;
 }
 
 .footerLinkHover {
-  @apply text-kasko;
+  @apply hover:text-[#ECBB2C];
 }
