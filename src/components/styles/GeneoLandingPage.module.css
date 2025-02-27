@@ -1,31 +1,36 @@
 /* src/components/styles/GeneoLandingPage.module.css */
 
-/* Move variables into the container class to keep them local */
+/* Global Styles */
 .container {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: #333333; /* --text-color */
+  color: #333333; /* --color-text */
   line-height: 1.6;
-  background-color: #F5F6F8; /* --background-color */
-  min-height: 100vh;
+  background-color: #F0F4F4; /* --color-background */
 
-  /* Define CSS variables here instead of :root */
-  --primary-color: #003087; /* Geneo’s deep blue */
-  --secondary-color: #00AEEF; /* Geneo’s sky blue */
-  --accent-color: #FFFFFF; /* White for text/buttons */
-  --background-color: #F5F6F8; /* Light grey background */
-  --text-color: #333333; /* Dark text */
-  --highlight-color: #00AEEF; /* Secondary color for highlights */
+  /* Define CSS variables locally within .container */
+  --color-primary: #008080; /* Teal */
+  --color-secondary: #005959; /* Darker teal */
+  --color-accent: #00A3A3; /* Bright teal */
+  --color-background: #F0F4F4; /* Light grey */
+  --color-text: #333333; /* Dark text */
+  --color-text-light: #FFFFFF; /* White text */
+  --color-border: #D1D5DB; /* Light grey border */
   --transition: all 0.3s ease;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.highlight {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
 /* Navigation */
-.nav {
+.navigation {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--accent-color);
+  background-color: var(--color-background);
   box-shadow: var(--box-shadow);
   z-index: 1000;
   height: 60px;
@@ -42,8 +47,7 @@
 }
 
 .logo {
-  height: 30px;
-  width: auto;
+  height: auto;
 }
 
 .navLinks {
@@ -61,35 +65,37 @@
 }
 
 .navLinks li:hover {
-  color: var(--primary-color);
+  color: var(--color-primary);
 }
 
+/* CTA Button (used in both navigation and CTA section) */
 .ctaButton {
-  background-color: var(--primary-color);
-  color: var(--accent-color);
+  background-color: var(--color-accent);
+  color: var(--color-text-light);
   border: none;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 50px;
   transition: var(--transition);
 }
 
 .ctaButton:hover {
-  background-color: darken(var(--primary-color), 10%);
+  background-color: var(--color-secondary);
+  transform: translateY(-2px);
 }
 
 /* Hero Section */
 .heroSection {
   padding: 120px 2rem 4rem;
-  background-color: var(--primary-color);
-  color: var(--accent-color);
-  text-align: center;
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
 }
 
 .heroContent {
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .heroHeadline {
@@ -104,21 +110,50 @@
 }
 
 .heroCta {
-  background-color: var(--secondary-color);
-  color: var(--accent-color);
+  background-color: var(--color-accent);
+  color: var(--color-text-light);
   padding: 1rem 2rem;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 50px;
 }
 
 .heroCta:hover {
-  background-color: darken(var(--secondary-color), 10%);
+  background-color: var(--color-secondary);
+}
+
+.metricsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.metricCard {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: var(--transition);
+}
+
+.metricCard:hover {
+  transform: translateY(-5px);
+}
+
+.metricValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.metricLabel {
+  font-size: 1rem;
+  opacity: 0.8;
 }
 
 /* Challenge Section */
 .challengeSection {
   padding: 4rem 2rem;
-  background-color: var(--background-color);
+  background-color: var(--color-background);
 }
 
 .sectionHeader {
@@ -130,57 +165,116 @@
 .sectionHeader h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--color-primary);
   margin-bottom: 1rem;
 }
 
 .sectionHeader p {
   font-size: 1.2rem;
+  color: var(--color-text);
 }
 
-.challengeContent {
+.processVisualization {
   max-width: 1000px;
   margin: 0 auto;
 }
 
-.challengeTabs {
+.processTimeline {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
+  position: relative;
 }
 
-.challengeTab {
-  padding: 1rem;
-  background-color: var(--accent-color);
-  border-radius: 8px;
+.processTimeline::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-border);
+  z-index: 0;
+}
+
+.processStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
   cursor: pointer;
   transition: var(--transition);
 }
 
-.challengeTab:hover,
-.activeTab {
-  background-color: var(--secondary-color);
-  color: var(--accent-color);
+.processIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--color-background);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  transition: var(--transition);
 }
 
-.challengeDetail {
-  background-color: var(--accent-color);
-  padding: 2rem;
+.processTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.processStep:hover .processIcon,
+.activeStep .processIcon {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.processStep:hover .processTitle,
+.activeStep .processTitle {
+  color: var(--color-primary);
+}
+
+.processDetail {
+  display: flex;
+  background-color: #FFFFFF;
   border-radius: 8px;
+  overflow: hidden;
   box-shadow: var(--box-shadow);
 }
 
-.challengeDetail h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: 1rem;
+.processDetailContent {
+  flex: 1;
+  padding: 2rem;
 }
 
-.challengeDetail p {
+.processDetailContent h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+}
+
+.processDetailContent p {
   font-size: 1rem;
+  color: var(--color-text);
+}
+
+.processDetailImage {
+  flex: 1;
+  background-color: #F5F5F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.processImage {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Solution Section */
@@ -189,7 +283,19 @@
   background-color: #FFFFFF;
 }
 
-.solutionFeatures {
+.solutionShowcase {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+}
+
+.showcaseImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.keyFeatures {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
@@ -198,7 +304,7 @@
 }
 
 .featureCard {
-  background-color: var(--background-color);
+  background-color: var(--color-background);
   border-radius: 8px;
   padding: 2rem;
   transition: var(--transition);
@@ -213,15 +319,16 @@
 .featureCard h4 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--primary-color);
   margin-bottom: 1rem;
+  color: var(--color-primary);
 }
 
 .featureCard p {
   font-size: 1rem;
+  color: var(--color-text);
 }
 
-.featureDetail {
+.featureExpanded {
   margin-top: 1rem;
 }
 
@@ -231,17 +338,102 @@
   border-radius: 8px;
 }
 
+.resultsPreview {
+  max-width: 1000px;
+  margin: 4rem auto 0;
+  background-color: var(--color-background);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+}
+
+.resultsPreview h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.resultsChart {
+  margin-top: 2rem;
+}
+
+.chartContainer {
+  margin-bottom: 2rem;
+}
+
+.chartBar {
+  margin-bottom: 1.5rem;
+}
+
+.chartLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.barContainer {
+  height: 30px;
+  background-color: #E0E0E0;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.barBefore,
+.barAfter {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: width 1s ease-out;
+}
+
+.barBefore {
+  background-color: var(--color-secondary);
+}
+
+.barAfter {
+  background-color: var(--color-primary);
+}
+
+.barLegend {
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.chartLegend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legendColor {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
 /* CTA Section */
 .ctaSection {
   padding: 6rem 2rem;
-  background-color: var(--primary-color);
-  color: var(--accent-color);
-  text-align: center;
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
 }
 
 .ctaContent {
   max-width: 800px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .ctaContent h2 {
@@ -256,28 +448,44 @@
 }
 
 .ctaButtonLarge {
-  background-color: var(--secondary-color);
-  color: var(--accent-color);
+  background-color: var(--color-accent);
+  color: var(--color-text-light);
+  border: none;
   padding: 1rem 2rem;
   font-size: 1.2rem;
-  border-radius: 8px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
   transition: var(--transition);
+  display: inline-block;
 }
 
 .ctaButtonLarge:hover {
-  background-color: darken(var(--secondary-color), 10%);
+  background-color: var(--color-secondary);
   transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-  .navLinks {
+  .navContent {
     flex-wrap: wrap;
+  }
+
+  .navLinks {
+    order: 2;
+    width: 100%;
+    margin-top: 1rem;
     justify-content: center;
   }
 
   .navLinks li {
-    margin: 0.5rem;
+    margin: 0 1rem;
+  }
+
+  .ctaButton {
+    order: 1;
+    margin-left: auto;
   }
 
   .heroHeadline {
@@ -288,17 +496,36 @@
     font-size: 1.2rem;
   }
 
-  .challengeTabs {
+  .processTimeline {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .processDetail {
     flex-direction: column;
   }
 
-  .solutionFeatures {
+  .keyFeatures {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 480px) {
+  .navLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navLinks li {
+    margin: 0.5rem;
+  }
+
   .heroHeadline {
+    font-size: 2rem;
+  }
+
+  .metricValue {
     font-size: 2rem;
   }
 
