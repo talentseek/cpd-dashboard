@@ -82,7 +82,7 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
             <div className={styles.heroImage}>
               <div className={styles.valueImageGradient} />
               <Image
-                src="/euflag.jpg"
+                src="/images/abm/kasko/euflag.jpg"
                 alt="EU Market Access"
                 width={600}
                 height={600}
@@ -182,7 +182,7 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
             <div className={styles.valueImageContainer}>
               <div className={styles.valueImageGradient} />
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/images/abm/kasko/euflag.jpg?height=400&width=600"
                 alt="KASKO Value Proposition"
                 width={600}
                 height={400}
