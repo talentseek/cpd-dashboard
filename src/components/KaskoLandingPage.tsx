@@ -182,7 +182,7 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
             <div className={styles.valueImageContainer}>
               <div className={styles.valueImageGradient} />
               <Image
-                src="/images/abm/kasko/euflag.jpg?height=400&width=600"
+                src="/images/abm/kasko/eu2.jpg?height=400&width=600"
                 alt="KASKO Value Proposition"
                 width={600}
                 height={400}
