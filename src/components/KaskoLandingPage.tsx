@@ -33,7 +33,7 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
           <div className={styles.navFlex}>
             <Link href="/" className={styles.navLogo}>
               <Image
-                src="/kasko-logo.svg"
+                src="/images/abm/kasko/logo.avif"
                 alt="KASKO"
                 width={140}
                 height={40}
@@ -82,7 +82,7 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
             <div className={styles.heroImage}>
               <div className={styles.valueImageGradient} />
               <Image
-                src="/placeholder.svg?height=600&width=600"
+                src="/euflag.jpg"
                 alt="EU Market Access"
                 width={600}
                 height={600}
@@ -214,14 +214,14 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
         <div className={styles.footerContainer}>
           <div className={styles.footerLogos}>
             <Image
-              src="/iso27001.svg"
+              src="/images/abm/kasko/iso27001.avif"
               alt="ISO27001 Certified"
               width={120}
               height={60}
               className={styles.footerLogo}
             />
             <Image
-              src="/eu-funded.svg"
+              src="/images/abm/kasko/eu.avif"
               alt="Co-funded by the European Union"
               width={180}
               height={60}
