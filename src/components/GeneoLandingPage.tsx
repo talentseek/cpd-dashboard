@@ -105,7 +105,7 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
       <nav className={styles.navigation}>
         <div className={styles.navContent}>
           <Image
-            src="/images/abm/geneo/logo.jpg"
+            src="/images/abm/geneo/logo.png"
             alt="Geneo Logo"
             width={120}
             height={30}
@@ -205,12 +205,16 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
           <p><ReplaceText text="A best-in-class system to streamline {company}’s production" replacements={replacements} /></p>
         </motion.div>
         <motion.div className={styles.solutionShowcase} variants={fadeInUp}>
-          <Image
-            src="/images/abm/geneo/genops-platform.png"
-            alt="GEN-OPS Platform"
+          <video
+            src="/images/abm/geneo/yamazumi.mp4"
             width={1200}
             height={600}
             className={styles.showcaseImage}
+            autoPlay
+            loop
+            muted
+            playsInline
+            title="GEN-OPS Yamazumi Demo"
           />
         </motion.div>
         <motion.div className={styles.keyFeatures} variants={staggerChildren}>
