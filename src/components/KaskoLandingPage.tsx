@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight, Building2, CheckCircle, Globe, Lock, ShieldCheck, Timer } from "lucide-react"
-import styles from "@/components/styles/Kasko.module.css" // Adjust path as needed
+import styles from "@/components/styles/Kasko.module.css"
 
 interface Replacements {
   first_name: string;
@@ -27,28 +27,28 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
 
   return (
     <div className={styles.container}>
-      {/* Floating Navigation */}
+      {/* Navigation */}
       <nav className={`${styles.nav} ${isScrolled ? styles.navScrolled : styles.navTransparent}`}>
         <div className={styles.navContainer}>
           <div className={styles.navFlex}>
-            <Link href="/" className="flex items-center">
+            <Link href="/" className={styles.navLogo}>
               <Image
-                src="/kasko-logo.svg" // Replace with actual KASKO logo
+                src="/kasko-logo.svg"
                 alt="KASKO"
                 width={140}
                 height={40}
-                className="h-10 w-auto"
+                className={styles.logoImage}
                 priority
               />
             </Link>
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="#solutions" className={`${styles.navLink} ${styles.navLinkHover}`}>
+            <div className={styles.navLinks}>
+              <Link href="#solutions" className={styles.navLink}>
                 Solutions
               </Link>
-              <Link href="#benefits" className={`${styles.navLink} ${styles.navLinkHover}`}>
+              <Link href="#benefits" className={styles.navLink}>
                 Benefits
               </Link>
-              <Link href="#contact" className={`${styles.navLink} ${styles.navLinkHover}`}>
+              <Link href="#contact" className={styles.navLink}>
                 Contact
               </Link>
               <Button className={styles.getStartedButton}>Get Started</Button>
@@ -71,17 +71,15 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
                 handles everything—from licensing and compliance to banking and tax—so you can focus on growing your
                 business in the EU market.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className={styles.ctaButton}>
+              <div className={styles.ctaContainer}>
+                <Button className={styles.ctaButton}>
                   Start Your EU Journey
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className={styles.arrowIcon} />
                 </Button>
-                <Button variant="outline" size="lg" className={styles.ctaButtonOutline}>
-                  Schedule a Call
-                </Button>
+                <Button className={styles.ctaButtonOutline}>Schedule a Call</Button>
               </div>
             </div>
-            <div className={`${styles.valueImageContainer} hidden lg:block`}>
+            <div className={styles.heroImage}>
               <div className={styles.valueImageGradient} />
               <Image
                 src="/placeholder.svg?height=600&width=600"
@@ -99,12 +97,12 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
       {/* Features Section */}
       <section className={styles.featuresSection}>
         <div className={styles.featuresContainer}>
-          <div className="text-center mb-16">
+          <div className={styles.featuresHeader}>
             <h2 className={styles.featuresTitle}>
               Your Complete Brexit Solution for {replacements.company}
             </h2>
             <p className={styles.featuresDescription}>
-              Since Brexit, we&apos;ve helped over 40 MGAs/brokers establish a fully regulated intermediary in Germany,
+              Since Brexit, we&#39;ve helped over 40 MGAs/brokers establish a fully regulated intermediary in Germany,
               enabling EU-wide operations.
             </p>
           </div>
@@ -133,7 +131,7 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
             </Card>
           </div>
 
-          <div className="mt-16">
+          <div className={styles.benefitsSection}>
             <h3 className={styles.benefitsTitle}>Key Benefits</h3>
             <ul className={styles.benefitList}>
               {[
@@ -156,9 +154,9 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
       <section className={styles.valueSection}>
         <div className={styles.valueContainer}>
           <div className={styles.valueGrid}>
-            <div>
+            <div className={styles.valueContent}>
               <h2 className={styles.valueTitle}>Why Choose KASKO?</h2>
-              <div className="space-y-8">
+              <div className={styles.valueItems}>
                 <div className={styles.valueItem}>
                   <Building2 className={styles.valueIcon} />
                   <div>
@@ -202,15 +200,11 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
             Ready to help {replacements.company} access the EU market?
           </h2>
           <p className={styles.ctaDescription}>
-            Let&apos;s discuss your EU expansion strategy, {replacements.first_name}!
+            Let&#39;s discuss your EU expansion strategy, {replacements.first_name}!
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button className={styles.ctaButton} size="lg">
-              Schedule a Call
-            </Button>
-            <Button variant="outline" size="lg" className={styles.ctaButtonOutline}>
-              Download Our Brochure
-            </Button>
+          <div className={styles.ctaButtons}>
+            <Button className={styles.ctaButton}>Schedule a Call</Button>
+            <Button className={styles.ctaButtonOutline}>Download Our Brochure</Button>
           </div>
         </div>
       </section>
@@ -220,14 +214,14 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
         <div className={styles.footerContainer}>
           <div className={styles.footerLogos}>
             <Image
-              src="/iso27001.svg" // Replace with actual ISO27001 logo
+              src="/iso27001.svg"
               alt="ISO27001 Certified"
               width={120}
               height={60}
               className={styles.footerLogo}
             />
             <Image
-              src="/eu-funded.svg" // Replace with actual EU funding logo
+              src="/eu-funded.svg"
               alt="Co-funded by the European Union"
               width={180}
               height={60}
@@ -241,13 +235,13 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
               W1H 1DP
             </p>
             <div className={styles.footerLinks}>
-              <Link href="/privacy" className={`${styles.footerLink} ${styles.footerLinkHover}`}>
+              <Link href="/privacy" className={styles.footerLink}>
                 Privacy Notice
               </Link>
-              <Link href="/terms" className={`${styles.footerLink} ${styles.footerLinkHover}`}>
+              <Link href="/terms" className={styles.footerLink}>
                 Terms & Conditions
               </Link>
-              <Link href="/legal" className={`${styles.footerLink} ${styles.footerLinkHover}`}>
+              <Link href="/legal" className={styles.footerLink}>
                 Legal Notice
               </Link>
             </div>

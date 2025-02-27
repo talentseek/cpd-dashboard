@@ -1,0 +1,75 @@
+/* src/components/styles/TransformationSection.module.css */
+.container {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  padding: 24px;
+  background: rgba(0, 51, 75, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #c4d0ff;
+  margin-bottom: 16px;
+}
+
+.stories {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.story {
+  display: flex;
+  align-items: flex-start;
+}
+
+.icon {
+  margin-right: 8px;
+  margin-top: 4px;
+  height: 24px;
+  width: 24px;
+}
+
+.improvements {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.improvement {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+}
+
+.improvementIcon {
+  margin-right: 8px;
+  height: 24px;
+  width: 24px;
+}
+
+.label {
+  color: #fff;
+}
+
+.value {
+  color: #9ecc3b;
+  font-weight: 700;
+}

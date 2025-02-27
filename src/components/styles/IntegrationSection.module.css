@@ -1,0 +1,72 @@
+/* src/components/styles/IntegrationSection.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.card {
+  padding: 24px;
+  background: rgba(0, 51, 75, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #c4d0ff;
+  margin-bottom: 16px;
+}
+
+.erpGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.nonFinancialGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.integrationItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logoContainer {
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nonFinancialLogoContainer {
+  width: 64px;
+  height: 64px;
+}
+
+.logo {
+  object-fit: contain;
+}
+
+.name {
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+}
+
+.nonFinancialName {
+  font-size: 12px;
+}
+
+.notice {
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+}

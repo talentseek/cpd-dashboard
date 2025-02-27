@@ -1,0 +1,545 @@
+/* src/components/styles/ProForecastLandingPage.module.css */
+.container {
+  background: #00334B;
+  color: #fff;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(0, 51, 75, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.headerContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookDemoButton {
+  background: #f29102;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.bookDemoButton:hover {
+  background: rgba(242, 145, 2, 0.9);
+}
+
+.heroSection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 80px 16px;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.heroTitle {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  animation: fade-in-up 0.5s ease-out;
+}
+
+.highlight {
+  color: #9dc423;
+}
+
+.companyHighlight {
+  color: #67b1e3;
+}
+
+.heroDescription {
+  font-size: 20px;
+  margin-bottom: 32px;
+  animation: fade-in-up 0.5s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+.heroButton {
+  background: #f29102;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  animation: fade-in-up 0.5s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+.heroButton:hover {
+  background: rgba(242, 145, 2, 0.9);
+}
+
+.visionSection {
+  background: linear-gradient(to bottom, #00334B, #0654c4);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.visionContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.visionTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.visionDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.visionGrid {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .visionGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.visionCard {
+  background: rgba(0, 51, 75, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.visionCardTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #9ecc3b;
+  margin-bottom: 16px;
+}
+
+.visionCardText {
+}
+
+.landscapeSection {
+  background: #0654c4;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.landscapeContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.landscapeTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.landscapeDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.scenariosSection {
+  background: linear-gradient(to bottom, #0654c4, #00334B);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.scenariosContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.scenariosTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.scenariosDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.dataSection {
+  background: #00334B;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.dataContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.dataTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.dataDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.dataGrid {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .dataGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.blueprintSection {
+  background: linear-gradient(to bottom, #00334B, #0654c4);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.blueprintContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.blueprintTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.blueprintDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.blueprintGrid {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .blueprintGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.blueprintCard {
+  background: rgba(0, 51, 75, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.blueprintCardTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #c4d0ff;
+  margin-bottom: 16px;
+}
+
+.blueprintList {
+  list-style-type: disc;
+  list-style-position: inside;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.integrationSection {
+  background: #0654c4;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.integrationContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.integrationTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.integrationDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.transformationSection {
+  background: linear-gradient(to bottom, #0654c4, #00334B);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.transformationContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.transformationTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.transformationDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.successCard {
+  background: rgba(0, 51, 75, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 24px;
+  border-radius: 8px;
+  text-align: left;
+  margin-bottom: 48px;
+}
+
+.successCardTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #c4d0ff;
+  margin-bottom: 16px;
+}
+
+.successList {
+  list-style-type: disc;
+  list-style-position: inside;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.successSource {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.ctaSection {
+  background: #00334B;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.ctaContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 32px;
+}
+
+.videoIframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ctaTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.ctaDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.ctaButton {
+  background: #f29102;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+.ctaButton:hover {
+  background: rgba(242, 145, 2, 0.9);
+}
+
+.closingSection {
+  background: linear-gradient(to bottom, #00334B, #0654c4);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px;
+}
+
+.closingContainer {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.closingTitle {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.closingDescription {
+  font-size: 20px;
+  margin-bottom: 48px;
+}
+
+.tutorialLink {
+  display: inline-flex;
+  align-items: center;
+  font-size: 20px;
+  color: #9dc423;
+  text-decoration: none;
+}
+
+.tutorialLink:hover {
+  color: #fff;
+}
+
+.arrowIcon {
+  margin-left: 8px;
+  height: 24px;
+  width: 24px;
+}
+
+.footer {
+  padding: 32px 16px;
+  background: #00334B;
+  color: #fff;
+}
+
+.footerContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .footerContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.footerText {
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .footerText {
+    margin-top: 0;
+  }
+}
+
+.footerNav {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .footerNav {
+    margin-top: 0;
+  }
+}
+
+.footerLink {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  color: #9dc423;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

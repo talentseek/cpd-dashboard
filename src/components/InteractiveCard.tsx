@@ -1,26 +1,26 @@
-import Image from 'next/image';
+import Image from "next/image"
+import styles from "@/components/styles/InteractiveCard.module.css"
 
 interface InteractiveCardProps {
-title: string;
-description: string;
-imageSrc: string;
+  title: string;
+  description: string;
+  imageSrc: string;
 }
 
 export default function InteractiveCard({ title, description, imageSrc }: InteractiveCardProps) {
-return (
-    <div className="bg-[#00334B]/80 backdrop-blur-md p-6 rounded-lg transform transition-all duration-300 hover:scale-105">
-    <div className="relative w-full h-48 mb-4 overflow-hidden rounded">
+  return (
+    <div className={styles.card}>
+      <div className={styles.imageContainer}>
         <Image 
-            src={imageSrc} 
-            alt={title} 
-            className="object-cover" 
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
+          src={imageSrc} 
+          alt={title} 
+          className={styles.image}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
         />
+      </div>
+      <h3 className={styles.title}>{title}</h3>
+      <p className={styles.description}>{description}</p>
     </div>
-    <h3 className="text-2xl font-semibold mb-4 text-[#9ecc3b]">{title}</h3>
-    <p className="text-white">{description}</p>
-    </div>
-);
+  );
 }
-

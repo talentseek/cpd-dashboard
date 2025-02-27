@@ -1,226 +1,512 @@
 /* src/components/styles/Kasko.module.css */
-
-
 .container {
-  @apply flex min-h-screen flex-col;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .nav {
-  @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: all 0.3s ease;
 }
 
 .navScrolled {
-  @apply bg-white/90 backdrop-blur-md shadow-md py-2;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
 }
 
 .navTransparent {
-  @apply bg-transparent py-4;
+  background: transparent;
+  padding: 16px 0;
 }
 
 .navContainer {
-  @apply container mx-auto px-4;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .navFlex {
-  @apply flex items-center justify-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navLogo {
+  display: flex;
+  align-items: center;
+}
+
+.logoImage {
+  height: 40px;
+  width: auto;
+}
+
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .navLinks {
+    display: flex;
+  }
 }
 
 .navLink {
-  @apply text-sm font-medium text-gray-600 transition-colors;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.navLinkHover {
-  @apply hover:text-[#ECBB2C];
+.navLink:hover {
+  color: #ECBB2C;
 }
 
 .getStartedButton {
-  @apply bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black;
+  background: #ECBB2C;
+  color: #000;
+  padding: 8px 16px;
+  transition: background 0.3s ease;
+}
+
+.getStartedButton:hover {
+  background: rgba(236, 187, 44, 0.9);
 }
 
 .heroSection {
-  @apply pt-32 pb-16 md:pt-40 md:pb-24;
+  padding-top: 128px;
+  padding-bottom: 64px;
+}
+
+@media (min-width: 768px) {
+  .heroSection {
+    padding-top: 160px;
+    padding-bottom: 96px;
+  }
 }
 
 .heroContainer {
-  @apply container mx-auto px-4;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .heroGrid {
-  @apply grid lg:grid-cols-2 gap-12 items-center;
+  display: grid;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .heroGrid {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
 }
 
 .heroText {
-  @apply space-y-6;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .heroTitle {
-  @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .heroTitle {
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroTitle {
+    font-size: 60px;
+  }
 }
 
 .heroSubtitle {
-  @apply text-2xl md:text-3xl text-muted-foreground font-medium;
+  font-size: 24px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+@media (min-width: 768px) {
+  .heroSubtitle {
+    font-size: 30px;
+  }
 }
 
 .heroDescription {
-  @apply text-lg text-muted-foreground;
-}
-
-.ctaButton {
-  @apply bg-[#ECBB2C] hover:bg-[#ECBB2C]/90 text-black;
-}
-
-.ctaButtonOutline {
-  @apply border-gray-300 text-black hover:bg-gray-100;
-}
-
-.featuresSection {
-  @apply py-16 md:py-24 bg-muted/50;
-}
-
-.featuresContainer {
-  @apply container mx-auto px-4;
-}
-
-.featuresTitle {
-  @apply text-3xl md:text-4xl font-bold mb-6;
-}
-
-.featuresDescription {
-  @apply text-lg text-muted-foreground max-w-3xl mx-auto;
-}
-
-.featureGrid {
-  @apply grid gap-8 sm:grid-cols-2 lg:grid-cols-3;
-}
-
-.featureCard {
-  @apply p-6;
-}
-
-.featureIcon {
-  @apply mb-4 h-8 w-8 text-[#ECBB2C];
-}
-
-.featureTitle {
-  @apply mb-2 text-xl font-semibold;
-}
-
-.featureDescription {
-  @apply text-muted-foreground;
-}
-
-.benefitsTitle {
-  @apply mb-6 text-2xl font-semibold;
-}
-
-.benefitList {
-  @apply grid gap-4 sm:grid-cols-2;
-}
-
-.benefitItem {
-  @apply flex items-center gap-2;
-}
-
-.benefitIcon {
-  @apply h-5 w-5 text-[#ECBB2C];
-}
-
-.valueSection {
-  @apply py-16 md:py-24;
-}
-
-.valueContainer {
-  @apply container mx-auto px-4;
-}
-
-.valueGrid {
-  @apply grid gap-12 lg:grid-cols-2;
-}
-
-.valueTitle {
-  @apply mb-6 text-3xl font-bold sm:text-4xl;
-}
-
-.valueItem {
-  @apply flex gap-4;
-}
-
-.valueIcon {
-  @apply h-6 w-6 text-[#ECBB2C];
-}
-
-.valueSubtitle {
-  @apply mb-2 text-xl font-semibold;
-}
-
-.valueDescription {
-  @apply text-muted-foreground;
-}
-
-.valueImageContainer {
-  @apply relative;
-}
-
-.valueImageGradient {
-  @apply absolute inset-0 bg-gradient-to-br from-[#ECBB2C]/20 to-transparent rounded-2xl;
-}
-
-.valueImage {
-  @apply relative rounded-2xl object-cover;
-}
-
-.ctaSection {
-  @apply bg-muted/50 py-16 md:py-24;
+  font-size: 18px;
+  color: #6b7280;
 }
 
 .ctaContainer {
-  @apply container mx-auto px-4 text-center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .ctaContainer {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.ctaButton {
+  background: #ECBB2C;
+  color: #000;
+  padding: 12px 24px;
+  transition: background 0.3s ease;
+}
+
+.ctaButton:hover {
+  background: rgba(236, 187, 44, 0.9);
+}
+
+.arrowIcon {
+  margin-left: 8px;
+  height: 20px;
+  width: 20px;
+}
+
+.ctaButtonOutline {
+  border: 1px solid #d1d5db;
+  color: #000;
+  padding: 12px 24px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.ctaButtonOutline:hover {
+  background: #f3f4f6;
+}
+
+.heroImage {
+  position: relative;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .heroImage {
+    display: block;
+  }
+}
+
+.valueImageGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, rgba(236, 187, 44, 0.2), transparent);
+  border-radius: 16px;
+}
+
+.valueImage {
+  position: relative;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.featuresSection {
+  padding: 64px 0;
+  background: rgba(243, 244, 246, 0.5);
+}
+
+@media (min-width: 768px) {
+  .featuresSection {
+    padding: 96px 0;
+  }
+}
+
+.featuresContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.featuresHeader {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.featuresTitle {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .featuresTitle {
+    font-size: 36px;
+  }
+}
+
+.featuresDescription {
+  font-size: 18px;
+  color: #6b7280;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.featureGrid {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 640px) {
+  .featureGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featureGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featureCard {
+  padding: 24px;
+}
+
+.featureIcon {
+  margin-bottom: 16px;
+  height: 32px;
+  width: 32px;
+  color: #ECBB2C;
+}
+
+.featureTitle {
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.featureDescription {
+  color: #6b7280;
+}
+
+.benefitsSection {
+  margin-top: 64px;
+}
+
+.benefitsTitle {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.benefitList {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .benefitList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.benefitItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.benefitIcon {
+  height: 20px;
+  width: 20px;
+  color: #ECBB2C;
+}
+
+.valueSection {
+  padding: 64px 0;
+}
+
+@media (min-width: 768px) {
+  .valueSection {
+    padding: 96px 0;
+  }
+}
+
+.valueContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.valueGrid {
+  display: grid;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .valueGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.valueContent {
+}
+
+.valueTitle {
+  margin-bottom: 24px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .valueTitle {
+    font-size: 36px;
+  }
+}
+
+.valueItems {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.valueItem {
+  display: flex;
+  gap: 16px;
+}
+
+.valueIcon {
+  height: 24px;
+  width: 24px;
+  color: #ECBB2C;
+}
+
+.valueSubtitle {
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.valueDescription {
+  color: #6b7280;
+}
+
+.valueImageContainer {
+  position: relative;
+}
+
+.ctaSection {
+  padding: 64px 0;
+  background: rgba(243, 244, 246, 0.5);
+}
+
+@media (min-width: 768px) {
+  .ctaSection {
+    padding: 96px 0;
+  }
+}
+
+.ctaContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  text-align: center;
 }
 
 .ctaTitle {
-  @apply mb-4 text-3xl font-bold sm:text-4xl;
+  margin-bottom: 16px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .ctaTitle {
+    font-size: 36px;
+  }
 }
 
 .ctaDescription {
-  @apply mb-8 text-lg text-muted-foreground;
+  margin-bottom: 32px;
+  font-size: 18px;
+  color: #6b7280;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .ctaButtons {
+    flex-direction: row;
+  }
 }
 
 .footer {
-  @apply border-t bg-white;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
 }
 
 .footerContainer {
-  @apply container mx-auto px-4 py-12;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 16px;
 }
 
 .footerLogos {
-  @apply flex justify-center space-x-12 mb-12;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-bottom: 48px;
 }
 
 .footerLogo {
-@apply h-16 w-auto;
+  height: 60px;
+  width: auto;
 }
 
 .footerText {
-  @apply text-center space-y-4;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .footerCopyright {
-  @apply text-sm;
+  font-size: 14px;
 }
 
 .footerAddress {
-  @apply text-sm text-muted-foreground max-w-2xl mx-auto;
+  font-size: 14px;
+  color: #6b7280;
+  max-width: 512px;
+  margin: 0 auto;
 }
 
 .footerLinks {
-  @apply flex justify-center space-x-6;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
 }
 
 .footerLink {
-  @apply text-sm text-muted-foreground;
+  font-size: 14px;
+  color: #6b7280;
+  text-decoration: none;
 }
 
-.footerLinkHover {
-  @apply hover:text-[#ECBB2C];
+.footerLink:hover {
+  color: #ECBB2C;
 }

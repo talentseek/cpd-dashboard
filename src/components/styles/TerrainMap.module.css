@@ -1,0 +1,40 @@
+/* src/components/styles/TerrainMap.module.css */
+.container {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background: rgba(0, 51, 75, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #c4d0ff;
+  margin-bottom: 16px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 8px;
+}

@@ -7,7 +7,7 @@ import { ArrowRight, Shield, Lock, Users, Globe, Cpu, ScrollText } from "lucide-
 import Image from "next/image"
 import Link from "next/link"
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText"
-import styles from "./styles/Aapoon.module.css" // Import the CSS module
+import styles from "@/components/styles/Aapoon.module.css"
 
 interface Replacements extends CustomReplacements {
   first_name: string;
@@ -81,15 +81,15 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
           alt="Aapoon Logo"
           width={120}
           height={40}
-          className="h-8 w-auto"
+          className={styles.navLogo}
         />
-        <div className="space-x-4">
+        <div className={styles.navLinks}>
           {sections.map((section, index) => (
             <Button
               key={section.id}
               variant={currentSection === index ? "default" : "ghost"}
               onClick={() => setCurrentSection(index)}
-              className={`${styles.navButton} hover:${styles.navButtonHover}`}
+              className={styles.navButton}
             >
               {section.title}
             </Button>
@@ -124,9 +124,9 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
               <p className={styles.heroDescription}>
                 In a world of rising cyber threats and data breaches, Aapoon provides B2B and B2G organizations with secure, sovereign messaging solutions that ensure complete data control and compliance.
               </p>
-              <div className="flex justify-center gap-4 mt-8">
-                <Button size="lg" className={styles.ctaButton}>
-                  <ReplaceText text="Explore Investment Opportunity for {company}" replacements={replacements} /> <ArrowRight className="ml-2" />
+              <div className={styles.ctaContainer}>
+                <Button className={styles.ctaButton}>
+                  <ReplaceText text="Explore Investment Opportunity for {company}" replacements={replacements} /> <ArrowRight className={styles.arrowIcon} />
                 </Button>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                 <div className={styles.securityCard}>
                   <Lock className={styles.securityIcon} />
                   <h3 className={styles.securityTitleCard}>Data Sovereignty</h3>
-                <p className={styles.securityDescription}>Complete control over your organization&apos;s data.</p>
+                  <p className={styles.securityDescription}>Complete control over your organization&#39;s data.</p>
                 </div>
                 <div className={styles.securityCard}>
                   <Cpu className={styles.securityIcon} />
@@ -255,13 +255,9 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
           {currentSection === 5 && (
             <div className={styles.ctaContainer}>
               <h2 className={styles.ctaTitle}>Ready to Join Our Journey</h2>
-              <div className="space-y-4">
-                <Button size="lg" variant="default" className={styles.ctaButtonFull}>
-                  Download Investor Presentation
-                </Button>
-                <Button size="lg" variant="outline" className={styles.ctaButtonOutline}>
-                  Schedule an Introduction
-                </Button>
+              <div className={styles.ctaButtons}>
+                <Button className={styles.ctaButtonFull}>Download Investor Presentation</Button>
+                <Button className={styles.ctaButtonOutline}>Schedule an Introduction</Button>
               </div>
               <p className={styles.ctaDescription}>
                 Join us in revolutionizing secure communication technology.

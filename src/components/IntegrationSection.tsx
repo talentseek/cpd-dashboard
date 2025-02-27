@@ -1,6 +1,7 @@
 import type React from "react"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
+import styles from "@/components/styles/IntegrationSection.module.css"
 
 const IntegrationSection: React.FC = () => {
   const erpIntegrations = [
@@ -28,53 +29,53 @@ const IntegrationSection: React.FC = () => {
   ]
 
   return (
-    <div className="space-y-12">
+    <div className={styles.container}>
       {/* ERP Integrations */}
-      <Card className="p-6 bg-[#00334B]/80 backdrop-blur-md">
-        <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">Direct ERP Integrations</h3>
-        <div className="grid grid-cols-3 gap-4">
+      <Card className={styles.card}>
+        <h3 className={styles.title}>Direct ERP Integrations</h3>
+        <div className={styles.erpGrid}>
           {erpIntegrations.map((integration) => (
-            <div key={integration.name} className="flex flex-col items-center justify-center space-y-2">
-              <div className="w-24 h-24 flex items-center justify-center">
+            <div key={integration.name} className={styles.integrationItem}>
+              <div className={styles.logoContainer}>
                 <Image
                   src={integration.logo || "/placeholder.svg"}
                   alt={`${integration.name} logo`}
                   width={100}
                   height={100}
-                  className="object-contain"
+                  className={styles.logo}
                 />
               </div>
-              <span className="text-center text-white text-sm">{integration.name}</span>
+              <span className={styles.name}>{integration.name}</span>
             </div>
           ))}
         </div>
       </Card>
 
       {/* Non-Financial Integrations */}
-      <Card className="p-6 bg-[#00334B]/80 backdrop-blur-md">
-        <h3 className="text-2xl font-semibold mb-4 text-[#c4d0ff]">Non-Financial Integrations</h3>
-        <div className="grid grid-cols-5 gap-4">
+      <Card className={styles.card}>
+        <h3 className={styles.title}>Non-Financial Integrations</h3>
+        <div className={styles.nonFinancialGrid}>
           {nonFinancialIntegrations.map((integration) => (
-            <div key={integration.name} className="flex flex-col items-center justify-center space-y-2">
-              <div className="w-16 h-16 flex items-center justify-center">
+            <div key={integration.name} className={styles.integrationItem}>
+              <div className={styles.nonFinancialLogoContainer}>
                 <Image
                   src={integration.logo || "/placeholder.svg"}
                   alt={`${integration.name} logo`}
                   width={64}
                   height={64}
-                  className="object-contain"
+                  className={styles.logo}
                 />
               </div>
-              <span className="text-center text-white text-xs">{integration.name}</span>
+              <span className={styles.nonFinancialName}>{integration.name}</span>
             </div>
           ))}
         </div>
       </Card>
 
       {/* Custom Integration Notice */}
-      <div className="text-center text-white text-base">
+      <div className={styles.notice}>
         <p>
-        Don&apos;t see your integration? We can build custom integrations inexpensively for most CRM, Payroll, HR, and social media packages, or any application with a RESTful API.
+          Don&#39;t see your integration? We can build custom integrations inexpensively for most CRM, Payroll, HR, and social media packages, or any application with a RESTful API.
         </p>
       </div>
     </div>
