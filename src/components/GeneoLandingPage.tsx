@@ -105,7 +105,7 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
       <nav className={styles.navigation}>
         <div className={styles.navContent}>
           <Image
-            src="/images/abm/geneo/logo.png"
+            src="/images/abm/geneo/logo.jpg"
             alt="Geneo Logo"
             width={120}
             height={30}
