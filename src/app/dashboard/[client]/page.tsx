@@ -47,7 +47,8 @@ export default function ClientDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [clientId, setClientId] = useState<number | null>(null);
   const router = useRouter();
-  const { client } = useParams();
+  const params = useParams();
+  const client = params.client as string;
 
   useEffect(() => {
     async function fetchData() {

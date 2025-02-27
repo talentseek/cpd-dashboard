@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { supabase } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Label } from "@/components/ui/label"
@@ -14,23 +15,169 @@ import { cn } from "@/lib/utils"
 
 const companySizes = ["1-10", "11-50", "51-200", "201-500", "501-1000", "1001-5000", "5001-10000", "10000+"]
 
-export default function OnboardingForm() {
+export default function OnboardingForm({ clientSlug }: { clientSlug: string }) {
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
+  
+  // Update companySizeList in formData when selectedSizes changes
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      companySizeList: selectedSizes
+    }))
+  }, [selectedSizes])
   const [linkCount, setLinkCount] = useState(1)
   const [fileCount, setFileCount] = useState(1)
 
   const totalSteps = 6
 
-  const handleNext = () => {
+  // Form data state
+  const [formData, setFormData] = useState({
+    // Contact details
+    firstName: "",
+    lastName: "",
+    email: "",
+    company: "",
+    website: "",
+    
+    // ICP information
+    persona: "",
+    geography: "",
+    industry: "",
+    jobTitles: "",
+    companySizeList: [] as string[],
+    
+    // Product information
+    shortDesc: "",
+    detailedDesc: "",
+    
+    // Lead magnet
+    whatToOffer: "",
+    
+    // Useful data
+    productPresentation: "",
+    videoPresentation: "",
+    usefulStuff: "",
+    
+    // Calendar setup
+    salesRep: "",
+    calendarIntegration: "",
+    calApiKey: ""
+  })
+  
+  // Form submission status
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState("")
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  // Handle form field changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }))
+  }
+
+  const handleNext = async () => {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1)
+    } else {
+      // Handle form submission
+      await handleSubmit()
     }
   }
 
   const handlePrevious = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
+    }
+  }
+  
+  const handleSubmit = async () => {
+    try {
+      setIsSubmitting(true)
+      setSubmitError("")
+      
+      // Get current user and client info from Supabase
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (!session) {
+        throw new Error("No active session found. Please log in again.")
+      }
+      
+      const { data: userProfile } = await supabase
+        .from('user_profiles')
+        .select('client_id')
+        .eq('id', session.user.id)
+        .single()
+        
+      if (!userProfile?.client_id) {
+        throw new Error("Client ID not found. Please contact support.")
+      }
+      
+      // Prepare data for submission
+      const onboardingData = {
+        client_id: userProfile.client_id,
+        contact_info: {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          company: formData.company,
+          website: formData.website
+        },
+        ideal_customer: {
+          persona: formData.persona,
+          geography: formData.geography,
+          industry: formData.industry,
+          job_titles: formData.jobTitles,
+          company_sizes: selectedSizes
+        },
+        product_info: {
+          short_description: formData.shortDesc,
+          detailed_description: formData.detailedDesc
+        },
+        lead_magnet: formData.whatToOffer,
+        additional_data: {
+          product_presentation: formData.productPresentation,
+          video_presentation: formData.videoPresentation,
+          useful_info: formData.usefulStuff
+        },
+        calendar_info: {
+          sales_rep: formData.salesRep,
+          calendar_link: formData.calendarIntegration,
+          cal_api_key: formData.calApiKey
+        },
+        status: "submitted",
+        created_at: new Date().toISOString()
+      }
+      
+      // Submit to Supabase
+      const { error } = await supabase
+        .from('client_onboarding')
+        .insert([onboardingData])
+        
+      if (error) {
+        throw error
+      }
+      
+      setSubmitSuccess(true)
+      
+      // Redirect to dashboard after successful submission
+      setTimeout(() => {
+        window.location.href = `/dashboard/${clientSlug}`
+      }, 2000)
+      
+    } catch (error: unknown) {
+      console.error("Form submission error:", error)
+      // Type guard to safely access error.message
+      if (error instanceof Error) {
+        setSubmitError(error.message)
+      } else {
+        setSubmitError("An error occurred while submitting the form. Please try again.")
+      }
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -47,31 +194,62 @@ export default function OnboardingForm() {
                 <Label htmlFor="firstName">
                   First Name <span className="text-red-500">*</span>
                 </Label>
-                <Input id="firstName" required className="w-full border-gray-200" />
+                <Input 
+                  id="firstName" 
+                  required 
+                  className="w-full border-gray-200" 
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="lastName">
                   Last Name <span className="text-red-500">*</span>
                 </Label>
-                <Input id="lastName" required className="w-full border-gray-200" />
+                <Input 
+                  id="lastName" 
+                  required 
+                  className="w-full border-gray-200" 
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">
                   Email <span className="text-red-500">*</span>
                 </Label>
-                <Input id="email" type="email" required className="w-full border-gray-200" />
+                <Input 
+                  id="email" 
+                  type="email" 
+                  required 
+                  className="w-full border-gray-200" 
+                  value={formData.email}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="company">
                   Company Name <span className="text-red-500">*</span>
                 </Label>
-                <Input id="company" required className="w-full border-gray-200" />
+                <Input 
+                  id="company" 
+                  required 
+                  className="w-full border-gray-200" 
+                  value={formData.company}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="website">
                   Website <span className="text-red-500">*</span>
                 </Label>
-                <Input id="website" required className="w-full border-gray-200" />
+                <Input 
+                  id="website" 
+                  required 
+                  className="w-full border-gray-200" 
+                  value={formData.website}
+                  onChange={handleInputChange}
+                />
               </div>
             </div>
           </div>
@@ -93,6 +271,8 @@ export default function OnboardingForm() {
                   placeholder="Founders/CEOs/Head of Sales of SaaS companies."
                   required
                   className="min-h-[100px] w-full border-gray-200"
+                  value={formData.persona}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="grid gap-2">
@@ -104,6 +284,8 @@ export default function OnboardingForm() {
                   placeholder="USA, UK."
                   required
                   className="min-h-[100px] w-full border-gray-200"
+                  value={formData.geography}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="grid gap-2">
@@ -115,6 +297,8 @@ export default function OnboardingForm() {
                   placeholder="Computer Software, Manufacturing, Healthcare, Real Estate."
                   required
                   className="min-h-[100px] w-full border-gray-200"
+                  value={formData.industry}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="grid gap-2">
@@ -126,6 +310,8 @@ export default function OnboardingForm() {
                   placeholder="CEO, CFO, COO, Co-Founder, Founder, Owner, Managing Director."
                   required
                   className="min-h-[100px] w-full border-gray-200"
+                  value={formData.jobTitles}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="grid gap-2">
@@ -210,6 +396,8 @@ export default function OnboardingForm() {
                   placeholder="CostPerDemo is an email marketing agency for the SaaS industry."
                   required
                   className="min-h-[100px] w-full border-gray-200"
+                  value={formData.shortDesc}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="grid gap-2">
@@ -225,6 +413,8 @@ export default function OnboardingForm() {
                   placeholder="CostPerDemo is an email marketing agency for the SaaS industry. We offer pre-screened demo meetings for a set price of $250, charged only after the meeting is completed and approved by you. First, we create domains that are similar to yours and start warming them up..."
                   required
                   className="min-h-[100px] w-full border-gray-200"
+                  value={formData.detailedDesc}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -255,7 +445,13 @@ export default function OnboardingForm() {
                 <Label htmlFor="whatToOffer">
                   What can you offer? <span className="text-red-500">*</span>
                 </Label>
-                <Textarea id="whatToOffer" required className="min-h-[100px] w-full border-gray-200" />
+                <Textarea 
+                  id="whatToOffer" 
+                  required 
+                  className="min-h-[100px] w-full border-gray-200"
+                  value={formData.whatToOffer}
+                  onChange={handleInputChange}
+                />
               </div>
             </div>
           </div>
@@ -274,12 +470,22 @@ export default function OnboardingForm() {
               <div className="grid gap-2">
                 <Label htmlFor="productPresentation">Product Presentation</Label>
                 <p className="text-sm text-muted-foreground">Link to the PDF.</p>
-                <Input id="productPresentation" className="w-full border-gray-200" />
+                <Input 
+                  id="productPresentation" 
+                  className="w-full border-gray-200" 
+                  value={formData.productPresentation}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="videoPresentation">Video Presentation</Label>
                 <p className="text-sm text-muted-foreground">Link to the video demonstration of your product.</p>
-                <Input id="videoPresentation" className="w-full border-gray-200" />
+                <Input 
+                  id="videoPresentation" 
+                  className="w-full border-gray-200" 
+                  value={formData.videoPresentation}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="usefulStuff">Useful Stuff</Label>
@@ -288,6 +494,8 @@ export default function OnboardingForm() {
                   id="usefulStuff"
                   placeholder="Industry Report, Guide, Product Matrix, etc."
                   className="min-h-[100px] w-full border-gray-200"
+                  value={formData.usefulStuff}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -306,7 +514,14 @@ export default function OnboardingForm() {
                   Sales Development Representative <span className="text-red-500">*</span>
                 </Label>
                 <p className="text-sm text-muted-foreground">Who will be conducting the demo meeting?</p>
-                <Input id="salesRep" placeholder="Michael Beckett, CEO." required className="w-full border-gray-200" />
+                <Input 
+                  id="salesRep" 
+                  placeholder="Michael Beckett, CEO." 
+                  required 
+                  className="w-full border-gray-200" 
+                  value={formData.salesRep}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="calendarIntegration">
@@ -324,6 +539,8 @@ export default function OnboardingForm() {
                   placeholder="https://cal.com/costperdemo"
                   required
                   className="w-full border-gray-200"
+                  value={formData.calendarIntegration}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="grid gap-2">
@@ -337,7 +554,14 @@ export default function OnboardingForm() {
                   </a>
                   .
                 </p>
-                <Input id="calApiKey" type="password" required className="w-full border-gray-200" />
+                <Input 
+                  id="calApiKey" 
+                  type="password" 
+                  required 
+                  className="w-full border-gray-200" 
+                  value={formData.calApiKey}
+                  onChange={handleInputChange}
+                />
               </div>
             </div>
           </div>
@@ -359,14 +583,50 @@ export default function OnboardingForm() {
       <div className="w-full rounded-lg border bg-white p-8">
         <div className="mx-auto w-full max-w-2xl">
           {renderStep()}
+          {submitSuccess ? (
+          <div className="text-center pt-6">
+            <div className="p-4 bg-green-100 rounded-md mb-4">
+              <p className="text-green-800 font-medium">Thank you for completing the onboarding form!</p>
+              <p className="text-green-700">Your information has been successfully submitted.</p>
+            </div>
+            <p>You will be redirected to your dashboard shortly...</p>
+          </div>
+        ) : (
           <div className="flex justify-between pt-6">
-            <Button variant="outline" onClick={handlePrevious} disabled={currentStep === 1}>
+            <Button 
+              variant="outline" 
+              onClick={handlePrevious} 
+              disabled={currentStep === 1 || isSubmitting}
+            >
               Previous
             </Button>
-            <Button variant="default" onClick={handleNext} className="bg-black text-white hover:bg-black/90">
-              {currentStep === totalSteps ? "Submit" : "Next >"}
+            <Button 
+              variant="default" 
+              onClick={handleNext} 
+              className="bg-black text-white hover:bg-black/90"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <span className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Submitting...
+                </span>
+              ) : (
+                currentStep === totalSteps ? "Submit" : "Next >"
+              )}
             </Button>
           </div>
+        )}
+        
+        {submitError && (
+          <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-md">
+            <p className="font-medium">Error submitting form:</p>
+            <p>{submitError}</p>
+          </div>
+        )}
         </div>
       </div>
     </div>

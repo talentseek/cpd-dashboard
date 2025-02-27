@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { supabase } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, LogOut, Menu, X, Rocket, Settings } from 'lucide-react'; // Ensure all icons used are imported
+import { LayoutDashboard, LogOut, Menu, X, Rocket, Settings, ClipboardList } from 'lucide-react'; // Added ClipboardList icon
 import Image from 'next/image';
 import Link from 'next/link'; // Added missing import for `Link`
 
@@ -21,6 +21,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const [passwordChangeSuccess, setPasswordChangeSuccess] = useState('');
   const router = useRouter();
 
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState<boolean>(false);
+  
   useEffect(() => {
     async function fetchUserProfile() {
       try {
@@ -53,6 +55,14 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           return;
         }
 
+        // Check if onboarding has been completed
+        const { data: onboardingData } = await supabase
+          .from('client_onboarding')
+          .select('*')
+          .eq('client_id', profile.client_id)
+          .single();
+
+        setHasCompletedOnboarding(!!onboardingData);
         setClientName(clientData.client_name || 'Client');
         setUserEmail(user.email || '');
       } catch (error) {
@@ -133,6 +143,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 <span className="ml-3">Quick Start</span>
               </Link>
             </li>
+            {!hasCompletedOnboarding && (
+            <li>
+              <Link href={`/dashboard/${clientName}/onboarding`} className="flex items-center p-2 bg-blue-50 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-gray-700 group">
+                <ClipboardList className="w-5 h-5 text-blue-500 transition duration-75 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white" />
+                <span className="ml-3 font-medium">Complete Onboarding</span>
+                {!hasCompletedOnboarding && <span className="ml-2 px-2 py-0.5 text-xs bg-blue-500 text-white rounded-full">New</span>}
+              </Link>
+            </li>
+            )}
           </ul>
         </nav>
       </aside>
