@@ -1,0 +1,312 @@
+/* src/components/styles/GeneoLandingPage.module.css */
+
+/* Move variables into the container class to keep them local */
+.container {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #333333; /* --text-color */
+  line-height: 1.6;
+  background-color: #F5F6F8; /* --background-color */
+  min-height: 100vh;
+
+  /* Define CSS variables here instead of :root */
+  --primary-color: #003087; /* Geneo’s deep blue */
+  --secondary-color: #00AEEF; /* Geneo’s sky blue */
+  --accent-color: #FFFFFF; /* White for text/buttons */
+  --background-color: #F5F6F8; /* Light grey background */
+  --text-color: #333333; /* Dark text */
+  --highlight-color: #00AEEF; /* Secondary color for highlights */
+  --transition: all 0.3s ease;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--accent-color);
+  box-shadow: var(--box-shadow);
+  z-index: 1000;
+  height: 60px;
+}
+
+.navContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 100%;
+}
+
+.logo {
+  height: 30px;
+  width: auto;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks li {
+  margin-left: 2rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.navLinks li:hover {
+  color: var(--primary-color);
+}
+
+.ctaButton {
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.ctaButton:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+
+/* Hero Section */
+.heroSection {
+  padding: 120px 2rem 4rem;
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  text-align: center;
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroHeadline {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.heroSubheadline {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.heroCta {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+.heroCta:hover {
+  background-color: darken(var(--secondary-color), 10%);
+}
+
+/* Challenge Section */
+.challengeSection {
+  padding: 4rem 2rem;
+  background-color: var(--background-color);
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+
+.sectionHeader h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.sectionHeader p {
+  font-size: 1.2rem;
+}
+
+.challengeContent {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.challengeTabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.challengeTab {
+  padding: 1rem;
+  background-color: var(--accent-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.challengeTab:hover,
+.activeTab {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+}
+
+.challengeDetail {
+  background-color: var(--accent-color);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.challengeDetail h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.challengeDetail p {
+  font-size: 1rem;
+}
+
+/* Solution Section */
+.solutionSection {
+  padding: 4rem 2rem;
+  background-color: #FFFFFF;
+}
+
+.solutionFeatures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featureCard {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow);
+}
+
+.featureCard h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.featureCard p {
+  font-size: 1rem;
+}
+
+.featureDetail {
+  margin-top: 1rem;
+}
+
+.featureImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 6rem 2rem;
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaContent h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.ctaContent p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.ctaButtonLarge {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.ctaButtonLarge:hover {
+  background-color: darken(var(--secondary-color), 10%);
+  transform: translateY(-3px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navLinks li {
+    margin: 0.5rem;
+  }
+
+  .heroHeadline {
+    font-size: 2.5rem;
+  }
+
+  .heroSubheadline {
+    font-size: 1.2rem;
+  }
+
+  .challengeTabs {
+    flex-direction: column;
+  }
+
+  .solutionFeatures {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroHeadline {
+    font-size: 2rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2rem;
+  }
+
+  .ctaContent h2 {
+    font-size: 2rem;
+  }
+}
