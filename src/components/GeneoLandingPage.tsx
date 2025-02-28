@@ -190,7 +190,7 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
             </div>
             <div className={styles.processDetailImage}>
               <Image
-                src={`/images/abm/geneo/challenge-${activeProcess + 1}.png`}
+                src={`/images/abm/geneo/challenge-${activeProcess + 1}.jpg`}
                 alt={processSteps[activeProcess].title}
                 width={500}
                 height={300}
