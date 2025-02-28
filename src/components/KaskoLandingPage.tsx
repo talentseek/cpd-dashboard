@@ -204,7 +204,6 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
           </p>
           <div className={styles.ctaButtons}>
             <Button className={styles.ctaButton}>Schedule a Call</Button>
-            <Button className={styles.ctaButtonOutline}>Download Our Brochure</Button>
           </div>
         </div>
       </section>
