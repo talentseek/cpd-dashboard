@@ -1,374 +1,159 @@
 /* src/components/styles/GeneoLandingPage.module.css */
 
-/* Global Styles */
 .container {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: #333333; /* --color-text */
+  font-family: "Inter", sans-serif;
+  color: #333948;
+  background-color: #efefef;
   line-height: 1.6;
-  background-color: #F0F4F4; /* --color-background */
-
-  /* Define CSS variables locally within .container */
-  --color-primary: #008080; /* Teal */
-  --color-secondary: #005959; /* Darker teal */
-  --color-accent: #00A3A3; /* Bright teal */
-  --color-background: #F0F4F4; /* Light grey */
-  --color-text: #333333; /* Dark text */
-  --color-text-light: #FFFFFF; /* White text */
-  --color-border: #D1D5DB; /* Light grey border */
-  --transition: all 0.3s ease;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.highlight {
-  color: var(--color-accent);
-  font-weight: 700;
-}
-
-/* Navigation */
-.navigation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #333948; /* Dark blue-grey */
-  box-shadow: var(--box-shadow);
-  z-index: 1000;
-  height: 60px;
-}
-
-.navContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  height: 100%;
-}
-
-.logo {
-  height: auto;
-}
-
-.navLinks {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.navLinks li {
-  margin-left: 2rem;
-  cursor: pointer;
-  font-weight: 500;
-  color: #FFFFFF; /* White text for visibility */
-  transition: var(--transition);
-}
-
-.navLinks li:hover {
-  color: #00A3A3; /* Hover uses accent color for contrast */
-}
-
-/* CTA Button (used in both navigation and CTA section) */
-.ctaButton {
-  background-color: var(--color-accent);
-  color: var(--color-text-light);
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: 50px;
-  transition: var(--transition);
-}
-
-.ctaButton:hover {
-  background-color: var(--color-secondary);
-  transform: translateY(-2px);
 }
 
 /* Hero Section */
 .heroSection {
-  padding: 120px 2rem 4rem;
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
+  position: relative;
+  padding: 6rem 2rem 4rem;
+  background-color: #ffffff;
+}
+
+.heroCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.coverImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
 }
 
 .heroContent {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  position: relative;
 }
 
 .heroText {
   flex: 1;
   min-width: 300px;
-  text-align: left;
 }
 
-.heroHeadline {
-  font-size: 3rem;
+.heroText h1 {
+  font-size: 2.5rem;
   font-weight: 800;
+  color: #333948;
   margin-bottom: 1rem;
 }
 
-.heroSubheadline {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
+.heroText p {
+  font-size: 1.2rem;
+  color: #556277;
 }
 
 .heroGif {
   flex: 1;
-  min-width: 300px;
   display: flex;
   justify-content: flex-end;
 }
 
 .factoryGif {
-  width: 498px;
-  height: 498px;
-}
-
-.metricsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-  width: 100%; /* Ensure it spans full width below text and GIF */
-}
-
-.metricCard {
-  background-color: rgba(255, 255, 255, 0.1);
+  width: 300px;
+  height: 300px;
   border-radius: 8px;
-  padding: 1.5rem;
-  transition: var(--transition);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.metricCard:hover {
-  transform: translateY(-5px);
-}
-
-.metricValue {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.metricLabel {
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-/* Challenge Section */
-.challengeSection {
+/* Features Section */
+.featuresSection {
   padding: 4rem 2rem;
-  background-color: var(--color-background);
+  background-color: #ffffff;
 }
 
-.sectionHeader {
+.featuresSection h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333948;
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto 3rem;
+  margin-bottom: 3rem;
 }
 
-.sectionHeader h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 1rem;
-}
-
-.sectionHeader p {
-  font-size: 1.2rem;
-  color: var(--color-text);
-}
-
-.processVisualization {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.processTimeline {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  position: relative;
-}
-
-.processTimeline::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: var(--color-border);
-  z-index: 0;
-}
-
-.processStep {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.processIcon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: var(--color-background);
-  border: 2px solid var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  transition: var(--transition);
-}
-
-.processTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  transition: var(--transition);
-}
-
-.processStep:hover .processIcon,
-.activeStep .processIcon {
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
-}
-
-.processStep:hover .processTitle,
-.activeStep .processTitle {
-  color: var(--color-primary);
-}
-
-.processDetail {
-  display: flex;
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: var(--box-shadow);
-}
-
-.processDetailContent {
-  flex: 1;
-  padding: 2rem;
-}
-
-.processDetailContent h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--color-primary);
-}
-
-.processDetailContent p {
-  font-size: 1rem;
-  color: var(--color-text);
-}
-
-.processDetailImage {
-  flex: 1;
-  background-color: #F5F5F5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.processImage {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Solution Section */
-.solutionSection {
-  padding: 4rem 2rem;
-  background-color: #FFFFFF;
-}
-
-.solutionShowcase {
-  max-width: 1200px;
-  margin: 0 auto 3rem;
-}
-
-.showcaseImage {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: var(--box-shadow);
-}
-
-.keyFeatures {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+.featuresGrid {
   max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .featureCard {
-  background-color: var(--color-background);
-  border-radius: 8px;
+  background-color: #efefef;
   padding: 2rem;
-  transition: var(--transition);
-  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid #b8bcc1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .featureCard:hover {
   transform: translateY(-5px);
-  box-shadow: var(--box-shadow);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.featureCard h4 {
-  font-size: 1.2rem;
-  font-weight: 700;
+.featureIcon {
   margin-bottom: 1rem;
-  color: var(--color-primary);
+}
+
+.featureIcon img {
+  width: 50px;
+  height: 50px;
+}
+
+.featureCard h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333948;
+  margin-bottom: 1rem;
 }
 
 .featureCard p {
   font-size: 1rem;
-  color: var(--color-text);
+  color: #556277;
+  margin-bottom: 1.5rem;
 }
 
-.featureExpanded {
-  margin-top: 1rem;
-}
-
+.featureVideo,
 .featureImage {
   width: 100%;
-  height: auto;
   border-radius: 8px;
 }
 
-.resultsPreview {
-  max-width: 1000px;
-  margin: 4rem auto 0;
-  background-color: var(--color-background);
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: var(--box-shadow);
+/* Outcomes Section */
+.outcomesSection {
+  padding: 4rem 2rem;
+  background-color: #efefef;
 }
 
-.resultsPreview h3 {
-  font-size: 1.8rem;
+.outcomesSection h2 {
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 2rem;
-  color: var(--color-primary);
+  color: #333948;
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-.resultsChart {
-  margin-top: 2rem;
+.outcomesChart {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #b8bcc1;
 }
 
 .chartContainer {
@@ -382,13 +167,14 @@
 .chartLabel {
   font-size: 1rem;
   font-weight: 600;
+  color: #333948;
   margin-bottom: 0.5rem;
 }
 
 .barContainer {
-  height: 30px;
-  background-color: #E0E0E0;
-  border-radius: 15px;
+  height: 25px;
+  background-color: #b8bcc1;
+  border-radius: 12px;
   overflow: hidden;
   position: relative;
 }
@@ -403,17 +189,18 @@
 }
 
 .barBefore {
-  background-color: var(--color-secondary);
+  background-color: #556277;
 }
 
 .barAfter {
-  background-color: var(--color-primary);
+  background-color: #18d3d3;
 }
 
 .barLegend {
-  text-align: right;
   font-size: 0.9rem;
   font-weight: 600;
+  color: #333948;
+  text-align: right;
   margin-top: 0.5rem;
 }
 
@@ -437,142 +224,63 @@
 
 /* CTA Section */
 .ctaSection {
-  padding: 6rem 2rem;
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
-}
-
-.ctaContent {
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 4rem 2rem;
+  background-color: #333948;
+  color: #ffffff;
   text-align: center;
 }
 
-.ctaContent h2 {
-  font-size: 2.5rem;
+.ctaSection h2 {
+  font-size: 2rem;
   font-weight: 800;
   margin-bottom: 1rem;
 }
 
-.ctaContent p {
+.ctaSection p {
   font-size: 1.2rem;
+  color: #b8bcc1;
   margin-bottom: 2rem;
 }
 
-.ctaButtonLarge {
-  background-color: var(--color-accent);
-  color: var(--color-text-light);
-  border: none;
+.ctaButton {
+  background-color: #18d3d3;
+  color: #ffffff;
   padding: 1rem 2rem;
   font-size: 1.2rem;
   font-weight: 600;
+  border: none;
   border-radius: 50px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.ctaButtonLarge:hover {
-  background-color: var(--color-secondary);
+.ctaButton:hover {
+  background-color: #556277;
   transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive Styles */
+/* Responsive Design */
 @media (max-width: 768px) {
-  .navContent {
-    flex-wrap: wrap;
-  }
-
-  .navLinks {
-    order: 2;
-    width: 100%;
-    margin-top: 1rem;
-    justify-content: center;
-  }
-
-  .navLinks li {
-    margin: 0 1rem;
-  }
-
-  .ctaButton {
-    order: 1;
-    margin-left: auto;
-  }
-
-  .heroHeadline {
-    font-size: 2.5rem;
-  }
-
-  .heroSubheadline {
-    font-size: 1.2rem;
-  }
-
-  .heroText {
+  .heroContent {
+    flex-direction: column;
     text-align: center;
   }
 
   .heroGif {
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
   }
 
-  .factoryGif {
-    width: 350px;
-    height: 350px;
-  }
-
-  .processTimeline {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  .processDetail {
-    flex-direction: column;
-  }
-
-  .keyFeatures {
+  .featuresGrid {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 480px) {
-  .navLinks {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .navLinks li {
-    margin: 0.5rem;
-  }
-
-  .heroHeadline {
+  .heroText h1 {
     font-size: 2rem;
   }
 
-  .heroSubheadline {
-    font-size: 1rem;
-  }
-
-  .heroGif {
-    margin-top: 1rem;
-  }
-
-  .factoryGif {
-    width: 250px;
-    height: 250px;
-  }
-
-  .metricValue {
-    font-size: 2rem;
-  }
-
-  .sectionHeader h2 {
-    font-size: 2rem;
-  }
-
-  .ctaContent h2 {
-    font-size: 2rem;
+  .featuresSection h2,
+  .outcomesSection h2,
+  .ctaSection h2 {
+    font-size: 1.8rem;
   }
 }
