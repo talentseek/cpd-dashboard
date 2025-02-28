@@ -132,12 +132,14 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
         variants={staggerChildren}
       >
         <div className={styles.heroContent}>
-          <motion.h1 variants={fadeInUp} className={styles.heroHeadline}>
-            <ReplaceText text="{first_name}, transform {company}’s production with GEN-OPS" replacements={replacements} />
-          </motion.h1>
-          <motion.p variants={fadeInUp} className={styles.heroSubheadline}>
-            Overcome the chaos of setting up standards for <span className={styles.highlight}>100+ variants</span> in just <span className={styles.highlight}>3 months</span>
-          </motion.p>
+          <motion.div className={styles.heroText} variants={fadeInUp}>
+            <h1 className={styles.heroHeadline}>
+              <ReplaceText text="{first_name}, transform {company}’s production with GEN-OPS" replacements={replacements} />
+            </h1>
+            <p className={styles.heroSubheadline}>
+              Overcome the chaos of setting up standards for <span className={styles.highlight}>100+ variants</span> in just <span className={styles.highlight}>3 months</span>
+            </p>
+          </motion.div>
           <motion.div className={styles.heroGif} variants={fadeInUp}>
             <Image
               src="/images/abm/geneo/factory.gif"
@@ -190,7 +192,7 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
             </div>
             <div className={styles.processDetailImage}>
               <Image
-                src={`/images/abm/geneo/challenge-${activeProcess + 1}.jpg`}
+                src={`/images/abm/geneo/challenge-${activeProcess + 1}.png`}
                 alt={processSteps[activeProcess].title}
                 width={500}
                 height={300}

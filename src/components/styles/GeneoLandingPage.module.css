@@ -96,7 +96,17 @@
 .heroContent {
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.heroText {
+  flex: 1;
+  min-width: 300px;
+  text-align: left;
 }
 
 .heroHeadline {
@@ -111,9 +121,10 @@
 }
 
 .heroGif {
-  margin: 2rem auto;
+  flex: 1;
+  min-width: 300px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .factoryGif {
@@ -126,6 +137,7 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+  width: 100%; /* Ensure it spans full width below text and GIF */
 }
 
 .metricCard {
@@ -496,8 +508,13 @@
     font-size: 1.2rem;
   }
 
+  .heroText {
+    text-align: center;
+  }
+
   .heroGif {
-    margin: 1.5rem auto;
+    justify-content: center;
+    margin-top: 1.5rem;
   }
 
   .factoryGif {
@@ -539,7 +556,7 @@
   }
 
   .heroGif {
-    margin: 1rem auto;
+    margin-top: 1rem;
   }
 
   .factoryGif {
