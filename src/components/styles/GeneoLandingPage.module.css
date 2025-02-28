@@ -30,7 +30,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #333948; /* Updated to dark blue-grey */
+  background-color: #333948; /* Dark blue-grey */
   box-shadow: var(--box-shadow);
   z-index: 1000;
   height: 60px;
@@ -110,23 +110,22 @@
   margin-bottom: 2rem;
 }
 
-.heroCta {
-  background-color: var(--color-accent);
-  color: var(--color-text-light);
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  border-radius: 50px;
+.heroGif {
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
 }
 
-.heroCta:hover {
-  background-color: var(--color-secondary);
+.factoryGif {
+  width: 498px;
+  height: 498px;
 }
 
 .metricsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .metricCard {
@@ -497,6 +496,15 @@
     font-size: 1.2rem;
   }
 
+  .heroGif {
+    margin: 1.5rem auto;
+  }
+
+  .factoryGif {
+    width: 350px;
+    height: 350px;
+  }
+
   .processTimeline {
     flex-wrap: wrap;
     justify-content: center;
@@ -524,6 +532,19 @@
 
   .heroHeadline {
     font-size: 2rem;
+  }
+
+  .heroSubheadline {
+    font-size: 1rem;
+  }
+
+  .heroGif {
+    margin: 1rem auto;
+  }
+
+  .factoryGif {
+    width: 250px;
+    height: 250px;
   }
 
   .metricValue {

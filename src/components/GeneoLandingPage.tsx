@@ -138,6 +138,15 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
           <motion.p variants={fadeInUp} className={styles.heroSubheadline}>
             Overcome the chaos of setting up standards for <span className={styles.highlight}>100+ variants</span> in just <span className={styles.highlight}>3 months</span>
           </motion.p>
+          <motion.div className={styles.heroGif} variants={fadeInUp}>
+            <Image
+              src="/images/abm/geneo/factory.gif"
+              alt="Factory Animation"
+              width={498}
+              height={498}
+              className={styles.factoryGif}
+            />
+          </motion.div>
           <motion.div className={styles.metricsContainer} variants={staggerChildren}>
             {metrics.map((metric, index) => (
               <motion.div key={index} className={styles.metricCard} variants={fadeInUp}>
@@ -234,7 +243,7 @@ export default function GeneoLandingPage({ replacements = defaultReplacements }:
                     alt={feature.title}
                     width={400}
                     height={250}
-                    className={styles.featureImage}
+                    className={styles.factoryImage}
                   />
                 </div>
               )}
