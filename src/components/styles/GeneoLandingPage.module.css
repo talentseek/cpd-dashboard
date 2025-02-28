@@ -30,7 +30,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--color-background);
+  background-color: #333948; /* Updated to dark blue-grey */
   box-shadow: var(--box-shadow);
   z-index: 1000;
   height: 60px;
@@ -61,11 +61,12 @@
   margin-left: 2rem;
   cursor: pointer;
   font-weight: 500;
+  color: #FFFFFF; /* White text for visibility */
   transition: var(--transition);
 }
 
 .navLinks li:hover {
-  color: var(--color-primary);
+  color: #00A3A3; /* Hover uses accent color for contrast */
 }
 
 /* CTA Button (used in both navigation and CTA section) */
