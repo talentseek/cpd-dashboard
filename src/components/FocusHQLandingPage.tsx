@@ -100,8 +100,8 @@ export default function FocusHQLandingPage({
             <Image
               src="/images/abm/focushq/logo.svg"
               alt="Focus HQ Logo"
-              width={120}
-              height={40}
+              width={2400}
+              height={80}
             />
           </div>
           <Button
@@ -281,7 +281,7 @@ export default function FocusHQLandingPage({
               muted
               loop
               playsInline
-              poster="/images/abm/focushq/dashboard-video-poster.jpg"
+              poster="/images/abm/focushq/csuite-leadership-1.png"
             >
               <source src="/images/abm/focushq/dashboard-video.mp4" type="video/mp4" />
               Your browser does not support the video tag.
