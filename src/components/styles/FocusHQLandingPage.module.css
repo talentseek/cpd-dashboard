@@ -161,6 +161,12 @@
   transform: scale(1.1);
 }
 
+.challengeIcon {
+  width: 40px;
+  height: 40px;
+  color: #00a2ee;
+}
+
 .challengeTitle {
   font-size: 1.25rem;
   font-weight: 600;

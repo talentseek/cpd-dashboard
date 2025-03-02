@@ -3,7 +3,8 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link"; // Import Link for internal navigation
+import Link from "next/link";
+import { Eye, DollarSign, Users, Zap } from "lucide-react"; // Import lucide-react icons
 import { Button } from "@/components/ui/button";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 import styles from "@/components/styles/FocusHQLandingPage.module.css";
@@ -162,7 +163,7 @@ export default function FocusHQLandingPage({
         <motion.div className={styles.challengesGrid} variants={staggerChildren}>
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconWrapper}>
-              <Image src="/images/abm/focushq/icon-visibility.png" alt="Visibility Icon" width={50} height={50} />
+              <Eye className={styles.challengeIcon} />
             </div>
             <h3 className={styles.challengeTitle}>Lack of Visibility</h3>
             <p className={styles.challengeText}>
@@ -175,7 +176,7 @@ export default function FocusHQLandingPage({
 
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconWrapper}>
-              <Image src="/images/abm/focushq/icon-financial.png" alt="Financial Icon" width={50} height={50} />
+              <DollarSign className={styles.challengeIcon} />
             </div>
             <h3 className={styles.challengeTitle}>Financial Tracking Issues</h3>
             <p className={styles.challengeText}>
@@ -188,7 +189,7 @@ export default function FocusHQLandingPage({
 
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconWrapper}>
-              <Image src="/images/abm/focushq/icon-resources.png" alt="Resources Icon" width={50} height={50} />
+              <Users className={styles.challengeIcon} />
             </div>
             <h3 className={styles.challengeTitle}>Resource Prioritization</h3>
             <p className={styles.challengeText}>
@@ -201,7 +202,7 @@ export default function FocusHQLandingPage({
 
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconWrapper}>
-              <Image src="/images/abm/focushq/icon-agility.png" alt="Agility Icon" width={50} height={50} />
+              <Zap className={styles.challengeIcon} />
             </div>
             <h3 className={styles.challengeTitle}>Business Agility</h3>
             <p className={styles.challengeText}>
