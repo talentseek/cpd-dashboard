@@ -6,6 +6,7 @@ import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Cus
 import AapoonLandingPage from '@/components/AapoonLandingPage'; // Custom Aapoon template
 import KaskoLandingPage from '@/components/KaskoLandingPage'; // Custom KASKO template
 import GeneoLandingPage from '@/components/GeneoLandingPage'; // Custom Geneo template
+import FocusHQLandingPage from '@/components/FocusHQLandingPage'; // Custom Focus HQ template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -239,6 +240,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <GeneoLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "focushq") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <FocusHQLandingPage replacements={replacements} />
         </>
       );
     }
