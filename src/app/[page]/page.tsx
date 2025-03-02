@@ -7,6 +7,7 @@ import AapoonLandingPage from '@/components/AapoonLandingPage'; // Custom Aapoon
 import KaskoLandingPage from '@/components/KaskoLandingPage'; // Custom KASKO template
 import GeneoLandingPage from '@/components/GeneoLandingPage'; // Custom Geneo template
 import FocusHQLandingPage from '@/components/FocusHQLandingPage'; // Custom Focus HQ template
+import QASolveLandingPage from '@/components/QASolveLandingPage'; // Custom QASolve template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -248,6 +249,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <FocusHQLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "qasolve") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <QASolveLandingPage replacements={replacements} />
         </>
       );
     }
