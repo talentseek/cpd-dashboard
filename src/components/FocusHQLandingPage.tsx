@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link"; // Import Link for internal navigation
 import { Button } from "@/components/ui/button";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 import styles from "@/components/styles/FocusHQLandingPage.module.css";
@@ -17,32 +18,43 @@ export default function FocusHQLandingPage({
 }: {
   replacements?: CustomReplacements;
 }) {
+  // State for sticky navigation
+  const [isScrolled, setIsScrolled] = useState(false);
+
   // Refs for animation triggers
+  const navRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const challengesRef = useRef<HTMLDivElement>(null);
   const solutionRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Animation controls
+  const navControls = useAnimation();
   const heroControls = useAnimation();
   const challengesControls = useAnimation();
   const solutionControls = useAnimation();
   const ctaControls = useAnimation();
+  const footerControls = useAnimation();
 
   // InView hooks
+  const navInView = useInView(navRef, { once: false, amount: 0.3 });
   const heroInView = useInView(heroRef, { once: false, amount: 0.3 });
   const challengesInView = useInView(challengesRef, { once: false, amount: 0.3 });
   const solutionInView = useInView(solutionRef, { once: false, amount: 0.3 });
   const ctaInView = useInView(ctaRef, { once: false, amount: 0.3 });
+  const footerInView = useInView(footerRef, { once: false, amount: 0.3 });
 
   // Trigger animations
   useEffect(() => {
+    if (navInView) navControls.start("visible");
     if (heroInView) heroControls.start("visible");
     if (challengesInView) challengesControls.start("visible");
     if (solutionInView) solutionControls.start("visible");
     if (ctaInView) ctaControls.start("visible");
-  }, [heroInView, challengesInView, solutionInView, ctaInView, heroControls, challengesControls, solutionControls, ctaControls]);
+    if (footerInView) footerControls.start("visible");
+  }, [navInView, heroInView, challengesInView, solutionInView, ctaInView, footerInView, navControls, heroControls, challengesControls, solutionControls, ctaControls, footerControls]);
 
   // Trigger video playback when in view
   useEffect(() => {
@@ -50,6 +62,16 @@ export default function FocusHQLandingPage({
       videoRef.current.play();
     }
   }, [solutionInView]);
+
+  // Handle scroll for sticky navigation
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Animation variants
   const fadeInUp = {
@@ -64,6 +86,32 @@ export default function FocusHQLandingPage({
 
   return (
     <div className={styles.container}>
+      {/* Sticky Navigation */}
+      <motion.nav
+        ref={navRef}
+        className={`${styles.nav} ${isScrolled ? styles.scrolled : ""}`}
+        initial="hidden"
+        animate={navControls}
+        variants={fadeInUp}
+      >
+        <div className={styles.navContent}>
+          <div className={styles.logo}>
+            <Image
+              src="/images/abm/focushq/logo.png"
+              alt="Focus HQ Logo"
+              width={120}
+              height={40}
+            />
+          </div>
+          <Button
+            className={styles.navCta}
+            onClick={() => window.location.href = "#book-a-demo"}
+          >
+            Book a Demo
+          </Button>
+        </div>
+      </motion.nav>
+
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
@@ -264,6 +312,25 @@ export default function FocusHQLandingPage({
           </motion.div>
         </motion.div>
       </motion.section>
+
+      {/* Footer Section */}
+      <motion.footer
+        ref={footerRef}
+        className={styles.footer}
+        initial="hidden"
+        animate={footerControls}
+        variants={fadeInUp}
+      >
+        <div className={styles.footerContent}>
+          <div className={styles.footerLinks}>
+            <Link href="/terms" className={styles.footerLink}>Terms</Link>
+            <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
+          </div>
+          <div className={styles.footerCopyright}>
+            © {new Date().getFullYear()} Focus HQ. All rights reserved.
+          </div>
+        </div>
+      </motion.footer>
     </div>
   );
 }
