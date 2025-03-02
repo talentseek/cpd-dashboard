@@ -100,7 +100,7 @@ export default function FocusHQLandingPage({
             <Image
               src="/images/abm/focushq/logo.svg"
               alt="Focus HQ Logo"
-              width={2400}
+              width={240}
               height={80}
             />
           </div>
