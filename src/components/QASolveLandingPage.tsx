@@ -221,8 +221,8 @@ export default function QASolveLandingPage({
             <Image
               src="/images/abm/qasolve/logo.webp"
               alt="QASolve Logo"
-              width={120}
-              height={40}
+              width={240}
+              height={80}
             />
           </div>
           <Button
