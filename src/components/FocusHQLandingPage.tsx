@@ -98,7 +98,7 @@ export default function FocusHQLandingPage({
         <div className={styles.navContent}>
           <div className={styles.logo}>
             <Image
-              src="/images/abm/focushq/logo.png"
+              src="/images/abm/focushq/logo.svg"
               alt="Focus HQ Logo"
               width={120}
               height={40}
@@ -137,7 +137,7 @@ export default function FocusHQLandingPage({
         </div>
         <motion.div className={styles.heroVisual} variants={fadeInUp}>
           <Image
-            src="/images/abm/focushq/dashboard-animation.gif"
+            src="/images/abm/focushq/hero.png"
             alt="Focus HQ Dashboard Animation"
             width={500}
             height={500}
