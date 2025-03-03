@@ -96,7 +96,7 @@ export default function HRoesLandingPage({
         <div className={styles.navContainer}>
           <div className={styles.logo}>
             <Image
-              src="/images/abm/hroes/logo.png"
+              src="/images/abm/hroes/logo.webp"
               alt="HRoes Logo"
               width={120}
               height={40}
