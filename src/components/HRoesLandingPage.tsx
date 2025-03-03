@@ -136,7 +136,7 @@ export default function HRoesLandingPage({
           <div className={styles.heroInner}>
             <motion.h1 variants={fadeInUp} className={styles.heroTitle}>
               <ReplaceText
-                text="{first_name}, Don\'t Let {company} Be the Next Headline!"
+                text="{first_name}, Don't Let {company} Be the Next Headline!"
                 replacements={replacements}
               />
             </motion.h1>
