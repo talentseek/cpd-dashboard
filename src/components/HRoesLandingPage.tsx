@@ -158,7 +158,7 @@ export default function HRoesLandingPage({
             <motion.div variants={fadeInUp} className={styles.quoteBubble}>
               <div className={styles.quoteImage}>
                 <Image
-                  src="/images/abm/hroes/elissa-thursfield.jpg"
+                  src="/images/abm/hroes/elisa.jpeg"
                   alt="Elissa Thursfield"
                   width={100}
                   height={100}
@@ -300,7 +300,7 @@ export default function HRoesLandingPage({
           <div className={styles.testimonialContent}>
             <motion.div variants={fadeInUp} className={styles.testimonialImage}>
               <Image
-                src="/images/abm/hroes/elissa-thursfield.jpg"
+                src="/images/abm/hroes/elisa.jpeg"
                 alt="Elissa Thursfield"
                 width={120}
                 height={120}
