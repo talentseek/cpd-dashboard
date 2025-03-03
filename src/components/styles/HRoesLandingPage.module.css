@@ -68,7 +68,7 @@
 .heroBackground {
   position: absolute;
   inset: 0;
-  background-image: url("/images/abm/hroes/hero-background.jpg");
+  background-image: url("/images/abm/hroes/newspaper.jpg");
   background-size: cover;
   background-position: center;
   mix-blend-mode: overlay;
