@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react"; // Removed useState
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,8 +19,7 @@ export default function EmbryonicLandingPage({
 }: {
   replacements?: CustomReplacements;
 }) {
-  const [isScrolled, setIsScrolled] = useState(false);
-
+  // Removed isScrolled state
   // Refs for animation triggers
   const navRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -74,16 +73,6 @@ export default function EmbryonicLandingPage({
     footerControls,
   ]);
 
-  // Handle scroll for sticky navigation
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   // Animation for solution steps
   useEffect(() => {
     const steps = document.querySelectorAll(`.${styles.solutionStep}`);
@@ -104,14 +93,14 @@ export default function EmbryonicLandingPage({
   };
 
   // Venture logos (using placeholders for now)
-  const ventures = ["Tunespotter", "Artisan Lab", "Clyx", "Cratebase", "Curvey", "Opinion"];
+  const ventures = ["Tunespotter", "Artisan Lab", "Clyx", "Cratebase", "Curvey"];
 
   return (
     <div className={styles.container}>
       {/* Sticky Navigation */}
       <motion.nav
         ref={navRef}
-        className={`${styles.nav} ${isScrolled ? styles.scrolled : ""}`}
+        className={styles.nav} // Removed dynamic .scrolled class
         initial="hidden"
         animate={navControls}
         variants={fadeInUp}
@@ -183,7 +172,7 @@ export default function EmbryonicLandingPage({
             {[...ventures, ...ventures].map((venture, index) => (
               <div key={index} className={styles.carouselItem}>
                 <Image
-                  src={`/images/abm/embryonic/logo-${venture.toLowerCase().replace(/\s+/g, '-')}.avif`}
+                  src={`/images/abm/embryonic/logo-${venture.toLowerCase().replace(/\s+/g, '-')}.png`}
                   alt={`${venture} logo`}
                   width={100}
                   height={50}

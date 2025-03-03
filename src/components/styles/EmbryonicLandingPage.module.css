@@ -2,7 +2,7 @@
 
 /* Base Styles */
 .container {
-  font-family: "Inter", sans-serif; /* Updated font */
+  font-family: "Inter", sans-serif;
   color: rgb(43, 43, 43);
   background-color: rgb(255, 248, 229);
   line-height: 1.6;
@@ -15,16 +15,13 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: transparent;
-  transition: background-color 0.3s ease;
+  background-color: rgb(255, 248, 229); /* Set to creamy beige */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Keep shadow for depth */
+  backdrop-filter: blur(5px); /* Keep blur effect */
   padding: 1rem 2rem;
 }
 
-.nav.scrolled {
-  background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-}
+/* Removed .nav.scrolled class since we don't need it anymore */
 
 .navContent {
   display: flex;
@@ -79,7 +76,7 @@
 }
 
 .heroTitle {
-  font-family: "Inter", sans-serif; /* Updated font */
+  font-family: "Inter", sans-serif;
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
