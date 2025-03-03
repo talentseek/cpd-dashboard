@@ -8,6 +8,7 @@ import KaskoLandingPage from '@/components/KaskoLandingPage'; // Custom KASKO te
 import GeneoLandingPage from '@/components/GeneoLandingPage'; // Custom Geneo template
 import FocusHQLandingPage from '@/components/FocusHQLandingPage'; // Custom Focus HQ template
 import QASolveLandingPage from '@/components/QASolveLandingPage'; // Custom QASolve template
+import EmbryonicLandingPage from '@/components/EmbryonicLandingPage'; // Custom Embryonic Studio template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -257,6 +258,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <QASolveLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "embryonic") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <EmbryonicLandingPage replacements={replacements} />
         </>
       );
     }
