@@ -93,7 +93,7 @@ export default function EmbryonicLandingPage({
   };
 
   // Venture logos (using placeholders for now)
-  const ventures = ["Partnerize", "Artisan", "Clyx", "Monc", "Opinion"];
+  const ventures = ["batchday", "Artisan", "Clyx", "Monc", "Opinion"];
 
   return (
     <div className={styles.container}>
