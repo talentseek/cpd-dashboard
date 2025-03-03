@@ -1,0 +1,511 @@
+/* src/components/styles/HRoesLandingPage.module.css */
+
+/* Base Styles */
+.container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1rem;
+  z-index: 50;
+}
+
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.navCta {
+  background-color: #e24038;
+  color: #ffffff;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.navCta:hover {
+  background-color: #c5352e;
+}
+
+.navSpacer {
+  height: 4rem;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #e24038, #318297);
+  opacity: 0.9;
+}
+
+.heroBackground {
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/abm/hroes/hero-background.jpg");
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+}
+
+.alertLines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0.3;
+}
+
+.alertLine {
+  height: 1px;
+  background-color: #ffffff;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.heroInner {
+  max-width: 64rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.heroText {
+  font-size: 1.25rem;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.heroCtaWrapper {
+  position: relative;
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  color: #e24038;
+  font-size: 1.125rem;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.heroCta:hover {
+  background-color: #f8f8f8;
+  transform: scale(1.05);
+}
+
+.ctaIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+.quoteBubble {
+  margin-top: 3rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 32rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.quoteImage {
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+}
+
+.quoteImageInner {
+  object-fit: cover;
+}
+
+.quoteText {
+  color: #010101;
+  font-style: italic;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.quoteAuthor {
+  color: #318297;
+  font-weight: 600;
+}
+
+/* Urgency Section */
+.urgency {
+  background-color: #e24038;
+  color: #ffffff;
+  padding: 3rem 1rem;
+}
+
+.urgencyInner {
+  max-width: 64rem;
+  margin: 0 auto;
+  animation: shake 5s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+.urgencyContent {
+  text-align: center;
+}
+
+.urgencyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.urgencyIcon {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+}
+
+.urgencyTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.urgencyText {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.urgencyCta {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  color: #e24038;
+  font-size: 1.125rem;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.urgencyCta:hover {
+  background-color: #f8f8f8;
+  transform: scale(1.05);
+}
+
+/* Solutions Section */
+.solutions {
+  padding: 4rem 1rem;
+  background-color: #ffffff;
+}
+
+.solutionsInner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.solutionsTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #318297;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.solutionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.solutionCard {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-top: 4px solid #e24038;
+  transition: all 0.3s ease;
+}
+
+.solutionCard:hover {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.solutionIcon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  color: #318297;
+}
+
+.solutionTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #318297;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.solutionText {
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.solutionCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #318297;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.solutionCta:hover {
+  background-color: #2c7a8b;
+  transform: scale(1.05);
+}
+
+/* Testimonial Section */
+.testimonial {
+  background-color: #b3c7c6;
+  padding: 4rem 1rem;
+}
+
+.testimonialInner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.testimonialContent {
+  text-align: center;
+}
+
+.testimonialImage {
+  margin-bottom: 1.5rem;
+}
+
+.testimonialImageInner {
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+}
+
+.testimonialQuote {
+  font-size: 1.125rem;
+  font-style: italic;
+  color: #010101;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.testimonialAuthor {
+  font-weight: 600;
+  color: #318297;
+}
+
+/* Webcast Section */
+.webcast {
+  background-color: #318297;
+  color: #ffffff;
+  padding: 4rem 1rem;
+}
+
+.webcastInner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.webcastContent {
+  text-align: center;
+}
+
+.webcastIcon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.webcastTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.webcastText {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.webcastCta {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  color: #318297;
+  font-size: 1.125rem;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.webcastCta:hover {
+  background-color: #f8f8f8;
+  transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+  background-color: #010101;
+  color: #ffffff;
+  padding: 2rem 1rem;
+}
+
+.footerInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footerLink {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.footerLink:hover {
+  color: #e24038;
+}
+
+.footerCopyright {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .heroTitle {
+    font-size: 3rem;
+  }
+
+  .heroText {
+    font-size: 1.5rem;
+  }
+
+  .urgencyTitle {
+    font-size: 2rem;
+  }
+
+  .solutionsTitle {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroTitle {
+    font-size: 3.5rem;
+  }
+
+  .solutionsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
