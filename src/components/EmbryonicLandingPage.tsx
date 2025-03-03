@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Briefcase, Search, Users } from "lucide-react"; // Use lucide-react icons for challenges
+import { Briefcase, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 import styles from "@/components/styles/EmbryonicLandingPage.module.css";
@@ -145,7 +145,12 @@ export default function EmbryonicLandingPage({
         <div className={styles.heroContent}>
           <motion.h1 variants={fadeInUp} className={styles.heroTitle}>
             <ReplaceText
-              text="Hey {first_name}, Let's De-Risk and Build {company} with embryōnic"
+              text="Hey {first_name}, Let's "
+              replacements={replacements}
+            />
+            <span className={styles.underline}>De-Risk</span>
+            <ReplaceText
+              text=" and Build {company} with embryōnic"
               replacements={replacements}
             />
           </motion.h1>

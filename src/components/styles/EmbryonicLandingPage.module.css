@@ -2,7 +2,7 @@
 
 /* Base Styles */
 .container {
-  font-family: "Creta Creta", "Creta Creta Placeholder", sans-serif;
+  font-family: "Inter", sans-serif; /* Updated font */
   color: rgb(43, 43, 43);
   background-color: rgb(255, 248, 229);
   line-height: 1.6;
@@ -79,7 +79,7 @@
 }
 
 .heroTitle {
-  font-family: "Creta Creta", "Creta Creta Placeholder", sans-serif;
+  font-family: "Inter", sans-serif; /* Updated font */
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
