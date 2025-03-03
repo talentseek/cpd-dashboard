@@ -183,7 +183,7 @@ export default function EmbryonicLandingPage({
             {[...ventures, ...ventures].map((venture, index) => (
               <div key={index} className={styles.carouselItem}>
                 <Image
-                  src={`/images/abm/embryonic/logo-${venture.toLowerCase().replace(/\s+/g, '-')}.png`}
+                  src={`/images/abm/embryonic/logo-${venture.toLowerCase().replace(/\s+/g, '-')}.avif`}
                   alt={`${venture} logo`}
                   width={100}
                   height={50}
