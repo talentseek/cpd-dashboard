@@ -156,9 +156,16 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
   const ogImage = constructFullUrl(clientData.hero?.heroImage || '/default-og-image.jpg');
   const currentUrl = `https://${host}/${page}`;
 
+  // Normalize landing_page_template value for comparison
+  const template = client.landing_page_template?.toLowerCase().trim();
+
+  // Conditionally set robots meta tag to noindex for the embryonic template
+  const robots = template === "embryonic" ? "noindex" : undefined;
+
   return {
     title: ogTitle,
     description: ogDescription,
+    robots, // Add robots metadata to prevent indexing for embryonic template
     openGraph: {
       title: ogTitle,
       description: ogDescription,
