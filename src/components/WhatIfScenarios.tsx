@@ -1,26 +1,27 @@
-"use client"
+// src/components/WhatIfScenarios.tsx
+"use client";
 
-import React, { useState } from "react"
-import { Card } from "@/components/ui/card"
-import { Slider } from "@/components/ui/slider"
-import { LineChart } from "@/components/ui/chart"
-import styles from "@/components/styles/WhatIfScenarios.module.css"
+import React, { useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import { LineChart } from "@/components/ui/chart";
+import styles from "@/components/styles/WhatIfScenarios.module.css";
 
 const generateRandomData = (initial: number, length: number) => {
-  let value = initial
+  let value = initial;
   return Array.from({ length }, () => {
-    const change = (Math.random() - 0.5) * 20
-    value = value + change
-    if (value < 0) value = 0
-    return Number(value.toFixed(2))
-  })
-}
+    const change = (Math.random() - 0.5) * 20;
+    value = value + change;
+    if (value < 0) value = 0;
+    return Number(value.toFixed(2));
+  });
+};
 
 const WhatIfScenarios: React.FC = () => {
-  const [marketGrowth, setMarketGrowth] = useState(50)
-  const [operationalEfficiency, setOperationalEfficiency] = useState(50)
+  const [marketGrowth, setMarketGrowth] = useState(50);
+  const [operationalEfficiency, setOperationalEfficiency] = useState(50);
 
-  const labels = ["January", "February", "March", "April", "May", "June", "July"]
+  const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
   const chartData = {
     labels,
@@ -40,7 +41,7 @@ const WhatIfScenarios: React.FC = () => {
         fill: false,
       },
     ],
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -76,7 +77,7 @@ const WhatIfScenarios: React.FC = () => {
         </div>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default WhatIfScenarios
+export default WhatIfScenarios;

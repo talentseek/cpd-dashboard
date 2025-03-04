@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import FloatingNav from "@/components/FloatingNav";
 import FullScreenSection from "@/components/FullScreenSection";
 import TerrainMap from "@/components/TerrainMap";
+import WhatIfScenarios from "@/components/WhatIfScenarios"; // Re-added import
 import IntegrationSection from "@/components/IntegrationSection";
 import TransformationSection from "@/components/TransformationSection";
 import Link from "next/link";
@@ -23,6 +24,12 @@ export default function ProForecastLandingPage({
 }: {
   replacements?: CustomReplacements;
 }) {
+  // Function to scroll to a section by ID
+  const scrollTo = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className={styles.container}>
       <FloatingNav />
@@ -38,7 +45,7 @@ export default function ProForecastLandingPage({
           />
           <Button
             className={styles.bookDemoButton}
-            onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+            onClick={() => window.location.href = "https://calendly.com/proforecastdemo/proforecast-demonstration-1"}
           >
             Book a Demo
           </Button>
@@ -57,7 +64,7 @@ export default function ProForecastLandingPage({
           </p>
           <Button
             className={styles.heroButton}
-            onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+            onClick={() => scrollTo("vision")} // Scroll to the Vision section
           >
             Begin Your Journey
           </Button>
@@ -99,7 +106,18 @@ export default function ProForecastLandingPage({
         </div>
       </FullScreenSection>
 
-      {/* 4. Transforming Data */}
+      {/* 4. What-If Scenarios (Re-added) */}
+      <FullScreenSection id="scenarios" className={styles.scenariosSection}>
+        <div className={styles.scenariosContainer}>
+          <h2 className={styles.scenariosTitle}>What-If Scenarios: Explore Your Future Possibilities</h2>
+          <p className={styles.scenariosDescription}>
+            What if you could predict the impact of every decision? Explore multiple future scenarios—from market shifts to operational tweaks—and visualize how each possibility reshapes <ReplaceText text="{company}" replacements={replacements} />{"'"}s financial trajectory.
+          </p>
+          <WhatIfScenarios />
+        </div>
+      </FullScreenSection>
+
+      {/* 5. Transforming Data */}
       <FullScreenSection id="data" className={styles.dataSection}>
         <div className={styles.dataContainer}>
           <h2 className={styles.dataTitle}>Transforming Data into Actionable Intelligence</h2>
@@ -127,7 +145,7 @@ export default function ProForecastLandingPage({
         </div>
       </FullScreenSection>
 
-      {/* 5. Your Unique Financial Blueprint */}
+      {/* 6. Your Unique Financial Blueprint */}
       <FullScreenSection id="blueprint" className={styles.blueprintSection}>
         <div className={styles.blueprintContainer}>
           <h2 className={styles.blueprintTitle}>Your Unique Financial Blueprint</h2>
@@ -162,7 +180,7 @@ export default function ProForecastLandingPage({
         </div>
       </FullScreenSection>
 
-      {/* 6. Seamless Integration */}
+      {/* 7. Seamless Integration */}
       <FullScreenSection id="integration" className={styles.integrationSection}>
         <div className={styles.integrationContainer}>
           <h2 className={styles.integrationTitle}>Seamless Integration & Intelligent Automation</h2>
@@ -173,7 +191,7 @@ export default function ProForecastLandingPage({
         </div>
       </FullScreenSection>
 
-      {/* 7. Driving Financial Mastery */}
+      {/* 8. Driving Financial Mastery */}
       <FullScreenSection id="transformation" className={styles.transformationSection}>
         <div className={styles.transformationContainer}>
           <h2 className={styles.transformationTitle}>Driving Financial Mastery & Strategic Transformation</h2>
@@ -196,7 +214,7 @@ export default function ProForecastLandingPage({
         </div>
       </FullScreenSection>
 
-      {/* 8. Call-to-Action */}
+      {/* 9. Call-to-Action */}
       <FullScreenSection id="cta" className={styles.ctaSection}>
         <div className={styles.ctaContainer}>
           <div className={styles.videoWrapper}>
@@ -217,14 +235,14 @@ export default function ProForecastLandingPage({
           </p>
           <Button
             className={styles.ctaButton}
-            onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+            onClick={() => window.location.href = "https://calendly.com/proforecastdemo/proforecast-demonstration-1"}
           >
             Book Your Demo
           </Button>
         </div>
       </FullScreenSection>
 
-      {/* 9. Closing */}
+      {/* 10. Closing */}
       <FullScreenSection id="closing" className={styles.closingSection}>
         <div className={styles.closingContainer}>
           <h2 className={styles.closingTitle}>Your Continuous Journey</h2>
@@ -243,9 +261,9 @@ export default function ProForecastLandingPage({
           <Image src="/images/abm/proforecast/logo.svg" alt="ProForecast Logo" width={120} height={16} />
           <p className={styles.footerText}>© {new Date().getFullYear()} ProForecast. All rights reserved.</p>
           <nav className={styles.footerNav}>
-            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
-            <Link href="/terms" className={styles.footerLink}>Terms of Service</Link>
-            <Link href="#connect" className={styles.footerLink}>Connect with Us</Link>
+            <Link href="https://proforecast.com/privacy-policy/" className={styles.footerLink}>Privacy Policy</Link>
+            <Link href="https://proforecast.com/terms-conditions/" className={styles.footerLink}>Terms of Service</Link>
+            <Link href="https://proforecast.com/contact-us/" className={styles.footerLink}>Connect with Us</Link>
           </nav>
         </div>
       </footer>
