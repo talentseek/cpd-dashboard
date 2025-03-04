@@ -1,0 +1,671 @@
+/* src/components/styles/LeezlyLandingPage.module.css */
+
+/* Base styles */
+.container {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a2e;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+  background-color: #f8f9ff;
+}
+
+/* Animated background */
+.backgroundAnimation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.shape1,
+.shape2,
+.shape3 {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+}
+
+.shape1 {
+  width: 600px;
+  height: 600px;
+  background: linear-gradient(45deg, #5567ff, #8f9aff);
+  top: -200px;
+  right: -200px;
+}
+
+.shape2 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(45deg, #ff6b6b, #ffa6a6);
+  bottom: 10%;
+  left: -100px;
+}
+
+.shape3 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, #36d1dc, #5b86e5);
+  top: 40%;
+  right: 10%;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.headerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+.logoText {
+  background: linear-gradient(45deg, #5567ff, #8f9aff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+}
+
+.ctaButton {
+  background-color: #5567ff;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(85, 103, 255, 0.3);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(85, 103, 255, 0.4);
+}
+
+.headerSpacer {
+  height: 5rem;
+}
+
+/* Hero Section */
+.hero {
+  padding: 2rem 2rem 6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.heroLeft {
+  padding-right: 2rem;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, #1a1a2e, #16213e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.highlight {
+  color: #5567ff;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background-color: rgba(85, 103, 255, 0.2);
+  z-index: -1;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  color: #4a4a6a;
+  margin-bottom: 2rem;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(85, 103, 255, 0.1);
+  color: #5567ff;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.badgeIcon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.heroButton {
+  display: inline-block;
+  background: linear-gradient(45deg, #5567ff, #8f9aff);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(85, 103, 255, 0.4);
+}
+
+.heroButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(85, 103, 255, 0.5);
+}
+
+.heroRight {
+  position: relative;
+}
+
+.heroImage {
+  position: relative;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 80%;
+}
+
+.imagePlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Dashboard mockup */
+.dashboardMockup {
+  width: 100%;
+  height: 100%;
+  background-color: #f8f9ff;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.mockupHeader {
+  height: 30px;
+  background-color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.mockupDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.mockupDot:nth-child(1) {
+  background-color: #ff6b6b;
+}
+
+.mockupDot:nth-child(2) {
+  background-color: #ffd93d;
+}
+
+.mockupDot:nth-child(3) {
+  background-color: #6bcb77;
+}
+
+.mockupContent {
+  display: flex;
+  height: calc(100% - 30px);
+}
+
+.mockupSidebar {
+  width: 20%;
+  background-color: #16213e;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mockupMenuItem {
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.mockupMain {
+  width: 80%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mockupCard {
+  height: 40px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.mockupGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.mockupGridItem {
+  height: 80px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Pain Points Section */
+.painPoints {
+  padding: 6rem 2rem;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: #1a1a2e;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.painPointsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.painPointCard {
+  background-color: #f8f9ff;
+  border-radius: 15px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.painPointCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.painPointIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.painPointTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.painPointText {
+  color: #4a4a6a;
+}
+
+/* Solutions Section */
+.solutions {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #5567ff 0%, #8f9aff 100%);
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.solutionsContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.solutions .sectionTitle {
+  color: white;
+}
+
+.solutionsCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.solutionCard {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.solutionCard:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+.solutionNumber {
+  font-size: 3rem;
+  font-weight: 800;
+  opacity: 0.3;
+  margin-bottom: 1rem;
+}
+
+.solutionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.solutionText {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* Testimonial Section */
+.testimonial {
+  padding: 6rem 2rem;
+  background-color: #f8f9ff;
+  position: relative;
+  z-index: 2;
+}
+
+.testimonialContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.testimonialQuoteIcon {
+  font-size: 8rem;
+  position: absolute;
+  top: -4rem;
+  left: -2rem;
+  color: rgba(85, 103, 255, 0.1);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.testimonialQuote {
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  color: #1a1a2e;
+}
+
+.testimonialAuthor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonialAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #5567ff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-right: 1rem;
+}
+
+.testimonialInfo {
+  text-align: left;
+}
+
+.testimonialName {
+  font-weight: 700;
+  margin: 0;
+  color: #1a1a2e;
+}
+
+.testimonialRole {
+  color: #4a4a6a;
+  margin: 0;
+}
+
+/* CTA Section */
+.cta {
+  padding: 6rem 2rem;
+  background-color: #1a1a2e;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.ctaContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.ctaText {
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.primaryButton {
+  background: linear-gradient(45deg, #5567ff, #8f9aff);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(85, 103, 255, 0.4);
+}
+
+.primaryButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(85, 103, 255, 0.5);
+}
+
+.secondaryButton {
+  background-color: transparent;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.secondaryButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+/* Footer */
+.footer {
+  padding: 3rem 2rem;
+  background-color: #16213e;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footerLogo {
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, #5567ff, #8f9aff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.footerCopyright {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 2rem;
+}
+
+.footerLink {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footerLink:hover {
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .heroLeft {
+    padding-right: 0;
+    order: 1;
+  }
+
+  .heroRight {
+    order: 0;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .imageWrapper {
+    padding-bottom: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .testimonialQuote {
+    font-size: 1.5rem;
+  }
+
+  .ctaTitle {
+    font-size: 2rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .header {
+    padding: 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .ctaButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

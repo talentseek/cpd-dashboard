@@ -11,6 +11,7 @@ import QASolveLandingPage from '@/components/QASolveLandingPage'; // Custom QASo
 import EmbryonicLandingPage from '@/components/EmbryonicLandingPage'; // Custom Embryonic Studio template
 import HRoesLandingPage from '@/components/HRoesLandingPage'; // Custom HRoes template
 import CleverlyLandingPage from '@/components/CleverlyLandingPage'; // Custom Cleverly template
+import LeezlyLandingPage from '@/components/LeezlyLandingPage'; // Custom Leezly template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -291,6 +292,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <CleverlyLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "leezly") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <LeezlyLandingPage replacements={replacements} />
         </>
       );
     }
