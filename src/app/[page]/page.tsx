@@ -10,6 +10,7 @@ import FocusHQLandingPage from '@/components/FocusHQLandingPage'; // Custom Focu
 import QASolveLandingPage from '@/components/QASolveLandingPage'; // Custom QASolve template
 import EmbryonicLandingPage from '@/components/EmbryonicLandingPage'; // Custom Embryonic Studio template
 import HRoesLandingPage from '@/components/HRoesLandingPage'; // Custom HRoes template
+import CleverlyLandingPage from '@/components/CleverlyLandingPage'; // Custom Cleverly template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -282,6 +283,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <HRoesLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "cleverly") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <CleverlyLandingPage replacements={replacements} />
         </>
       );
     }
