@@ -1,34 +1,28 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import InteractiveCard from "@/components/InteractiveCard"
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
-import FloatingNav from "@/components/FloatingNav"
-import FullScreenSection from "@/components/FullScreenSection"
-import TerrainMap from "@/components/TerrainMap"
-import WhatIfScenarios from "@/components/WhatIfScenarios"
-import IntegrationSection from "@/components/IntegrationSection"
-import TransformationSection from "@/components/TransformationSection"
-import Link from "next/link"
-import { ReplaceText, CustomReplacements } from "@/components/ReplaceText"
-import styles from "@/components/styles/ProForecastLandingPage.module.css"
+import Image from "next/image";
+import InteractiveCard from "@/components/InteractiveCard";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import FloatingNav from "@/components/FloatingNav";
+import FullScreenSection from "@/components/FullScreenSection";
+import TerrainMap from "@/components/TerrainMap";
+import IntegrationSection from "@/components/IntegrationSection";
+import TransformationSection from "@/components/TransformationSection";
+import Link from "next/link";
+import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
+import styles from "@/components/styles/ProForecastLandingPage.module.css";
 
-const AnimatedBackground = dynamic(() => import("@/components/AnimatedBackground"), { ssr: false })
+const defaultReplacements: CustomReplacements = {
+  first_name: "{first_name}",
+  company: "{company}",
+};
 
-interface ClientData {
-  id: string;
-  name: string;
-  email: string;
-}
-
-interface ProForecastLandingPageProps {
-  clientData: ClientData;
-  replacements: CustomReplacements;
-}
-
-export default function ProForecastLandingPage({ clientData, replacements }: ProForecastLandingPageProps) {
+export default function ProForecastLandingPage({
+  replacements = defaultReplacements,
+}: {
+  replacements?: CustomReplacements;
+}) {
   return (
     <div className={styles.container}>
       <FloatingNav />
@@ -42,25 +36,31 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
             width={150}
             height={20}
           />
-          <Button className={styles.bookDemoButton}>Book a Demo</Button>
+          <Button
+            className={styles.bookDemoButton}
+            onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+          >
+            Book a Demo
+          </Button>
         </div>
       </header>
 
       {/* 1. Welcome & Introduction */}
       <FullScreenSection id="hero" className={styles.heroSection}>
-        <AnimatedBackground />
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
-            Hello <span className={styles.highlight}>{String(replacements.first_name)}</span>, Welcome to your Financial Odyssey at{" "}
-            <span className={styles.companyHighlight}>{String(replacements.company)}</span>
+            Hello <span className={styles.highlight}><ReplaceText text="{first_name}" replacements={replacements} /></span>, Welcome to Your Financial Odyssey at{" "}
+            <span className={styles.companyHighlight}><ReplaceText text="{company}" replacements={replacements} /></span>
           </h1>
           <p className={styles.heroDescription}>
-            <ReplaceText
-              text="Embark on a journey of financial transformation where every decision is driven by accurate forecasts and actionable insights."
-              replacements={replacements}
-            />
+            Embark on a journey of financial transformation where every decision is driven by accurate forecasts and actionable insights.
           </p>
-          <Button className={styles.heroButton}>Begin Your Journey</Button>
+          <Button
+            className={styles.heroButton}
+            onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+          >
+            Begin Your Journey
+          </Button>
         </div>
       </FullScreenSection>
 
@@ -69,10 +69,7 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         <div className={styles.visionContainer}>
           <h2 className={styles.visionTitle}>Your Vision & Mission</h2>
           <p className={styles.visionDescription}>
-            <ReplaceText
-              text="At {company}, your mission—{custom.mission}—drives every decision. Imagine a future where every financial action is guided by real-time insights and smart, proactive strategies."
-              replacements={replacements}
-            />
+            At <ReplaceText text="{company}" replacements={replacements} />, your mission drives every decision. Imagine a future where every financial action is guided by real-time insights and smart, proactive strategies.
           </p>
           <div className={styles.visionGrid}>
             <div className={styles.visionCard}>
@@ -96,35 +93,18 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         <div className={styles.landscapeContainer}>
           <h2 className={styles.landscapeTitle}>Mapping the Landscape: Challenges & Opportunities</h2>
           <p className={styles.landscapeDescription}>
-            <ReplaceText
-              text="Navigate the complex terrain of {custom.industry} with precision and foresight, uncovering hidden risks and emerging opportunities that impact your bottom line."
-              replacements={replacements}
-            />
+            Navigate the complex terrain of your industry with precision and foresight, uncovering hidden risks and emerging opportunities that impact <ReplaceText text="{company}" replacements={replacements} />{"'"}s bottom line.
           </p>
           <TerrainMap />
         </div>
       </FullScreenSection>
 
-      {/* 4. What-If Scenarios */}
-      <FullScreenSection id="scenarios" className={styles.scenariosSection}>
-        <div className={styles.scenariosContainer}>
-          <h2 className={styles.scenariosTitle}>What-If Scenarios: Explore Your Future Possibilities</h2>
-          <p className={styles.scenariosDescription}>
-            <ReplaceText
-              text="What if you could predict the impact of every decision? Explore multiple future scenarios—from market shifts to operational tweaks—and visualize how each possibility reshapes {company}'s financial trajectory."
-              replacements={replacements}
-            />
-          </p>
-          <WhatIfScenarios />
-        </div>
-      </FullScreenSection>
-
-      {/* 5. Transforming Data */}
+      {/* 4. Transforming Data */}
       <FullScreenSection id="data" className={styles.dataSection}>
         <div className={styles.dataContainer}>
           <h2 className={styles.dataTitle}>Transforming Data into Actionable Intelligence</h2>
           <p className={styles.dataDescription}>
-            Unlock real-time, customized dashboards that convert raw data into strategic insights for <span className={styles.highlight}>{String(replacements.company)}</span>.
+            Unlock real-time, customized dashboards that convert raw data into strategic insights for <span className={styles.highlight}><ReplaceText text="{company}" replacements={replacements} /></span>.
             Leverage detailed analytics to recognize opportunities, manage risks, and drive sustainable growth.
           </p>
           <div className={styles.dataGrid}>
@@ -147,21 +127,17 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         </div>
       </FullScreenSection>
 
-      {/* 6. Your Unique Financial Blueprint */}
+      {/* 5. Your Unique Financial Blueprint */}
       <FullScreenSection id="blueprint" className={styles.blueprintSection}>
         <div className={styles.blueprintContainer}>
           <h2 className={styles.blueprintTitle}>Your Unique Financial Blueprint</h2>
           <p className={styles.blueprintDescription}>
-            <ReplaceText
-              text="Discover a tailor-made financial blueprint that leverages your strengths – like your industry-leading {custom.usp} – and positions {company} as a leader in {custom.industry}. Our solution drives innovation, improves forecasting accuracy, and unlocks long-term value."
-              replacements={replacements}
-            />
+            Discover a tailor-made financial blueprint that positions <ReplaceText text="{company}" replacements={replacements} /> as a leader in your industry. Our solution drives innovation, improves forecasting accuracy, and unlocks long-term value.
           </p>
           <div className={styles.blueprintGrid}>
             <div className={styles.blueprintCard}>
               <h3 className={styles.blueprintCardTitle}>Core Strengths</h3>
               <ul className={styles.blueprintList}>
-                <li>{'{custom.usp}'}</li>
                 <li>Innovative financial strategies</li>
                 <li>Robust risk management</li>
               </ul>
@@ -186,29 +162,23 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         </div>
       </FullScreenSection>
 
-      {/* 7. Seamless Integration */}
+      {/* 6. Seamless Integration */}
       <FullScreenSection id="integration" className={styles.integrationSection}>
         <div className={styles.integrationContainer}>
           <h2 className={styles.integrationTitle}>Seamless Integration & Intelligent Automation</h2>
           <p className={styles.integrationDescription}>
-            <ReplaceText
-              text="Experience a unified platform that streamlines your operations, automates routine processes, and empowers you to focus on what truly matters: strategic leadership."
-              replacements={replacements}
-            />
+            Experience a unified platform that streamlines <ReplaceText text="{company}" replacements={replacements} />{"'"}s operations, automates routine processes, and empowers you to focus on what truly matters: strategic leadership.
           </p>
           <IntegrationSection />
         </div>
       </FullScreenSection>
 
-      {/* 8. Driving Financial Mastery */}
+      {/* 7. Driving Financial Mastery */}
       <FullScreenSection id="transformation" className={styles.transformationSection}>
         <div className={styles.transformationContainer}>
           <h2 className={styles.transformationTitle}>Driving Financial Mastery & Strategic Transformation</h2>
           <p className={styles.transformationDescription}>
-            <ReplaceText
-              text="Imagine a world where every decision is backed by precise, forward-looking insights. At {company}, these insights empower you to navigate uncertainty, optimize cash flow, and drive transformative growth."
-              replacements={replacements}
-            />
+            Imagine a world where every decision at <ReplaceText text="{company}" replacements={replacements} /> is backed by precise, forward-looking insights. These insights empower you to navigate uncertainty, optimize cash flow, and drive transformative growth.
           </p>
           <div className={styles.successCard}>
             <h3 className={styles.successCardTitle}>The Power of Accurate Forecasting</h3>
@@ -226,7 +196,7 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
         </div>
       </FullScreenSection>
 
-      {/* 9. Call-to-Action */}
+      {/* 8. Call-to-Action */}
       <FullScreenSection id="cta" className={styles.ctaSection}>
         <div className={styles.ctaContainer}>
           <div className={styles.videoWrapper}>
@@ -243,24 +213,23 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
             Begin Your Transformation, <ReplaceText text="{first_name}" replacements={replacements} />!
           </h2>
           <p className={styles.ctaDescription}>
-            <ReplaceText
-              text="Take the first step towards transforming {company}'s financial future. Begin your personalized journey to strategic clarity and operational excellence today."
-              replacements={replacements}
-            />
+            Take the first step towards transforming <ReplaceText text="{company}" replacements={replacements} />{"'"}s financial future. Begin your personalized journey to strategic clarity and operational excellence today.
           </p>
-          <Button className={styles.ctaButton}>Book Your Demo</Button>
+          <Button
+            className={styles.ctaButton}
+            onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+          >
+            Book Your Demo
+          </Button>
         </div>
       </FullScreenSection>
 
-      {/* 10. Closing */}
+      {/* 9. Closing */}
       <FullScreenSection id="closing" className={styles.closingSection}>
         <div className={styles.closingContainer}>
           <h2 className={styles.closingTitle}>Your Continuous Journey</h2>
           <p className={styles.closingDescription}>
-            <ReplaceText
-              text="Every day brings new opportunities. Let ProForecast be your trusted partner in transforming challenges into actionable insights and turning potential into performance at {company}."
-              replacements={replacements}
-            />
+            Every day brings new opportunities. Let ProForecast be your trusted partner in transforming challenges into actionable insights and turning potential into performance at <ReplaceText text="{company}" replacements={replacements} />.
           </p>
           <Link href="https://proforecast.com/tutorials/" target="_blank" className={styles.tutorialLink}>
             Not ready for a demo yet but want to learn more? Visit our tutorials section <ArrowRight className={styles.arrowIcon} />
@@ -274,9 +243,9 @@ export default function ProForecastLandingPage({ clientData, replacements }: Pro
           <Image src="/images/abm/proforecast/logo.svg" alt="ProForecast Logo" width={120} height={16} />
           <p className={styles.footerText}>© {new Date().getFullYear()} ProForecast. All rights reserved.</p>
           <nav className={styles.footerNav}>
-            <a href="#" className={styles.footerLink}>Privacy Policy</a>
-            <a href="#" className={styles.footerLink}>Terms of Service</a>
-            <a href="#" className={styles.footerLink}>Connect with Us</a>
+            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
+            <Link href="/terms" className={styles.footerLink}>Terms of Service</Link>
+            <Link href="#connect" className={styles.footerLink}>Connect with Us</Link>
           </nav>
         </div>
       </footer>

@@ -225,7 +225,7 @@ export default async function Page({ params }: { params: Promise<{ page: string 
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
-          <ProForecastLandingPage clientData={clientData} replacements={replacements} />
+          <ProForecastLandingPage replacements={replacements} />
         </>
       );
     }

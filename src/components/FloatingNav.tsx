@@ -1,33 +1,32 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import styles from "@/components/styles/FloatingNav.module.css"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import styles from "@/components/styles/FloatingNav.module.css";
 
 const FloatingNav: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
-        setIsVisible(true)
+        setIsVisible(true);
       } else {
-        setIsVisible(false)
+        setIsVisible(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", toggleVisibility)
+    window.addEventListener("scroll", toggleVisibility);
 
-    return () => window.removeEventListener("scroll", toggleVisibility)
-  }, [])
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
 
   const scrollTo = (id: string) => {
-    const element = document.getElementById(id)
-    element?.scrollIntoView({ behavior: "smooth" })
-  }
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  if (!isVisible) return null
+  if (!isVisible) return null;
 
   return (
     <nav className={styles.nav}>
@@ -37,14 +36,13 @@ const FloatingNav: React.FC = () => {
             <Button
               className={styles.button}
               onClick={() => scrollTo(section)}
-            >
-              <span className={styles.srOnly}>Scroll to {section}</span>
-            </Button>
+              aria-label={`Navigate to ${section} section`}
+            />
           </li>
         ))}
       </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default FloatingNav
+export default FloatingNav;
