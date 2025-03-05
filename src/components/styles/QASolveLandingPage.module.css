@@ -1,28 +1,23 @@
 /* src/components/styles/QASolveLandingPage.module.css */
 
-/* Base Styles */
+/* Base styles */
 .container {
-  font-family: "Inter", sans-serif;
-  color: #434343;
-  background-color: #fefefe;
-  line-height: 1.6;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #2e2e38;
+  overflow-x: hidden;
+  position: relative;
+  background-color: #f8f9ff;
 }
 
-/* Navigation */
-.nav {
+/* Sticky Navigation */
+.stickyNav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  background-color: transparent;
-  transition: background-color 0.3s ease;
-  padding: 1rem 2rem;
-}
-
-.nav.scrolled {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(46, 46, 56, 0.95);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
   backdrop-filter: blur(5px);
 }
 
@@ -30,34 +25,44 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
+  height: 40px;
 }
 
 .navCta {
-  background-color: #1abb4d;
-  color: #fefefe;
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
+  background-color: #3551a3;
+  color: #fff;
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .navCta:hover {
-  background-color: #5dbdf1;
+  background-color: #2034aa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(53, 81, 163, 0.3);
+}
+
+.navSpacer {
+  height: 72px;
 }
 
 /* Hero Section */
 .hero {
   position: relative;
-  background: linear-gradient(135deg, #3e65b2 0%, #5dbdf1 100%);
-  color: #fefefe;
-  padding: 8rem 2rem 4rem; /* Adjusted for sticky nav */
+  background: #2e2e38;
+  color: #fff;
+  padding: 6rem 2rem;
   overflow: hidden;
   min-height: 100vh;
   display: flex;
@@ -65,18 +70,7 @@
   justify-content: center;
 }
 
-.particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
 .heroContent {
-  position: relative;
-  z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
@@ -103,54 +97,32 @@
   margin-right: auto;
 }
 
-.animatedElement {
+.knowledgeGraph {
   width: 100%;
   height: auto;
   border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* CTA Button */
 .ctaButton {
-  background-color: #1abb4d;
-  color: #fefefe;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #3551a3;
+  color: #fff;
   font-weight: 600;
   font-size: 1.125rem;
   padding: 1rem 2rem;
   border-radius: 50px;
-  border: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(26, 187, 77, 0.4);
-  animation: pulse 2s infinite;
+  box-shadow: 0 4px 15px rgba(53, 81, 163, 0.4);
 }
 
 .ctaButton:hover {
-  background-color: #5dbdf1;
+  background-color: #2034aa;
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(93, 189, 241, 0.5);
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(26, 187, 77, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 15px rgba(26, 187, 77, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(26, 187, 77, 0);
-  }
+  box-shadow: 0 6px 20px rgba(53, 81, 163, 0.5);
 }
 
 /* Comparison Section */
@@ -190,7 +162,7 @@
 
 .withUs {
   background-color: #f5f5f5;
-  border: 1px solid #1abb4d;
+  border: 1px solid #3551a3;
 }
 
 .withoutUs h3,
@@ -204,7 +176,7 @@
 }
 
 .withUs h3 {
-  color: #1abb4d;
+  color: #3551a3;
 }
 
 .comparisonCard {
@@ -240,8 +212,8 @@
 }
 
 .withUs .iconWrapper {
-  background-color: #e6f7ec;
-  border: 1px solid #1abb4d;
+  background-color: rgba(53, 81, 163, 0.1);
+  border: 1px solid #3551a3;
 }
 
 .withoutUs .icon {
@@ -249,27 +221,12 @@
 }
 
 .withUs .icon {
-  color: #1abb4d;
+  color: #3551a3;
 }
 
 .icon {
   width: 24px;
   height: 24px;
-  transition: transform 0.3s ease;
-}
-
-.comparisonCard:hover .icon {
-  animation: bounce 0.5s ease;
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
 }
 
 /* Features Section */
@@ -291,7 +248,7 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   max-width: 1200px;
-  margin: 0 auto 4rem;
+  margin: 0 auto;
 }
 
 .featureCard {
@@ -310,8 +267,8 @@
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background-color: #e6f7ec;
-  border: 2px solid #1abb4d;
+  background-color: rgba(53, 81, 163, 0.1);
+  border: 2px solid #3551a3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -321,12 +278,7 @@
 .featureIcon {
   width: 32px;
   height: 32px;
-  color: #1abb4d;
-  transition: transform 0.3s ease;
-}
-
-.featureCard:hover .featureIcon {
-  transform: rotate(15deg);
+  color: #3551a3;
 }
 
 .featureCard h3 {
@@ -339,20 +291,6 @@
 .featureCard p {
   color: #434343;
   line-height: 1.6;
-}
-
-.videoContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.demoVideo {
-  width: 100%;
-  height: auto;
-  display: block;
 }
 
 /* Testimonials Section */
@@ -381,7 +319,9 @@
   top: 0;
   left: 0;
   width: 100%;
+  opacity: 0;
   visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
   padding: 2rem;
   border-radius: 12px;
   background-color: #f5f5f5;
@@ -389,6 +329,7 @@
 }
 
 .activeTestimonial {
+  opacity: 1;
   visibility: visible;
 }
 
@@ -401,8 +342,7 @@
 }
 
 .author {
-  font-weight: 600;
-  color: #3e65b2;
+  color: #3551a3;
 }
 
 .carouselDots {
@@ -427,11 +367,11 @@
 }
 
 .activeDot {
-  background-color: #5dbdf1;
+  background-color: #3551a3;
   transform: scale(1.2);
 }
 
-/* Call to Action Section */
+/* CTA Section */
 .cta {
   background-color: #040404;
   color: #fefefe;
@@ -452,11 +392,17 @@
   line-height: 1.6;
 }
 
+.cta .ctaButton {
+  font-size: 1.25rem;
+  padding: 1.25rem 2.5rem;
+}
+
 /* Footer */
 .footer {
-  background-color: #32373c;
-  color: #ffffff;
+  background-color: #2e2e38;
+  color: #fff;
   padding: 2rem;
+  text-align: center;
 }
 
 .footerContent {
@@ -465,31 +411,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   gap: 1rem;
+}
+
+.footerLogo {
+  margin-bottom: 1rem;
+}
+
+.footerText {
+  font-size: 0.875rem;
+  opacity: 0.8;
 }
 
 .footerLinks {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .footerLink {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .footerLink:hover {
-  opacity: 0.8;
+  color: #a4e6fb;
 }
 
-.footerCopyright {
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-/* Responsive Styles */
+/* Responsive Design */
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 2rem;
@@ -534,5 +483,25 @@
   .ctaButton {
     font-size: 1rem;
     padding: 0.875rem 1.75rem;
+  }
+
+  .knowledgeGraph {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .stickyNav {
+    padding: 0.5rem 1rem;
+  }
+
+  .navCta {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 }
