@@ -1,4 +1,4 @@
-/* src/components/styles/AapoonLandingPage.module.css */
+/* src/components/styles/Aapoon.module.css */
 .container {
   background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
   min-height: 100vh;
@@ -164,7 +164,7 @@
 
 @media (min-width: 768px) {
   .patentGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -302,6 +302,47 @@
   flex-shrink: 0;
 }
 
+/* Industry Insights Section */
+.insightsTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 32px;
+}
+
+.insightsGrid {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .insightsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.insightCard {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.insightQuote {
+  font-size: 18px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 16px;
+}
+
+.insightAuthor {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e25630;
+}
+
+/* CTA Section */
 .ctaTitle {
   font-size: 36px;
   font-weight: 700;
@@ -324,31 +365,21 @@
   gap: 16px;
 }
 
-.ctaButtonFull {
+.ctaButton {
   width: 100%;
   padding: 24px 0;
   font-size: 20px;
   background: #e25630;
   color: #fff;
   transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.ctaButtonFull:hover {
+.ctaButton:hover {
   background: rgba(226, 86, 48, 0.9);
-}
-
-.ctaButtonOutline {
-  width: 100%;
-  padding: 24px 0;
-  font-size: 20px;
-  color: #fff;
-  border: 1px solid #fff;
-  background: none;
-  transition: background 0.3s ease;
-}
-
-.ctaButtonOutline:hover {
-  background: rgba(255, 255, 255, 0.1);
 }
 
 .ctaDescription {
@@ -407,6 +438,7 @@
   .patentsTitle,
   .securityTitle,
   .opportunityTitle,
+  .insightsTitle,
   .ctaTitle {
     font-size: 28px;
   }
@@ -414,7 +446,8 @@
   .productGrid,
   .patentGrid,
   .securityGrid,
-  .opportunityGrid {
+  .opportunityGrid,
+  .insightsGrid {
     grid-template-columns: 1fr;
   }
 

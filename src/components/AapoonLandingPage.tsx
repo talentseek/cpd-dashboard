@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FloatingNav from "@/components/FloatingNav";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
-import styles from "@/components/styles/Aapoon.module.css";
+import styles from "@/components/styles/Aapoon.module.css"; // Updated to Aapoon.module.css
 
 interface Replacements extends CustomReplacements {
   first_name: string;
@@ -55,6 +55,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
   const patentsRef = useRef<HTMLDivElement>(null);
   const securityRef = useRef<HTMLDivElement>(null);
   const opportunityRef = useRef<HTMLDivElement>(null);
+  const insightsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
 
@@ -65,6 +66,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
   const patentsControls = useAnimation();
   const securityControls = useAnimation();
   const opportunityControls = useAnimation();
+  const insightsControls = useAnimation();
   const ctaControls = useAnimation();
   const footerControls = useAnimation();
 
@@ -75,6 +77,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
   const patentsInView = useInView(patentsRef, { once: false, amount: 0.3 });
   const securityInView = useInView(securityRef, { once: false, amount: 0.3 });
   const opportunityInView = useInView(opportunityRef, { once: false, amount: 0.3 });
+  const insightsInView = useInView(insightsRef, { once: false, amount: 0.3 });
   const ctaInView = useInView(ctaRef, { once: false, amount: 0.3 });
   const footerInView = useInView(footerRef, { once: false, amount: 0.3 });
 
@@ -86,6 +89,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
     if (patentsInView) patentsControls.start("visible");
     if (securityInView) securityControls.start("visible");
     if (opportunityInView) opportunityControls.start("visible");
+    if (insightsInView) insightsControls.start("visible");
     if (ctaInView) ctaControls.start("visible");
     if (footerInView) footerControls.start("visible");
   }, [
@@ -95,6 +99,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
     patentsInView,
     securityInView,
     opportunityInView,
+    insightsInView,
     ctaInView,
     footerInView,
     navControls,
@@ -103,6 +108,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
     patentsControls,
     securityControls,
     opportunityControls,
+    insightsControls,
     ctaControls,
     footerControls,
   ]);
@@ -178,6 +184,13 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
             className={styles.navButton}
           >
             {"Opportunity"}
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => handleScrollTo("insights")}
+            className={styles.navButton}
+          >
+            {"Insights"}
           </Button>
           <Button
             variant="ghost"
@@ -302,6 +315,17 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                 <li>{"Compliance-ready system"}</li>
               </ul>
             </motion.div>
+            <motion.div variants={fadeInUp} className={styles.patentCard}>
+              <ScrollText className={styles.patentIcon} />
+              <h3 className={styles.patentTitle}>{"Patent #18/961,639"}</h3>
+              <p className={styles.patentDescription}>{"Secure Device Communication Using Multi-Key Encapsulation"}</p>
+              <ul className={styles.patentList}>
+                <li>{"Multi-key encapsulation for secure device communication"}</li>
+                <li>{"Enhanced encryption for device-to-device interactions"}</li>
+                <li>{"Scalable security for IoT and enterprise networks"}</li>
+                <li>{"Resilient against advanced cryptographic attacks"}</li>
+              </ul>
+            </motion.div>
           </motion.div>
         </div>
       </motion.section>
@@ -393,6 +417,36 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
         </div>
       </motion.section>
 
+      {/* Industry Insights Section */}
+      <motion.section
+        ref={insightsRef}
+        id="insights"
+        className={styles.section}
+        initial="hidden"
+        animate={insightsControls}
+        variants={staggerChildren}
+      >
+        <div className={styles.heroContainer}>
+          <motion.h2 variants={fadeInUp} className={styles.insightsTitle}>
+            {"Industry Insights"}
+          </motion.h2>
+          <motion.div variants={staggerChildren} className={styles.insightsGrid}>
+            <motion.div variants={fadeInUp} className={styles.insightCard}>
+              <blockquote className={styles.insightQuote}>
+                {"\"We’re moving from a world where SaaS was essentially CRUD databases with some business logic on top to one where AI agents can dynamically orchestrate and execute workflows.\""}
+              </blockquote>
+              <p className={styles.insightAuthor}>— Satya Nadella, CEO of Microsoft</p>
+            </motion.div>
+            <motion.div variants={fadeInUp} className={styles.insightCard}>
+              <blockquote className={styles.insightQuote}>
+                {"\"The SaaS era as we know it might be ending—not because software is dead, but because it’s becoming a tool to transform businesses rather than a standalone subscription product.\""}
+              </blockquote>
+              <p className={styles.insightAuthor}>— Sam Lessin, General Partner at Slow Ventures</p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
       {/* CTA Section */}
       <motion.section
         ref={ctaRef}
@@ -408,16 +462,12 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
           </motion.h2>
           <motion.div variants={staggerChildren} className={styles.ctaButtons}>
             <motion.div variants={fadeInUp}>
-              <Button className={styles.ctaButtonFull}>
-                {"Download Investor Presentation"}
-              </Button>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
               <Button
-                className={styles.ctaButtonOutline}
+                className={styles.ctaButton}
                 onClick={() => (window.location.href = "https://cal.com/aapoon/15min")}
               >
                 {"Schedule an Introduction"}
+                <ArrowRight className={styles.arrowIcon} />
               </Button>
             </motion.div>
           </motion.div>
