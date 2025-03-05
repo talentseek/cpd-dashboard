@@ -319,7 +319,7 @@ export default function CleverlyLandingPage({
           <div className={styles.featuresGrid}>
             <div className={styles.featuresImage}>
               <Image
-                src="/images/abm/cleverly/platform-overview.jpg"
+                src="/images/abm/cleverly/desktop.webp"
                 alt="Cleverly Platform Overview"
                 width={500}
                 height={350}
