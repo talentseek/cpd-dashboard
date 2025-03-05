@@ -108,7 +108,7 @@ export default function LeezlyLandingPage({
         <div className={styles.headerContainer}>
           <div className={styles.logo}>
             <Image
-              src="/images/abm/leezly/logo.svg"
+              src="/images/abm/leezly/logo.png"
               alt="Leezly Logo"
               width={120}
               height={40}
