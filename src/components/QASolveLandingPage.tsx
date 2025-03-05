@@ -420,7 +420,7 @@ export default function QASolveLandingPage({
         <div className={styles.footerContent}>
           <div className={styles.footerLogo}>
             <Image
-              src="/images/abm/qasolve/logo.png"
+              src="/images/abm/qasolve/logo.svg"
               alt="QASolve Logo"
               width={120}
               height={40}
