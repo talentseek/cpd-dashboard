@@ -58,7 +58,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 0.75rem 2rem; /* Reduced padding to make the header thinner */
   position: fixed;
   top: 0;
   left: 0;
@@ -66,10 +66,12 @@
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 50;
+  height: 60px; /* Set a fixed height to make the header thinner */
 }
 
 .headerContainer {
   max-width: 1200px;
+  width: 100%; /* Ensure it takes full width for proper spacing */
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -92,12 +94,15 @@
 .ctaButton {
   background-color: #5567ff;
   color: white;
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1rem; /* Adjusted padding for a thinner button */
   border-radius: 30px;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(85, 103, 255, 0.3);
+  display: flex; /* Ensure text is centered */
+  align-items: center;
+  justify-content: center;
 }
 
 .ctaButton:hover {
@@ -106,7 +111,7 @@
 }
 
 .headerSpacer {
-  height: 5rem;
+  height: 60px; /* Adjusted to match the thinner header height */
 }
 
 /* Hero Section */
@@ -181,7 +186,9 @@
 }
 
 .heroButton {
-  display: inline-block;
+  display: flex; /* Use flexbox to center the text */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
   background: linear-gradient(45deg, #5567ff, #8f9aff);
   color: white;
   padding: 1rem 2rem;
@@ -529,27 +536,14 @@
   font-weight: 700;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(85, 103, 255, 0.4);
+  display: flex; /* Ensure text is centered */
+  align-items: center;
+  justify-content: center;
 }
 
 .primaryButton:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(85, 103, 255, 0.5);
-}
-
-.secondaryButton {
-  background-color: transparent;
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 700;
-  transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.secondaryButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: white;
 }
 
 /* Footer */
@@ -644,8 +638,7 @@
     align-items: center;
   }
 
-  .primaryButton,
-  .secondaryButton {
+  .primaryButton {
     width: 100%;
     max-width: 300px;
   }
@@ -657,7 +650,7 @@
   }
 
   .header {
-    padding: 1rem;
+    padding: 0.5rem 1rem; /* Adjusted padding for smaller screens */
   }
 
   .logo {
@@ -665,7 +658,7 @@
   }
 
   .ctaButton {
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
   }
 }

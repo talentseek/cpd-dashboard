@@ -116,9 +116,9 @@ export default function LeezlyLandingPage({
           </div>
           <Button
             className={styles.ctaButton}
-            onClick={() => window.location.href = "mailto:admin@leezly.com"}
+            onClick={() => (window.location.href = "mailto:admin@leezly.com")}
           >
-            Request a Demo
+            Book a Demo
           </Button>
         </div>
       </motion.header>
@@ -152,9 +152,9 @@ export default function LeezlyLandingPage({
             <motion.div variants={fadeInUp}>
               <Button
                 className={styles.heroButton}
-                onClick={() => window.location.href = "mailto:admin@leezly.com"}
+                onClick={() => (window.location.href = "mailto:admin@leezly.com")}
               >
-                Request a Demo Now
+                Book a Demo Now
               </Button>
             </motion.div>
           </div>
@@ -322,16 +322,11 @@ export default function LeezlyLandingPage({
           <motion.div variants={fadeInUp} className={styles.ctaButtons}>
             <Button
               className={styles.primaryButton}
-              onClick={() => window.location.href = "mailto:admin@leezly.com"}
+              onClick={() => (window.location.href = "mailto:admin@leezly.com")}
             >
               Request a Demo
             </Button>
-            <Button
-              className={styles.secondaryButton}
-              onClick={() => window.location.href = "https://www.leezly.com"}
-            >
-              Visit Our Website
-            </Button>
+            {/* Removed the "Visit Our Website" button */}
           </motion.div>
         </div>
       </motion.section>
