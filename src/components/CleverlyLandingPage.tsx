@@ -124,7 +124,7 @@ export default function CleverlyLandingPage({
         <div className={styles.navContainer}>
           <div className={styles.logo}>
             <Image
-              src="/images/abm/cleverly/logo.svg"
+              src="/images/abm/cleverly/logo.webp"
               alt="Cleverly Logo"
               width={120}
               height={40}
