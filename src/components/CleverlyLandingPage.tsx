@@ -22,53 +22,59 @@ export default function CleverlyLandingPage({
   replacements?: CustomReplacements;
 }) {
   // Refs for animation triggers
-  const headerRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const painPointsRef = useRef<HTMLDivElement>(null);
   const solutionsRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const testimonialRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
 
   // Animation controls
-  const headerControls = useAnimation();
+  const navControls = useAnimation();
   const heroControls = useAnimation();
   const painPointsControls = useAnimation();
   const solutionsControls = useAnimation();
+  const featuresControls = useAnimation();
   const testimonialControls = useAnimation();
   const ctaControls = useAnimation();
   const footerControls = useAnimation();
 
   // InView hooks
-  const headerInView = useInView(headerRef, { once: false, amount: 0.3 });
+  const navInView = useInView(navRef, { once: false, amount: 0.3 });
   const heroInView = useInView(heroRef, { once: false, amount: 0.3 });
   const painPointsInView = useInView(painPointsRef, { once: false, amount: 0.3 });
   const solutionsInView = useInView(solutionsRef, { once: false, amount: 0.3 });
+  const featuresInView = useInView(featuresRef, { once: false, amount: 0.3 });
   const testimonialInView = useInView(testimonialRef, { once: false, amount: 0.3 });
   const ctaInView = useInView(ctaRef, { once: false, amount: 0.3 });
   const footerInView = useInView(footerRef, { once: false, amount: 0.3 });
 
   // Trigger animations
   useEffect(() => {
-    if (headerInView) headerControls.start("visible");
+    if (navInView) navControls.start("visible");
     if (heroInView) heroControls.start("visible");
     if (painPointsInView) painPointsControls.start("visible");
     if (solutionsInView) solutionsControls.start("visible");
+    if (featuresInView) featuresControls.start("visible");
     if (testimonialInView) testimonialControls.start("visible");
     if (ctaInView) ctaControls.start("visible");
     if (footerInView) footerControls.start("visible");
   }, [
-    headerInView,
+    navInView,
     heroInView,
     painPointsInView,
     solutionsInView,
+    featuresInView,
     testimonialInView,
     ctaInView,
     footerInView,
-    headerControls,
+    navControls,
     heroControls,
     painPointsControls,
     solutionsControls,
+    featuresControls,
     testimonialControls,
     ctaControls,
     footerControls,
@@ -98,33 +104,33 @@ export default function CleverlyLandingPage({
       </div>
 
       {/* Header */}
-      <motion.header
-        ref={headerRef}
-        className={styles.header}
+      <motion.nav
+        ref={navRef}
+        className={styles.nav}
         initial="hidden"
-        animate={headerControls}
+        animate={navControls}
         variants={fadeInUp}
       >
-        <div className={styles.headerContainer}>
+        <div className={styles.navContainer}>
           <div className={styles.logo}>
             <Image
-              src="/images/abm/cleverly/logo.svg"
+              src="/images/abm/cleverly/logo.webp"
               alt="Cleverly Logo"
               width={120}
               height={40}
             />
           </div>
           <Button
-            className={styles.ctaButton}
+            className={styles.navCta}
             onClick={() => window.location.href = "mailto:contact@cleverly.works"}
           >
             Contact Us
           </Button>
         </div>
-      </motion.header>
+      </motion.nav>
 
-      {/* Spacer for fixed header */}
-      <div className={styles.headerSpacer}></div>
+      {/* Spacer for fixed nav */}
+      <div className={styles.navSpacer}></div>
 
       {/* Hero Section */}
       <motion.section
@@ -135,61 +141,47 @@ export default function CleverlyLandingPage({
         animate={heroControls}
         variants={staggerChildren}
       >
+        <div className={styles.heroOverlay}></div>
+        <div className={styles.heroBackground}></div>
+
         <div className={styles.heroContent}>
-          <div className={styles.heroLeft}>
+          <div className={styles.heroInner}>
             <motion.h1 variants={fadeInUp} className={styles.heroTitle}>
               <ReplaceText
                 text="{first_name}, Don’t Let Chaos Hold {company} Back!"
                 replacements={replacements}
               />
             </motion.h1>
-            <motion.p variants={fadeInUp} className={styles.heroSubtitle}>
+
+            <motion.p variants={fadeInUp} className={styles.heroText}>
               Cleverly slashes costs, saves time, and delivers powerful insights with an all-in-one platform built for your facilities workflows.
             </motion.p>
-            <motion.div variants={fadeInUp} className={styles.heroBadge}>
-              <span className={styles.badgeIcon}>🏆</span> Named Startup of the Month by Vestbee (Jan 2025)
-            </motion.div>
-            <motion.div variants={fadeInUp}>
+
+            <motion.div variants={fadeInUp} className={styles.heroCtaWrapper}>
               <Button
-                className={styles.heroButton}
+                className={styles.heroCta}
                 onClick={() => window.location.href = "mailto:contact@cleverly.works"}
               >
-                Contact Us Now
+                Contact Us Now <ArrowRight className={styles.ctaIcon} />
               </Button>
             </motion.div>
-          </div>
-          <div className={styles.heroRight}>
-            <div className={styles.heroImage}>
-              <div className={styles.imageWrapper}>
-                <div className={styles.imagePlaceholder}>
-                  <div className={styles.dashboardMockup}>
-                    <div className={styles.mockupHeader}>
-                      <div className={styles.mockupDot}></div>
-                      <div className={styles.mockupDot}></div>
-                      <div className={styles.mockupDot}></div>
-                    </div>
-                    <div className={styles.mockupContent}>
-                      <div className={styles.mockupSidebar}>
-                        <div className={styles.mockupMenuItem}></div>
-                        <div className={styles.mockupMenuItem}></div>
-                        <div className={styles.mockupMenuItem}></div>
-                        <div className={styles.mockupMenuItem}></div>
-                      </div>
-                      <div className={styles.mockupMain}>
-                        <div className={styles.mockupCard}></div>
-                        <div className={styles.mockupCard}></div>
-                        <div className={styles.mockupGrid}>
-                          <div className={styles.mockupGridItem}></div>
-                          <div className={styles.mockupGridItem}></div>
-                          <div className={styles.mockupGridItem}></div>
-                          <div className={styles.mockupGridItem}></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
+            {/* Quote Bubble */}
+            <motion.div variants={fadeInUp} className={styles.quoteBubble}>
+              <div className={styles.quoteImage}>
+                <Image
+                  src="/images/abm/cleverly/testimonial.jpg"
+                  alt="George Boldero"
+                  width={100}
+                  height={100}
+                  className={styles.quoteImageInner}
+                />
               </div>
-            </div>
+              <p className={styles.quoteText}>
+                {"\""}Cleverly provides a powerful platform for work order management and compliance. The system is really flexible!{"\""}
+              </p>
+              <p className={styles.quoteAuthor}>— George Boldero, Operations Manager</p>
+            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -203,33 +195,43 @@ export default function CleverlyLandingPage({
         animate={painPointsControls}
         variants={staggerChildren}
       >
-        <motion.h2 variants={fadeInUp} className={styles.sectionTitle}>
-          Struggling with These Rental Management Challenges?
-        </motion.h2>
-        <motion.div variants={staggerChildren} className={styles.painPointsGrid}>
-          <motion.div className={styles.painPointCard} variants={fadeInUp}>
-            <div className={styles.painPointIcon}>⏱️</div>
-            <h3 className={styles.painPointTitle}>Manual Operations</h3>
-            <p className={styles.painPointText}>
-              Overwhelmed by time-consuming manual operations at <ReplaceText text="{company}" replacements={replacements} />?
-            </p>
-          </motion.div>
-          <motion.div className={styles.painPointCard} variants={fadeInUp}>
-            <div className={styles.painPointIcon}>💸</div>
-            <h3 className={styles.painPointTitle}>Late Payments</h3>
-            <p className={styles.painPointText}>Chasing late payments and losing revenue every month?</p>
-          </motion.div>
-          <motion.div className={styles.painPointCard} variants={fadeInUp}>
-            <div className={styles.painPointIcon}>🔄</div>
-            <h3 className={styles.painPointTitle}>Disorganized Communication</h3>
-            <p className={styles.painPointText}>Struggling with disorganized tenant communications?</p>
-          </motion.div>
-          <motion.div className={styles.painPointCard} variants={fadeInUp}>
-            <div className={styles.painPointIcon}>📈</div>
-            <h3 className={styles.painPointTitle}>Scaling Issues</h3>
-            <p className={styles.painPointText}>Unable to scale your business without adding complexity?</p>
-          </motion.div>
-        </motion.div>
+        <div className={styles.painPointsInner}>
+          <div className={styles.painPointsContent}>
+            <motion.h2 variants={fadeInUp} className={styles.painPointsTitle}>
+              Struggling with These Challenges?
+            </motion.h2>
+
+            <motion.ul variants={staggerChildren} className={styles.painPointsList}>
+              <motion.li variants={fadeInUp}>
+                <ReplaceText
+                  text="Overwhelmed by task volume across {company}’s sites?"
+                  replacements={replacements}
+                />
+              </motion.li>
+              <motion.li variants={fadeInUp}>
+                Constantly chasing updates from suppliers and teams?
+              </motion.li>
+              <motion.li variants={fadeInUp}>
+                Information scattered across multiple systems?
+              </motion.li>
+              <motion.li variants={fadeInUp}>
+                Struggling to access actionable reports?
+              </motion.li>
+            </motion.ul>
+
+            <motion.div variants={fadeInUp}>
+              <Button
+                className={styles.painPointsCta}
+                onClick={() => {
+                  const element = document.getElementById("solutions");
+                  element?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                See How Cleverly Solves This <ArrowRight className={styles.ctaIcon} />
+              </Button>
+            </motion.div>
+          </div>
+        </div>
       </motion.section>
 
       {/* Solutions Section */}
@@ -241,35 +243,132 @@ export default function CleverlyLandingPage({
         animate={solutionsControls}
         variants={staggerChildren}
       >
-        <div className={styles.solutionsContent}>
-          <motion.h2 variants={fadeInUp} className={styles.sectionTitle}>
+        <div className={styles.solutionsInner}>
+          <motion.h2 variants={fadeInUp} className={styles.solutionsTitle}>
             <ReplaceText
               text="Cleverly Transforms {company}’s Operations"
               replacements={replacements}
             />
           </motion.h2>
-          <motion.div variants={staggerChildren} className={styles.solutionsCards}>
+
+          <motion.div className={styles.solutionsGrid} variants={staggerChildren}>
             <motion.div className={styles.solutionCard} variants={fadeInUp}>
-              <div className={styles.solutionNumber}>01</div>
+              <div className={styles.solutionIcon}>
+                <Image
+                  src="/images/abm/cleverly/icons/ease-of-use.svg"
+                  alt="Ease of Use Icon"
+                  width={32}
+                  height={32}
+                  className={styles.icon}
+                />
+              </div>
               <h3 className={styles.solutionTitle}>Ease of Use</h3>
               <p className={styles.solutionText}>
                 An intuitive platform to manage everything in one place.
               </p>
             </motion.div>
+
             <motion.div className={styles.solutionCard} variants={fadeInUp}>
-              <div className={styles.solutionNumber}>02</div>
+              <div className={styles.solutionIcon}>
+                <Image
+                  src="/images/abm/cleverly/icons/onboarding.svg"
+                  alt="Onboarding Icon"
+                  width={32}
+                  height={32}
+                  className={styles.icon}
+                />
+              </div>
               <h3 className={styles.solutionTitle}>Done-for-You Onboarding</h3>
               <p className={styles.solutionText}>
                 We handle setup—your data is imported for you.
               </p>
             </motion.div>
+
             <motion.div className={styles.solutionCard} variants={fadeInUp}>
-              <div className={styles.solutionNumber}>03</div>
+              <div className={styles.solutionIcon}>
+                <Image
+                  src="/images/abm/cleverly/icons/support.svg"
+                  alt="Support Icon"
+                  width={32}
+                  height={32}
+                  className={styles.icon}
+                />
+              </div>
               <h3 className={styles.solutionTitle}>World-Class Support</h3>
               <p className={styles.solutionText}>
-                Tailored support to meet <ReplaceText text="{company}" replacements={replacements} />{"’"}s needs.
+                <ReplaceText
+                  text="Tailored support to meet {company}’s needs."
+                  replacements={replacements}
+                />
               </p>
             </motion.div>
+          </motion.div>
+
+          <motion.div variants={fadeInUp}>
+            <Button
+              className={styles.solutionsCta}
+              onClick={() => window.location.href = "mailto:contact@cleverly.works"}
+            >
+              Contact Us to Transform Your Workflows <ArrowRight className={styles.ctaIcon} />
+            </Button>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Features Section */}
+      <motion.section
+        ref={featuresRef}
+        id="features"
+        className={styles.features}
+        initial="hidden"
+        animate={featuresControls}
+        variants={staggerChildren}
+      >
+        <div className={styles.featuresInner}>
+          <motion.h2 variants={fadeInUp} className={styles.featuresTitle}>
+            All-in-One Facilities Management Platform
+          </motion.h2>
+
+          <motion.ul variants={staggerChildren} className={styles.featuresList}>
+            <motion.li variants={fadeInUp} className={styles.featureItem}>
+              <Image
+                src="/images/abm/cleverly/icons/workflow.svg"
+                alt="Workflow Icon"
+                width={24}
+                height={24}
+                className={styles.featureIcon}
+              />
+              Workflow Automation & Task Management
+            </motion.li>
+            <motion.li variants={fadeInUp} className={styles.featureItem}>
+              <Image
+                src="/images/abm/cleverly/icons/reports.svg"
+                alt="Reports Icon"
+                width={24}
+                height={24}
+                className={styles.featureIcon}
+              />
+              Custom Reports & Dashboards
+            </motion.li>
+            <motion.li variants={fadeInUp} className={styles.featureItem}>
+              <Image
+                src="/images/abm/cleverly/icons/mobile.svg"
+                alt="Mobile Icon"
+                width={24}
+                height={24}
+                className={styles.featureIcon}
+              />
+              Mobile App for Planned & Reactive Work
+            </motion.li>
+          </motion.ul>
+
+          <motion.div variants={fadeInUp}>
+            <Button
+              className={styles.featuresCta}
+              onClick={() => window.location.href = "https://www.cleverly.works"}
+            >
+              Explore All Features <ArrowRight className={styles.ctaIcon} />
+            </Button>
           </motion.div>
         </div>
       </motion.section>
@@ -283,20 +382,16 @@ export default function CleverlyLandingPage({
         animate={testimonialControls}
         variants={staggerChildren}
       >
-        <div className={styles.testimonialContent}>
-          <motion.div variants={fadeInUp} className={styles.testimonialQuoteIcon}>
-            {"\""}
-          </motion.div>
-          <motion.blockquote variants={fadeInUp} className={styles.testimonialQuote}>
-            With customisable job templates and checklists for our cleaners… The data and analytics are really appreciated by our clients.
-          </motion.blockquote>
-          <motion.div variants={fadeInUp} className={styles.testimonialAuthor}>
-            <div className={styles.testimonialAvatar}>OK</div>
-            <div className={styles.testimonialInfo}>
-              <p className={styles.testimonialName}>Chuong, Founder</p>
-              <p className={styles.testimonialRole}>Hammock Cleaning</p>
-            </div>
-          </motion.div>
+        <div className={styles.testimonialInner}>
+          <div className={styles.testimonialContent}>
+            <motion.blockquote variants={fadeInUp} className={styles.testimonialQuote}>
+              {"\""}With customisable job templates and checklists for our cleaners… The data and analytics are really appreciated by our clients.{"\""}
+            </motion.blockquote>
+
+            <motion.p variants={fadeInUp} className={styles.testimonialAuthor}>
+              — Chuong, Founder, Hammock Cleaning
+            </motion.p>
+          </div>
         </div>
       </motion.section>
 
@@ -309,34 +404,38 @@ export default function CleverlyLandingPage({
         animate={ctaControls}
         variants={staggerChildren}
       >
-        <div className={styles.ctaContent}>
-          <motion.h2 variants={fadeInUp} className={styles.ctaTitle}>
-            <ReplaceText
-              text="{first_name}, Ready to Take Control at {company}?"
-              replacements={replacements}
-            />
-          </motion.h2>
-          <motion.p variants={fadeInUp} className={styles.ctaText}>
-            Find out how Cleverly can supercharge your facilities and real estate workflows. Contact us today!
-          </motion.p>
-          <motion.div variants={fadeInUp} className={styles.ctaButtons}>
-            <Button
-              className={styles.primaryButton}
-              onClick={() => window.location.href = "mailto:contact@cleverly.works"}
-            >
-              Contact Us Now
-            </Button>
-            <Button
-              className={styles.secondaryButton}
-              onClick={() => window.location.href = "https://www.cleverly.works"}
-            >
-              Visit Our Website
-            </Button>
-          </motion.div>
+        <div className={styles.ctaInner}>
+          <div className={styles.ctaContent}>
+            <motion.h2 variants={fadeInUp} className={styles.ctaTitle}>
+              <ReplaceText
+                text="{first_name}, Ready to Take Control at {company}?"
+                replacements={replacements}
+              />
+            </motion.h2>
+
+            <motion.p variants={fadeInUp} className={styles.ctaText}>
+              Find out how Cleverly can supercharge your facilities and real estate workflows. Contact us today!
+            </motion.p>
+
+            <motion.div variants={fadeInUp} className={styles.ctaButtons}>
+              <Button
+                className={styles.ctaPrimary}
+                onClick={() => window.location.href = "mailto:contact@cleverly.works"}
+              >
+                Contact Us Now <ArrowRight className={styles.ctaIcon} />
+              </Button>
+              <Button
+                className={styles.ctaSecondary}
+                onClick={() => window.location.href = "https://www.cleverly.works"}
+              >
+                Visit Our Website <ArrowRight className={styles.ctaIcon} />
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </motion.section>
 
-      {/* Footer */}
+      {/* Footer Section */}
       <motion.footer
         ref={footerRef}
         className={styles.footer}
@@ -344,19 +443,23 @@ export default function CleverlyLandingPage({
         animate={footerControls}
         variants={fadeInUp}
       >
-        <div className={styles.footerContent}>
-          <div className={styles.footerLogo}>
-            <Image
-              src="/images/abm/cleverly/logo.svg"
-              alt="Cleverly Logo"
-              width={120}
-              height={40}
-            />
-          </div>
-          <p className={styles.footerCopyright}>© {new Date().getFullYear()} Cleverly. All rights reserved.</p>
-          <div className={styles.footerLinks}>
-            <Link href="https://www.cleverly.works/privacy-policy/" className={styles.footerLink}>Privacy</Link>
-            <Link href="#unsubscribe" className={styles.footerLink}>Unsubscribe</Link>
+        <div className={styles.footerInner}>
+          <div className={styles.footerContent}>
+            <div className={styles.footerLogo}>
+              <Image
+                src="/images/abm/cleverly/logo.webp"
+                alt="Cleverly Logo"
+                width={120}
+                height={40}
+              />
+            </div>
+            <div className={styles.footerLinks}>
+              <Link href="https://www.cleverly.works/privacy-policy/" className={styles.footerLink}>Privacy</Link>
+              <Link href="#unsubscribe" className={styles.footerLink}>Unsubscribe</Link>
+            </div>
+            <div className={styles.footerCopyright}>
+              © {new Date().getFullYear()} Cleverly. All rights reserved.
+            </div>
           </div>
         </div>
       </motion.footer>
