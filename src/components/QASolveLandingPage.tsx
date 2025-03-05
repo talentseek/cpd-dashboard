@@ -145,7 +145,7 @@ export default function QASolveLandingPage({
       >
         <div className={styles.navContent}>
           <Image
-            src="/images/abm/qasolve/logo.png"
+            src="/images/abm/qasolve/logo.svg"
             alt="QASolve Logo"
             width={120}
             height={40}
@@ -194,7 +194,7 @@ export default function QASolveLandingPage({
           </motion.div>
           <motion.div variants={fadeInUp} className={styles.heroAnimation}>
             <Image
-              src="/images/abm/qasolve/hero.png"
+              src="/images/abm/qasolve/hero.jpeg"
               alt="QASolve Knowledge Graph Visualization"
               width={600}
               height={400}
