@@ -410,7 +410,7 @@ export default function CleverlyLandingPage({
             <div className={styles.testimonialCardContent}>
               <div className={styles.testimonialCardImage}>
                 <Image
-                  src="/images/abm/cleverly/testimonial-full.jpg"
+                  src="/images/abm/cleverly/face2.jpg"
                   alt="Chuong, Founder"
                   width={200}
                   height={200}
@@ -496,7 +496,7 @@ export default function CleverlyLandingPage({
               </div>
               <div className={styles.ctaImage}>
                 <Image
-                  src="/images/abm/cleverly/mobile-app.jpg"
+                  src="/images/abm/cleverly/mobile.webp"
                   alt="Cleverly Mobile App"
                   width={300}
                   height={500}
