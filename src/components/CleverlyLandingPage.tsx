@@ -166,7 +166,7 @@ export default function CleverlyLandingPage({
             <div className={styles.testimonialBubble}>
               <div className={styles.testimonialContent}>
                 <Image
-                  src="/images/abm/cleverly/testimonial.jpg"
+                  src="/images/abm/cleverly/face.jpg"
                   alt="George Boldero"
                   width={60}
                   height={60}
@@ -190,7 +190,7 @@ export default function CleverlyLandingPage({
             <div className={styles.painPointsGrid}>
               <div className={styles.painPointsImage}>
                 <Image
-                  src="/images/abm/cleverly/frustrated-manager.jpg"
+                  src="/images/abm/cleverly/analytics.webp"
                   alt="Frustrated Facility Manager"
                   width={400}
                   height={300}
