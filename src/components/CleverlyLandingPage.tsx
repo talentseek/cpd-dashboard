@@ -115,7 +115,7 @@ export default function CleverlyLandingPage({
         <div className={styles.navContent}>
           <Link href="https://www.cleverly.works" className={styles.logoLink}>
             <Image
-              src="/images/abm/cleverly/logo.svg"
+              src="/images/abm/cleverly/logo.webp"
               alt="Cleverly Logo"
               width={120}
               height={40}
@@ -157,7 +157,7 @@ export default function CleverlyLandingPage({
           </div>
           <div className={styles.heroImageContainer}>
             <Image
-              src="/images/abm/cleverly/dashboard.jpg"
+              src="/images/abm/cleverly/infographics.webp"
               alt="Cleverly Dashboard"
               width={600}
               height={400}
