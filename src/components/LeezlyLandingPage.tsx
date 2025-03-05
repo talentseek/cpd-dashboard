@@ -108,7 +108,7 @@ export default function LeezlyLandingPage({
         <div className={styles.headerContainer}>
           <div className={styles.logo}>
             <Image
-              src="/images/abm/leezly/logo.png"
+              src="/images/abm/leezly/logo.png" // Updated to logo.png
               alt="Leezly Logo"
               width={120}
               height={40}
@@ -116,7 +116,7 @@ export default function LeezlyLandingPage({
           </div>
           <Button
             className={styles.ctaButton}
-            onClick={() => (window.location.href = "mailto:admin@leezly.com")}
+            onClick={() => (window.location.href = "https://cal.com/leezly/15min")} // Updated URL
           >
             Book a Demo
           </Button>
@@ -152,7 +152,7 @@ export default function LeezlyLandingPage({
             <motion.div variants={fadeInUp}>
               <Button
                 className={styles.heroButton}
-                onClick={() => (window.location.href = "mailto:admin@leezly.com")}
+                onClick={() => (window.location.href = "https://cal.com/leezly/15min")} // Updated URL
               >
                 Book a Demo Now
               </Button>
@@ -160,35 +160,13 @@ export default function LeezlyLandingPage({
           </div>
           <div className={styles.heroRight}>
             <div className={styles.heroImage}>
-              <div className={styles.imageWrapper}>
-                <div className={styles.imagePlaceholder}>
-                  <div className={styles.dashboardMockup}>
-                    <div className={styles.mockupHeader}>
-                      <div className={styles.mockupDot}></div>
-                      <div className={styles.mockupDot}></div>
-                      <div className={styles.mockupDot}></div>
-                    </div>
-                    <div className={styles.mockupContent}>
-                      <div className={styles.mockupSidebar}>
-                        <div className={styles.mockupMenuItem}></div>
-                        <div className={styles.mockupMenuItem}></div>
-                        <div className={styles.mockupMenuItem}></div>
-                        <div className={styles.mockupMenuItem}></div>
-                      </div>
-                      <div className={styles.mockupMain}>
-                        <div className={styles.mockupCard}></div>
-                        <div className={styles.mockupCard}></div>
-                        <div className={styles.mockupGrid}>
-                          <div className={styles.mockupGridItem}></div>
-                          <div className={styles.mockupGridItem}></div>
-                          <div className={styles.mockupGridItem}></div>
-                          <div className={styles.mockupGridItem}></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Image
+                src="/images/abm/leezly/hero.png" // Replaced mock dashboard with hero.png
+                alt="Leezly Dashboard"
+                width={500}
+                height={400}
+                className={styles.heroImageContent}
+              />
             </div>
           </div>
         </div>
@@ -322,11 +300,10 @@ export default function LeezlyLandingPage({
           <motion.div variants={fadeInUp} className={styles.ctaButtons}>
             <Button
               className={styles.primaryButton}
-              onClick={() => (window.location.href = "mailto:admin@leezly.com")}
+              onClick={() => (window.location.href = "https://cal.com/leezly/15min")} // Updated URL
             >
               Request a Demo
             </Button>
-            {/* Removed the "Visit Our Website" button */}
           </motion.div>
         </div>
       </motion.section>
@@ -342,7 +319,7 @@ export default function LeezlyLandingPage({
         <div className={styles.footerContent}>
           <div className={styles.footerLogo}>
             <Image
-              src="/images/abm/leezly/logo.svg"
+              src="/images/abm/leezly/logo.png" // Updated to logo.png
               alt="Leezly Logo"
               width={120}
               height={40}
