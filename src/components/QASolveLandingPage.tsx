@@ -145,7 +145,7 @@ export default function QASolveLandingPage({
       >
         <div className={styles.navContent}>
           <Image
-            src="/images/abm/qasolve/logo.svg"
+            src="/images/abm/qasolve/Logo.svg"
             alt="QASolve Logo"
             width={120}
             height={40}
@@ -420,7 +420,7 @@ export default function QASolveLandingPage({
         <div className={styles.footerContent}>
           <div className={styles.footerLogo}>
             <Image
-              src="/images/abm/qasolve/logo.svg"
+              src="/images/abm/qasolve/Logo.svg"
               alt="QASolve Logo"
               width={120}
               height={40}
