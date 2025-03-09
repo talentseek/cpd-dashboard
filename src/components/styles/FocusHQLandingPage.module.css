@@ -167,26 +167,6 @@
   color: #00a2ee;
 }
 
-.poundIconWrapper {
-  position: relative;
-  width: 40px;
-  height: 40px;
-}
-
-.poundIconWrapper .challengeIcon {
-  opacity: 0; /* Hide the default $ symbol */
-}
-
-.poundSymbol {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 40px;
-  color: #00a2ee;
-  font-weight: bold;
-}
-
 /* Solution Section */
 .solution {
   padding: 5rem 2rem;

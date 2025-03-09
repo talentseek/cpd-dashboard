@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, DollarSign, Users, Zap } from "lucide-react"; // Keeping DollarSign, will style as £
+import { Eye, PoundSterling, Users, Zap } from "lucide-react"; // Replaced DollarSign with PoundSterling
 import { Button } from "@/components/ui/button";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 import styles from "@/components/styles/FocusHQLandingPage.module.css";
@@ -107,7 +107,7 @@ export default function FocusHQLandingPage({
           </div>
           <Button
             className={styles.navCta}
-            onClick={() => window.location.href = "#book-a-demo"}
+            onClick={() => window.location.href = "https://cal.com/focushq"}
           >
             Book a Demo
           </Button>
@@ -133,7 +133,7 @@ export default function FocusHQLandingPage({
             Gain real-time transparency, streamline governance, and deliver projects on time, on budget, and with the outcomes promised—across your entire portfolio.
           </motion.p>
           <motion.div variants={fadeInUp}>
-            <Button className={styles.ctaButton} onClick={() => window.location.href = "#book-a-demo"}>Book a Demo</Button>
+            <Button className={styles.ctaButton} onClick={() => window.location.href = "https://cal.com/focushq"}>Book a Demo</Button>
           </motion.div>
         </div>
         <motion.div className={styles.heroVisual} variants={fadeInUp}>
@@ -177,10 +177,7 @@ export default function FocusHQLandingPage({
 
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconWrapper}>
-              <div className={styles.poundIconWrapper}>
-                <DollarSign className={styles.challengeIcon} />
-                <span className={styles.poundSymbol}>£</span>
-              </div>
+              <PoundSterling className={styles.challengeIcon} /> {/* Replaced DollarSign with PoundSterling */}
             </div>
             <h3 className={styles.challengeTitle}>Financial Tracking Issues</h3>
             <p className={styles.challengeText}>
@@ -195,7 +192,7 @@ export default function FocusHQLandingPage({
             <div className={styles.iconWrapper}>
               <Users className={styles.challengeIcon} />
             </div>
-            <h3 className={styles.challengeTitle}>Resource Prioritisation</h3> {/* Changed to British English */}
+            <h3 className={styles.challengeTitle}>Resource Prioritisation</h3>
             <p className={styles.challengeText}>
               <ReplaceText
                 text="Challenges in prioritising and resourcing projects effectively to deliver on {company}’s strategic objectives."
@@ -246,7 +243,7 @@ export default function FocusHQLandingPage({
             </motion.div>
 
             <motion.div className={styles.solutionItem} variants={fadeInUp}>
-              <h3 className={styles.solutionTitle}>Benefits Realisation</h3> {/* Changed to British English */}
+              <h3 className={styles.solutionTitle}>Benefits Realisation</h3>
               <p className={styles.solutionText}>
                 <ReplaceText
                   text="Track and manage ROI throughout the project lifecycle, ensuring {company} delivers promised outcomes."
@@ -303,17 +300,17 @@ export default function FocusHQLandingPage({
         variants={staggerChildren}
       >
         <motion.div className={styles.ctaContent} variants={fadeInUp}>
-          <h2 className={styles.ctaTitle}>
+          <h3 className={styles.ctaTitle}>
             <ReplaceText
               text="{first_name}, Ready to Streamline {company}’s Project Delivery?"
               replacements={replacements}
             />
-          </h2>
+          </h3>
           <p className={styles.ctaSubtitle}>
             Book a demo to see how Focus HQ can enhance control, reduce risks, and deliver better outcomes.
           </p>
           <motion.div variants={fadeInUp}>
-            <Button className={styles.ctaButtonLarge} onClick={() => window.location.href = "#book-a-demo"}>Book a Demo</Button>
+            <Button className={styles.ctaButtonLarge} onClick={() => window.location.href = "https://cal.com/focushq"}>Book a Demo</Button>
           </motion.div>
         </motion.div>
       </motion.section>
@@ -328,8 +325,8 @@ export default function FocusHQLandingPage({
       >
         <div className={styles.footerContent}>
           <div className={styles.footerLinks}>
-            <Link href="/terms" className={styles.footerLink}>Terms</Link>
-            <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
+            <Link href="https://www.focushq.com/terms-of-use/" className={styles.footerLink}>Terms</Link>
+            <Link href="https://www.focushq.com/privacy-policy/" className={styles.footerLink}>Privacy</Link>
           </div>
           <div className={styles.footerCopyright}>
             © {new Date().getFullYear()} Focus HQ. All rights reserved.
