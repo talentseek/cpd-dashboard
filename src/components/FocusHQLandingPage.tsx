@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, DollarSign, Users, Zap } from "lucide-react"; // Keeping DollarSign for now, will style as £
+import { Eye, DollarSign, Users, Zap } from "lucide-react"; // Keeping DollarSign, will style as £
 import { Button } from "@/components/ui/button";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 import styles from "@/components/styles/FocusHQLandingPage.module.css";
@@ -177,7 +177,10 @@ export default function FocusHQLandingPage({
 
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconWrapper}>
-              <DollarSign className={`${styles.challengeIcon} ${styles.poundIcon}`} /> {/* Styled as £ */}
+              <div className={styles.poundIconWrapper}>
+                <DollarSign className={styles.challengeIcon} />
+                <span className={styles.poundSymbol}>£</span>
+              </div>
             </div>
             <h3 className={styles.challengeTitle}>Financial Tracking Issues</h3>
             <p className={styles.challengeText}>
