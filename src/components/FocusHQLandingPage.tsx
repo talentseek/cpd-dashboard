@@ -1,10 +1,11 @@
+// src/components/FocusHQLandingPage.tsx
 "use client";
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, DollarSign, Users, Zap } from "lucide-react"; // Import lucide-react icons
+import { Eye, DollarSign, Users, Zap } from "lucide-react"; // Keeping DollarSign for now, will style as £
 import { Button } from "@/components/ui/button";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 import styles from "@/components/styles/FocusHQLandingPage.module.css";
@@ -176,7 +177,7 @@ export default function FocusHQLandingPage({
 
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconWrapper}>
-              <DollarSign className={styles.challengeIcon} />
+              <DollarSign className={`${styles.challengeIcon} ${styles.poundIcon}`} /> {/* Styled as £ */}
             </div>
             <h3 className={styles.challengeTitle}>Financial Tracking Issues</h3>
             <p className={styles.challengeText}>
@@ -191,10 +192,10 @@ export default function FocusHQLandingPage({
             <div className={styles.iconWrapper}>
               <Users className={styles.challengeIcon} />
             </div>
-            <h3 className={styles.challengeTitle}>Resource Prioritization</h3>
+            <h3 className={styles.challengeTitle}>Resource Prioritisation</h3> {/* Changed to British English */}
             <p className={styles.challengeText}>
               <ReplaceText
-                text="Challenges in prioritizing and resourcing projects effectively to deliver on {company}’s strategic objectives."
+                text="Challenges in prioritising and resourcing projects effectively to deliver on {company}’s strategic objectives."
                 replacements={replacements}
               />
             </p>
@@ -242,7 +243,7 @@ export default function FocusHQLandingPage({
             </motion.div>
 
             <motion.div className={styles.solutionItem} variants={fadeInUp}>
-              <h3 className={styles.solutionTitle}>Benefits Realization</h3>
+              <h3 className={styles.solutionTitle}>Benefits Realisation</h3> {/* Changed to British English */}
               <p className={styles.solutionText}>
                 <ReplaceText
                   text="Track and manage ROI throughout the project lifecycle, ensuring {company} delivers promised outcomes."
@@ -255,7 +256,7 @@ export default function FocusHQLandingPage({
               <h3 className={styles.solutionTitle}>Simplicity & Automation</h3>
               <p className={styles.solutionText}>
                 <ReplaceText
-                  text="Automate reporting so {company}’s PMs focus on managing projects, not status updates—designed for accidental project managers."
+                  text="Automate reporting so {company}’s PMs focus on managing projects, not status updates - perfect for accidental project managers."
                   replacements={replacements}
                 />
               </p>
@@ -265,7 +266,7 @@ export default function FocusHQLandingPage({
               <h3 className={styles.solutionTitle}>Tailored Governance</h3>
               <p className={styles.solutionText}>
                 <ReplaceText
-                  text="Flex governance to suit any project size or complexity, ensuring consistency across {company}’s portfolio."
+                  text="Define governance requirements to suit any project size or complexity, ensuring consistency across {company}’s portfolio."
                   replacements={replacements}
                 />
               </p>
