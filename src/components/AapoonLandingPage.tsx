@@ -489,7 +489,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                   </th>
                   <th className={styles.tableHeader}>
                     <Image
-                      src="/images/abm/aapoon/slack-logo.png"
+                      src="/images/abm/aapoon/slack.png"
                       alt="Slack Logo"
                       width={80}
                       height={24}
@@ -498,7 +498,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                   </th>
                   <th className={styles.tableHeader}>
                     <Image
-                      src="/images/abm/aapoon/teams-logo.png"
+                      src="/images/abm/aapoon/teams.png"
                       alt="Microsoft Teams Logo"
                       width={80}
                       height={24}
@@ -507,7 +507,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                   </th>
                   <th className={styles.tableHeader}>
                     <Image
-                      src="/images/abm/aapoon/whatsapp-logo.png"
+                      src="/images/abm/aapoon/whatsapp.png"
                       alt="WhatsApp Business Logo"
                       width={80}
                       height={24}
