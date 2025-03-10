@@ -1,3 +1,4 @@
+// src/components/HRoesLandingPage.tsx
 "use client";
 
 import { useRef, useEffect } from "react";
@@ -104,7 +105,7 @@ export default function HRoesLandingPage({
           </div>
           <Button
             className={styles.navCta}
-            onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+            onClick={() => window.location.href = "https://cal.com/hroes/15min"}
           >
             Book a 15-Min Demo
           </Button>
@@ -136,19 +137,19 @@ export default function HRoesLandingPage({
           <div className={styles.heroInner}>
             <motion.h1 variants={fadeInUp} className={styles.heroTitle}>
               <ReplaceText
-                text="{first_name}, Don't Let {company} Be the Next Headline!"
+                text="{first_name}, Don&apos;t Let {company} Be the Next Headline!"
                 replacements={replacements}
               />
             </motion.h1>
 
             <motion.p variants={fadeInUp} className={styles.heroText}>
-              ITV faced backlash after Gino D&apos;Acampo’s inappropriate behavior—new UK laws mean your business could be next. Act now to stay compliant!
+              HR Teams are now dealing with the fall-out from those Christmas party mishaps! Sexual harassment claims can leave businesses facing legal issues long after the festivities end. Make sure your company stays out of the spotlight for all the wrong reasons...
             </motion.p>
 
             <motion.div variants={fadeInUp} className={styles.heroCtaWrapper}>
               <Button
                 className={styles.heroCta}
-                onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+                onClick={() => window.location.href = "https://cal.com/hroes/15min"}
               >
                 Book a 15-Min Demo <ArrowRight className={styles.ctaIcon} />
               </Button>
@@ -166,7 +167,7 @@ export default function HRoesLandingPage({
                 />
               </div>
               <p className={styles.quoteText}>
-                &quot;A Tesco worker settled a £45k sexual harassment claim—don&apos;t be next!&quot;
+                &quot;A Tesco worker settled a &pound;45k sexual harassment claim—don&apos;t be next!&quot;
               </p>
               <p className={styles.quoteAuthor}>— Elissa Thursfield, HRoes Co-Founder</p>
             </motion.div>
@@ -197,7 +198,7 @@ export default function HRoesLandingPage({
             <motion.div variants={fadeInUp}>
               <Button
                 className={styles.urgencyCta}
-                onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+                onClick={() => window.location.href = "https://cal.com/hroes/15min"}
               >
                 Book a 15-Min Demo <ArrowRight className={styles.ctaIcon} />
               </Button>
@@ -230,59 +231,33 @@ export default function HRoesLandingPage({
                 <Book className={styles.icon} />
               </div>
 
-              <h3 className={styles.solutionTitle}>E-Learning Course</h3>
+              <h3 className={styles.solutionTitle}>CPD E-Learning</h3>
 
               <p className={styles.solutionText}>
-                For just £35 per employee, our CPD-accredited Sexual Harassment E-Learning Course ensures compliance in 30 minutes—anytime, anywhere.
+                Ensure you are compliant with no government legislation on sexual harassment, in just a few hours, from anywhere, for only &pound;35 per employee.
               </p>
 
               <Button
                 className={styles.solutionCta}
-                onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
+                onClick={() => window.location.href = "https://cal.com/hroes/15min"}
               >
-                Book a 15-Min Demo <ArrowRight className={styles.ctaIcon} />
+                Get Started <ArrowRight className={styles.ctaIcon} />
               </Button>
             </motion.div>
+          </motion.div>
 
-            {/* HR Software Card */}
-            <motion.div className={styles.solutionCard} variants={fadeInUp}>
-              <div className={styles.solutionIcon}>
-                <Shield className={styles.icon} />
-              </div>
-
-              <h3 className={styles.solutionTitle}>HR Software</h3>
-
-              <p className={styles.solutionText}>
-                Manage claims and prevent lawsuits with our Disciplinary Decider, from £2 per employee.
-              </p>
-
-              <Button
-                className={styles.solutionCta}
-                onClick={() => window.location.href = "#book-demo"} // Placeholder until actual demo link is provided
-              >
-                Book a 15-Min Demo <ArrowRight className={styles.ctaIcon} />
-              </Button>
-            </motion.div>
-
-            {/* HR Consultancy Card */}
-            <motion.div className={styles.solutionCard} variants={fadeInUp}>
-              <div className={styles.solutionIcon}>
-                <UserCheck className={styles.icon} />
-              </div>
-
-              <h3 className={styles.solutionTitle}>HR Consultancy</h3>
-
-              <p className={styles.solutionText}>
-                Stay on the right side of the law with our excellent-rated advisors.
-              </p>
-
-              <Button
-                className={styles.solutionCta}
-                onClick={() => window.location.href = "#free-consultation"} // Placeholder until actual consultation link is provided
-              >
-                Free Consultation <ArrowRight className={styles.ctaIcon} />
-              </Button>
-            </motion.div>
+          {/* Embedded Video (Placeholder for TikTok video.mp4) */}
+          <motion.div variants={fadeInUp} className={styles.videoContainer}>
+            <video
+              controls
+              className={styles.video}
+              width={600}
+              height={400}
+              poster="/images/abm/hroes/video-poster.jpg"
+            >
+              <source src="/images/abm/hroes/video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </motion.div>
         </div>
       </motion.section>
@@ -345,7 +320,7 @@ export default function HRoesLandingPage({
             <motion.div variants={fadeInUp}>
               <Button
                 className={styles.webcastCta}
-                onClick={() => window.location.href = "#webcast-registration"} // Placeholder until actual webcast link is provided
+                onClick={() => window.location.href = "#webcast-registration"}
               >
                 Register for Webcast <Calendar className={styles.ctaIcon} />
               </Button>
@@ -365,8 +340,8 @@ export default function HRoesLandingPage({
         <div className={styles.footerInner}>
           <div className={styles.footerContent}>
             <div className={styles.footerLinks}>
-              <Link href="/privacy" className={styles.footerLink}>Privacy</Link>
-              <Link href="#unsubscribe" className={styles.footerLink}>Unsubscribe</Link>
+              <Link href="https://www.hroes.co.uk/privacy-policy/" className={styles.footerLink}>Privacy</Link>
+              <Link href="https://www.hroes.co.uk/unsubscribe/" className={styles.footerLink}>Unsubscribe</Link>
             </div>
             <div className={styles.footerCopyright}>
               © {new Date().getFullYear()} HRoes. All rights reserved.
