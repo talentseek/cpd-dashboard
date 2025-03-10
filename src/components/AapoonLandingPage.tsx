@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FloatingNav from "@/components/FloatingNav";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
-import styles from "@/components/styles/Aapoon.module.css"; // Updated to Aapoon.module.css
+import styles from "@/components/styles/Aapoon.module.css";
 
 interface Replacements extends CustomReplacements {
   first_name: string;
@@ -56,6 +56,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
   const securityRef = useRef<HTMLDivElement>(null);
   const opportunityRef = useRef<HTMLDivElement>(null);
   const insightsRef = useRef<HTMLDivElement>(null);
+  const comparisonsRef = useRef<HTMLDivElement>(null); // New ref for comparisons section
   const ctaRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
 
@@ -67,6 +68,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
   const securityControls = useAnimation();
   const opportunityControls = useAnimation();
   const insightsControls = useAnimation();
+  const comparisonsControls = useAnimation(); // New animation control for comparisons section
   const ctaControls = useAnimation();
   const footerControls = useAnimation();
 
@@ -78,6 +80,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
   const securityInView = useInView(securityRef, { once: false, amount: 0.3 });
   const opportunityInView = useInView(opportunityRef, { once: false, amount: 0.3 });
   const insightsInView = useInView(insightsRef, { once: false, amount: 0.3 });
+  const comparisonsInView = useInView(comparisonsRef, { once: false, amount: 0.3 }); // New inView hook
   const ctaInView = useInView(ctaRef, { once: false, amount: 0.3 });
   const footerInView = useInView(footerRef, { once: false, amount: 0.3 });
 
@@ -90,6 +93,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
     if (securityInView) securityControls.start("visible");
     if (opportunityInView) opportunityControls.start("visible");
     if (insightsInView) insightsControls.start("visible");
+    if (comparisonsInView) comparisonsControls.start("visible"); // Trigger animation for comparisons
     if (ctaInView) ctaControls.start("visible");
     if (footerInView) footerControls.start("visible");
   }, [
@@ -100,6 +104,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
     securityInView,
     opportunityInView,
     insightsInView,
+    comparisonsInView, // Added to dependencies
     ctaInView,
     footerInView,
     navControls,
@@ -109,6 +114,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
     securityControls,
     opportunityControls,
     insightsControls,
+    comparisonsControls, // Added to dependencies
     ctaControls,
     footerControls,
   ]);
@@ -191,6 +197,13 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
             className={styles.navButton}
           >
             {"Insights"}
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => handleScrollTo("comparisons")} // New nav link
+            className={styles.navButton}
+          >
+            {"Comparisons"}
           </Button>
           <Button
             variant="ghost"
@@ -443,6 +456,132 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
               </blockquote>
               <p className={styles.insightAuthor}>— Sam Lessin, General Partner at Slow Ventures</p>
             </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Comparisons Section */}
+      <motion.section
+        ref={comparisonsRef}
+        id="comparisons"
+        className={styles.section}
+        initial="hidden"
+        animate={comparisonsControls}
+        variants={staggerChildren}
+      >
+        <div className={styles.heroContainer}>
+          <motion.h2 variants={fadeInUp} className={styles.comparisonsTitle}>
+            {"Why Choose Aapoon Over Slack or Microsoft Teams"}
+          </motion.h2>
+          <motion.div variants={fadeInUp} className={styles.comparisonsTable}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.tableHeader}>{"Features"}</th>
+                  <th className={styles.tableHeader}>
+                    <Image
+                      src="/images/abm/aapoon/logo.png"
+                      alt="Aapoon Logo"
+                      width={80}
+                      height={24}
+                      className={styles.comparisonLogo}
+                    />
+                  </th>
+                  <th className={styles.tableHeader}>
+                    <Image
+                      src="/images/abm/aapoon/slack-logo.png"
+                      alt="Slack Logo"
+                      width={80}
+                      height={24}
+                      className={styles.comparisonLogo}
+                    />
+                  </th>
+                  <th className={styles.tableHeader}>
+                    <Image
+                      src="/images/abm/aapoon/teams-logo.png"
+                      alt="Microsoft Teams Logo"
+                      width={80}
+                      height={24}
+                      className={styles.comparisonLogo}
+                    />
+                  </th>
+                  <th className={styles.tableHeader}>
+                    <Image
+                      src="/images/abm/aapoon/whatsapp-logo.png"
+                      alt="WhatsApp Business Logo"
+                      width={80}
+                      height={24}
+                      className={styles.comparisonLogo}
+                    />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Data Ownership & Control"}</td>
+                  <td className={styles.tableCell}>{"Full control with on-prem & private cloud hosting"}</td>
+                  <td className={styles.tableCell}>{"Stored on Slack’s cloud servers"}</td>
+                  <td className={styles.tableCell}>{"Stored on Microsoft Cloud"}</td>
+                  <td className={styles.tableCell}>{"Meta-controlled Data Storage"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Hierarchical Messaging"}</td>
+                  <td className={styles.tableCell}>{"Yes, aligns with the organizational structure"}</td>
+                  <td className={styles.tableCell}>{"No"}</td>
+                  <td className={styles.tableCell}>{"No"}</td>
+                  <td className={styles.tableCell}>{"No"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Avoids Double Subpoena Risks"}</td>
+                  <td className={styles.tableCell}>{"Yes, minimizes third-party legal exposure."}</td>
+                  <td className={styles.tableCell}>{"No, subject to external subpoenas"}</td>
+                  <td className={styles.tableCell}>{"No, subject to external subpoenas"}</td>
+                  <td className={styles.tableCell}>{"No, Meta retains message metadata"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Customizable Privacy Controls"}</td>
+                  <td className={styles.tableCell}>{"Yes, tailored to compliance needs"}</td>
+                  <td className={styles.tableCell}>{"Limited, mostly admin-controlled"}</td>
+                  <td className={styles.tableCell}>{"Limited, admin-controlled"}</td>
+                  <td className={styles.tableCell}>{"Very limited, user-level controls only"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"AI Agents with Real-time Data Access"}</td>
+                  <td className={styles.tableCell}>{"Yes, real-time proprietary data access"}</td>
+                  <td className={styles.tableCell}>{"No, relies on API-based SaaS calls"}</td>
+                  <td className={styles.tableCell}>{"No, relies on API-based SaaS calls"}</td>
+                  <td className={styles.tableCell}>{"No, not designed for enterprise AI"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Edge Computing & On-Prem AI Models"}</td>
+                  <td className={styles.tableCell}>{"Yes, supports on-prem AI and edge computing."}</td>
+                  <td className={styles.tableCell}>{"No, SaaS-based cloud model"}</td>
+                  <td className={styles.tableCell}>{"No, SaaS-based cloud model"}</td>
+                  <td className={styles.tableCell}>{"No, cloud-based consumer model"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Flat Pricing Model"}</td>
+                  <td className={styles.tableCell}>{"Yes, unlimited users at flat pricing"}</td>
+                  <td className={styles.tableCell}>{"No, per-user pricing increases costs."}</td>
+                  <td className={styles.tableCell}>{"No, per-user pricing increases costs."}</td>
+                  <td className={styles.tableCell}>{"No, per-seat pricing for advanced features"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Integrated Enterprise Workflows"}</td>
+                  <td className={styles.tableCell}>{"Yes, integrates with Sales, HR, and Compliance workflows"}</td>
+                  <td className={styles.tableCell}>{"Limited, requires integrations"}</td>
+                  <td className={styles.tableCell}>{"Yes, but within Microsoft ecosystem"}</td>
+                  <td className={styles.tableCell}>{"No, not designed for enterprise workflows"}</td>
+                </tr>
+                <tr className={styles.tableRow}>
+                  <td className={styles.tableFeature}>{"Post-Quantum Cryptography (PQC) Encryption"}</td>
+                  <td className={styles.tableCell}>{"Yes, future-proof security"}</td>
+                  <td className={styles.tableCell}>{"No"}</td>
+                  <td className={styles.tableCell}>{"No"}</td>
+                  <td className={styles.tableCell}>{"No"}</td>
+                </tr>
+              </tbody>
+            </table>
           </motion.div>
         </div>
       </motion.section>

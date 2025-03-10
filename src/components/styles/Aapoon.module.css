@@ -342,6 +342,70 @@
   color: #e25630;
 }
 
+/* Comparisons Section */
+.comparisonsTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.comparisonsTable {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  background: #e25630;
+}
+
+.comparisonLogo {
+  display: block;
+  margin: 0 auto;
+  height: 24px;
+  width: auto;
+}
+
+.tableRow:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tableFeature {
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #e25630;
+  text-align: left;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tableCell {
+  padding: 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tableCell:last-child,
+.tableFeature:last-child {
+  border-right: none;
+}
+
 /* CTA Section */
 .ctaTitle {
   font-size: 36px;
@@ -439,6 +503,7 @@
   .securityTitle,
   .opportunityTitle,
   .insightsTitle,
+  .comparisonsTitle, /* Added */
   .ctaTitle {
     font-size: 28px;
   }
@@ -458,5 +523,16 @@
   .navButton {
     font-size: 14px;
     padding: 6px 12px;
+  }
+
+  .tableHeader,
+  .tableFeature,
+  .tableCell {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .comparisonLogo {
+    height: 20px;
   }
 }
