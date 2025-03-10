@@ -398,7 +398,7 @@ export default function AapoonLandingPage({ replacements = defaultReplacements }
                 <motion.ul variants={staggerChildren} className={styles.opportunityList}>
                   <motion.li variants={fadeInUp} className={styles.opportunityListItem}>
                     <Shield className={styles.opportunityIcon} />
-                    <span>{"Two granted patents creating strong market barriers"}</span>
+                    <span>{"Three granted patents creating strong market barriers"}</span>
                   </motion.li>
                   <motion.li variants={fadeInUp} className={styles.opportunityListItem}>
                     <Globe className={styles.opportunityIcon} />
