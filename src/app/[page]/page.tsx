@@ -12,6 +12,7 @@ import EmbryonicLandingPage from '@/components/EmbryonicLandingPage'; // Custom 
 import HRoesLandingPage from '@/components/HRoesLandingPage'; // Custom HRoes template
 import CleverlyLandingPage from '@/components/CleverlyLandingPage'; // Custom Cleverly template
 import LeezlyLandingPage from '@/components/LeezlyLandingPage'; // Custom Leezly template
+import EvolutionSGLandingPage from '@/components/EvolutionSGLandingPage'; // Custom Evolution SG template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -300,6 +301,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <LeezlyLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "evolutionsg") { // Added condition for Evolution SG
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <EvolutionSGLandingPage replacements={replacements} />
         </>
       );
     }
