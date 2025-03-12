@@ -137,7 +137,7 @@ export default function HRoesLandingPage({
           <div className={styles.heroInner}>
             <motion.h1 variants={fadeInUp} className={styles.heroTitle}>
               <ReplaceText
-                text="{first_name}, Don&apos;t Let {company} Be the Next Headline!"
+                text="{first_name}, Don't Let {company} Be the Next Headline!"
                 replacements={replacements}
               />
             </motion.h1>
@@ -167,7 +167,7 @@ export default function HRoesLandingPage({
                 />
               </div>
               <p className={styles.quoteText}>
-                &quot;A Tesco worker settled a &pound;45k sexual harassment claim—don&apos;t be next!&quot;
+                A Tesco worker settled a £45k sexual harassment claim—don’t be next!
               </p>
               <p className={styles.quoteAuthor}>— Elissa Thursfield, HRoes Co-Founder</p>
             </motion.div>
@@ -234,7 +234,7 @@ export default function HRoesLandingPage({
               <h3 className={styles.solutionTitle}>CPD E-Learning</h3>
 
               <p className={styles.solutionText}>
-                Ensure you are compliant with no government legislation on sexual harassment, in just a few hours, from anywhere, for only &pound;35 per employee.
+                Ensure you are compliant with no government legislation on sexual harassment, in just a few hours, from anywhere, for only £35 per employee.
               </p>
 
               <Button
@@ -246,16 +246,19 @@ export default function HRoesLandingPage({
             </motion.div>
           </motion.div>
 
-          {/* Embedded Video (Placeholder for TikTok video.mp4) */}
+          {/* Embedded Video (Placeholder for vid.mp4) */}
           <motion.div variants={fadeInUp} className={styles.videoContainer}>
             <video
+              autoPlay
+              muted // Required for autoplay in most browsers
+              loop
               controls
               className={styles.video}
-              width={600}
-              height={400}
+              width={800}
+              height={450}
               poster="/images/abm/hroes/video-poster.jpg"
             >
-              <source src="/images/abm/hroes/video.mp4" type="video/mp4" />
+              <source src="/images/abm/hroes/vid.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </motion.div>
@@ -284,7 +287,7 @@ export default function HRoesLandingPage({
             </motion.div>
 
             <motion.blockquote variants={fadeInUp} className={styles.testimonialQuote}>
-              &quot;We know what you&apos;re thinking—new regulations are a pain. You just want a safe workplace where common sense prevails. When harassment claims arise, prove your efforts to avoid more costly risks!&quot;
+              We know what you’re thinking—new regulations are a pain. You just want a safe workplace where common sense prevails. When harassment claims arise, prove your efforts to avoid more costly risks!
             </motion.blockquote>
 
             <motion.p variants={fadeInUp} className={styles.testimonialAuthor}>
@@ -320,7 +323,7 @@ export default function HRoesLandingPage({
             <motion.div variants={fadeInUp}>
               <Button
                 className={styles.webcastCta}
-                onClick={() => window.location.href = "#webcast-registration"}
+                onClick={() => window.location.href = "https://hroes.clickmeeting.com/"}
               >
                 Register for Webcast <Calendar className={styles.ctaIcon} />
               </Button>
@@ -340,8 +343,12 @@ export default function HRoesLandingPage({
         <div className={styles.footerInner}>
           <div className={styles.footerContent}>
             <div className={styles.footerLinks}>
-              <Link href="https://www.hroes.co.uk/privacy-policy/" className={styles.footerLink}>Privacy</Link>
-              <Link href="https://www.hroes.co.uk/unsubscribe/" className={styles.footerLink}>Unsubscribe</Link>
+              <Link href="https://www.hroes.co.uk/privacy-policy/" className={styles.footerLink}>
+                Privacy
+              </Link>
+              <Link href="https://www.hroes.co.uk/unsubscribe/" className={styles.footerLink}>
+                Unsubscribe
+              </Link>
             </div>
             <div className={styles.footerCopyright}>
               © {new Date().getFullYear()} HRoes. All rights reserved.
