@@ -1,12 +1,22 @@
-"use client"
+// /Users/mbeckett/Documents/codeprojects/website_projects/cpd-dashboard/src/components/KaskoLandingPage.tsx
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { ArrowRight, Building2, CheckCircle, Globe, Lock, ShieldCheck, Timer } from "lucide-react"
-import styles from "@/components/styles/Kasko.module.css"
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import {
+  ArrowRight,
+  Building2,
+  CheckCircle,
+  Globe,
+  Lock,
+  ShieldCheck,
+  Timer,
+} from "lucide-react";
+import styles from "@/components/styles/Kasko.module.css";
 
 interface Replacements {
   first_name: string;
@@ -14,21 +24,31 @@ interface Replacements {
 }
 
 export default function KaskoLandingPage({ replacements }: { replacements: Replacements }) {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
+      setIsScrolled(window.scrollY > 20);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Function to scroll to the next section (Features Section)
+  const scrollToNextSection = () => {
+    const featuresSection = document.querySelector(`#${styles.featuresSection}`);
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div className={styles.container}>
       {/* Navigation */}
-      <nav className={`${styles.nav} ${isScrolled ? styles.navScrolled : styles.navTransparent}`}>
+      <nav
+        className={`${styles.nav} ${isScrolled ? styles.navScrolled : styles.navTransparent}`}
+      >
         <div className={styles.navContainer}>
           <div className={styles.navFlex}>
             <Link href="/" className={styles.navLogo}>
@@ -51,7 +71,11 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
               <Link href="#contact" className={styles.navLink}>
                 Contact
               </Link>
-              <Button className={styles.getStartedButton}>Get Started</Button>
+              <Button className={styles.getStartedButton}>
+                <Link href="https://cal.com/kasko/30min" className={styles.navButtonLink}>
+                  Schedule a Call
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -72,11 +96,15 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
                 business in the EU market.
               </p>
               <div className={styles.ctaContainer}>
-                <Button className={styles.ctaButton}>
+                <Button className={styles.ctaButton} onClick={scrollToNextSection}>
                   Start Your EU Journey
                   <ArrowRight className={styles.arrowIcon} />
                 </Button>
-                <Button className={styles.ctaButtonOutline}>Schedule a Call</Button>
+                <Button className={styles.ctaButtonOutline}>
+                  <Link href="https://cal.com/kasko/30min" className={styles.ctaButtonLink}>
+                    Schedule a Call
+                  </Link>
+                </Button>
               </div>
             </div>
             <div className={styles.heroImage}>
@@ -95,7 +123,7 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
       </section>
 
       {/* Features Section */}
-      <section className={styles.featuresSection}>
+      <section id={styles.featuresSection} className={styles.featuresSection}>
         <div className={styles.featuresContainer}>
           <div className={styles.featuresHeader}>
             <h2 className={styles.featuresTitle}>
@@ -203,7 +231,11 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
             Let&#39;s discuss your EU expansion strategy, {replacements.first_name}!
           </p>
           <div className={styles.ctaButtons}>
-            <Button className={styles.ctaButton}>Schedule a Call</Button>
+            <Button className={styles.ctaButton}>
+              <Link href="https://cal.com/kasko/30min" className={styles.ctaButtonLink}>
+                Schedule a Call
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -248,5 +280,5 @@ export default function KaskoLandingPage({ replacements }: { replacements: Repla
         </div>
       </footer>
     </div>
-  )
+  );
 }
