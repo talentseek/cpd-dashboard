@@ -388,16 +388,16 @@ export default function CleverlyLandingPage({
           <h2 className={styles.sectionTitle}>Trusted by Leading Companies</h2>
           <div className={styles.clientsGrid}>
             <div className={styles.clientLogo}>
-              <Image src="/images/abm/cleverly/client1.jpg" alt="Client 1" width={150} height={80} />
+              <Image src="/images/abm/cleverly/company1.png" alt="CBRE" width={150} height={80} />
             </div>
             <div className={styles.clientLogo}>
-              <Image src="/images/abm/cleverly/client2.jpg" alt="Client 2" width={150} height={80} />
+              <Image src="/images/abm/cleverly/company2.png" alt="JLL" width={150} height={80} />
             </div>
             <div className={styles.clientLogo}>
-              <Image src="/images/abm/cleverly/client3.jpg" alt="Client 3" width={150} height={80} />
+              <Image src="/images/abm/cleverly/company3.png" alt="HOMYZE" width={150} height={80} />
             </div>
             <div className={styles.clientLogo}>
-              <Image src="/images/abm/cleverly/client4.jpg" alt="Client 4" width={150} height={80} />
+              <Image src="/images/abm/cleverly/company4.png" alt="Knight Frank" width={150} height={80} />
             </div>
           </div>
         </div>
@@ -447,7 +447,7 @@ export default function CleverlyLandingPage({
                   <div>
                     <Button
                       className={styles.primaryCta}
-                      onClick={() => (window.location.href = "https://calendly.com/cleverlyworks/demo")}
+                      onClick={() => (window.location.href = "https://cal.com/cleverly")}
                     >
                       Book a Demo Now <ArrowRight size={16} />
                     </Button>
