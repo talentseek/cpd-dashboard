@@ -115,7 +115,7 @@ export default function CleverlyLandingPage({
         <div className={styles.navContent}>
           <Link href="https://www.cleverly.works" className={styles.logoLink}>
             <Image
-              src="/images/abm/cleverly/logo.webp"
+              src="/images/abm/cleverly/logo-black.png"
               alt="Cleverly Logo"
               width={120}
               height={40}
@@ -124,7 +124,7 @@ export default function CleverlyLandingPage({
           </Link>
           <Button
             className={styles.navCta}
-            onClick={() => (window.location.href = "https://calendly.com/cleverlyworks/demo")}
+            onClick={() => (window.location.href = "https://cal.com/cleverly")}
           >
             Book a Demo
           </Button>
@@ -149,7 +149,7 @@ export default function CleverlyLandingPage({
             <div>
               <Button
                 className={styles.primaryCta}
-                onClick={() => (window.location.href = "https://calendly.com/cleverlyworks/demo")}
+                onClick={() => (window.location.href = "https://cal.com/cleverly")}
               >
                 Book a Demo Now <ArrowRight size={16} />
               </Button>
@@ -157,7 +157,7 @@ export default function CleverlyLandingPage({
           </div>
           <div className={styles.heroImageContainer}>
             <Image
-              src="/images/abm/cleverly/infographics.webp"
+              src="/images/abm/cleverly/Infographics1.png"
               alt="Cleverly Dashboard"
               width={600}
               height={400}
@@ -190,7 +190,7 @@ export default function CleverlyLandingPage({
             <div className={styles.painPointsGrid}>
               <div className={styles.painPointsImage}>
                 <Image
-                  src="/images/abm/cleverly/analytics.webp"
+                  src="/images/abm/cleverly/Infographics2.png"
                   alt="Frustrated Facility Manager"
                   width={400}
                   height={300}
@@ -319,7 +319,7 @@ export default function CleverlyLandingPage({
           <div className={styles.featuresGrid}>
             <div className={styles.featuresImage}>
               <Image
-                src="/images/abm/cleverly/desktop.webp"
+                src="/images/abm/cleverly/Infographics3.jpg"
                 alt="Cleverly Platform Overview"
                 width={500}
                 height={350}
@@ -513,7 +513,7 @@ export default function CleverlyLandingPage({
         <div className={styles.footerContent}>
           <div className={styles.footerLogo}>
             <Image
-              src="/images/abm/cleverly/logo.svg"
+              src="/images/abm/cleverly/logo-white.png"
               alt="Cleverly Logo"
               width={100}
               height={33}
