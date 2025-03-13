@@ -446,18 +446,10 @@ export default function CleverlyLandingPage({
                 <div className={styles.ctaButtons}>
                   <div>
                     <Button
-                      className={styles.primaryCta}
+                      className={`${styles.secondaryCta} ${styles.whiteCta}`}
                       onClick={() => (window.location.href = "https://cal.com/cleverly")}
                     >
                       Book a Demo Now <ArrowRight size={16} />
-                    </Button>
-                  </div>
-                  <div>
-                    <Button
-                      className={`${styles.secondaryCta} ${styles.whiteCta}`}
-                      onClick={() => (window.location.href = "https://www.cleverly.works")}
-                    >
-                      Visit Our Website <ArrowRight size={16} />
                     </Button>
                   </div>
                 </div>
