@@ -6,7 +6,7 @@ import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle, User, Wrench, Shield, FileText, BarChart, Smartphone, Clock, BookOpen, Headphones } from "lucide-react";
 import FloatingNav from "@/components/FloatingNav";
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
 import styles from "@/components/styles/CleverlyLandingPage.module.css";
@@ -234,54 +234,21 @@ export default function CleverlyLandingPage({
           <div className={styles.solutionsGrid}>
             <div className={styles.solutionCard}>
               <div className={styles.solutionIcon}>
-                <Image
-                  src="/images/abm/cleverly/icons/ease-of-use.svg"
-                  alt="Ease of Use Icon"
-                  width={32}
-                  height={32}
-                />
+                <User size={32} color="#351c75" /> {/* Icon for Ease of Use */}
               </div>
               <h3 className={styles.solutionTitle}>Ease of Use</h3>
               <p className={styles.solutionText}>An intuitive platform to manage everything in one place.</p>
-              <div className={styles.solutionImage}>
-                <Image
-                  src="/images/abm/cleverly/easy-interface.jpg"
-                  alt="Easy to use interface"
-                  width={250}
-                  height={150}
-                  className={styles.solutionImg}
-                />
-              </div>
             </div>
             <div className={styles.solutionCard}>
               <div className={styles.solutionIcon}>
-                <Image
-                  src="/images/abm/cleverly/icons/onboarding.svg"
-                  alt="Onboarding Icon"
-                  width={32}
-                  height={32}
-                />
+                <Wrench size={32} color="#351c75" /> {/* Icon for Done-for-You Onboarding */}
               </div>
               <h3 className={styles.solutionTitle}>Done-for-You Onboarding</h3>
               <p className={styles.solutionText}>We handle setup—your data is imported for you.</p>
-              <div className={styles.solutionImage}>
-                <Image
-                  src="/images/abm/cleverly/onboarding.jpg"
-                  alt="Onboarding process"
-                  width={250}
-                  height={150}
-                  className={styles.solutionImg}
-                />
-              </div>
             </div>
             <div className={styles.solutionCard}>
               <div className={styles.solutionIcon}>
-                <Image
-                  src="/images/abm/cleverly/icons/support.svg"
-                  alt="Support Icon"
-                  width={32}
-                  height={32}
-                />
+                <Shield size={32} color="#351c75" /> {/* Icon for World-Class Support */}
               </div>
               <h3 className={styles.solutionTitle}>World-Class Support</h3>
               <p className={styles.solutionText}>
@@ -290,15 +257,6 @@ export default function CleverlyLandingPage({
                   replacements={replacements}
                 />
               </p>
-              <div className={styles.solutionImage}>
-                <Image
-                  src="/images/abm/cleverly/support.jpg"
-                  alt="Customer support"
-                  width={250}
-                  height={150}
-                  className={styles.solutionImg}
-                />
-              </div>
             </div>
           </div>
           <div className={styles.solutionsCta}>
@@ -329,12 +287,7 @@ export default function CleverlyLandingPage({
             <div className={styles.featuresList}>
               <div className={styles.featureItem}>
                 <div className={styles.featureIcon}>
-                  <Image
-                    src="/images/abm/cleverly/icons/workflow.svg"
-                    alt="Workflow Icon"
-                    width={24}
-                    height={24}
-                  />
+                  <FileText size={24} color="#351c75" /> {/* Icon for Workflow Automation */}
                 </div>
                 <div className={styles.featureText}>
                   <h3>Workflow Automation & Task Management</h3>
@@ -343,12 +296,7 @@ export default function CleverlyLandingPage({
               </div>
               <div className={styles.featureItem}>
                 <div className={styles.featureIcon}>
-                  <Image
-                    src="/images/abm/cleverly/icons/reports.svg"
-                    alt="Reports Icon"
-                    width={24}
-                    height={24}
-                  />
+                  <BarChart size={24} color="#351c75" /> {/* Icon for Custom Reports */}
                 </div>
                 <div className={styles.featureText}>
                   <h3>Custom Reports & Dashboards</h3>
@@ -357,12 +305,7 @@ export default function CleverlyLandingPage({
               </div>
               <div className={styles.featureItem}>
                 <div className={styles.featureIcon}>
-                  <Image
-                    src="/images/abm/cleverly/icons/mobile.svg"
-                    alt="Mobile Icon"
-                    width={24}
-                    height={24}
-                  />
+                  <Smartphone size={24} color="#351c75" /> {/* Icon for Mobile App */}
                 </div>
                 <div className={styles.featureText}>
                   <h3>Mobile App for Planned & Reactive Work</h3>
@@ -455,33 +398,15 @@ export default function CleverlyLandingPage({
                 </div>
                 <div className={styles.ctaFeatures}>
                   <div className={styles.ctaFeatureItem}>
-                    <Image
-                      src="/images/abm/cleverly/icons/check-circle.svg"
-                      alt="Check Circle Icon"
-                      width={16}
-                      height={16}
-                      className={styles.ctaFeatureIcon}
-                    />
+                    <CheckCircle size={16} color="#ffffff" /> {/* Icon for 30-day money-back guarantee */}
                     <span>30-day money-back guarantee</span>
                   </div>
                   <div className={styles.ctaFeatureItem}>
-                    <Image
-                      src="/images/abm/cleverly/icons/check-circle.svg"
-                      alt="Check Circle Icon"
-                      width={16}
-                      height={16}
-                      className={styles.ctaFeatureIcon}
-                    />
+                    <BookOpen size={16} color="#ffffff" /> {/* Icon for Free onboarding & training */}
                     <span>Free onboarding & training</span>
                   </div>
                   <div className={styles.ctaFeatureItem}>
-                    <Image
-                      src="/images/abm/cleverly/icons/check-circle.svg"
-                      alt="Check Circle Icon"
-                      width={16}
-                      height={16}
-                      className={styles.ctaFeatureIcon}
-                    />
+                    <Headphones size={16} color="#ffffff" /> {/* Icon for Unlimited support */}
                     <span>Unlimited support</span>
                   </div>
                 </div>
