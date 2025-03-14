@@ -337,8 +337,8 @@ export default function MailMonitorLandingPage({
                   </div>
                 </div>
                 <button className={styles.ctaButton}>
-                  Start Your Deliverability Journey{" "}
-                  <ArrowRight className={styles.ctaButtonIcon} />
+                  Start Your Deliverability Journey
+    <ArrowRight className={styles.ctaButtonIcon} />
                 </button>
               </div>
             </div>
