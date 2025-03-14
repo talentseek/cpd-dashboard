@@ -1,8 +1,10 @@
 // src/components/MailMonitorLandingPage.tsx
+/* eslint-disable react/no-unescaped-entities */
+/* eslint @next/next/no-page-custom-font: "off" */ // Disable the font warning for this file
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { ArrowRight, CheckCircle, AlertCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, AlertCircle, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
@@ -69,8 +71,6 @@ export default function MailMonitorLandingPage({
 
   return (
     <>
-      {/* Suppress the font warning since we're intentionally loading the font here for self-sufficiency */}
-      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <Head>
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
@@ -85,11 +85,10 @@ export default function MailMonitorLandingPage({
               <Image
                 src="/images/abm/mailmonitor/logo.png"
                 alt="MailMonitor Logo"
-                width={50}
-                height={20}
+                width={100}
+                height={40}
                 className={styles.logoIcon}
               />
-              <span className={styles.logoText}>MailMonitor</span>
             </div>
             <button className={styles.button}>
               <Link href="#demo">Book a Free Demo</Link>
@@ -125,11 +124,7 @@ export default function MailMonitorLandingPage({
               className={styles.emailIconContainer}
               style={{ top: `${20 + emailPosition * 0.6}%` }}
             >
-              <Image
-                src="/images/email-icon.png"
-                alt="Email Icon"
-                width={24}
-                height={24}
+              <Mail
                 className={`${styles.emailIcon} ${
                   emailPosition > 70
                     ? styles.emailSuccess
@@ -154,7 +149,7 @@ export default function MailMonitorLandingPage({
             <div className={styles.sectionContainer}>
               <div className={styles.sectionContent}>
                 <h1 className={styles.sectionTitle}>
-                  {firstName}, as {company}&apos;s {role}, you&apos;ve spent
+                  {firstName}, as {company}'s {role}, you've spent
                   countless hours crafting the perfect campaign.
                 </h1>
                 <div className={styles.sectionText}>
@@ -180,9 +175,9 @@ export default function MailMonitorLandingPage({
                           <span className={styles.boldText}>
                             75% of marketers
                           </span>{" "}
-                          don&apos;t know where their emails actually land. And
-                          when they do find out there&apos;s a problem,
-                          it&apos;s often too late.
+                          don't know where their emails actually land. And
+                          when they do find out there's a problem,
+                          it's often too late.
                         </p>
                       </div>
                     </div>
@@ -207,7 +202,7 @@ export default function MailMonitorLandingPage({
                 </h2>
                 <div className={styles.sectionText}>
                   <p>
-                    Imagine having complete visibility into {company}&apos;s
+                    Imagine having complete visibility into {company}'s
                     email deliverability by knowing precisely which messages
                     reach the inbox and which get filtered to spam.
                   </p>
@@ -216,7 +211,7 @@ export default function MailMonitorLandingPage({
                       <div className={styles.gridNumber}>400+</div>
                       <h3 className={styles.gridTitle}>Seed Accounts</h3>
                       <p>
-                        MailMonitor&apos;s extensive network of seed accounts
+                        MailMonitor's extensive network of seed accounts
                         gives you visibility across all major ISPs.
                       </p>
                     </div>
@@ -224,7 +219,7 @@ export default function MailMonitorLandingPage({
                       <div className={styles.gridNumber}>60+</div>
                       <h3 className={styles.gridTitle}>ISPs Covered</h3>
                       <p>
-                        From Gmail to Outlook to Yahoo and beyond—we&apos;ve got
+                        From Gmail to Outlook to Yahoo and beyond—we've got
                         your deliverability covered everywhere.
                       </p>
                     </div>
@@ -263,7 +258,7 @@ export default function MailMonitorLandingPage({
                   <div className={styles.timelineItem}>
                     <h3 className={styles.timelineTitle}>The Solution</h3>
                     <p>
-                      With MailMonitor&apos;s reputation monitoring and smart
+                      With MailMonitor's reputation monitoring and smart
                       suggestions, {company} gained visibility into their
                       deliverability issues and actionable steps to fix them.
                     </p>
@@ -273,7 +268,7 @@ export default function MailMonitorLandingPage({
                     <p>
                       {company} now achieves{" "}
                       <span className={styles.highlight}>95% inbox rates</span>,
-                      joining 7,500+ companies who&apos;ve inboxed 3B+ emails
+                      joining 7,500+ companies who've inboxed 3B+ emails
                       with MailMonitor.
                     </p>
                     <div className={styles.testimonial}>
@@ -302,11 +297,11 @@ export default function MailMonitorLandingPage({
             <div className={styles.sectionContainer}>
               <div className={styles.ctaContent}>
                 <h2 className={styles.ctaTitle}>
-                  {firstName}, let&apos;s ensure {company}&apos;s emails reach
+                  {firstName}, let's ensure {company}'s emails reach
                   the inbox every time.
                 </h2>
                 <p className={styles.ctaText}>
-                  It&apos;s time to stop guessing where your emails land and
+                  It's time to stop guessing where your emails land and
                   start knowing.
                 </p>
                 <div className={styles.clientLogos}>
