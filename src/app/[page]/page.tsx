@@ -13,6 +13,7 @@ import HRoesLandingPage from '@/components/HRoesLandingPage'; // Custom HRoes te
 import CleverlyLandingPage from '@/components/CleverlyLandingPage'; // Custom Cleverly template
 import LeezlyLandingPage from '@/components/LeezlyLandingPage'; // Custom Leezly template
 import EvolutionSGLandingPage from '@/components/EvolutionSGLandingPage'; // Custom Evolution SG template
+import MailMonitorLandingPage from '@/components/MailMonitorLandingPage'; // Custom MailMonitor template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -304,11 +305,24 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         </>
       );
     }
-    if (template === "evolutionsg") { // Added condition for Evolution SG
+    if (template === "evolutionsg") {
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <EvolutionSGLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "mailmonitor") { // Added condition for MailMonitor
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <MailMonitorLandingPage
+            firstName={replacements.first_name}
+            company={replacements.company}
+            role={replacements.custom.role || "email marketing lead"}
+            painPoint={replacements.custom.pain_point || "emails landing in spam"}
+          />
         </>
       );
     }
