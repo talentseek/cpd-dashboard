@@ -91,7 +91,7 @@ export default function MailMonitorLandingPage({
               />
             </div>
             <button className={styles.button}>
-              <Link href="#demo">Book a Free Demo</Link>
+              <Link href="#demo">Book a Free Deliverability Assessment</Link>
             </button>
           </div>
         </nav>
@@ -242,7 +242,7 @@ export default function MailMonitorLandingPage({
             <div className={styles.sectionContainer}>
               <div className={styles.sectionContent}>
                 <h2 className={styles.sectionTitle}>
-                  The story of how {company} transformed their email
+                  The "future" story of how {company} transformed their email
                   deliverability
                 </h2>
                 <div className={styles.timeline}>
@@ -337,8 +337,7 @@ export default function MailMonitorLandingPage({
                   </div>
                 </div>
                 <button className={styles.ctaButton}>
-                  Start Your Deliverability Journey
-    <ArrowRight className={styles.ctaButtonIcon} />
+                  Start Your Deliverability Journey<ArrowRight className={styles.ctaButtonIcon} />
                 </button>
               </div>
             </div>
