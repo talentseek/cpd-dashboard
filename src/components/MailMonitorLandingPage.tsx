@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { ArrowRight, Mail, CheckCircle, AlertCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
@@ -82,7 +82,13 @@ export default function MailMonitorLandingPage({
         <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ""}`}>
           <div className={styles.navContent}>
             <div className={styles.logoContainer}>
-              <Mail className={styles.logoIcon} />
+              <Image
+                src="/images/abm/mailmonitor/logo.png"
+                alt="MailMonitor Logo"
+                width={50}
+                height={20}
+                className={styles.logoIcon}
+              />
               <span className={styles.logoText}>MailMonitor</span>
             </div>
             <button className={styles.button}>
@@ -119,7 +125,11 @@ export default function MailMonitorLandingPage({
               className={styles.emailIconContainer}
               style={{ top: `${20 + emailPosition * 0.6}%` }}
             >
-              <Mail
+              <Image
+                src="/images/email-icon.png"
+                alt="Email Icon"
+                width={24}
+                height={24}
                 className={`${styles.emailIcon} ${
                   emailPosition > 70
                     ? styles.emailSuccess
@@ -149,8 +159,8 @@ export default function MailMonitorLandingPage({
                 </h1>
                 <div className={styles.sectionText}>
                   <p>
-                    But <span className={styles.highlight}>{painPoint}</span>
-                    —costing {company} revenue and opportunities.
+                    But <span className={styles.highlight}>{painPoint}</span>{" "}
+                    are costing {company} revenue and opportunities.
                   </p>
                   <p>
                     Every undelivered email represents a missed connection with
@@ -197,9 +207,9 @@ export default function MailMonitorLandingPage({
                 </h2>
                 <div className={styles.sectionText}>
                   <p>
-                    Imagine having complete visibility into your email
-                    deliverability—knowing precisely which messages reach the
-                    inbox and which get filtered to spam.
+                    Imagine having complete visibility into {company}&apos;s
+                    email deliverability by knowing precisely which messages
+                    reach the inbox and which get filtered to spam.
                   </p>
                   <div className={styles.grid}>
                     <div className={styles.gridItem}>
@@ -308,7 +318,7 @@ export default function MailMonitorLandingPage({
                       {[1, 2, 3, 4, 5, 6].map((i) => (
                         <div key={i} className={styles.clientLogo}>
                           <Image
-                            src={`/placeholder.svg?height=48&width=120&text=Client${i}`}
+                            src={`/images/abm/mailmonitor/client${i}.png`}
                             alt={`Client ${i}`}
                             width={120}
                             height={48}
@@ -320,7 +330,7 @@ export default function MailMonitorLandingPage({
                       {[1, 2, 3, 4, 5, 6].map((i) => (
                         <div key={`dup-${i}`} className={styles.clientLogo}>
                           <Image
-                            src={`/placeholder.svg?height=48&width=120&text=Client${i}`}
+                            src={`/images/abm/mailmonitor/client${i}.png`}
                             alt={`Client ${i}`}
                             width={120}
                             height={48}
