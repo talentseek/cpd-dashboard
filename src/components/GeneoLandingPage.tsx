@@ -61,7 +61,6 @@ export default function GeneoLandingPage({
         "Plan production changes seamlessly into the future. GEN-OPS automatically synchronizes revisions across all Job Element Sheets, highlights conflicts between overlapping Change Masters, and allows you to adjust the go-live sequence to fit your operations at {company}.",
       asset: "/images/abm/geneo/change.mp4",
       type: "video",
-      icon: "/images/abm/geneo/documents-cm.png",
       backgroundImage: "/images/abm/geneo/documents-cm.png",
     },
     {
@@ -70,7 +69,6 @@ export default function GeneoLandingPage({
         "Reduce the number of standards needed for complex assemblies at {company}. With Variant Job Element Sheets, write one sheet to cover all process variations by linking Derivative Sets, recording only the differences—saving time and ensuring accuracy.",
       asset: "/images/abm/geneo/variants.mp4",
       type: "video",
-      icon: "/images/abm/geneo/variant-overrides.png",
       backgroundImage: "/images/abm/geneo/variant-overrides.png",
     },
     {
@@ -79,7 +77,6 @@ export default function GeneoLandingPage({
         "Optimize production flow by setting weightings for each variant in a Derivative Set. GEN-OPS calculates cycle times from Work Instruction elements and auto-generates Yamazumi charts, enabling on-the-fly line balancing as demand shifts at {company}.",
       asset: "/images/abm/geneo/derivative.mp4",
       type: "video",
-      icon: "/images/abm/geneo/weightings-ds.png",
       backgroundImage: "/images/abm/geneo/weightings-ds.png",
     },
     {
@@ -88,7 +85,6 @@ export default function GeneoLandingPage({
         "Ensure no parts are missed with GEN-OPS’ 3-tier part system. Generate mBOM reports from Work Instructions for each Change Master and compare them with your eBOM, streamlining {company}’s assembly process.",
       asset: "/images/abm/geneo/bom.mp4",
       type: "video",
-      icon: "/images/abm/geneo/yamazumi-perspective.jpeg",
       backgroundImage: "/images/abm/geneo/yamazumi-perspective.jpeg",
     },
     {
@@ -97,7 +93,6 @@ export default function GeneoLandingPage({
         "GEN-OPS combines NPI scheduling, complex variant management, mBOM integration, and real-time Yamazumi—all built by Lean OpEx experts. Unlike other platforms, it’s uncompromisingly designed to enhance {company}’s production efficiency.",
       asset: "/images/abm/geneo/yamazumi.png",
       type: "image",
-      icon: "/images/abm/geneo/yamazumi.png",
       backgroundImage: "/images/abm/geneo/yamazumi.png",
     },
   ];
@@ -153,16 +148,20 @@ export default function GeneoLandingPage({
         </div>
       </motion.section>
 
-      {/* Features Sections */}
-      <div ref={featuresRef}>
+      {/* Features Section */}
+      <motion.div
+        ref={featuresRef}
+        initial="hidden"
+        animate={featuresControls}
+        variants={staggerChildren}
+        className={styles.featuresContainer}
+      >
         {features.map((feature, index) => (
           <motion.section
             key={index}
             className={styles.featureSection}
             style={{ backgroundImage: `url(${feature.backgroundImage})` }}
-            initial="hidden"
-            animate={featuresControls}
-            variants={staggerChildren}
+            variants={fadeInUp}
           >
             <div className={index % 2 === 0 ? styles.featureLeft : styles.featureRight}>
               <div className={styles.featureMedia}>
@@ -195,7 +194,7 @@ export default function GeneoLandingPage({
             </div>
           </motion.section>
         ))}
-      </div>
+      </motion.div>
 
       {/* Projected Outcomes Section */}
       <motion.section
@@ -219,14 +218,14 @@ export default function GeneoLandingPage({
                   animate={outcomesControls}
                   variants={{ visible: { width: "90%" } }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                ></motion.div>
+                />
                 <motion.div
                   className={styles.barAfter}
                   initial={{ width: 0 }}
                   animate={outcomesControls}
                   variants={{ visible: { width: "40%" } }}
                   transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                ></motion.div>
+                />
               </div>
               <div className={styles.barLegend}>55% Reduction</div>
             </div>
@@ -239,14 +238,14 @@ export default function GeneoLandingPage({
                   animate={outcomesControls}
                   variants={{ visible: { width: "60%" } }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                ></motion.div>
+                />
                 <motion.div
                   className={styles.barAfter}
                   initial={{ width: 0 }}
                   animate={outcomesControls}
                   variants={{ visible: { width: "10%" } }}
                   transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                ></motion.div>
+                />
               </div>
               <div className={styles.barLegend}>83% Reduction</div>
             </div>
@@ -259,25 +258,25 @@ export default function GeneoLandingPage({
                   animate={outcomesControls}
                   variants={{ visible: { width: "50%" } }}
                   transition={{ duration: 1, ease: "easeOut" }}
-                ></motion.div>
+                />
                 <motion.div
                   className={styles.barAfter}
                   initial={{ width: 0 }}
                   animate={outcomesControls}
                   variants={{ visible: { width: "90%" } }}
                   transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                ></motion.div>
+                />
               </div>
               <div className={styles.barLegend}>40% Increase</div>
             </div>
           </div>
           <div className={styles.chartLegend}>
             <div className={styles.legendItem}>
-              <div className={styles.legendColor} style={{ backgroundColor: "#556277" }}></div>
+              <div className={styles.legendColor} style={{ backgroundColor: "#556277" }} />
               <span>Before GEN-OPS</span>
             </div>
             <div className={styles.legendItem}>
-              <div className={styles.legendColor} style={{ backgroundColor: "#18d3d3" }}></div>
+              <div className={styles.legendColor} style={{ backgroundColor: "#18d3d3" }} />
               <span>With GEN-OPS</span>
             </div>
           </div>
