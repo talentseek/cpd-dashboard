@@ -62,7 +62,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/change.mp4",
       type: "video",
       icon: "/images/abm/geneo/documents-cm.png",
-      backgroundImage: "/images/abm/geneo/feature1-bg.jpg", // Placeholder
+      backgroundImage: "/images/abm/geneo/documents-cm.png",
     },
     {
       title: "Managing Complex Arrangements",
@@ -71,7 +71,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/variants.mp4",
       type: "video",
       icon: "/images/abm/geneo/variant-overrides.png",
-      backgroundImage: "/images/abm/geneo/feature2-bg.jpg", // Placeholder
+      backgroundImage: "/images/abm/geneo/variant-overrides.png",
     },
     {
       title: "Cycle Time, Customer Mix & Line Balancing",
@@ -80,7 +80,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/derivative.mp4",
       type: "video",
       icon: "/images/abm/geneo/weightings-ds.png",
-      backgroundImage: "/images/abm/geneo/feature3-bg.jpg", // Placeholder
+      backgroundImage: "/images/abm/geneo/weightings-ds.png",
     },
     {
       title: "BOM Management and Comparison",
@@ -89,7 +89,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/bom.mp4",
       type: "video",
       icon: "/images/abm/geneo/yamazumi-perspective.jpeg",
-      backgroundImage: "/images/abm/geneo/feature4-bg.jpg", // Placeholder
+      backgroundImage: "/images/abm/geneo/yamazumi-perspective.jpeg",
     },
     {
       title: "What Sets GENEO Apart",
@@ -98,7 +98,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/yamazumi.png",
       type: "image",
       icon: "/images/abm/geneo/yamazumi.png",
-      backgroundImage: "/images/abm/geneo/feature5-bg.jpg", // Placeholder
+      backgroundImage: "/images/abm/geneo/yamazumi.png",
     },
   ];
 
