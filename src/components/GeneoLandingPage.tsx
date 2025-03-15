@@ -62,6 +62,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/change.mp4",
       type: "video",
       icon: "/images/abm/geneo/documents-cm.png",
+      backgroundImage: "/images/abm/geneo/feature1-bg.jpg", // Placeholder
     },
     {
       title: "Managing Complex Arrangements",
@@ -70,6 +71,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/variants.mp4",
       type: "video",
       icon: "/images/abm/geneo/variant-overrides.png",
+      backgroundImage: "/images/abm/geneo/feature2-bg.jpg", // Placeholder
     },
     {
       title: "Cycle Time, Customer Mix & Line Balancing",
@@ -78,6 +80,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/derivative.mp4",
       type: "video",
       icon: "/images/abm/geneo/weightings-ds.png",
+      backgroundImage: "/images/abm/geneo/feature3-bg.jpg", // Placeholder
     },
     {
       title: "BOM Management and Comparison",
@@ -86,6 +89,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/bom.mp4",
       type: "video",
       icon: "/images/abm/geneo/yamazumi-perspective.jpeg",
+      backgroundImage: "/images/abm/geneo/feature4-bg.jpg", // Placeholder
     },
     {
       title: "What Sets GENEO Apart",
@@ -94,6 +98,7 @@ export default function GeneoLandingPage({
       asset: "/images/abm/geneo/yamazumi.png",
       type: "image",
       icon: "/images/abm/geneo/yamazumi.png",
+      backgroundImage: "/images/abm/geneo/feature5-bg.jpg", // Placeholder
     },
   ];
 
@@ -103,6 +108,16 @@ export default function GeneoLandingPage({
 
   return (
     <div className={styles.container}>
+      {/* Navigation */}
+      <div className={styles.navigation}>
+        <div className={styles.logo}>
+          <Image src="/images/abm/geneo/logo.png" alt="GENEO Logo" width={100} height={40} />
+        </div>
+        <Button className={styles.bookDemoButton} onClick={handleBookDemo}>
+          Book a Demo
+        </Button>
+      </div>
+
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
@@ -111,20 +126,11 @@ export default function GeneoLandingPage({
         animate={heroControls}
         variants={staggerChildren}
       >
-        <div className={styles.heroCover}>
-          <Image
-            src="/images/abm/geneo/factorycar.jpeg"
-            alt="GEN-OPS Factory Cover"
-            width={1584}
-            height={396}
-            className={styles.coverImage}
-          />
-        </div>
         <div className={styles.heroContent}>
           <motion.div className={styles.heroText} variants={fadeInUp}>
             <h1>
               <ReplaceText
-                text="{first_name}, Revolutionize {company}’s Work Instructions with GEN-OPS"
+                text="Michael, Revolutionize {company}’s Work Instructions with GEN-OPS"
                 replacements={replacements}
               />
             </h1>
@@ -147,48 +153,49 @@ export default function GeneoLandingPage({
         </div>
       </motion.section>
 
-      {/* Key Features Section */}
-      <motion.section
-        ref={featuresRef}
-        className={styles.featuresSection}
-        initial="hidden"
-        animate={featuresControls}
-        variants={staggerChildren}
-      >
-        <motion.h2 variants={fadeInUp}>GEN-OPS: A Best-in-Class Lean OpEx Solution</motion.h2>
-        <motion.div className={styles.featuresGrid} variants={staggerChildren}>
-          {features.map((feature, index) => (
-            <motion.div key={index} className={styles.featureCard} variants={fadeInUp}>
-              <div className={styles.featureIcon}>
-                <Image src={feature.icon} alt={`${feature.title} Icon`} width={50} height={50} />
+      {/* Features Sections */}
+      <div ref={featuresRef}>
+        {features.map((feature, index) => (
+          <motion.section
+            key={index}
+            className={styles.featureSection}
+            style={{ backgroundImage: `url(${feature.backgroundImage})` }}
+            initial="hidden"
+            animate={featuresControls}
+            variants={staggerChildren}
+          >
+            <div className={index % 2 === 0 ? styles.featureLeft : styles.featureRight}>
+              <div className={styles.featureMedia}>
+                {feature.type === "video" ? (
+                  <video
+                    src={feature.asset}
+                    className={styles.featureVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    title={feature.title}
+                  />
+                ) : (
+                  <Image
+                    src={feature.asset}
+                    alt={feature.title}
+                    width={600}
+                    height={300}
+                    className={styles.featureImage}
+                  />
+                )}
               </div>
-              <h3>{feature.title}</h3>
-              <p>
-                <ReplaceText text={feature.description} replacements={replacements} />
-              </p>
-              {feature.type === "video" ? (
-                <video
-                  src={feature.asset}
-                  className={styles.featureVideo}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  title={feature.title}
-                />
-              ) : (
-                <Image
-                  src={feature.asset}
-                  alt={feature.title}
-                  width={600}
-                  height={300}
-                  className={styles.featureImage}
-                />
-              )}
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.section>
+              <div className={styles.featureText}>
+                <h3>{feature.title}</h3>
+                <p>
+                  <ReplaceText text={feature.description} replacements={replacements} />
+                </p>
+              </div>
+            </div>
+          </motion.section>
+        ))}
+      </div>
 
       {/* Projected Outcomes Section */}
       <motion.section
@@ -201,29 +208,65 @@ export default function GeneoLandingPage({
         <motion.h2 variants={fadeInUp}>
           <ReplaceText text="Projected Outcomes for {company}" replacements={replacements} />
         </motion.h2>
-        <motion.div className={styles.outcomesChart} variants={fadeInUp}>
+        <motion.div className={styles.outcomesChart} variants={staggerChildren}>
           <div className={styles.chartContainer}>
             <div className={styles.chartBar}>
               <div className={styles.chartLabel}>Implementation Time</div>
               <div className={styles.barContainer}>
-                <div className={styles.barBefore} style={{ width: "90%" }}></div>
-                <div className={styles.barAfter} style={{ width: "40%" }}></div>
+                <motion.div
+                  className={styles.barBefore}
+                  initial={{ width: 0 }}
+                  animate={outcomesControls}
+                  variants={{ visible: { width: "90%" } }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                ></motion.div>
+                <motion.div
+                  className={styles.barAfter}
+                  initial={{ width: 0 }}
+                  animate={outcomesControls}
+                  variants={{ visible: { width: "40%" } }}
+                  transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                ></motion.div>
               </div>
               <div className={styles.barLegend}>55% Reduction</div>
             </div>
             <div className={styles.chartBar}>
               <div className={styles.chartLabel}>Error Rate</div>
               <div className={styles.barContainer}>
-                <div className={styles.barBefore} style={{ width: "60%" }}></div>
-                <div className={styles.barAfter} style={{ width: "10%" }}></div>
+                <motion.div
+                  className={styles.barBefore}
+                  initial={{ width: 0 }}
+                  animate={outcomesControls}
+                  variants={{ visible: { width: "60%" } }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                ></motion.div>
+                <motion.div
+                  className={styles.barAfter}
+                  initial={{ width: 0 }}
+                  animate={outcomesControls}
+                  variants={{ visible: { width: "10%" } }}
+                  transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                ></motion.div>
               </div>
               <div className={styles.barLegend}>83% Reduction</div>
             </div>
             <div className={styles.chartBar}>
               <div className={styles.chartLabel}>Efficiency</div>
               <div className={styles.barContainer}>
-                <div className={styles.barBefore} style={{ width: "50%" }}></div>
-                <div className={styles.barAfter} style={{ width: "90%" }}></div>
+                <motion.div
+                  className={styles.barBefore}
+                  initial={{ width: 0 }}
+                  animate={outcomesControls}
+                  variants={{ visible: { width: "50%" } }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                ></motion.div>
+                <motion.div
+                  className={styles.barAfter}
+                  initial={{ width: 0 }}
+                  animate={outcomesControls}
+                  variants={{ visible: { width: "90%" } }}
+                  transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                ></motion.div>
               </div>
               <div className={styles.barLegend}>40% Increase</div>
             </div>
