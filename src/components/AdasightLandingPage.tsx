@@ -72,9 +72,9 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
 
   const experts = [
     { name: "Gregor Spielmann", role: "Amplitude Expert & Instructor", image: "/images/abm/adasight/gregor.jpeg?height=120&width=120" },
-    { name: "Sarah Johnson", role: "Product Analytics Lead", image: "/placeholder.svg?height=120&width=120" },
-    { name: "Michael Chen", role: "Data Implementation Specialist", image: "/placeholder.svg?height=120&width=120" },
-    { name: "Priya Sharma", role: "Growth Analytics Consultant", image: "/placeholder.svg?height=120&width=120" },
+    { name: "Oleg Musteata", role: "Formerly Crunchyroll, Growth & Experimentation at Adasight", image: "/images/abm/adasight/oleg.jpeg?height=120&width=120" },
+    { name: "Dayana Marin", role: "Formerly Booking.com, now Growth at Adasight", image: "/images/abm/adasight/dayana.jpeg?height=120&width=120" },
+    { name: "Olivia Natasha", role: "Formerly Gojek, now Growth Analyst at Adasight", image: "/images/abm/adasight/olivia.jpeg?height=120&width=120" },
   ]
 
   return (
