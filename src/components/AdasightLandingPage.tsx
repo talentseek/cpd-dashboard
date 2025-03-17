@@ -82,7 +82,7 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
       {/* Navigation */}
       <nav className={styles.navigation}>
         <div className={styles.logo}>
-          <Image src="/images/adasight/logo.svg" alt="Adasight Logo" width={160} height={40} />
+          <Image src="/images/abm/adasight/logo.svg" alt="Adasight Logo" width={160} height={40} />
         </div>
         <button onClick={scrollToForm} className={styles.ctaButton}>
           Apply Now
@@ -107,7 +107,7 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
           </motion.div>
           <motion.div initial="hidden" animate="visible" variants={fadeInUp} className={styles.heroImageContainer}>
             <Image
-              src="/images/adasight/amplitude.png"
+              src="/images/abm/adasight/amplitude.png"
               alt="Amplitude Training"
               width={500}
               height={400}
