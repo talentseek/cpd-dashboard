@@ -14,6 +14,7 @@ import CleverlyLandingPage from '@/components/CleverlyLandingPage'; // Custom Cl
 import LeezlyLandingPage from '@/components/LeezlyLandingPage'; // Custom Leezly template
 import EvolutionSGLandingPage from '@/components/EvolutionSGLandingPage'; // Custom Evolution SG template
 import MailMonitorLandingPage from '@/components/MailMonitorLandingPage'; // Custom MailMonitor template
+import AdasightLandingPage from '@/components/AdasightLandingPage'; // Custom Adasight template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -313,7 +314,7 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         </>
       );
     }
-    if (template === "mailmonitor") { // Added condition for MailMonitor
+    if (template === "mailmonitor") {
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
@@ -322,6 +323,18 @@ export default async function Page({ params }: { params: Promise<{ page: string 
             company={replacements.company}
             role={replacements.custom.role || "email marketing lead"}
             painPoint={replacements.custom.pain_point || "emails landing in spam"}
+          />
+        </>
+      );
+    }
+    if (template === "adasight") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <AdasightLandingPage
+            firstName={replacements.first_name}
+            lastName={leadData.last_name || ""}
+            company={replacements.company}
           />
         </>
       );
