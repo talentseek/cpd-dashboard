@@ -71,7 +71,7 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
   }
 
   const experts = [
-    { name: "Gregor Spielmann", role: "Amplitude Expert & Instructor", image: "/placeholder.svg?height=120&width=120" },
+    { name: "Gregor Spielmann", role: "Amplitude Expert & Instructor", image: "/images/abm/adasight/gregor.jpeg?height=120&width=120" },
     { name: "Sarah Johnson", role: "Product Analytics Lead", image: "/placeholder.svg?height=120&width=120" },
     { name: "Michael Chen", role: "Data Implementation Specialist", image: "/placeholder.svg?height=120&width=120" },
     { name: "Priya Sharma", role: "Growth Analytics Consultant", image: "/placeholder.svg?height=120&width=120" },
