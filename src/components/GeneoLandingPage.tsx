@@ -92,7 +92,7 @@ export default function GeneoLandingPage({
       description:
         "GEN-OPS combines NPI scheduling, complex variant management, mBOM integration, and real-time Yamazumi—all built by Lean OpEx experts. Unlike other platforms, it’s uncompromisingly designed to enhance {company}’s production efficiency.",
       asset: "/images/abm/geneo/yamazumi.mp4",
-      type: "image",
+      type: "video",
       backgroundImage: "/images/abm/geneo/none.png",
     },
   ];
