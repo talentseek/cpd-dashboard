@@ -61,7 +61,7 @@ export default function GeneoLandingPage({
         "Plan production changes seamlessly into the future. GEN-OPS automatically synchronizes revisions across all Job Element Sheets, highlights conflicts between overlapping Change Masters, and allows you to adjust the go-live sequence to fit your operations at {company}.",
       asset: "/images/abm/geneo/change.mp4",
       type: "video",
-      backgroundImage: "/images/abm/geneo/documents-cm.png",
+      backgroundImage: "/images/abm/geneo/none.png",
     },
     {
       title: "Managing Complex Arrangements",
@@ -69,7 +69,7 @@ export default function GeneoLandingPage({
         "Reduce the number of standards needed for complex assemblies at {company}. With Variant Job Element Sheets, write one sheet to cover all process variations by linking Derivative Sets, recording only the differences—saving time and ensuring accuracy.",
       asset: "/images/abm/geneo/variants.mp4",
       type: "video",
-      backgroundImage: "/images/abm/geneo/variant-overrides.png",
+      backgroundImage: "/images/abm/geneo/none.png",
     },
     {
       title: "Cycle Time, Customer Mix & Line Balancing",
@@ -77,7 +77,7 @@ export default function GeneoLandingPage({
         "Optimize production flow by setting weightings for each variant in a Derivative Set. GEN-OPS calculates cycle times from Work Instruction elements and auto-generates Yamazumi charts, enabling on-the-fly line balancing as demand shifts at {company}.",
       asset: "/images/abm/geneo/derivative.mp4",
       type: "video",
-      backgroundImage: "/images/abm/geneo/weightings-ds.png",
+      backgroundImage: "/images/abm/geneo/none.png",
     },
     {
       title: "BOM Management and Comparison",
@@ -85,15 +85,15 @@ export default function GeneoLandingPage({
         "Ensure no parts are missed with GEN-OPS’ 3-tier part system. Generate mBOM reports from Work Instructions for each Change Master and compare them with your eBOM, streamlining {company}’s assembly process.",
       asset: "/images/abm/geneo/bom.mp4",
       type: "video",
-      backgroundImage: "/images/abm/geneo/yamazumi-perspective.jpeg",
+      backgroundImage: "/images/abm/geneo/none.png",
     },
     {
       title: "What Sets GENEO Apart",
       description:
         "GEN-OPS combines NPI scheduling, complex variant management, mBOM integration, and real-time Yamazumi—all built by Lean OpEx experts. Unlike other platforms, it’s uncompromisingly designed to enhance {company}’s production efficiency.",
-      asset: "/images/abm/geneo/yamazumi.png",
+      asset: "/images/abm/geneo/yamazumi.mp4",
       type: "image",
-      backgroundImage: "/images/abm/geneo/yamazumi.png",
+      backgroundImage: "/images/abm/geneo/none.png",
     },
   ];
 
