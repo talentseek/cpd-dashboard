@@ -36,7 +36,7 @@ export default function CampaignsPage() {
 
   useEffect(() => {
     fetchCampaigns();
-  }, [activeTab, activeStatus]);
+  }, [activeTab, activeStatus, fetchCampaigns]);
 
   async function fetchCampaigns() {
     setLoading(true);
