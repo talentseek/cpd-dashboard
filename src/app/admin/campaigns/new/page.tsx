@@ -13,6 +13,7 @@ export default function NewCampaignPage() {
   const [clients, setClients] = useState<Client[]>([]);
   const [clientId, setClientId] = useState('');
   const [campaignName, setCampaignName] = useState('');
+  const [campaignType, setCampaignType] = useState('Sales Navigator Open Profiles'); // Default value
   const [loading, setLoading] = useState(false);
 
   // Fetch clients on component mount
@@ -47,7 +48,7 @@ export default function NewCampaignPage() {
       const { error } = await supabase.from('campaigns').insert({
         name: campaignName,
         client_id: parseInt(clientId, 10),
-        campaign_type: 'Sales Navigator Open Profiles',
+        campaign_type: campaignType,
         status: 'draft',
       });
 
@@ -60,6 +61,7 @@ export default function NewCampaignPage() {
       alert('Campaign created successfully!');
       setCampaignName('');
       setClientId('');
+      setCampaignType('Sales Navigator Open Profiles'); // Reset to default
     } catch (err) {
       console.error('Unexpected error creating campaign:', err);
       alert('An unexpected error occurred while creating the campaign.');
@@ -107,6 +109,22 @@ export default function NewCampaignPage() {
               value={campaignName}
               onChange={(e) => setCampaignName(e.target.value)}
             />
+          </div>
+
+          {/* Campaign Type Dropdown */}
+          <div>
+            <label htmlFor="campaignType" className="block text-sm font-medium text-gray-700">
+              Campaign Type
+            </label>
+            <select
+              id="campaignType"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              value={campaignType}
+              onChange={(e) => setCampaignType(e.target.value)}
+            >
+              <option value="Sales Navigator Open Profiles">Sales Navigator Open Profiles</option>
+              <option value="Sales Navigator Connection Requests">Sales Navigator Connection Requests</option>
+            </select>
           </div>
 
           {/* Create Campaign Button */}

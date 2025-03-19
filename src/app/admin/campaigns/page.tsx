@@ -13,9 +13,7 @@ interface SupabaseCampaign {
   status: string | null;
   created_at: string;
   cookies?: Record<string, string>;
-clients?: {
-client_name?: string;
-}[];
+  client_id: number; // Added to link campaigns to clients
 }
 
 interface Campaign {
@@ -33,10 +31,12 @@ export default function CampaignsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
+  const [activeTab, setActiveTab] = useState<string>('Sales Navigator Open Profiles'); // Default tab
+  const [activeStatus, setActiveStatus] = useState<string>('active'); // Default status
 
   useEffect(() => {
     fetchCampaigns();
-  }, []);
+  }, [activeTab, activeStatus]);
 
   async function fetchCampaigns() {
     setLoading(true);
@@ -51,25 +51,37 @@ export default function CampaignsPage() {
           status,
           created_at,
           cookies,
-          clients (
-            client_name
-          )
+          client_id
         `);
 
       if (error) {
         console.error('Error fetching campaigns:', error.message || error);
         setError('Failed to fetch campaigns.');
       } else if (data) {
-        const normalizedData: Campaign[] = data.map((campaign: SupabaseCampaign) => ({
-          id: campaign.id,
-          name: campaign.name,
-          campaign_type: campaign.campaign_type,
-          status: campaign.status,
-          created_at: campaign.created_at,
-          cookies: campaign.cookies,
-        client_name: campaign.clients?.[0]?.client_name || 'Unknown',
-        }));
-        setCampaigns(normalizedData);
+        // Fetch client names based on client_id
+        const clientPromises = data.map(async (campaign: SupabaseCampaign) => {
+          const { data: clientData, error: clientError } = await supabase
+            .from('clients')
+            .select('client_name')
+            .eq('id', campaign.client_id)
+            .single();
+
+          if (clientError || !clientData) {
+            console.warn(`No client found for campaign ID ${campaign.id}, client_id ${campaign.client_id}`);
+            return { ...campaign, client_name: 'Unknown' };
+          }
+
+          return { ...campaign, client_name: clientData.client_name };
+        });
+
+        const resolvedCampaigns = await Promise.all(clientPromises);
+        const filteredCampaigns = resolvedCampaigns.filter((campaign) => {
+          const matchesCampaignType = campaign.campaign_type === activeTab;
+          const matchesStatus = activeStatus === 'active' ? campaign.status === 'active' : campaign.status !== 'active';
+          return matchesCampaignType && matchesStatus;
+        });
+
+        setCampaigns(filteredCampaigns);
       }
     } catch (err) {
       console.error('Unexpected error:', err);
@@ -92,7 +104,7 @@ export default function CampaignsPage() {
         alert('Failed to delete the campaign.');
       } else {
         alert('Campaign deleted successfully!');
-        setCampaigns((prev) => prev.filter((c) => c.id !== campaignId));
+        fetchCampaigns(); // Refresh the list
       }
     } catch (err) {
       console.error('Unexpected error during deletion:', err);
@@ -115,6 +127,38 @@ export default function CampaignsPage() {
               Create New Campaign
             </button>
           </Link>
+        </div>
+
+        {/* Tabs for Campaign Type and Status */}
+        <div className="mt-6 flex space-x-4">
+          {/* Campaign Type Tabs */}
+          <div className="flex space-x-4">
+            {['Sales Navigator Open Profiles', 'Sales Navigator Connection Requests'].map((type) => (
+              <button
+                key={type}
+                onClick={() => {
+                  setActiveTab(type);
+                  setActiveStatus('active'); // Reset to active when switching tabs
+                }}
+                className={`px-4 py-2 rounded-md ${activeTab === type ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+
+          {/* Status Tabs */}
+          <div className="flex space-x-4">
+            {['active', 'inactive/default'].map((status) => (
+              <button
+                key={status}
+                onClick={() => setActiveStatus(status === 'active' ? 'active' : 'inactive/default')}
+                className={`px-4 py-2 rounded-md ${activeStatus === (status === 'active' ? 'active' : 'inactive/default') ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+              >
+                {status === 'active' ? 'Active' : 'Inactive/Default'}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Campaigns Table */}
@@ -140,12 +184,6 @@ export default function CampaignsPage() {
                       Client Name
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Campaign Type
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Created At
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -165,8 +203,6 @@ export default function CampaignsPage() {
                         </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">{campaign.client_name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{campaign.campaign_type}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{campaign.status || 'N/A'}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {new Date(campaign.created_at).toLocaleDateString()}
                       </td>
