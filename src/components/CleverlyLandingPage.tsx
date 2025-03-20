@@ -140,7 +140,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
           </h1>
           <p className={styles.heroSubheading}>
             We get it—FM chaos is overwhelming.{' '}
-            <span className={styles.heroHighlight}>Cleverly Works restores your control.</span>
+            <span className={styles.heroHighlight}>Cleverly restores your control.</span>
           </p>
           <a href="https://cal.com/cleverly/30min" className={styles.heroButton}>
             Book a Demo
