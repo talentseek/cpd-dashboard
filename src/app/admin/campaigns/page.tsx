@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AdminLayout } from '@/components/AdminLayout';
 import { supabase } from '@/lib/utils';
 import Link from 'next/link';
@@ -34,11 +34,7 @@ export default function CampaignsPage() {
   const [activeTab, setActiveTab] = useState<string>('Sales Navigator Open Profiles'); // Default tab
   const [activeStatus, setActiveStatus] = useState<string>('active'); // Default status
 
-  useEffect(() => {
-    fetchCampaigns();
-  }, [activeTab, activeStatus, fetchCampaigns]);
-
-  async function fetchCampaigns() {
+  const fetchCampaigns = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -89,7 +85,11 @@ export default function CampaignsPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [activeTab, activeStatus]);
+
+  useEffect(() => {
+    fetchCampaigns();
+  }, [fetchCampaigns]);
 
   async function deleteCampaign(campaignId: number) {
     if (!window.confirm('Are you sure you want to delete this campaign?')) {

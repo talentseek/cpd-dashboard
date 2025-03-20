@@ -8,8 +8,8 @@ import { ArrowRight, FileWarning, Users, PoundSterling, Clipboard, Clock, Buildi
 interface Replacements {
   first_name: string;
   company: string;
-  custom?: Record<string, string>;
-  vc?: Record<string, unknown>;
+  custom: Record<string, string>;
+  vc: Record<string, string>;
 }
 
 interface CleverlyLandingPageProps {
@@ -119,15 +119,16 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
         <div className={styles.navContent}>
           <div className={styles.logo}>
             <Image
-              src="/cleverly-logo.svg"
+              src="/logo-black.png"
               alt="Cleverly Works Logo"
               width={40}
               height={40}
               className={styles.logoImage}
             />
-            <span className={styles.logoText}>Cleverly</span>
           </div>
-          <button className={styles.navButton}>Book a Demo</button>
+          <a href="https://cal.com/cleverly/30min" className={styles.navButton}>
+            Book a Demo
+          </a>
         </div>
       </header>
 
@@ -142,15 +143,15 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
             We get it—FM chaos is overwhelming.{' '}
             <span className={styles.heroHighlight}>Cleverly Works restores your control.</span>
           </p>
-          <button className={styles.heroButton}>
+          <a href="https://cal.com/cleverly/30min" className={styles.heroButton}>
             Book a Demo
             <ArrowRight className={styles.buttonIcon} />
-          </button>
+          </a>
         </div>
         <div className={styles.heroImage}>
           <Image
-            src="https://sjc.microlink.io/FuQnZnQytYSjVDn7p36DygrzdafmNqi4P6uuWaVKQeTkCDjzTJ13R_uogUZLSWUOvDSzIVHtciT2TGWVIVA2ug.jpeg"
-            alt="Cleverly Works Dashboard"
+            src="/Infographics1.png"
+            alt="Cleverly Works Infographic"
             width={600}
             height={400}
             className={styles.dashboardImage}
@@ -217,45 +218,33 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
           </div>
           <div className={styles.beforeAfter}>
             <div className={styles.before}>
-              <div className={styles.systemsGrid}>
-                {Array.from({ length: 9 }).map((_, i) => (
-                  <div key={i} className={styles.systemBox}>
-                    System {i + 1}
+              <div className={styles.beforeDetails}>
+                <div className={styles.detailItem}>
+                  <Clock className={styles.detailIcon} />
+                  <div>
+                    <h3 className={styles.detailTitle}>Wasted Time</h3>
+                    <p className={styles.detailDescription}>
+                      15+ hours weekly spent on manual data entry, chasing updates, and compiling reports.
+                    </p>
                   </div>
-                ))}
-              </div>
-              <div className={styles.alerts}>
-                <p>3 compliance alerts overdue</p>
-                <p>7 maintenance requests pending</p>
-                <p>4 reports need manual updates</p>
-              </div>
-            </div>
-            <div className={styles.beforeDetails}>
-              <div className={styles.detailItem}>
-                <Clock className={styles.detailIcon} />
-                <div>
-                  <h3 className={styles.detailTitle}>Wasted Time</h3>
-                  <p className={styles.detailDescription}>
-                    15+ hours weekly spent on manual data entry, chasing updates, and compiling reports.
-                  </p>
                 </div>
-              </div>
-              <div className={styles.detailItem}>
-                <FileWarning className={styles.detailIcon} />
-                <div>
-                  <h3 className={styles.detailTitle}>Compliance Risks</h3>
-                  <p className={styles.detailDescription}>
-                    Critical safety checks falling through the cracks with potential for costly penalties.
-                  </p>
+                <div className={styles.detailItem}>
+                  <FileWarning className={styles.detailIcon} />
+                  <div>
+                    <h3 className={styles.detailTitle}>Compliance Risks</h3>
+                    <p className={styles.detailDescription}>
+                      Critical safety checks falling through the cracks with potential for costly penalties.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className={styles.detailItem}>
-                <PoundSterling className={styles.detailIcon} />
-                <div>
-                  <h3 className={styles.detailTitle}>Revenue Leakage</h3>
-                  <p className={styles.detailDescription}>
-                    Unbilled work, missed opportunities, and inefficient resource allocation.
-                  </p>
+                <div className={styles.detailItem}>
+                  <PoundSterling className={styles.detailIcon} />
+                  <div>
+                    <h3 className={styles.detailTitle}>Revenue Leakage</h3>
+                    <p className={styles.detailDescription}>
+                      Unbilled work, missed opportunities, and inefficient resource allocation.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -298,8 +287,8 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
             <div className={styles.after}>
               <div className={styles.afterImage}>
                 <Image
-                  src="https://sjc.microlink.io/FuQnZnQytYSjVDn7p36DygrzdafmNqi4P6uuWaVKQeTkCDjzTJ13R_uogUZLSWUOvDSzIVHtciT2TGWVIVA2ug.jpeg"
-                  alt="Cleverly Works Dashboard"
+                  src="/Infographics4.png"
+                  alt="Cleverly Works Infographic"
                   width={600}
                   height={400}
                   className={styles.dashboardImage}
@@ -330,11 +319,11 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
             Join the community of forward-thinking facilities management companies.
           </p>
           <div className={styles.logos}>
-            {['Penguin FM', 'Sherwoods', 'Arcus FM', 'aspect.co.uk', 'Homyze'].map((logo, index) => (
+            {['company1.png', 'company2.png', 'company3.png', 'company4.png'].map((logo, index) => (
               <div key={index} className={styles.logoItem}>
                 <Image
-                  src="/placeholder-logo.svg"
-                  alt={logo}
+                  src={`/${logo}`}
+                  alt={`Company ${index + 1}`}
                   width={120}
                   height={60}
                   className={styles.logoImage}
@@ -401,12 +390,12 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
             Ready to Transform {company}, {firstName}?
           </h2>
           <p className={styles.ctaSubheading}>
-            Take control with Cleverly Works. Book your demo today.
+            Take control with Cleverly. Book your demo today.
           </p>
-          <button className={styles.ctaButton}>
+          <a href="https://cal.com/cleverly/30min" className={styles.ctaButton}>
             Book a Demo
             <ArrowRight className={styles.buttonIcon} />
-          </button>
+          </a>
         </div>
       </section>
     </div>
