@@ -119,7 +119,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
         <div className={styles.navContent}>
           <div className={styles.logo}>
             <Image
-              src="/logo-black.png"
+              src="/images/abm/cleverly/logo-black.png"
               alt="Cleverly Works Logo"
               width={40}
               height={40}
@@ -287,7 +287,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
             <div className={styles.after}>
               <div className={styles.afterImage}>
                 <Image
-                  src="/Infographics4.png"
+                  src="/images/abm/cleverly/Infographics4.png"
                   alt="Cleverly Works Infographic"
                   width={600}
                   height={400}
@@ -319,7 +319,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
             Join the community of forward-thinking facilities management companies.
           </p>
           <div className={styles.logos}>
-            {['company1.png', 'company2.png', 'company3.png', 'company4.png'].map((logo, index) => (
+            {['/images/abm/cleverly/company1.png', '/images/abm/cleverly/company2.png', '/images/abm/cleverly/company3.png', '/images/abm/cleverly/company4.png'].map((logo, index) => (
               <div key={index} className={styles.logoItem}>
                 <Image
                   src={`/${logo}`}
