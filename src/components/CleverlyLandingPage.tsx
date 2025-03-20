@@ -119,7 +119,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
         <div className={styles.navContent}>
           <div className={styles.logo}>
             <Image
-              src="/images/abm/cleverly/logo-black.png"
+              src="/images/abm/cleverly/logo.webp"
               alt="Cleverly Works Logo"
               width={40}
               height={40}
@@ -150,7 +150,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
         </div>
         <div className={styles.heroImage}>
           <Image
-            src="/Infographics1.png"
+            src="/images/abm/cleverly/Infographics1.png"
             alt="Cleverly Works Infographic"
             width={600}
             height={400}
@@ -324,7 +324,6 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
                 <Image
                   src={`/${logo}`}
                   alt={`Company ${index + 1}`}
-                  width={120}
                   height={60}
                   className={styles.logoImage}
                 />
