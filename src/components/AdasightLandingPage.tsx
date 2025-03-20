@@ -1,3 +1,5 @@
+// /Users/mbeckett/Documents/codeprojects/website_projects/cpd-dashboard/src/components/AdasightLandingPage.tsx
+
 /* eslint-disable react/no-unescaped-entities */
 
 "use client"
@@ -13,16 +15,16 @@ interface AdasightLandingPageProps {
   firstName: string
   lastName: string
   company: string
+  position: string // New prop for pre-populating the role
 }
 
-export default function AdasightLandingPage({ firstName, lastName, company }: AdasightLandingPageProps) {
+export default function AdasightLandingPage({ firstName, lastName, company, position }: AdasightLandingPageProps) {
   const formRef = useRef<HTMLElement>(null)
   const [formData, setFormData] = useState({
     firstName: firstName || "",
     lastName: lastName || "",
-    email: "",
     companyName: company || "",
-    role: "",
+    role: position || "", // Pre-populate with position
     challenge: "",
     topics: {
       eventTracking: false,
@@ -39,7 +41,7 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
     formRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
@@ -60,9 +62,25 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Here you would typically send the data to your backend
-    alert("Thanks for applying! We'll be in touch soon.")
+
+    // Prepare query parameters for Cal.com
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim()
+    const selectedTopics = Object.entries(formData.topics)
+      .filter(([key, value]) => value && key !== "other" && key !== "otherText")
+      .map(([key]) => key)
+      .join(", ")
+
+    const queryParams = new URLSearchParams({
+      name: fullName,
+      company: formData.companyName,
+      role: formData.role,
+      title: formData.challenge,
+      topics: selectedTopics,
+    })
+
+    // Redirect to Cal.com with pre-filled fields
+    const calComUrl = `https://cal.com/gregor.spielmann/amplitude-training?${queryParams.toString()}`
+    window.location.href = calComUrl
   }
 
   const fadeInUp = {
@@ -71,10 +89,36 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
   }
 
   const experts = [
-    { name: "Gregor Spielmann", role: "Amplitude Expert & Instructor", image: "/images/abm/adasight/gregor.jpeg?height=120&width=120" },
-    { name: "Oleg Musteata", role: "Formerly Crunchyroll, Growth & Experimentation at Adasight", image: "/images/abm/adasight/oleg.jpeg?height=120&width=120" },
-    { name: "Dayana Marin", role: "Formerly Booking.com, now Growth at Adasight", image: "/images/abm/adasight/dayana.jpeg?height=120&width=120" },
-    { name: "Olivia Natasha", role: "Formerly Gojek, now Growth Analyst at Adasight", image: "/images/abm/adasight/olivia.jpeg?height=120&width=120" },
+    {
+      name: "Gregor Spielmann",
+      role: "Former Amplitude | Product & Behavioral Analytics",
+      image: "/images/abm/adasight/gregor.jpeg?height=120&width=120",
+    },
+    {
+      name: "Moaaz Khan",
+      role: "Data Analyst at Make.com | Product, Growth & Marketing Analytics",
+      image: "/images/abm/adasight/moaaz.jpeg?height=120&width=120",
+    },
+    {
+      name: "Dayana Marin",
+      role: "Former Booking | Growth at Adasight",
+      image: "/images/abm/adasight/dayana.jpeg?height=120&width=120",
+    },
+    {
+      name: "Oleg Musteata",
+      role: "Former Crunchyroll | Growth & Experimentation at Adasight",
+      image: "/images/abm/adasight/oleg.jpeg?height=120&width=120",
+    },
+    {
+      name: "Olivia Natasha",
+      role: "Former Gojek | Marketing Analytics at Adasight",
+      image: "/images/abm/adasight/olivia.jpeg?height=120&width=120",
+    },
+    {
+      name: "Ahmad Malik",
+      role: "Former Markaz | Data Infrastructure & Integrations",
+      image: "/images/abm/adasight/ahmad.jpeg?height=120&width=120",
+    },
   ]
 
   return (
@@ -98,11 +142,10 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
             </h1>
             <p className={styles.heroSubtitle}>
               🚀 Struggling to get insights from Amplitude at {company}? Most training is generic—this isn't. We work
-              live with your data to solve real challenges in event tracking, funnels, retention, attribution, and A/B
-              testing.
+              live with your data to solve real challenges.
             </p>
             <button onClick={scrollToForm} className={styles.ctaButton}>
-              Apply Now – 5 Spots Left
+              Join Our Free Pilot – 5 Spots Available for the Amplitude Community
             </button>
           </motion.div>
           <motion.div initial="hidden" animate="visible" variants={fadeInUp} className={styles.heroImageContainer}>
@@ -129,51 +172,18 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
           <h2 className={styles.sectionTitle}>What You'll Get</h2>
 
           <div className={styles.benefitsList}>
-            <h3 className={styles.listTitle}>Benefits:</h3>
             <ul className={styles.checkList}>
               <li className={styles.checkItem}>
-                <span className={styles.checkIcon}>
-                  <Check size={20} />
-                </span>
+                <span className={styles.checkIcon}>✅</span>
                 <span>Hands-on problem-solving with your Amplitude data</span>
               </li>
               <li className={styles.checkItem}>
-                <span className={styles.checkIcon}>
-                  <Check size={20} />
-                </span>
+                <span className={styles.checkIcon}>✅</span>
                 <span>Live expert-led session—no theory, just real solutions</span>
               </li>
               <li className={styles.checkItem}>
-                <span className={styles.checkIcon}>
-                  <Check size={20} />
-                </span>
-                <span>
-                  More than training—it's consulting to fix tracking, optimize data, and improve decision-making
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div className={styles.benefitsList}>
-            <h3 className={styles.listTitle}>Requirements:</h3>
-            <ul className={styles.checkList}>
-              <li className={styles.checkItem}>
-                <span className={styles.checkIcon}>
-                  <Check size={20} />
-                </span>
-                <span>Amplitude access (viewer or editor role)</span>
-              </li>
-              <li className={styles.checkItem}>
-                <span className={styles.checkIcon}>
-                  <Check size={20} />
-                </span>
-                <span>Your key challenges – what's blocking your insights?</span>
-              </li>
-              <li className={styles.checkItem}>
-                <span className={styles.checkIcon}>
-                  <Check size={20} />
-                </span>
-                <span>A small, engaged team (optional) – ideal for Product, Growth, or Analytics</span>
+                <span className={styles.checkIcon}>✅</span>
+                <span>Tangible results—walk away with answers to your specific challenges</span>
               </li>
             </ul>
           </div>
@@ -261,7 +271,7 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label htmlFor="firstName" className={styles.formLabel}>
-                  First Name
+                  First Name*
                 </label>
                 <input
                   type="text"
@@ -276,7 +286,7 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
 
               <div className={styles.formGroup}>
                 <label htmlFor="lastName" className={styles.formLabel}>
-                  Last Name
+                  Last Name*
                 </label>
                 <input
                   type="text"
@@ -292,23 +302,8 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
-                <label htmlFor="email" className={styles.formLabel}>
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={styles.formInput}
-                />
-              </div>
-
-              <div className={styles.formGroup}>
                 <label htmlFor="companyName" className={styles.formLabel}>
-                  Company Name
+                  Company Name*
                 </label>
                 <input
                   type="text"
@@ -320,30 +315,20 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
                   className={styles.formInput}
                 />
               </div>
-            </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="role" className={styles.formLabel}>
-                Your Role
-              </label>
-              <div className={styles.selectWrapper}>
-                <select
+              <div className={styles.formGroup}>
+                <label htmlFor="role" className={styles.formLabel}>
+                  Your Role*
+                </label>
+                <input
+                  type="text"
                   id="role"
                   name="role"
                   required
                   value={formData.role}
                   onChange={handleInputChange}
-                  className={styles.formSelect}
-                >
-                  <option value="" disabled>
-                    Select your role
-                  </option>
-                  <option value="Product Manager">Product Manager</option>
-                  <option value="Analyst">Analyst</option>
-                  <option value="Growth Lead">Growth Lead</option>
-                  <option value="Other">Other</option>
-                </select>
-                <ChevronDown className={styles.selectIcon} size={20} />
+                  className={styles.formInput}
+                />
               </div>
             </div>
 
@@ -354,7 +339,6 @@ export default function AdasightLandingPage({ firstName, lastName, company }: Ad
               <textarea
                 id="challenge"
                 name="challenge"
-                required
                 rows={4}
                 value={formData.challenge}
                 onChange={handleInputChange}

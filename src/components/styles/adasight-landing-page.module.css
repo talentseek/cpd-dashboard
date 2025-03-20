@@ -1,3 +1,5 @@
+/* /Users/mbeckett/Documents/codeprojects/website_projects/cpd-dashboard/src/components/styles/adasight-landing-page.module.css */
+
 /* Main Container */
 .container {
   min-height: 100vh;
@@ -239,7 +241,7 @@
 
 @media (min-width: 1024px) {
   .expertsGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Adjusted for 6 experts */
   }
 }
 
@@ -301,8 +303,7 @@
 }
 
 .formInput,
-.formTextarea,
-.formSelect {
+.formTextarea {
   width: 100%;
   padding: 0.75rem 1rem;
   background-color: #0a0a1a;
@@ -312,8 +313,7 @@
 }
 
 .formInput:focus,
-.formTextarea:focus,
-.formSelect:focus {
+.formTextarea:focus {
   outline: none;
   border-color: transparent;
   box-shadow: 0 0 0 2px #30ff9c;
@@ -321,23 +321,6 @@
 
 .formTextarea {
   resize: vertical;
-}
-
-.selectWrapper {
-  position: relative;
-}
-
-.selectIcon {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #8a8f98;
-  pointer-events: none;
-}
-
-.formSelect {
-  appearance: none;
 }
 
 /* Checkbox Styles */

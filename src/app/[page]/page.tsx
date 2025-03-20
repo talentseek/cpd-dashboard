@@ -335,6 +335,7 @@ export default async function Page({ params }: { params: Promise<{ page: string 
             firstName={replacements.first_name}
             lastName={leadData.last_name || ""}
             company={replacements.company}
+            position={leadData.position || ""}
           />
         </>
       );
