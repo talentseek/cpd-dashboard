@@ -74,7 +74,7 @@ export default function AdasightLandingPage({ firstName, lastName, company, posi
       name: fullName,
       company: formData.companyName,
       role: formData.role,
-      title: formData.challenge,
+      notes: formData.challenge,
       topics: selectedTopics,
     })
 
