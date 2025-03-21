@@ -145,7 +145,7 @@ export default function AdasightLandingPage({ firstName, lastName, company, posi
               live with your data to solve real challenges.
             </p>
             <button onClick={scrollToForm} className={styles.ctaButton}>
-              Join Our Free Pilot – 5 Spots Available for the Amplitude Community
+              Join Our Free Pilot
             </button>
           </motion.div>
           <motion.div initial="hidden" animate="visible" variants={fadeInUp} className={styles.heroImageContainer}>
@@ -242,7 +242,7 @@ export default function AdasightLandingPage({ firstName, lastName, company, posi
           variants={fadeInUp}
         >
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Join Our Free Pilot – 5 Spots Available</h2>
+            <h2 className={styles.sectionTitle}>Join Our Free Pilot</h2>
             <p className={styles.sectionSubtitle}>
               🚀 We're refining this format and offering five free spots before launching as a paid service.
             </p>
@@ -460,7 +460,7 @@ export default function AdasightLandingPage({ firstName, lastName, company, posi
             </div>
 
             <button type="submit" className={styles.submitButton}>
-              Apply Now – 5 Spots Left
+              Apply Now – 5 Spots Available for the Amplitude Community
             </button>
           </form>
         </motion.div>
