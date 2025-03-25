@@ -98,7 +98,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
     {
       value: '15',
       unit: 'hours',
-      description: 'Average time saved per week on administrative tasks',
+      description: 'Average time saved each week per employee on administrative tasks',
     },
     {
       value: '20',
@@ -223,7 +223,7 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
                   <div>
                     <h3 className={styles.detailTitle}>Wasted Time</h3>
                     <p className={styles.detailDescription}>
-                      15+ hours weekly spent on manual data entry, chasing updates, and compiling reports.
+                      15+ hours weekly (per employee) spent on manual data entry, chasing updates, and compiling reports.
                     </p>
                   </div>
                 </div>
@@ -352,13 +352,13 @@ const CleverlyLandingPage: React.FC<CleverlyLandingPageProps> = ({ replacements 
           <div className={styles.testimonial}>
             <div className={styles.testimonialContent}>
               <div className={styles.testimonialAvatar}>
-                <span className={styles.avatarInitials}>EW</span>
+                <span className={styles.avatarInitials}>AJ</span>
               </div>
               <div>
                 <div className={styles.testimonialHeader}>
-                  <h4 className={styles.testimonialName}>Edward Wick</h4>
+                  <h4 className={styles.testimonialName}>Andrew Jaques</h4>
                   <span className={styles.testimonialTitle}>
-                    Co-Founder & Managing Director, Penguin FM
+                    Co-Founder & Managing Director, Homyze
                   </span>
                 </div>
                 <blockquote className={styles.testimonialQuote}>
