@@ -58,7 +58,7 @@ export default function GeneoLandingPage({
     {
       title: "Scheduling Future Changes to Work Instructions",
       description:
-        "Plan production changes seamlessly into the future. GEN-OPS automatically synchronizes revisions across all Job Element Sheets, highlights conflicts between overlapping Change Masters, and allows you to adjust the go-live sequence to fit your operations at {company}.",
+        "Plan production changes seamlessly into the future. GEN-OPS automatically synchronizes revisions across all Work Instructions highlighting conflicts between overlapping change collections, and allows you to adjust the go-live sequence to fit your operations at {company}.",
       asset: "/images/abm/geneo/change.mp4",
       type: "video",
       backgroundImage: "/images/abm/geneo/none.png",
@@ -66,7 +66,7 @@ export default function GeneoLandingPage({
     {
       title: "Managing Complex Arrangements",
       description:
-        "Reduce the number of standards needed for complex assemblies at {company}. With Variant Job Element Sheets, write one sheet to cover all process variations by linking Derivative Sets, recording only the differences—saving time and ensuring accuracy.",
+        "Reduce the number of standards needed for complex assemblies at {company}. With Variant Job Element Sheets, you only write one document to cover all process variations by recording only the differences between products - saving time and ensuring accuracy. Manage with certainty not by exception.",
       asset: "/images/abm/geneo/variants.mp4",
       type: "video",
       backgroundImage: "/images/abm/geneo/none.png",
@@ -74,7 +74,7 @@ export default function GeneoLandingPage({
     {
       title: "Cycle Time, Customer Mix & Line Balancing",
       description:
-        "Optimize production flow by setting weightings for each variant in a Derivative Set. GEN-OPS calculates cycle times from Work Instruction elements and auto-generates Yamazumi charts, enabling on-the-fly line balancing as demand shifts at {company}.",
+        "Optimize production flow by setting weightings for each production variant. GEN-OPS calculates cycle times from Work Instruction and mix to auto-generate a Yamazumi chart, enabling on-the-fly line balancing as the customer demand shifts at {company}.",
       asset: "/images/abm/geneo/derivative.mp4",
       type: "video",
       backgroundImage: "/images/abm/geneo/none.png",
@@ -82,7 +82,7 @@ export default function GeneoLandingPage({
     {
       title: "BOM Management and Comparison",
       description:
-        "Ensure no parts are missed with GEN-OPS’ 3-tier part system. Generate mBOM reports from Work Instructions for each Change Master and compare them with your eBOM, streamlining {company}’s assembly process.",
+        "Ensure no parts are missed with GEN-OPS’ 3-tier part system. Generate mBOM reports directly from Work Instructions and compare them with your eBOM, streamlining {company}’s assembly process and eliminating errors.",
       asset: "/images/abm/geneo/bom.mp4",
       type: "video",
       backgroundImage: "/images/abm/geneo/none.png",
@@ -98,7 +98,7 @@ export default function GeneoLandingPage({
   ];
 
   const handleBookDemo = () => {
-    console.log("Booking a demo");
+    window.location.href = "https://calendly.com/d/crqx-fnk-669/gen-ops-demo";
   };
 
   return (
@@ -125,13 +125,13 @@ export default function GeneoLandingPage({
           <motion.div className={styles.heroText} variants={fadeInUp}>
             <h1>
               <ReplaceText
-                text="Michael, Revolutionize {company}’s Work Instructions with GEN-OPS"
+                text="{first_name}, Revolutionize {company}’s Manufacturing Work Instructions with GEN-OPSv5"
                 replacements={replacements}
               />
             </h1>
             <p>
               <ReplaceText
-                text="Streamline the creation, management, and execution of manufacturing standards—saving time, reducing errors, and adapting to {company}’s complex needs."
+                text="Use our best-in-class SaaS solution to manage digital Standard Work Instructions. Streamline the creation, management, and execution of manufacturing standards - saving time, reducing errors, and adapting to {company}’s complex needs."
                 replacements={replacements}
               />
             </p>
