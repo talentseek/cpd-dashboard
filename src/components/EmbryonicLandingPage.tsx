@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react"; // Removed useState
+import { useRef, useEffect } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +19,6 @@ export default function EmbryonicLandingPage({
 }: {
   replacements?: CustomReplacements;
 }) {
-  // Removed isScrolled state
   // Refs for animation triggers
   const navRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -92,15 +91,21 @@ export default function EmbryonicLandingPage({
     visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
   };
 
-  // Venture logos (using placeholders for now)
-  const ventures = ["batchday", "Artisan", "Clyx", "Monc", "Opinion"];
+  // Venture logos with captions
+  const ventures = [
+    { name: "batchday", caption: "Scaled to 10K users in 6 months" },
+    { name: "Artisan", caption: "Raised $2M in seed funding" },
+    { name: "Clyx", caption: "Launched MVP in 8 weeks" },
+    { name: "Monc", caption: "Achieved 5K active users" },
+    { name: "Opinion", caption: "Grew revenue by 300% in 1 year" },
+  ];
 
   return (
     <div className={styles.container}>
       {/* Sticky Navigation */}
       <motion.nav
         ref={navRef}
-        className={styles.nav} // Removed dynamic .scrolled class
+        className={styles.nav}
         initial="hidden"
         animate={navControls}
         variants={fadeInUp}
@@ -116,7 +121,7 @@ export default function EmbryonicLandingPage({
           </div>
           <Button
             className={styles.navCta}
-            onClick={() => window.location.href = "#book-a-call"}
+            onClick={() => (window.location.href = "#book-a-call")}
           >
             Start Today
           </Button>
@@ -133,10 +138,7 @@ export default function EmbryonicLandingPage({
       >
         <div className={styles.heroContent}>
           <motion.h1 variants={fadeInUp} className={styles.heroTitle}>
-            <ReplaceText
-              text="Hey {first_name}, Let's "
-              replacements={replacements}
-            />
+            <ReplaceText text="Hey {first_name}, Let's " replacements={replacements} />
             <span className={styles.underline}>De-Risk</span>
             <ReplaceText
               text=" and Build {company} with embryōnic"
@@ -149,14 +151,30 @@ export default function EmbryonicLandingPage({
               replacements={replacements}
             />
           </motion.p>
+          <motion.p variants={fadeInUp} className={styles.heroTagline}>
+            We believe in turning{" "}
+            <span className={styles.underline}>visionary ideas</span> into validated
+            ventures with speed and precision.
+          </motion.p>
           <motion.div variants={fadeInUp}>
             <Button
               className={styles.ctaButton}
-              onClick={() => window.location.href = "#book-a-call"}
+              onClick={() => (window.location.href = "#book-a-call")}
             >
               Start Today
             </Button>
           </motion.div>
+        </div>
+
+        {/* Brushstroke Divider */}
+        <div className={styles.brushstrokeDivider}>
+          <Image
+            src="/images/abm/embryonic/brushstroke-divider.svg"
+            alt="Brushstroke Divider"
+            width={1200}
+            height={50}
+            className={styles.brushstrokeImage}
+          />
         </div>
 
         {/* Ventures Carousel */}
@@ -172,12 +190,15 @@ export default function EmbryonicLandingPage({
             {[...ventures, ...ventures].map((venture, index) => (
               <div key={index} className={styles.carouselItem}>
                 <Image
-                  src={`/images/abm/embryonic/logo-${venture.toLowerCase().replace(/\s+/g, '-')}.avif`}
-                  alt={`${venture} logo`}
+                  src={`/images/abm/embryonic/logo-${venture.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}.avif`}
+                  alt={`${venture.name} logo`}
                   width={100}
                   height={50}
                   className={styles.ventureLogo}
                 />
+                <p className={styles.ventureCaption}>{venture.caption}</p>
               </div>
             ))}
           </div>
@@ -260,7 +281,9 @@ export default function EmbryonicLandingPage({
               Systematically <span className={styles.underline}>validate problems</span>
             </h3>
             <p className={styles.solutionText}>
-              Validate and get pre-product traction. embryōnic’s pragmatic system aims to de-risk and spot winning (and losing) opportunities, increasing the odds of success and saving Time.
+              Validate and get pre-product traction. embryōnic’s pragmatic system aims
+              to de-risk and spot winning (and losing) opportunities, increasing the
+              odds of success and saving Time.
             </p>
           </motion.div>
 
@@ -269,7 +292,9 @@ export default function EmbryonicLandingPage({
               Product + Marketing as <span className={styles.underline}>ONE team</span>
             </h3>
             <p className={styles.solutionText}>
-              No need to hire on day one. With the Startup-as-a-Service Model you get a turnkey Squad and a battle-tested team with C-level operators in Product, Tech, and Marketing.
+              No need to hire on day one. With the Startup-as-a-Service Model you get a
+              turnkey Squad and a battle-tested team with C-level operators in Product,
+              Tech, and Marketing.
             </p>
           </motion.div>
 
@@ -278,7 +303,9 @@ export default function EmbryonicLandingPage({
               Predictable <span className={styles.underline}>burn rate</span>
             </h3>
             <p className={styles.solutionText}>
-              Keep it flexible. With flexible subscriptions to fit your burn rate, you can harness Lean execution and progressive investment deployment by scaling up or down as you get traction.
+              Keep it flexible. With flexible subscriptions to fit your burn rate, you
+              can harness Lean execution and progressive investment deployment by
+              scaling up or down as you get traction.
             </p>
           </motion.div>
         </motion.div>
@@ -299,12 +326,13 @@ export default function EmbryonicLandingPage({
           />
         </motion.h2>
         <motion.p variants={fadeInUp} className={styles.ctaSubtitle}>
-          Schedule a 45-minute call to see how embryōnic can accelerate your startup’s journey.
+          Schedule a 45-minute call to see how embryōnic can accelerate your
+          startup’s journey.
         </motion.p>
         <motion.div variants={fadeInUp}>
           <Button
             className={styles.ctaButtonLarge}
-            onClick={() => window.location.href = "#book-a-call"}
+            onClick={() => (window.location.href = "#book-a-call")}
           >
             Book a Call
           </Button>
@@ -321,8 +349,12 @@ export default function EmbryonicLandingPage({
       >
         <div className={styles.footerContent}>
           <div className={styles.footerLinks}>
-            <Link href="/terms" className={styles.footerLink}>Terms</Link>
-            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
+            <Link href="/terms" className={styles.footerLink}>
+              Terms
+            </Link>
+            <Link href="/privacy" className={styles.footerLink}>
+              Privacy Policy
+            </Link>
           </div>
           <div className={styles.footerCopyright}>
             © {new Date().getFullYear()} Embryonic Studio. All rights reserved.
