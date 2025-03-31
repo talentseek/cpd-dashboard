@@ -6,9 +6,10 @@
   src: url("/fonts/creta-webfont.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
+  font-display: swap; /* Improves font loading performance */
 }
 
-/* Load Handwritten Font for Headers (Placeholder: Dancing Script) */
+/* Load Handwritten Font for Headers and Buttons (Placeholder: Dancing Script) */
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
 
 /* Base Styles */
@@ -50,8 +51,9 @@
   color: #FFFEF2;
   padding: 0.5rem 1rem;
   border-radius: 50px;
-  font-family: "Cactus Classical Serif", serif;
-  font-weight: 600;
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
@@ -118,24 +120,11 @@
   color: #2B2B2B;
 }
 
-/* Brushstroke Divider */
-.brushstrokeDivider {
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem 0;
-  text-align: center;
-}
-
-.brushstrokeImage {
-  width: 100%;
-  height: auto;
-}
-
 /* CTA Button */
 .ctaButton {
   background-color: #A92631;
   color: #FFFEF2;
-  font-family: "Cactus Classical Serif", serif;
+  font-family: "Dancing Script", cursive;
   font-weight: 700;
   padding: 1rem 2.5rem;
   border-radius: 50px;
@@ -261,7 +250,7 @@
 }
 
 .challengeTitle {
-  font-family: "Dancing Script", cursive;
+  font-family: "Cactus Classical Serif", serif;
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -359,7 +348,7 @@
 .ctaButtonLarge {
   background-color: #A92631;
   color: #FFFEF2;
-  font-family: "Cactus Classical Serif", serif;
+  font-family: "Dancing Script", cursive;
   font-weight: 700;
   padding: 1rem 2.5rem;
   border-radius: 50px;
@@ -458,10 +447,6 @@
 
   .solutionText {
     font-size: 1rem;
-  }
-
-  .brushstrokeImage {
-    width: 100%;
   }
 }
 

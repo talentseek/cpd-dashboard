@@ -166,17 +166,6 @@ export default function EmbryonicLandingPage({
           </motion.div>
         </div>
 
-        {/* Brushstroke Divider */}
-        <div className={styles.brushstrokeDivider}>
-          <Image
-            src="/images/abm/embryonic/brushstroke-divider.svg"
-            alt="Brushstroke Divider"
-            width={1200}
-            height={50}
-            className={styles.brushstrokeImage}
-          />
-        </div>
-
         {/* Ventures Carousel */}
         <motion.div
           ref={venturesRef}
