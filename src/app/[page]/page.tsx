@@ -15,6 +15,7 @@ import LeezlyLandingPage from '@/components/LeezlyLandingPage'; // Custom Leezly
 import EvolutionSGLandingPage from '@/components/EvolutionSGLandingPage'; // Custom Evolution SG template
 import MailMonitorLandingPage from '@/components/MailMonitorLandingPage'; // Custom MailMonitor template
 import AdasightLandingPage from '@/components/AdasightLandingPage'; // Custom Adasight template
+import FreightRollABMLandingPage from '@/components/FreightRollABMLandingPage'; // Custom FreightRoll template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -337,6 +338,14 @@ export default async function Page({ params }: { params: Promise<{ page: string 
             company={replacements.company}
             position={leadData.position || ""}
           />
+        </>
+      );
+    }
+    if (template === "freightroll") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <FreightRollABMLandingPage custom={replacements.custom} />
         </>
       );
     }

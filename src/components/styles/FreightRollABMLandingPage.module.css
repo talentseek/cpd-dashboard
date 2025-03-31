@@ -1,0 +1,352 @@
+/* src/components/styles/FreightRollABMLandingPage.module.css */
+
+/* Base Styles */
+.container {
+  font-family: "Roboto", sans-serif;
+  color: #2B2B2B;
+  background-color: #F5F5F5;
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #E5E5E5;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+}
+
+/* Hero Section */
+.heroSection {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%);
+}
+
+.heroTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #2B2B2B;
+}
+
+.highlight {
+  color: #A92631;
+  font-weight: 800;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  color: #4A4A4A;
+  margin-bottom: 2rem;
+}
+
+.ctaButton {
+  background-color: #A92631;
+  color: #FFFFFF;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.ctaButton:hover {
+  background-color: #C12F3A;
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  border: 2px solid #A92631;
+  color: #A92631;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background-color: #A92631;
+  color: #FFFFFF;
+}
+
+/* Problem Section (Negative Reviews) */
+.problemSection {
+  padding: 4rem 0;
+  background-color: #2B2B2B;
+  color: #FFFFFF;
+}
+
+.sectionTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+  font-size: 1.25rem;
+  color: #B0B0B0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.reviewCard {
+  background-color: #3A3A3A;
+  border: 1px solid #A92631;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.reviewCard:hover {
+  transform: translateY(-5px);
+}
+
+.reviewContent {
+  padding: 1.5rem;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.reviewerAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #A92631;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.reviewerName {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.reviewComment {
+  font-size: 0.95rem;
+  color: #D0D0D0;
+}
+
+/* Solution Section */
+.solutionSection {
+  padding: 5rem 0;
+  background-color: #F5F5F5;
+}
+
+.solutionGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.solutionCard {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.solutionCard:hover {
+  transform: translateY(-5px);
+}
+
+.solutionContent {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #A92631;
+  border-radius: 50%;
+  color: #FFFFFF;
+}
+
+.solutionTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2B2B2B;
+  margin-bottom: 0.5rem;
+}
+
+.solutionDescription {
+  font-size: 0.95rem;
+  color: #4A4A4A;
+}
+
+/* Testimonials Section */
+.testimonialsSection {
+  padding: 5rem 0;
+  background-color: #FFFFFF;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonialCard {
+  background-color: #F5F5F5;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.testimonialContent {
+  padding: 1.5rem;
+}
+
+.testimonialHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.testimonialAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #A92631;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.testimonialName {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2B2B2B;
+}
+
+.testimonialPosition {
+  font-size: 0.85rem;
+  color: #4A4A4A;
+}
+
+.testimonialRating {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.testimonialComment {
+  font-size: 0.95rem;
+  color: #4A4A4A;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 5rem 0;
+  background-color: #A92631;
+  color: #FFFFFF;
+}
+
+.ctaTitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 1rem;
+}
+
+.ctaSubtitle {
+  font-size: 1.25rem;
+  color: #F5F5F5;
+}
+
+/* Footer */
+.footer {
+  padding: 3rem 0;
+  background-color: #2B2B2B;
+  color: #B0B0B0;
+}
+
+.footer a {
+  color: #B0B0B0;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #A92631;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .reviewsGrid,
+  .solutionGrid,
+  .testimonialsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .reviewsGrid,
+  .solutionGrid,
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroTitle {
+    font-size: 1.75rem;
+  }
+
+  .heroSubtitle,
+  .sectionSubtitle,
+  .ctaSubtitle {
+    font-size: 1rem;
+  }
+
+  .sectionTitle,
+  .ctaTitle {
+    font-size: 1.75rem;
+  }
+}
