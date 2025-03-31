@@ -74,7 +74,7 @@ export default function FreightRollABMLandingPage({
               <div className="relative">
                 <div className="relative rounded-lg overflow-hidden shadow-xl">
                   <Image
-                    src="/images/freightroll/yard-congestion.jpg"
+                    src="/images/freightroll/yard-congestion.png"
                     width={800}
                     height={600}
                     alt="Congested Warehouse Yard"
