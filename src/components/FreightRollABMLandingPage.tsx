@@ -28,30 +28,35 @@ export default function FreightRollABMLandingPage({
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2 font-bold text-xl">
-            <Truck className="h-6 w-6 text-primary" />
-            <span>FreightRoll</span>
+        <div className={styles.headerContainer}>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/images/abm/freightroll/logo.png"
+              width={120}
+              height={40}
+              alt="FreightRoll Logo"
+              className={styles.logo}
+            />
           </div>
           <nav className="hidden md:flex gap-6">
-            <Link href="#problem" className="text-sm font-medium hover:text-primary">
+            <Link href="#problem" className={styles.navLink}>
               The Problem
             </Link>
-            <Link href="#solution" className="text-sm font-medium hover:text-primary">
+            <Link href="#solution" className={styles.navLink}>
               Our Solution
             </Link>
-            <Link href="#testimonials" className="text-sm font-medium hover:text-primary">
+            <Link href="#testimonials" className={styles.navLink}>
               Testimonials
             </Link>
           </nav>
-          <Button>Book a Demo</Button>
+          <Button className={styles.headerCta}>Book a Demo</Button>
         </div>
       </header>
 
       <main className="flex-1">
         {/* Hero Section */}
         <section className={styles.heroSection}>
-          <div className="container">
+          <div className={styles.sectionContainer}>
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
               <div className="space-y-6">
                 <h1 className={styles.heroTitle}>
@@ -67,7 +72,7 @@ export default function FreightRollABMLandingPage({
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                   <Button size="lg" variant="outline" className={styles.secondaryButton}>
-                    Learn More
+                    <Link href="#problem">Learn More</Link>
                   </Button>
                 </div>
               </div>
@@ -88,7 +93,7 @@ export default function FreightRollABMLandingPage({
 
         {/* Problem Section (Negative Reviews) */}
         <section id="problem" className={styles.problemSection}>
-          <div className="container">
+          <div className={styles.sectionContainer}>
             <div className="text-center mb-12">
               <h2 className={styles.sectionTitle}>
                 What Drivers Are Saying About {company}
@@ -134,7 +139,7 @@ export default function FreightRollABMLandingPage({
 
         {/* Solution Section */}
         <section id="solution" className={styles.solutionSection}>
-          <div className="container">
+          <div className={styles.sectionContainer}>
             <div className="text-center mb-16">
               <h2 className={styles.sectionTitle}>
                 How FreightRoll Can Improve {company}’s Operations
@@ -185,7 +190,7 @@ export default function FreightRollABMLandingPage({
 
         {/* Testimonials Section */}
         <section id="testimonials" className={styles.testimonialsSection}>
-          <div className="container">
+          <div className={styles.sectionContainer}>
             <div className="text-center mb-12">
               <h2 className={styles.sectionTitle}>What Our Clients Say</h2>
               <p className={styles.sectionSubtitle}>
@@ -244,7 +249,7 @@ export default function FreightRollABMLandingPage({
 
         {/* CTA Section */}
         <section className={styles.ctaSection}>
-          <div className="container">
+          <div className={styles.sectionContainer}>
             <div className="text-center max-w-3xl mx-auto space-y-8">
               <h2 className={styles.ctaTitle}>
                 Ready to Improve {company}’s Reputation?
@@ -252,12 +257,9 @@ export default function FreightRollABMLandingPage({
               <p className={styles.ctaSubtitle}>
                 Schedule a demo and see how FreightRoll can transform your yard operations.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex justify-center">
                 <Button size="lg" className={styles.ctaButton}>
                   Book a Demo
-                </Button>
-                <Button size="lg" variant="outline" className={styles.secondaryButton}>
-                  Contact Sales
                 </Button>
               </div>
             </div>
@@ -266,67 +268,26 @@ export default function FreightRollABMLandingPage({
       </main>
 
       <footer className={styles.footer}>
-        <div className="container">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className={styles.footerContainer}>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
-              <div className="flex items-center gap-2 font-bold text-xl mb-4">
-                <Truck className="h-6 w-6 text-primary" />
-                <span>FreightRoll</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
+              <p className={styles.footerText}>
                 330 E Liberty St, Ann Arbor, MI 48104
                 <br />
                 Email: info@freightroll.com
               </p>
             </div>
-            <div>
-              <h3 className="font-semibold mb-4">Solutions</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link href="#" className="hover:text-primary">
-                    Yard Execution System
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-primary">
-                    Driver Experience
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link href="#" className="hover:text-primary">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-primary">
-                    Blog
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link href="/terms" className="hover:text-primary">
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className="hover:text-primary">
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
+            <div className="flex gap-4">
+              <Link href="/terms" className={styles.footerLink}>
+                Terms of Service
+              </Link>
+              <Link href="/privacy" className={styles.footerLink}>
+                Privacy Policy
+              </Link>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>© {new Date().getFullYear()} FreightRoll. All rights reserved.</p>
+          <div className="mt-6 text-center">
+            <p className={styles.footerText}>© {new Date().getFullYear()} FreightRoll. All rights reserved.</p>
           </div>
         </div>
       </footer>

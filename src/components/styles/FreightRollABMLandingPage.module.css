@@ -3,8 +3,8 @@
 /* Base Styles */
 .container {
   font-family: "Roboto", sans-serif;
-  color: #2B2B2B;
-  background-color: #F5F5F5;
+  color: #333333;
+  background-color: #FFFFFF;
   line-height: 1.6;
 }
 
@@ -13,15 +13,61 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid #E5E5E5;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(5px);
+  background-color: #1A73E8; /* Primary blue for header background */
+  color: #FFFFFF;
+}
+
+.headerContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem; /* Increased padding for more space from edges */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.logo {
+  filter: brightness(0) invert(1); /* Ensure logo is visible on blue background */
+}
+
+.navLink {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #E8F0FE; /* Light blue hover effect */
+}
+
+.headerCta {
+  background-color: #FFFFFF;
+  color: #1A73E8;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.headerCta:hover {
+  background-color: #E8F0FE;
+  transform: translateY(-2px);
+}
+
+/* Section Container (for consistent padding) */
+.sectionContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem; /* Increased padding for more space from edges */
 }
 
 /* Hero Section */
 .heroSection {
-  padding: 5rem 0;
-  background: linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%);
+  padding: 6rem 0;
+  background-color: #F7FAFF; /* Light blue background for contrast */
 }
 
 .heroTitle {
@@ -29,22 +75,22 @@
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
-  color: #2B2B2B;
+  color: #333333;
 }
 
 .highlight {
-  color: #A92631;
+  color: #1A73E8; /* Primary blue for highlight */
   font-weight: 800;
 }
 
 .heroSubtitle {
   font-size: 1.25rem;
-  color: #4A4A4A;
+  color: #555555;
   margin-bottom: 2rem;
 }
 
 .ctaButton {
-  background-color: #A92631;
+  background-color: #1A73E8;
   color: #FFFFFF;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
@@ -54,13 +100,13 @@
 }
 
 .ctaButton:hover {
-  background-color: #C12F3A;
+  background-color: #1557B0; /* Darker blue on hover */
   transform: translateY(-2px);
 }
 
 .secondaryButton {
-  border: 2px solid #A92631;
-  color: #A92631;
+  border: 2px solid #1A73E8;
+  color: #1A73E8;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
@@ -69,28 +115,35 @@
 }
 
 .secondaryButton:hover {
-  background-color: #A92631;
+  background-color: #1A73E8;
   color: #FFFFFF;
+}
+
+.secondaryButton a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Problem Section (Negative Reviews) */
 .problemSection {
-  padding: 4rem 0;
-  background-color: #2B2B2B;
-  color: #FFFFFF;
+  padding: 5rem 0;
+  background-color: #FFFFFF;
 }
 
 .sectionTitle {
   font-family: "Montserrat", sans-serif;
   font-size: 2.25rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #333333;
   margin-bottom: 1rem;
 }
 
 .sectionSubtitle {
   font-size: 1.25rem;
-  color: #B0B0B0;
+  color: #555555;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -99,15 +152,13 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .reviewCard {
-  background-color: #3A3A3A;
-  border: 1px solid #A92631;
+  background-color: #F7FAFF; /* Light blue background for cards */
+  border: 1px solid #E0E7FF;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
 }
 
@@ -130,7 +181,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #A92631;
+  background-color: #1A73E8;
   color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -143,7 +194,7 @@
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #333333;
 }
 
 .rating {
@@ -153,26 +204,24 @@
 
 .reviewComment {
   font-size: 0.95rem;
-  color: #D0D0D0;
+  color: #555555;
 }
 
 /* Solution Section */
 .solutionSection {
   padding: 5rem 0;
-  background-color: #F5F5F5;
+  background-color: #F7FAFF;
 }
 
 .solutionGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .solutionCard {
   background-color: #FFFFFF;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #E0E7FF;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
@@ -194,7 +243,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #A92631;
+  background-color: #1A73E8;
   border-radius: 50%;
   color: #FFFFFF;
 }
@@ -203,13 +252,13 @@
   font-family: "Montserrat", sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #2B2B2B;
+  color: #333333;
   margin-bottom: 0.5rem;
 }
 
 .solutionDescription {
   font-size: 0.95rem;
-  color: #4A4A4A;
+  color: #555555;
 }
 
 /* Testimonials Section */
@@ -222,12 +271,10 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .testimonialCard {
-  background-color: #F5F5F5;
+  background-color: #F7FAFF;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
@@ -247,7 +294,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #A92631;
+  background-color: #1A73E8;
   color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -260,12 +307,12 @@
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   font-weight: 600;
-  color: #2B2B2B;
+  color: #333333;
 }
 
 .testimonialPosition {
   font-size: 0.85rem;
-  color: #4A4A4A;
+  color: #555555;
 }
 
 .testimonialRating {
@@ -276,14 +323,13 @@
 
 .testimonialComment {
   font-size: 0.95rem;
-  color: #4A4A4A;
+  color: #555555;
 }
 
 /* CTA Section */
 .ctaSection {
   padding: 5rem 0;
-  background-color: #A92631;
-  color: #FFFFFF;
+  background-color: #1A73E8;
 }
 
 .ctaTitle {
@@ -296,23 +342,34 @@
 
 .ctaSubtitle {
   font-size: 1.25rem;
-  color: #F5F5F5;
+  color: #E8F0FE; /* Light blue text for contrast on blue background */
 }
 
 /* Footer */
 .footer {
-  padding: 3rem 0;
-  background-color: #2B2B2B;
-  color: #B0B0B0;
+  padding: 2rem 0;
+  background-color: #F7FAFF;
 }
 
-.footer a {
-  color: #B0B0B0;
+.footerContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem; /* Increased padding for more space from edges */
+}
+
+.footerText {
+  font-size: 0.875rem;
+  color: #555555;
+}
+
+.footerLink {
+  font-size: 0.875rem;
+  color: #1A73E8;
   transition: color 0.3s ease;
 }
 
-.footer a:hover {
-  color: #A92631;
+.footerLink:hover {
+  color: #1557B0; /* Darker blue on hover */
 }
 
 /* Responsive Styles */
@@ -348,5 +405,17 @@
   .sectionTitle,
   .ctaTitle {
     font-size: 1.75rem;
+  }
+
+  .headerContainer {
+    padding: 0 1.5rem;
+  }
+
+  .sectionContainer {
+    padding: 0 1.5rem;
+  }
+
+  .footerContainer {
+    padding: 0 1.5rem;
   }
 }
