@@ -7,8 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import styles from "@/components/styles/FreightRollABMLandingPage.module.css";
 
 interface CustomPersonalizations {
-  company_name: string;
-  first_name: string;
   rating: string;
   review_count: string;
   review1: { name: string; rating: number; comment: string };
@@ -17,10 +15,16 @@ interface CustomPersonalizations {
 }
 
 interface FreightRollABMLandingPageProps {
+  firstName: string;
+  company: string;
   custom: CustomPersonalizations;
 }
 
-export default function FreightRollABMLandingPage({ custom }: FreightRollABMLandingPageProps) {
+export default function FreightRollABMLandingPage({
+  firstName,
+  company,
+  custom,
+}: FreightRollABMLandingPageProps) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -51,7 +55,7 @@ export default function FreightRollABMLandingPage({ custom }: FreightRollABMLand
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
               <div className="space-y-6">
                 <h1 className={styles.heroTitle}>
-                  Hello {custom.first_name}, Is {custom.company_name}’s{" "}
+                  Hello {firstName}, Is {company}’s{" "}
                   <span className={styles.highlight}>{custom.rating}/5 Rating</span> Hurting Your Business?
                 </h1>
                 <p className={styles.heroSubtitle}>
@@ -87,7 +91,7 @@ export default function FreightRollABMLandingPage({ custom }: FreightRollABMLand
           <div className="container">
             <div className="text-center mb-12">
               <h2 className={styles.sectionTitle}>
-                What Drivers Are Saying About {custom.company_name}
+                What Drivers Are Saying About {company}
               </h2>
               <p className={styles.sectionSubtitle}>
                 Your {custom.rating}/5 rating from {custom.review_count} reviews highlights serious yard management issues.
@@ -133,7 +137,7 @@ export default function FreightRollABMLandingPage({ custom }: FreightRollABMLand
           <div className="container">
             <div className="text-center mb-16">
               <h2 className={styles.sectionTitle}>
-                How FreightRoll Can Improve {custom.company_name}’s Operations
+                How FreightRoll Can Improve {company}’s Operations
               </h2>
               <p className={styles.sectionSubtitle}>
                 Our Yard Execution System addresses these pain points to boost reliability and driver satisfaction.
@@ -243,7 +247,7 @@ export default function FreightRollABMLandingPage({ custom }: FreightRollABMLand
           <div className="container">
             <div className="text-center max-w-3xl mx-auto space-y-8">
               <h2 className={styles.ctaTitle}>
-                Ready to Improve {custom.company_name}’s Reputation?
+                Ready to Improve {company}’s Reputation?
               </h2>
               <p className={styles.ctaSubtitle}>
                 Schedule a demo and see how FreightRoll can transform your yard operations.

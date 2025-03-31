@@ -345,7 +345,11 @@ export default async function Page({ params }: { params: Promise<{ page: string 
       return (
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
-          <FreightRollABMLandingPage custom={replacements.custom} />
+          <FreightRollABMLandingPage
+            firstName={replacements.first_name}
+            company={replacements.company}
+            custom={replacements.custom}
+          />
         </>
       );
     }
