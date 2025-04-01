@@ -5,8 +5,9 @@ import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Briefcase, Search, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; // Assuming this is styled separately or unstyled
 import { ReplaceText, CustomReplacements } from "@/components/ReplaceText";
+// Import the UPDATED CSS Module
 import styles from "@/components/styles/EmbryonicLandingPage.module.css";
 
 const defaultReplacements: CustomReplacements = {
@@ -72,7 +73,7 @@ export default function EmbryonicLandingPage({
     footerControls,
   ]);
 
-  // Animation for solution steps
+  // Set CSS variable for solution step animation staggering
   useEffect(() => {
     const steps = document.querySelectorAll(`.${styles.solutionStep}`);
     steps.forEach((step, index) => {
@@ -80,7 +81,7 @@ export default function EmbryonicLandingPage({
     });
   }, []);
 
-  // Animation variants
+  // Animation variants (unchanged)
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
@@ -91,7 +92,7 @@ export default function EmbryonicLandingPage({
     visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
   };
 
-  // Venture logos with captions
+  // Venture logos with captions (unchanged)
   const ventures = [
     { name: "batchday", caption: "Scaled to 10K users in 6 months" },
     { name: "Artisan", caption: "Raised $2M in seed funding" },
@@ -100,7 +101,20 @@ export default function EmbryonicLandingPage({
     { name: "Opinion", caption: "Grew revenue by 300% in 1 year" },
   ];
 
+  // Scroll to booking section function
+  const scrollToBook = () => {
+    const element = document.getElementById("book-a-call"); // Target element ID
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      console.warn("Element with ID 'book-a-call' not found for scrolling.");
+      // Fallback or alternative behavior if needed
+    }
+  };
+
+
   return (
+    // Use the main container class from the CSS module
     <div className={styles.container}>
       {/* Sticky Navigation */}
       <motion.nav
@@ -112,19 +126,23 @@ export default function EmbryonicLandingPage({
       >
         <div className={styles.navContent}>
           <div className={styles.logo}>
+            {/* Ensure logo path is correct */}
             <Image
               src="/images/abm/embryonic/logo.png"
               alt="Embryonic Studio Logo"
               width={120}
               height={40}
+              priority // Prioritize loading the logo
             />
           </div>
-          <Button
+          {/* Use the updated navCta style */}
+          {/* Note: Using <button> directly as <Button> might add its own styles */}
+          <button
             className={styles.navCta}
-            onClick={() => (window.location.href = "#book-a-call")}
+            onClick={scrollToBook} // Use smooth scroll function
           >
             Start Today
-          </Button>
+          </button>
         </div>
       </motion.nav>
 
@@ -137,6 +155,7 @@ export default function EmbryonicLandingPage({
         variants={staggerChildren}
       >
         <div className={styles.heroContent}>
+          {/* Apply heroTitle style (now uses Creta) */}
           <motion.h1 variants={fadeInUp} className={styles.heroTitle}>
             <ReplaceText text="Hey {first_name}, Let's " replacements={replacements} />
             <span className={styles.underline}>De-Risk</span>
@@ -145,24 +164,27 @@ export default function EmbryonicLandingPage({
               replacements={replacements}
             />
           </motion.h1>
+          {/* Apply heroSubtitle style (uses Cactus Classical Serif) */}
           <motion.p variants={fadeInUp} className={styles.heroSubtitle}>
             <ReplaceText
               text="Hatch your concept in a fraction of the time with embryōnic—the Startup Studio that problem-centric founders rely on to rapidly de-risk, build, and grow remarkable ventures in weeks."
               replacements={replacements}
             />
           </motion.p>
+          {/* Apply heroTagline style (uses Cactus Classical Serif) */}
           <motion.p variants={fadeInUp} className={styles.heroTagline}>
             We believe in turning{" "}
             <span className={styles.underline}>visionary ideas</span> into validated
             ventures with speed and precision.
           </motion.p>
           <motion.div variants={fadeInUp}>
-            <Button
+            {/* Apply ctaButton style (now uses Creta) */}
+            <button
               className={styles.ctaButton}
-              onClick={() => (window.location.href = "#book-a-call")}
+              onClick={scrollToBook} // Use smooth scroll function
             >
               Start Today
-            </Button>
+            </button>
           </motion.div>
         </div>
 
@@ -174,19 +196,23 @@ export default function EmbryonicLandingPage({
           animate={venturesControls}
           variants={fadeInUp}
         >
+           {/* Apply venturesTitle style (now uses Creta) */}
           <h2 className={styles.venturesTitle}>Ventures the Team Worked With</h2>
           <div className={styles.carouselTrack}>
             {[...ventures, ...ventures].map((venture, index) => (
               <div key={index} className={styles.carouselItem}>
+                 {/* Ensure venture logo paths are correct and use .avif if available */}
                 <Image
                   src={`/images/abm/embryonic/logo-${venture.name
                     .toLowerCase()
-                    .replace(/\s+/g, "-")}.avif`}
+                    .replace(/\s+/g, "-")}.avif`} // Prefer AVIF if available
                   alt={`${venture.name} logo`}
-                  width={100}
-                  height={50}
+                  width={100} // Intrinsic width
+                  height={50} // Intrinsic height
                   className={styles.ventureLogo}
+                  loading="lazy" // Lazy load venture logos
                 />
+                 {/* Apply ventureCaption style (uses Cactus Classical Serif) */}
                 <p className={styles.ventureCaption}>{venture.caption}</p>
               </div>
             ))}
@@ -202,6 +228,7 @@ export default function EmbryonicLandingPage({
         animate={challengesControls}
         variants={staggerChildren}
       >
+        {/* Apply sectionTitle style (now uses Creta) */}
         <motion.h2 variants={fadeInUp} className={styles.sectionTitle}>
           <ReplaceText
             text="Challenges {company} Faces"
@@ -209,11 +236,14 @@ export default function EmbryonicLandingPage({
           />
         </motion.h2>
         <motion.div className={styles.challengesGrid} variants={staggerChildren}>
+          {/* Card 1 */}
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconContainer}>
               <Briefcase className={styles.challengeIcon} />
             </div>
+             {/* Apply challengeTitle style (uses Cactus Classical Serif - bold) */}
             <h3 className={styles.challengeTitle}>Lack of Product-Market Fit</h3>
+             {/* Apply challengeText style (uses Cactus Classical Serif) */}
             <p className={styles.challengeText}>
               <ReplaceText
                 text="You’ve raised funding, but {company} hasn’t nailed product-market fit yet. Skipping validation risks wasting time and resources."
@@ -222,6 +252,7 @@ export default function EmbryonicLandingPage({
             </p>
           </motion.div>
 
+          {/* Card 2 */}
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconContainer}>
               <Search className={styles.challengeIcon} />
@@ -235,6 +266,7 @@ export default function EmbryonicLandingPage({
             </p>
           </motion.div>
 
+          {/* Card 3 */}
           <motion.div className={styles.challengeCard} variants={fadeInUp}>
             <div className={styles.iconContainer}>
               <Users className={styles.challengeIcon} />
@@ -258,6 +290,7 @@ export default function EmbryonicLandingPage({
         animate={solutionControls}
         variants={staggerChildren}
       >
+         {/* Apply sectionTitle style (now uses Creta) */}
         <motion.h2 variants={fadeInUp} className={styles.sectionTitle}>
           <ReplaceText
             text="How embryōnic Helps {company}"
@@ -265,10 +298,13 @@ export default function EmbryonicLandingPage({
           />
         </motion.h2>
         <motion.div className={styles.solutionContent} variants={staggerChildren}>
+          {/* Step 1 */}
           <motion.div className={`${styles.solutionStep}`} variants={fadeInUp}>
+             {/* Apply solutionTitle style (now uses Creta) */}
             <h3 className={styles.solutionTitle}>
               Systematically <span className={styles.underline}>validate problems</span>
             </h3>
+             {/* Apply solutionText style (uses Cactus Classical Serif) */}
             <p className={styles.solutionText}>
               Validate and get pre-product traction. embryōnic’s pragmatic system aims
               to de-risk and spot winning (and losing) opportunities, increasing the
@@ -276,6 +312,7 @@ export default function EmbryonicLandingPage({
             </p>
           </motion.div>
 
+          {/* Step 2 */}
           <motion.div className={`${styles.solutionStep}`} variants={fadeInUp}>
             <h3 className={styles.solutionTitle}>
               Product + Marketing as <span className={styles.underline}>ONE team</span>
@@ -287,6 +324,7 @@ export default function EmbryonicLandingPage({
             </p>
           </motion.div>
 
+          {/* Step 3 */}
           <motion.div className={`${styles.solutionStep}`} variants={fadeInUp}>
             <h3 className={styles.solutionTitle}>
               Predictable <span className={styles.underline}>burn rate</span>
@@ -308,23 +346,26 @@ export default function EmbryonicLandingPage({
         animate={ctaControls}
         variants={staggerChildren}
       >
+        {/* Apply ctaTitle style (now uses Creta) */}
         <motion.h2 variants={fadeInUp} className={styles.ctaTitle}>
           <ReplaceText
             text="{first_name}, Ready to Build {company} Without the Risks?"
             replacements={replacements}
           />
         </motion.h2>
+         {/* Apply ctaSubtitle style (uses Cactus Classical Serif) */}
         <motion.p variants={fadeInUp} className={styles.ctaSubtitle}>
           Schedule a 45-minute call to see how embryōnic can accelerate your
           startup’s journey.
         </motion.p>
         <motion.div variants={fadeInUp}>
-          <Button
+          {/* Apply ctaButtonLarge style (now uses Creta) */}
+          <button
             className={styles.ctaButtonLarge}
-            onClick={() => (window.location.href = "#book-a-call")}
+            onClick={scrollToBook} // Use smooth scroll function
           >
             Book a Call
-          </Button>
+          </button>
         </motion.div>
       </motion.section>
 
@@ -338,6 +379,7 @@ export default function EmbryonicLandingPage({
       >
         <div className={styles.footerContent}>
           <div className={styles.footerLinks}>
+             {/* Apply footerLink style (uses Cactus Classical Serif) */}
             <Link href="/terms" className={styles.footerLink}>
               Terms
             </Link>
@@ -345,11 +387,17 @@ export default function EmbryonicLandingPage({
               Privacy Policy
             </Link>
           </div>
+           {/* Apply footerCopyright style (uses Cactus Classical Serif) */}
           <div className={styles.footerCopyright}>
             © {new Date().getFullYear()} Embryonic Studio. All rights reserved.
           </div>
         </div>
       </motion.footer>
+
+       {/* Add a target element for the booking link, if not already present elsewhere */}
+       {/* This could be an empty div or the container of your booking widget */}
+       <div id="book-a-call" style={{ scrollMarginTop: '100px' }}></div> {/* Adjust scrollMarginTop as needed */}
+
     </div>
   );
 }
