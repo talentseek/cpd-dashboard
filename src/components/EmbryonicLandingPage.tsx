@@ -128,7 +128,7 @@ export default function EmbryonicLandingPage({
           <div className={styles.logo}>
             {/* Ensure logo path is correct */}
             <Image
-              src="/images/abm/embryonic/logo.png"
+              src="/images/abm/embryonic/vector_logo.svg"
               alt="Embryonic Studio Logo"
               width={120}
               height={40}
