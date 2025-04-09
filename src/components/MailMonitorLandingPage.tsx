@@ -91,7 +91,7 @@ export default function MailMonitorLandingPage({
               />
             </div>
             <button className={styles.button}>
-              <Link href="#demo">Book a Free Deliverability Assessment</Link>
+              <Link href="https://cal.com/mailmonitor/30min">Book a Free Deliverability Assessment</Link>
             </button>
           </div>
         </nav>
@@ -337,7 +337,9 @@ export default function MailMonitorLandingPage({
                   </div>
                 </div>
                 <button className={styles.ctaButton}>
-                  Start Your Deliverability Journey<ArrowRight className={styles.ctaButtonIcon} />
+                  <Link href="https://cal.com/mailmonitor/30min">
+                    Start Your Deliverability Journey <ArrowRight className={styles.ctaButtonIcon} />
+                  </Link>
                 </button>
               </div>
             </div>
@@ -347,18 +349,7 @@ export default function MailMonitorLandingPage({
         {/* Footer */}
         <footer className={styles.footer}>
           <div className={styles.footerContent}>
-            <p>© 2025 MailMonitor. All rights reserved.</p>
-            <div className={styles.footerLinks}>
-              <Link href="#" className={styles.footerLink}>
-                Privacy Policy
-              </Link>
-              <Link href="#" className={styles.footerLink}>
-                Terms of Service
-              </Link>
-              <Link href="#" className={styles.footerLink}>
-                Contact Us
-              </Link>
-            </div>
+            <p>COPYRIGHT © 2010 - 2024 MAILMONITOR INC. ALL RIGHTS RESERVED</p>
           </div>
         </footer>
       </div>
