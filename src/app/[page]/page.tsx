@@ -4,6 +4,7 @@ import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
 import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Custom ProForecast template
 import AapoonLandingPage from '@/components/AapoonLandingPage'; // Custom Aapoon template
+import AapoonDemoLandingPage from '@/components/AapoonDemoLandingPage'; // Custom Aapoon Demo template for investors
 import KaskoLandingPage from '@/components/KaskoLandingPage'; // Custom KASKO template
 import GeneoLandingPage from '@/components/GeneoLandingPage'; // Custom Geneo template
 import FocusHQLandingPage from '@/components/FocusHQLandingPage'; // Custom Focus HQ template
@@ -240,6 +241,17 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         <>
           <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
           <AapoonLandingPage replacements={replacements} />
+        </>
+      );
+    }
+    if (template === "aapoondemo") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <AapoonDemoLandingPage
+            firstName={replacements.first_name}
+            company={replacements.company}
+          />
         </>
       );
     }
