@@ -1,10 +1,10 @@
 // src/components/AapoonDemoLandingPage.tsx
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Lock, Shield, Zap, Server, Globe, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { Lock, Shield, Server, Globe, Zap, ArrowRight } from "lucide-react";
 import { motion, useInView, useAnimation, useScroll, useTransform } from "framer-motion";
 import styles from "@/components/styles/AapoonDemo.module.css";
 
@@ -27,75 +27,7 @@ export default function AapoonDemoLandingPage({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Quantum Threat Visual Animation (Adapted from QuantumThreatVisual)
-  const QuantumThreatVisual = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-      const container = containerRef.current;
-      if (!container) return;
-
-      const handleMouseMove = (e: MouseEvent) => {
-        const { left, top, width, height } = container.getBoundingClientRect();
-        const x = (e.clientX - left) / width - 0.5;
-        const y = (e.clientY - top) / height - 0.5;
-
-        const elements = container.querySelectorAll(`.${styles.animateElement}`);
-        elements.forEach((el) => {
-          const element = el as HTMLElement;
-          const factor = Number.parseFloat(element.dataset.factor || "1");
-          element.style.transform = `translate(${x * 20 * factor}px, ${y * 20 * factor}px)`;
-        });
-      };
-
-      document.addEventListener("mousemove", handleMouseMove);
-      return () => document.removeEventListener("mousemove", handleMouseMove);
-    }, []);
-
-    return (
-      <div ref={containerRef} className={styles.quantumThreatVisual}>
-        <div className={styles.quantumGrid}></div>
-        <div className={`${styles.animateElement} ${styles.brokenLock}`} data-factor="1.5">
-          <div className={styles.lockWrapper}>
-            <Image
-              src="/images/broken-lock.svg"
-              alt="Broken encryption"
-              width={300}
-              height={300}
-              className={styles.lockImage}
-            />
-            <div className={styles.pingEffect}>
-              <div className={styles.pingCircle}></div>
-            </div>
-          </div>
-        </div>
-        <div className={`${styles.animateElement} ${styles.quantumComputer}`} data-factor="1">
-          <Image src="/images/quantum-computer.svg" alt="Quantum computer" width={200} height={200} />
-        </div>
-        <div className={`${styles.animateElement} ${styles.binaryData}`} data-factor="2">
-          <div className={styles.binaryText}>
-            {Array(10)
-              .fill(0)
-              .map((_, i) => (
-                <div key={i} className={styles.binaryRow}>
-                  {Array(20)
-                    .fill(0)
-                    .map((_, j) => (
-                      <span key={j} className={j % 3 === 0 ? styles.highlightedBit : ""}>
-                        {Math.random() > 0.5 ? "1" : "0"}
-                      </span>
-                    ))}
-                </div>
-              ))}
-          </div>
-        </div>
-        <div className={`${styles.animateElement} ${styles.warningIndicator}`} data-factor="1.2">
-          <div className={styles.warningText}>ENCRYPTION VULNERABLE</div>
-        </div>
-      </div>
-    );
-  };
-
-  // Scroll Reveal Component (Adapted from ScrollReveal)
+  // Scroll Reveal Component
   const ScrollReveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -126,23 +58,9 @@ export default function AapoonDemoLandingPage({
     );
   };
 
-  // Security Transition Component (Adapted from SecurityTransition)
+  // Security Transition Component (Simplified)
   const SecurityTransition = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => setIsVisible(entry.isIntersecting),
-        { threshold: 0.1 }
-      );
-      const currentRef = containerRef.current;
-      if (currentRef) observer.observe(currentRef);
-      return () => {
-        if (currentRef) observer.unobserve(currentRef);
-      };
-    }, []);
-
     const { scrollYProgress } = useScroll({
       target: containerRef,
       offset: ["start end", "end start"],
@@ -196,7 +114,12 @@ export default function AapoonDemoLandingPage({
                   </ul>
                 </div>
                 <div className={styles.stateImage}>
-                  <Image src="/images/vulnerable-data.svg" alt="Vulnerable data" fill className={styles.image} />
+                  <Image
+                    src="/images/abm/aapoon/vulnerable-data.svg"
+                    alt="Vulnerable data"
+                    fill
+                    className={styles.image}
+                  />
                 </div>
               </div>
             </div>
@@ -226,7 +149,7 @@ export default function AapoonDemoLandingPage({
               <div className={styles.transitionImage}>
                 <div className={styles.transitionImageWrapper}>
                   <Image
-                    src="/images/security-transition.svg"
+                    src="/images/abm/aapoon/security-transition.svg"
                     alt="Security transition"
                     width={500}
                     height={200}
@@ -285,7 +208,12 @@ export default function AapoonDemoLandingPage({
                   </ul>
                 </div>
                 <div className={styles.stateImage}>
-                  <Image src="/images/secure-data.svg" alt="Secure data" fill className={styles.image} />
+                  <Image
+                    src="/images/abm/aapoon/secure-data.svg"
+                    alt="Secure data"
+                    fill
+                    className={styles.image}
+                  />
                 </div>
               </div>
             </div>
@@ -295,7 +223,7 @@ export default function AapoonDemoLandingPage({
     );
   };
 
-  // Product Feature Component (Adapted from ProductFeature)
+  // Product Feature Component
   const ProductFeature = ({
     icon,
     title,
@@ -314,127 +242,6 @@ export default function AapoonDemoLandingPage({
     </div>
   );
 
-  // Testimonial Slider Component (Adapted from TestimonialSlider)
-  const TestimonialSlider = () => {
-    const testimonials = [
-      {
-        id: 1,
-        quote:
-          "aapoon’s Quantum Resistant Communication Suite positions them as a leader in the quantum-safe cybersecurity market—a must-watch for investors.",
-        author: "Sarah Johnson",
-        title: "CIO, Global Financial Services",
-        logo: "/images/company-logo-1.svg",
-      },
-      {
-        id: 2,
-        quote:
-          "The scalability of aapoon’s Quantum Secure VPN makes it a game-changer for industries facing quantum threats. A solid investment opportunity.",
-        author: "Michael Chen",
-        title: "CISO, Healthcare Technologies",
-        logo: "/images/company-logo-2.svg",
-      },
-      {
-        id: 3,
-        quote:
-          "aapoon’s alignment with NIST standards and federal mandates ensures long-term growth potential in the cybersecurity sector.",
-        author: "Elena Rodriguez",
-        title: "VP of Technology, Government Sector",
-        logo: "/images/company-logo-3.svg",
-      },
-    ];
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isAnimating, setIsAnimating] = useState(false);
-
-    const goToPrevious = useCallback(() => {
-      if (isAnimating) return;
-      setIsAnimating(true);
-      setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
-      setTimeout(() => setIsAnimating(false), 500);
-    }, [isAnimating, testimonials.length]);
-
-    const goToNext = useCallback(() => {
-      if (isAnimating) return;
-      setIsAnimating(true);
-      setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
-      setTimeout(() => setIsAnimating(false), 500);
-    }, [isAnimating, testimonials.length]);
-
-    useEffect(() => {
-      const interval = setInterval(goToNext, 8000);
-      return () => clearInterval(interval);
-    }, [goToNext]);
-
-    return (
-      <div className={styles.testimonialSlider}>
-        <div className={styles.sliderWrapper}>
-          <div
-            className={`${styles.sliderTrack} ${isAnimating ? styles.sliderAnimating : ""}`}
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
-            <div className={styles.sliderItems}>
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className={styles.sliderItem}>
-                  <div className={styles.testimonialContent}>
-                    <div className={styles.testimonialLogo}>
-                      <Image
-                        src={testimonial.logo || "/placeholder.svg"}
-                        alt={`${testimonial.author}'s company`}
-                        width={120}
-                        height={40}
-                        className={styles.logoImage}
-                      />
-                    </div>
-                    <blockquote className={styles.testimonialQuote}>
-                      <p className={styles.quoteText}>&quot;{testimonial.quote}&quot;</p>
-                      <footer className={styles.quoteFooter}>
-                        <div className={styles.authorWrapper}>
-                          <div className={styles.authorAvatar}></div>
-                          <div>
-                            <p className={styles.authorName}>{testimonial.author}</p>
-                            <p className={styles.authorTitle}>{testimonial.title}</p>
-                          </div>
-                        </div>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className={styles.sliderDots}>
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ""}`}
-              onClick={() => {
-                if (isAnimating) return;
-                setIsAnimating(true);
-                setCurrentIndex(index);
-                setTimeout(() => setIsAnimating(false), 500);
-              }}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))}
-        </div>
-        <button
-          className={styles.sliderButtonPrev}
-          onClick={goToPrevious}
-          aria-label="Previous testimonial"
-        >
-          <ChevronLeft className={styles.sliderIcon} />
-        </button>
-        <button
-          className={styles.sliderButtonNext}
-          onClick={goToNext}
-          aria-label="Next testimonial"
-        >
-          <ChevronRight className={styles.sliderIcon} />
-        </button>
-      </div>
-    );
-  };
   return (
     <div className={styles.container}>
       {/* Navigation */}
@@ -442,236 +249,260 @@ export default function AapoonDemoLandingPage({
         <div className={styles.headerContainer}>
           <Link href="/">
             <Image
-              src="/images/aapoon-logo.svg"
+              src="/images/abm/aapoon/logo.png"
               alt="aapoon"
               width={120}
               height={40}
               priority
             />
           </Link>
-          <Link href="https://cal.com/aapoon/demo" className={styles.ctaButton}>
-            Book a Demo
+          <Link href="https://cal.com/aapoon/30min" className={styles.ctaButton}>
+            Schedule a Call
             <ArrowRight className={styles.ctaIcon} />
           </Link>
         </div>
       </header>
 
-                        {/* Hero Section */}
-                        <section className={styles.heroSection}>
-                            <div className={styles.heroBackground}></div>
-                            <div className={styles.sectionContainer}>
-                                <div className={styles.heroContent}>
-                                    <ScrollReveal>
-                                        <div className={styles.heroText}>
-                                            <div className={styles.alertBadge}>
-                                                Quantum Security Alert
-                                            </div>
-                                            <h1 className={styles.heroTitle}>
-                                                {firstName}, The Quantum Threat Could Disrupt {company}&apos;s Portfolio
-                                            </h1>
-                                            <p className={styles.heroSubtitle}>
-                                                Quantum computers will soon break today’s encryption, creating a $1T+ cybersecurity market opportunity. aapoon is leading the charge.
-                                            </p>
-                                            <div className={styles.heroButtons}>
-                                                <Link href="https://cal.com/aapoon/demo" className={styles.ctaButton}>
-                                                    Book a Demo
-                                                    <ArrowRight className={styles.ctaIcon} />
-                                                </Link>
-                                                <Link href="#solution" className={styles.secondaryButton}>
-                                                    Learn More
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </ScrollReveal>
-                                    <ScrollReveal delay={200}>
-                                        <div className={styles.heroVisual}>
-                                            <QuantumThreatVisual />
-                                        </div>
-                                    </ScrollReveal>
-                                </div>
-                            </div>
-                        </section>
+      {/* Hero Section */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroBackground}></div>
+        <div className={styles.sectionContainer}>
+          <div className={styles.heroContent}>
+            <ScrollReveal>
+              <div className={styles.heroText}>
+                <div className={styles.alertBadge}>Quantum Security Alert</div>
+                <h1 className={styles.heroTitle}>
+                  {firstName}, Protect {company} from the Quantum Threat
+                </h1>
+                <p className={styles.heroSubtitle}>
+                  Quantum computers will soon break current encryption, putting your sensitive data at risk. Aapoon’s quantum-resistant solutions ensure your organization stays secure.
+                </p>
+                <div className={styles.heroButtons}>
+                  <Link href="https://cal.com/aapoon/30min" className={styles.ctaButton}>
+                    Schedule a Call
+                    <ArrowRight className={styles.ctaIcon} />
+                  </Link>
+                  <Link href="#solution" className={styles.secondaryButton}>
+                    Learn More
+                  </Link>
+                </div>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={200}>
+              <div className={styles.heroVisual}>
+                <Image
+                  src="/images/abm/aapoon/quantum-threat.svg"
+                  alt="Quantum Threat"
+                  width={500}
+                  height={400}
+                  className={styles.heroImage}
+                />
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
-                        {/* Problem Statement Section */}
-                        <section className={styles.problemSection}>
-                            <div className={styles.sectionContainer}>
-                                <ScrollReveal>
-                                    <div className={styles.sectionHeader}>
-                                        <h2 className={styles.sectionTitle}>The Quantum Threat Is Real</h2>
-                                        <p className={styles.sectionSubtitle}>
-                                            Quantum computers, using Shor’s algorithm, can break RSA-2048 encryption in hours, exposing a massive market gap.
-                                        </p>
-                                    </div>
-                                </ScrollReveal>
-                                <div className={styles.problemGrid}>
-                                    <ScrollReveal delay={100}>
-                                        <div className={styles.problemCard}>
-                                            <div className={styles.cardIcon}>
-                                                <Lock className={styles.icon} />
-                                            </div>
-                                            <h3 className={styles.cardTitle}>Encryption Vulnerability</h3>
-                                            <p className={styles.cardDescription}>
-                                                RSA, ECC, and DSA will be obsolete, creating urgent demand for quantum-resistant solutions.
-                                            </p>
-                                        </div>
-                                    </ScrollReveal>
-                                    <ScrollReveal delay={200}>
-                                        <div className={styles.problemCard}>
-                                            <div className={styles.cardIcon}>
-                                                <Shield className={styles.icon} />
-                                            </div>
-                                            <h3 className={styles.cardTitle}>Regulatory Pressure</h3>
-                                            <p className={styles.cardDescription}>
-                                                The Quantum Computing Cybersecurity Preparedness Act mandates PQC adoption by 2030 for federal agencies.
-                                            </p>
-                                        </div>
-                                    </ScrollReveal>
-                                    <ScrollReveal delay={300}>
-                                        <div className={styles.problemCard}>
-                                            <div className={styles.cardIcon}>
-                                                <Zap className={styles.icon} />
-                                            </div>
-                                            <h3 className={styles.cardTitle}>Market Opportunity</h3>
-                                            <p className={styles.cardDescription}>
-                                                Enterprises across banking, healthcare, and defense need PQC solutions, creating a scalable market for investors.
-                                            </p>
-                                        </div>
-                                    </ScrollReveal>
-                                </div>
-                            </div>
-                        </section>
+      {/* Problem Statement Section */}
+      <section className={styles.problemSection}>
+        <div className={styles.sectionContainer}>
+          <ScrollReveal>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>The Quantum Threat to Your Organization</h2>
+              <p className={styles.sectionSubtitle}>
+                As a CISO, you’re responsible for safeguarding sensitive data. Quantum computing poses an unprecedented risk to your current security measures.
+              </p>
+            </div>
+          </ScrollReveal>
+          <div className={styles.problemGrid}>
+            <ScrollReveal delay={100}>
+              <div className={styles.problemCard}>
+                <div className={styles.cardIcon}>
+                  <Lock className={styles.icon} />
+                </div>
+                <h3 className={styles.cardTitle}>Encryption Vulnerability</h3>
+                <p className={styles.cardDescription}>
+                  Quantum computers using Shor’s algorithm can break RSA-2048 and ECC encryption in hours, rendering current standards obsolete.
+                </p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={200}>
+              <div className={styles.problemCard}>
+                <div className={styles.cardIcon}>
+                  <Shield className={styles.icon} />
+                </div>
+                <h3 className={styles.cardTitle}>Regulatory Compliance Risks</h3>
+                <p className={styles.cardDescription}>
+                  The Quantum Computing Cybersecurity Preparedness Act mandates federal agencies to adopt post-quantum cryptography (PQC) by 2030. Non-compliance could lead to penalties and loss of contracts.
+                </p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={300}>
+              <div className={styles.problemCard}>
+                <div className={styles.cardIcon}>
+                  <Zap className={styles.icon} />
+                </div>
+                <h3 className={styles.cardTitle}>Data Harvesting Threat</h3>
+                <p className={styles.cardDescription}>
+                  Adversaries are already harvesting encrypted data today, waiting for quantum computers to decrypt it in the future—a &quot;harvest now, decrypt later&quot; attack.
+                </p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={400}>
+              <div className={styles.problemCard}>
+                <div className={styles.cardIcon}>
+                  <Server className={styles.icon} />
+                </div>
+                <h3 className={styles.cardTitle}>Industry-Wide Impact</h3>
+                <p className={styles.cardDescription}>
+                  Sectors like finance, healthcare, and defense, which rely on secure communications, face significant risks if encryption fails, leading to data breaches and reputational damage.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
-                        {/* Transition Visual Section */}
-                        <section className={styles.transitionSection}>
-                            <div className={styles.sectionContainer}>
-                                <ScrollReveal>
-                                    <div className={styles.sectionHeader}>
-                                        <h2 className={styles.sectionTitle}>The Path to Quantum Security</h2>
-                                        <p className={styles.sectionSubtitle}>
-                                            aapoon bridges the gap from vulnerability to quantum-safe protection.
-                                        </p>
-                                    </div>
-                                </ScrollReveal>
-                                <div className={styles.transitionVisual}>
-                                    <SecurityTransition />
-                                </div>
-                            </div>
-                        </section>
+      {/* Transition Visual Section */}
+      <section className={styles.transitionSection}>
+        <div className={styles.sectionContainer}>
+          <ScrollReveal>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Secure Your Future Today</h2>
+              <p className={styles.sectionSubtitle}>
+                Transition to quantum-resistant security with Aapoon to protect your organization from emerging threats.
+              </p>
+            </div>
+          </ScrollReveal>
+          <div className={styles.transitionVisual}>
+            <SecurityTransition />
+          </div>
+        </div>
+      </section>
 
-                        {/* Solution Section */}
-                        <section className={styles.solutionSection}>
-                            <div className={styles.sectionContainer}>
-                                <ScrollReveal>
-                                    <div className={styles.sectionHeader}>
-                                        <div className={styles.solutionBadge}>The Solution</div>
-                                        <h2 className={styles.sectionTitle}>Quantum Resistant Communication Suite</h2>
-                                        <p className={styles.sectionSubtitle}>
-                                            aapoon delivers scalable, NIST-compliant solutions for the quantum era.
-                                        </p>
-                                    </div>
-                                </ScrollReveal>
-                                <div className={styles.solutionContent}>
-                                    <ScrollReveal>
-                                        <div className={styles.solutionFeatures}>
-                                            <ProductFeature
-                                                icon={<Shield className={styles.icon} />}
-                                                title="Quantum Secure VPN"
-                                                description="Protect remote access with post-quantum encryption, featuring kill switch, multi-region nodes, and stealth mode."
-                                            />
-                                            <ProductFeature
-                                                icon={<Server className={styles.icon} />}
-                                                title="Quantum Secure Wrapper"
-                                                description="Integrate PQC into existing systems with zero latency, ensuring compliance in banking, healthcare, and defense."
-                                            />
-                                            <ProductFeature
-                                                icon={<Globe className={styles.icon} />}
-                                                title="Future-Proof Compliance"
-                                                description="Align with NIST PQC standards and federal mandates, ensuring long-term market relevance."
-                                            />
-                                        </div>
-                                    </ScrollReveal>
-                                    <ScrollReveal delay={200}>
-                                        <div className={styles.solutionImage}>
-                                            <Image
-                                                src="/images/quantum-product.svg"
-                                                alt="Quantum Resistant Communication Suite"
-                                                width={600}
-                                                height={400}
-                                                className={styles.image}
-                                            />
-                                        </div>
-                                    </ScrollReveal>
-                                </div>
-                            </div>
-                        </section>
+      {/* Solution Section */}
+      <section className={styles.solutionSection}>
+        <div className={styles.sectionContainer}>
+          <ScrollReveal>
+            <div className={styles.sectionHeader}>
+              <div className={styles.solutionBadge}>The Solution</div>
+              <h2 className={styles.sectionTitle}>Aapoon’s Quantum Resistant Communication Suite</h2>
+              <p className={styles.sectionSubtitle}>
+                Designed for CISOs, Aapoon provides a seamless, NIST-compliant solution to safeguard your organization against quantum threats.
+              </p>
+            </div>
+          </ScrollReveal>
+          <div className={styles.solutionContent}>
+            <ScrollReveal>
+              <div className={styles.solutionFeatures}>
+                <ProductFeature
+                  icon={<Shield className={styles.icon} />}
+                  title="Quantum Secure VPN"
+                  description="Protect remote access with post-quantum encryption, featuring a kill switch, multi-region nodes, and stealth mode to ensure secure communications."
+                />
+                <ProductFeature
+                  icon={<Server className={styles.icon} />}
+                  title="Quantum Secure Wrapper"
+                  description="Integrate PQC into your existing systems with zero latency, ensuring compliance across industries like banking, healthcare, and defense."
+                />
+                <ProductFeature
+                  icon={<Globe className={styles.icon} />}
+                  title="Future-Proof Compliance"
+                  description="Align with NIST PQC standards and federal mandates, ensuring your organization meets regulatory requirements by 2030 and beyond."
+                />
+                <ProductFeature
+                  icon={<Zap className={styles.icon} />}
+                  title="Scalable Deployment"
+                  description="Easily deploy across your organization with minimal disruption, supporting both on-premises and cloud environments."
+                />
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={200}>
+              <div className={styles.solutionImage}>
+                <Image
+                  src="/images/abm/aapoon/quantum-product.svg"
+                  alt="Quantum Resistant Communication Suite"
+                  width={600}
+                  height={400}
+                  className={styles.image}
+                />
+              </div>
+            </ScrollReveal>
+          </div>
+          <ScrollReveal delay={300}>
+            <div className={styles.benefitsSection}>
+              <h3 className={styles.benefitsTitle}>Why Choose Aapoon?</h3>
+              <ul className={styles.benefitsList}>
+                <li className={styles.benefitItem}>
+                  <strong>Proactive Protection:</strong> Stay ahead of quantum threats by implementing PQC today.
+                </li>
+                <li className={styles.benefitItem}>
+                  <strong>Regulatory Readiness:</strong> Meet federal mandates and industry standards with NIST-compliant solutions.
+                </li>
+                <li className={styles.benefitItem}>
+                  <strong>Seamless Integration:</strong> Integrate with your existing infrastructure without downtime or performance impact.
+                </li>
+                <li className={styles.benefitItem}>
+                  <strong>Trusted Security:</strong> Protect sensitive data from both classical and quantum attacks, ensuring data sovereignty.
+                </li>
+              </ul>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
-                        {/* Testimonials Section */}
-                        <section className={styles.testimonialsSection}>
-                            <div className={styles.sectionContainer}>
-                                <ScrollReveal>
-                                    <div className={styles.sectionHeader}>
-                                        <h2 className={styles.sectionTitle}>Trusted by Industry Leaders</h2>
-                                        <p className={styles.sectionSubtitle}>
-                                            Hear why top organizations are partnering with aapoon.
-                                        </p>
-                                    </div>
-                                </ScrollReveal>
-                                <TestimonialSlider />
-                            </div>
-                        </section>
+      {/* CTA Section */}
+      <section className={styles.ctaSection}>
+        <div className={styles.sectionContainer}>
+          <ScrollReveal>
+            <div className={styles.ctaContent}>
+              <h2 className={styles.ctaTitle}>
+                {firstName}, Secure {company} Against Quantum Threats
+              </h2>
+              <p className={styles.ctaSubtitle}>
+                Schedule a 30-minute call with our team to see how Aapoon can protect your organization.
+              </p>
+              <Link href="https://cal.com/aapoon/30min" className={styles.ctaButton}>
+                Schedule a Call
+                <ArrowRight className={styles.ctaIcon} />
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
-                        {/* CTA Section */}
-                        <section className={styles.ctaSection}>
-                            <div className={styles.sectionContainer}>
-                                <ScrollReveal>
-                                    <div className={styles.ctaContent}>
-                                        <h2 className={styles.ctaTitle}>
-                                            {firstName}, Invest in the Future of Cybersecurity with aapoon
-                                        </h2>
-                                        <p className={styles.ctaSubtitle}>
-                                            Join the quantum-safe revolution and secure {company}&apos;s portfolio for the future.
-                                        </p>
-                                        <Link href="https://cal.com/aapoon/demo" className={styles.ctaButton}>
-                                            Book a Demo
-                                            <ArrowRight className={styles.ctaIcon} />
-                                        </Link>
-                                    </div>
-                                </ScrollReveal>
-                            </div>
-                        </section>
-
-                        {/* Footer */}
-                        <footer className={styles.footer}>
-                            <div className={styles.footerContainer}>
-                                <div className={styles.footerContent}>
-                                    <div>
-                                        <Image
-                                            src="/images/aapoon-logo-white.svg"
-                                            alt="aapoon"
-                                            width={120}
-                                            height={40}
-                                            className={styles.footerLogo}
-                                        />
-                                        <p className={styles.footerText}>
-                                            Quantum-resistant communication solutions for the future.
-                                        </p>
-                                    </div>
-                                    <div className={styles.footerLinks}>
-                                        <Link href="/privacy" className={styles.footerLink}>
-                                            Privacy Policy
-                                        </Link>
-                                        <Link href="/terms" className={styles.footerLink}>
-                                            Terms of Service
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className={styles.footerBottom}>
-                                    <p className={styles.footerText}>
-                                        © {new Date().getFullYear()} aapoon. All rights reserved.
-                                    </p>
-                                </div>
-                            </div>
-                        </footer>
-                    </div>
-                );
-            }
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerContent}>
+            <div>
+              <Image
+                src="/images/abm/aapoon/logo-white.png"
+                alt="aapoon"
+                width={120}
+                height={40}
+                className={styles.footerLogo}
+              />
+              <p className={styles.footerText}>
+                Quantum-resistant communication solutions for the future.
+              </p>
+            </div>
+            <div className={styles.footerLinks}>
+              <Link href="/privacy" className={styles.footerLink}>
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className={styles.footerLink}>
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+          <div className={styles.footerBottom}>
+            <p className={styles.footerText}>
+              © {new Date().getFullYear()} Aapoon. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
