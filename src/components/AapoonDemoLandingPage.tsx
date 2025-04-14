@@ -100,7 +100,7 @@ export default function AapoonDemoLandingPage({
             </div>
             <div className={styles.heroVisual}>
               <Image
-                src="/images/abm/aapoon/quantum-threat.svg"
+                src="/images/abm/aapoon/threat.jpg"
                 alt="Quantum Threat"
                 width={500}
                 height={400}
