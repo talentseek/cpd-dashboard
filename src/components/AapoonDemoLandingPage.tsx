@@ -196,7 +196,7 @@ export default function AapoonDemoLandingPage({
             </div>
             <div className={styles.solutionImage}>
               <Image
-                src="/images/abm/aapoon/suite.png"
+                src="/images/abm/aapoon/suite.webp"
                 alt="Quantum Resistant Communication Suite"
                 width={600}
                 height={400}
