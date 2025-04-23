@@ -1,9 +1,9 @@
-// src/components/FreightRollLandingPage.tsx
+"use client"; // Add this line
+
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, FileText, Truck, Leaf, Star, Facebook, Linkedin, ArrowRight } from "lucide-react";
 import styles from "@/components/styles/FreightRollABMLandingPage.module.css";
-
 
 interface CustomPersonalizations {
   rating: string;
