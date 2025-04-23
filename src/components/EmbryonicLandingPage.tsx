@@ -116,7 +116,7 @@ export default function EmbryonicLandingPage({
       className={styles.navCta}
       onClick={scrollToBook}
      >
-      Book a Call
+      BOOK A CALL
      </button>
     </div>
    </motion.nav>
@@ -155,7 +155,7 @@ export default function EmbryonicLandingPage({
        className={styles.ctaButton}
        onClick={scrollToBook}
       >
-       Start Today
+       START TODAY
       </button>
      </motion.div>
     </div>
@@ -320,7 +320,7 @@ export default function EmbryonicLandingPage({
       className={styles.ctaButtonLarge}
       onClick={scrollToBook}
      >
-      Book a Call
+      BOOK A CALL
      </button>
     </motion.div>
    </motion.section>
