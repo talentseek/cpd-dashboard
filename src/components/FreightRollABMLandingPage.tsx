@@ -36,15 +36,13 @@ export default function FreightRollLandingPage({
       {/* Sticky Navigation */}
       <header className={styles.header}>
         <div className={styles.headerContainer}>
-          <Link href="/">
-            <Image
-              src="/images/abm/freightroll/logo.png"
-              alt="FreightRoll Logo"
-              width={180}
-              height={60}
-              className={styles.logo}
-            />
-          </Link>
+          <Image
+            src="/images/abm/freightroll/logo.png"
+            alt="FreightRoll Logo"
+            width={180}
+            height={60}
+            className={styles.logo}
+          />
           <nav className={styles.nav}>
             <Link href="#problem" className={styles.navLink}>
               The Problem

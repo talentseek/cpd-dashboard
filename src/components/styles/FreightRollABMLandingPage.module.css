@@ -150,6 +150,7 @@
 }
 
 .smallCtaButton {
+  display: inline-block; /* Prevent stretching */
   background-color: #4bb6ef;
   color: #ffffff;
   padding: 0.5rem 1rem;
@@ -165,6 +166,7 @@
 }
 
 .smallSecondaryButton {
+  display: inline-block; /* Prevent stretching */
   border: 2px solid #4bb6ef;
   color: #4bb6ef;
   padding: 0.5rem 1rem;
@@ -300,6 +302,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  align-items: flex-start; /* Align button to the left to prevent stretching */
 }
 
 .statsTitle {
