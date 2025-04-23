@@ -206,9 +206,6 @@ export default function EmbryonicLandingPage({
     <motion.div className={styles.challengesGrid} variants={staggerChildren}>
      {/* Card 1 - CHANGED */}
      <motion.div className={styles.challengeCard} variants={fadeInUp}>
-      <div className={styles.iconContainer}>
-       <Briefcase className={styles.challengeIcon} />
-      </div>
       {/* CHANGED: Card Title Text & Styling (font/size updated in CSS) */}
       <h3 className={styles.challengeTitle}>Seeking Product-market Fit Signals</h3>
       <p className={styles.challengeText}>
@@ -222,9 +219,6 @@ export default function EmbryonicLandingPage({
 
      {/* Card 2 - No changes to text */}
      <motion.div className={styles.challengeCard} variants={fadeInUp}>
-      <div className={styles.iconContainer}>
-       <Search className={styles.challengeIcon} />
-      </div>
       <h3 className={styles.challengeTitle}>Uncertain Development Path</h3>
       <p className={styles.challengeText}>
        <ReplaceText
@@ -236,9 +230,6 @@ export default function EmbryonicLandingPage({
 
      {/* Card 3 - CHANGED */}
      <motion.div className={styles.challengeCard} variants={fadeInUp}>
-      <div className={styles.iconContainer}>
-       <Users className={styles.challengeIcon} />
-      </div>
       <h3 className={styles.challengeTitle}>Need for Proactive Partners</h3>
       <p className={styles.challengeText}>
        {/* CHANGED: Card Body Text */}
