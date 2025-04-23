@@ -1,8 +1,8 @@
-"use client"; // Add this line
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, FileText, Truck, Leaf, Star, Facebook, Linkedin, ArrowRight } from "lucide-react";
+import { Clock, FileText, Truck, Leaf, Star, Linkedin } from "lucide-react";
 import styles from "@/components/styles/FreightRollABMLandingPage.module.css";
 
 interface CustomPersonalizations {
@@ -52,7 +52,7 @@ export default function FreightRollLandingPage({
             <Link href="#solution" className={styles.navLink}>
               Our Solution
             </Link>
-            <a href="#demo" className={styles.navButton}>
+            <a href="https://cal.com/jake-koppinger-mp7hhc/freightroll" className={styles.navButton}>
               Book a Demo
             </a>
           </nav>
@@ -87,14 +87,13 @@ export default function FreightRollLandingPage({
               <span className={styles.heroHighlight}>{custom.rating}/5 Rating</span> Hurting Your Business?
             </h1>
             <p className={styles.heroSubtitle}>
-              With only {custom.rating} stars from {custom.review_count} reviews, drivers are frustrated. FreightRoll
-              can transform your yard into a reliable, driver-friendly hub.
+              With only {custom.rating} stars from {custom.review_count} reviews, drivers are frustrated. Don’t let the ratings from your warehouse impact the rest of your business. FreightRoll can transform your yard into a reliable, driver-friendly hub.
             </p>
             <div className={styles.heroButtons}>
-              <a href="#demo" className={styles.ctaButton}>
+              <a href="https://cal.com/jake-koppinger-mp7hhc/freightroll" className={styles.smallCtaButton}>
                 Schedule a Demo
               </a>
-              <button onClick={handleLearnMoreClick} className={styles.secondaryButton}>
+              <button onClick={handleLearnMoreClick} className={styles.smallSecondaryButton}>
                 Learn More
               </button>
             </div>
@@ -155,7 +154,7 @@ export default function FreightRollLandingPage({
           <div className={styles.statsGrid}>
             <div className={styles.statsText}>
               <h2 className={styles.statsTitle}>$100K+ in Annual Savings per Facility</h2>
-              <a href="#demo" className={styles.ctaButton}>
+              <a href="https://cal.com/jake-koppinger-mp7hhc/freightroll" className={styles.smallCtaButton}>
                 Schedule a Demo
               </a>
             </div>
@@ -291,22 +290,8 @@ export default function FreightRollLandingPage({
             <p className={styles.ctaSubtitle}>
               Schedule a demo and see how FreightRoll can transform your yard operations.
             </p>
-            <a href="#demo" className={styles.ctaButton}>
+            <a href="https://cal.com/jake-koppinger-mp7hhc/freightroll" className={styles.smallCtaButton}>
               Book a Demo
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section className={styles.finalCtaSection}>
-        <div className={styles.sectionContainer}>
-          <div className={styles.finalCtaContent}>
-            <h2 className={styles.finalCtaTitle}>
-              Get Your Savings <span className={styles.ctaHighlight}>Rolling</span> Today
-            </h2>
-            <a href="#demo" className={styles.ctaButton}>
-              Schedule a Demo
             </a>
           </div>
         </div>
@@ -329,11 +314,8 @@ export default function FreightRollLandingPage({
               Copyright FreightRoll © {new Date().getFullYear()} All Rights Reserved
             </div>
             <div className={styles.footerLinks}>
-              <Link href="#" aria-label="LinkedIn" className={styles.footerLink}>
+              <Link href="https://www.linkedin.com/company/freightroll/" aria-label="LinkedIn" className={styles.footerLink}>
                 <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link href="#" aria-label="Facebook" className={styles.footerLink}>
-                <Facebook className="h-5 w-5" />
               </Link>
             </div>
           </div>
