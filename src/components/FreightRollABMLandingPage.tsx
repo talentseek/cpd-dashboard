@@ -188,24 +188,24 @@ export default function FreightRollLandingPage({
           <div className={styles.testimonialsGrid}>
             {[
               {
-                name: "Jane Doe",
-                position: "Operations Manager, Trucking Co.",
+                name: "John",
+                position: "Driver, NFI",
                 rating: 5,
                 comment:
-                  "FreightRoll revolutionized our yard management. Driver wait times and errors are down significantly.",
+                  "The system speeds up everything its awesome",
               },
               {
-                name: "John Smith",
-                position: "Logistics Coordinator, LogisticsPro",
+                name: "Justin",
+                position: "Driver, Pocono Coast West LLC",
                 rating: 5,
-                comment: "The automation tools saved us countless hours every week.",
+                comment: "Efficient process, one of our favorite places to load",
               },
               {
-                name: "Emily Johnson",
-                position: "Supply Chain Manager, FleetCorp",
+                name: "Edwin",
+                position: "Driver, New Era Logistics",
                 rating: 5,
                 comment:
-                  "FreightVISION gave us complete visibility over our shipments, improving decision-making and cutting costs.",
+                  "Great system!!!",
               },
             ].map((testimonial, index) => (
               <div key={index} className={styles.testimonialCard}>
