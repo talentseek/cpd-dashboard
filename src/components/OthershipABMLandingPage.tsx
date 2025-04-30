@@ -306,10 +306,10 @@ export default function OthershipABMLandingPage({
               </p>
             </div>
             <div className={styles.footerLinks}>
-              <Link href="/privacy" className={styles.footerLink}>
+              <Link href="https://othership.com/legal/privacy-policy/" className={styles.footerLink}>
                 Privacy Policy
               </Link>
-              <Link href="/terms" className={styles.footerLink}>
+              <Link href="https://othership.com/legal/tos/" className={styles.footerLink}>
                 Terms of Service
               </Link>
             </div>
