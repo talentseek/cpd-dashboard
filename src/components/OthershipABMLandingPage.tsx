@@ -12,6 +12,20 @@ export default function OthershipABMLandingPage({
   firstName = "Jordan",
   company = "InnovateCorp",
 }: OthershipABMLandingPageProps) {
+  // Define companies for Case Studies and Social Proof
+  const caseStudyCompanies = [
+    { name: "NatWest", file: "natwest-logo.png", stat: "91%", title: "Employee Satisfaction", description: "NatWest achieved exceptional employee satisfaction through a flexible hybrid model." },
+    { name: "SOCITM", file: "socitm-logo.png", stat: "92%", title: "Cost Reduction", description: "SOCITM realized significant cost savings and a 600% increase in collaboration time." },
+    { name: "Santander", file: "santander-logo.png", stat: "600%", title: "Collaboration Increase", description: "Santander transformed existing spaces into dynamic Work Cafés for their teams." },
+  ];
+
+  const socialProofCompanies = [
+    ...caseStudyCompanies.map(company => ({ name: company.name, file: company.file })),
+    { name: "Google", file: "google-logo.png" },
+    { name: "Microsoft", file: "microsoft-logo.png" },
+    { name: "Slack", file: "slack-logo.png" },
+  ];
+
   return (
     <div className={styles.container}>
       {/* Header */}
@@ -21,8 +35,8 @@ export default function OthershipABMLandingPage({
             <Image
               src="/images/abm/othership/logo.png"
               alt="Othership Logo"
-              width={80}
-              height={33}
+              width={90}
+              height={37}
               className={styles.logoImage}
             />
           </div>
@@ -50,260 +64,35 @@ export default function OthershipABMLandingPage({
           <div className={styles.sectionContainer}>
             <div className={styles.heroContent}>
               <div className={styles.heroText}>
-                <h1 className={styles.heroTitle}>
-                  {firstName}, Is Hybrid Work Chaos Holding {company} Back?
-                </h1>
+                <h1 className={styles.heroTitle}>Flexible Workspace Solutions for {company}</h1>
                 <p className={styles.heroSubtitle}>
-                  Othership&apos;s Hybrid Solutions Cut Costs, Streamline Workspaces, and Boost Team Collaboration.
+                  Hi {firstName}, discover how {company} can transform its workplace strategy with Othership&apos;s network of premium flexible workspaces.
                 </p>
-                <div className={styles.heroButtons}>
-                  <Link href="https://cal.com/cole-othership.com/30min" className={styles.ctaButtonLarge}>
-                    Book a Demo
-                    <ArrowRight className={styles.ctaIcon} />
+                <div className={styles.ctaContainer}>
+                  <Link href="https://cal.com/cole-othership.com/30min" className={styles.primaryCta}>
+                    Book a Demo <ArrowRight size={16} />
                   </Link>
                 </div>
               </div>
-              <div className={styles.heroImage}>
+              <div className={styles.heroImageContainer}>
                 <Image
-                  src="/images/abm/othership/modern-hybrid-workspace.png"
-                  alt="Modern hybrid workspace"
-                  fill
-                  className={styles.image}
-                  priority
+                  src="/images/abm/othership/hero-image.jpg"
+                  alt="Othership Workspace"
+                  width={500}
+                  height={400}
+                  className={styles.heroImage}
                 />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Problems Section */}
-        <section id="problems" className={styles.problemsSection}>
+        {/* Features Section */}
+        <section className={styles.featuresSection}>
           <div className={styles.sectionContainer}>
-            <div className={styles.sectionHeader}>
-              <div className={styles.sectionHeaderInner}>
-                <h2 className={styles.sectionTitle}>The Challenges of Hybrid Work</h2>
-                <p className={styles.sectionSubtitle}>
-                  High office costs, scattered teams, and scheduling nightmares? Companies like {company} deserve a better way to manage hybrid work.
-                </p>
-              </div>
-            </div>
-            <div className={styles.problemsGrid}>
-              <div className={styles.problemCard}>
-                <div className={styles.cardIcon}>
-                  <DollarSign className={styles.icon} />
-                </div>
-                <h3 className={styles.cardTitle}>Unpredictable Costs</h3>
-                <p className={styles.cardDescription}>
-                  Fluctuating office usage leads to inefficient space utilization and wasted resources, draining budgets for growing startups.
-                </p>
-              </div>
-              <div className={styles.problemCard}>
-                <div className={styles.cardIcon}>
-                  <Users className={styles.icon} />
-                </div>
-                <h3 className={styles.cardTitle}>Disconnected Teams</h3>
-                <p className={styles.cardDescription}>
-                  Remote and hybrid setups often isolate employees, reducing collaboration and weakening company culture.
-                </p>
-              </div>
-              <div className={styles.problemCard}>
-                <div className={styles.cardIcon}>
-                  <Calendar className={styles.icon} />
-                </div>
-                <h3 className={styles.cardTitle}>Scheduling Overload</h3>
-                <p className={styles.cardDescription}>
-                  Manual coordination of desks, meeting rooms, and hybrid schedules creates administrative chaos and eats up valuable time.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Solutions Section */}
-        <section id="solutions" className={styles.solutionsSection}>
-          <div className={styles.sectionContainer}>
-            <div className={styles.sectionHeader}>
-              <div className={styles.sectionHeaderInner}>
-                <h2 className={styles.sectionTitle}>Our Comprehensive Solution</h2>
-                <p className={styles.sectionSubtitle}>
-                  Othership&apos;s blends a global workspace network with smart software—Workplace Scheduler, desk booking, and more—to make hybrid work seamless for {company}.
-                </p>
-              </div>
-            </div>
-            <div className={styles.solutionsGrid}>
-              <div className={styles.solutionItem}>
-                <div className={styles.itemIcon}>
-                  <Building2 className={styles.icon} />
-                </div>
-                <h3 className={styles.itemTitle}>On-Demand Workspaces</h3>
-                <p className={styles.itemDescription}>
-                  Access a global network of vetted workspaces for flexible, cost-effective office solutions without long-term leases.
-                </p>
-              </div>
-              <div className={styles.solutionItem}>
-                <div className={styles.itemIcon}>
-                  <Calendar className={styles.icon} />
-                </div>
-                <h3 className={styles.itemTitle}>Workplace Scheduler</h3>
-                <p className={styles.itemDescription}>
-                  Coordinate hybrid teams effortlessly with a cloud-based tool that syncs schedules and fosters in-person collaboration.
-                </p>
-              </div>
-              <div className={styles.solutionItem}>
-                <div className={styles.itemIcon}>
-                  <LayoutDashboard className={styles.icon} />
-                </div>
-                <h3 className={styles.itemTitle}>Desk Booking Software</h3>
-                <p className={styles.itemDescription}>
-                  Simplify desk allocation with an intuitive app that remembers team preferences and optimizes space usage.
-                </p>
-              </div>
-              <div className={styles.solutionItem}>
-                <div className={styles.itemIcon}>
-                  <CalendarClock className={styles.icon} />
-                </div>
-                <h3 className={styles.itemTitle}>Meeting Room Booking</h3>
-                <p className={styles.itemDescription}>
-                  Streamline meeting room reservations with a flexible system tailored to your hybrid workflow.
-                </p>
-              </div>
-              <div className={styles.solutionItem}>
-                <div className={styles.itemIcon}>
-                  <Bell className={styles.icon} />
-                </div>
-                <h3 className={styles.itemTitle}>Behavioral Nudges</h3>
-                <p className={styles.itemDescription}>
-                  Boost team connectivity with personalized notifications that suggest meetups based on location and availability.
-                </p>
-              </div>
-              <div className={styles.solutionItem}>
-                <div className={styles.itemIcon}>
-                  <LineChart className={styles.icon} />
-                </div>
-                <h3 className={styles.itemTitle}>Mixed Inventory Model</h3>
-                <p className={styles.itemDescription}>
-                  Monetize underutilized office space by selling it on our platform, turning costs into revenue.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Case Studies Section */}
-        <section id="case-studies" className={styles.caseStudiesSection}>
-          <div className={styles.sectionContainer}>
-            <div className={styles.sectionHeader}>
-              <div className={styles.sectionHeaderInner}>
-                <h2 className={styles.sectionTitle}>Real Results from Real Clients</h2>
-                <p className={styles.sectionSubtitle}>
-                  See how organizations like {company} have transformed their hybrid work environments.
-                </p>
-              </div>
-            </div>
-            <div className={styles.caseStudiesGrid}>
-              <div className={styles.caseStudyCard}>
-                <div className={styles.cardHeader}>
-                  <div className={styles.stat}>91%</div>
-                  <div className={styles.logoWrapper}>
-                    <Image
-                      src="/images/abm/othership/natwest-logo.png"
-                      alt="NatWest"
-                      width={96}
-                      height={48}
-                      className={styles.logoImage}
-                    />
-                  </div>
-                </div>
-                <h3 className={styles.cardTitle}>Employee Satisfaction</h3>
-                <p className={styles.cardDescription}>
-                  NatWest achieved exceptional employee satisfaction through a flexible hybrid model.
-                </p>
-              </div>
-              <div className={styles.caseStudyCard}>
-                <div className={styles.cardHeader}>
-                  <div className={styles.stat}>92%</div>
-                  <div className={styles.logoWrapper}>
-                    <Image
-                      src="/images/abm/othership/socitm-logo.svg"
-                      alt="SOCITM"
-                      width={96}
-                      height={48}
-                      className={styles.logoImage}
-                    />
-                  </div>
-                </div>
-                <h3 className={styles.cardTitle}>Cost Reduction</h3>
-                <p className={styles.cardDescription}>
-                  SOCITM realized significant cost savings and a 600% increase in collaboration time.
-                </p>
-              </div>
-              <div className={styles.caseStudyCard}>
-                <div className={styles.cardHeader}>
-                  <div className={styles.stat}>600%</div>
-                  <div className={styles.logoWrapper}>
-                    <Image
-                      src="/images/abm/othership/santander-logo.png"
-                      alt="Santander"
-                      width={96}
-                      height={48}
-                      className={styles.logoImage}
-                    />
-                  </div>
-                </div>
-                <h3 className={styles.cardTitle}>Collaboration Increase</h3>
-                <p className={styles.cardDescription}>
-                  Santander transformed existing spaces into dynamic Work Cafés for their teams.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Social Proof Section */}
-        <section className={styles.socialProofSection}>
-          <div className={styles.sectionContainer}>
-            <div className={styles.sectionHeader}>
-              <div className={styles.sectionHeaderInner}>
-                <h2 className={styles.sectionTitle}>Trusted by Industry Leaders</h2>
-                <p className={styles.sectionSubtitle}>
-                  Join hundreds of forward-thinking organizations already using our solution.
-                </p>
-              </div>
-            </div>
-            <div className={styles.logosGrid}>
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className={styles.logoItem}>
-                  <Image
-                    src={`/images/abm/othership/generic-company-logo.png?height=80&width=160&query=company logo ${i} minimal`}
-                    alt={`Company ${i}`}
-                    width={160}
-                    height={80}
-                    className={styles.logoImage}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA Section */}
-        <section className={styles.ctaSection}>
-          <div className={styles.sectionContainer}>
-            <div className={styles.ctaContent}>
-              <div className={styles.ctaText}>
-                <h2 className={styles.ctaTitle}>
-                  {firstName}, Ready to Transform {company}&apos;s Hybrid Workspace?
-                </h2>
-                <p className={styles.ctaSubtitle}>
-                  Schedule a personalized demo to see how our solution can address your specific challenges.
-                </p>
-              </div>
-              <div className={styles.ctaButtons}>
-                <Link href="https://cal.com/cole-othership.com/30min" className={styles.ctaButtonSecondary}>
-                  Book a Demo
-                  <ArrowRight className={styles.ctaIcon} />
-                </Link>
-              </div>
+            <h2 className={styles.sectionTitle}>How Othership Helps {company}</h2>
+            <div className={styles.featuresGrid}>
+              {/* Feature cards would go here */}
             </div>
           </div>
         </section>
@@ -312,28 +101,7 @@ export default function OthershipABMLandingPage({
       {/* Footer */}
       <footer className={styles.footer}>
         <div className={styles.footerContainer}>
-          <div className={styles.footerContent}>
-            <div className={styles.footerLogo}>
-              <Image
-                src="/images/abm/othership/logo.png"
-                alt="Othership Logo"
-                width={60}
-                height={25}
-                className={styles.logoImage}
-              />
-              <p className={styles.footerText}>
-                © {new Date().getFullYear()} Othership. All rights reserved.
-              </p>
-            </div>
-            <div className={styles.footerLinks}>
-              <Link href="/privacy" className={styles.footerLink}>
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className={styles.footerLink}>
-                Terms of Service
-              </Link>
-            </div>
-          </div>
+          <p>© {new Date().getFullYear()} Othership. All rights reserved.</p>
         </div>
       </footer>
     </div>
