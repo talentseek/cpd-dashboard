@@ -206,7 +206,7 @@ export default function OthershipABMLandingPage({
                   <div className={styles.stat}>91%</div>
                   <div className={styles.logoWrapper}>
                     <Image
-                      src="/images/abm/othership/natwest-logo-abstract.png"
+                      src="/images/abm/othership/natwest-logo.png"
                       alt="NatWest"
                       width={96}
                       height={48}
