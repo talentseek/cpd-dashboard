@@ -1,5 +1,3 @@
-// src/app/[page]/page.tsx
-
 import { supabase } from '@/lib/utils';
 import { AbmLandingPage } from '@/components/abm/AbmLandingPage';
 import ProForecastLandingPage from '@/components/ProForecastLandingPage'; // Custom ProForecast template
@@ -17,6 +15,7 @@ import EvolutionSGLandingPage from '@/components/EvolutionSGLandingPage'; // Cus
 import MailMonitorLandingPage from '@/components/MailMonitorLandingPage'; // Custom MailMonitor template
 import AdasightLandingPage from '@/components/AdasightLandingPage'; // Custom Adasight template
 import FreightRollABMLandingPage from '@/components/FreightRollABMLandingPage'; // Custom FreightRoll template
+import OthershipABMLandingPage from '@/components/OthershipABMLandingPage'; // Custom Othership template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -361,6 +360,17 @@ export default async function Page({ params }: { params: Promise<{ page: string 
             firstName={replacements.first_name}
             company={replacements.company}
             custom={replacements.custom}
+          />
+        </>
+      );
+    }
+    if (template === "othership") {
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <OthershipABMLandingPage
+            firstName={replacements.first_name}
+            company={replacements.company}
           />
         </>
       );
