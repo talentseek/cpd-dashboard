@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar, CreditCard, Shield, Users, MessageSquare, BarChart3, CheckCircle2 } from "lucide-react";
@@ -14,13 +13,28 @@ export default function MedVirtualABMLandingPage({
   firstName = "Alex",
   company = "BrightSmile Dental",
 }: MedVirtualABMLandingPageProps) {
-  const socialProofCompanies = [
-    { name: "BrightSmile Dental", file: "brightsmile-dental-logo.png" },
-    { name: "Elite Dental Spa", file: "elite-dental-spa-logo.png" },
-    { name: "Downtown Dental Group", file: "downtown-dental-group-logo.png" },
-    { name: "Valencia Periodontics", file: "valencia-periodontics-logo.png" },
-    { name: "Social Coaching Club", file: "social-coaching-club-logo.png" },
-    { name: "DC Bautch Chiropractic", file: "dc-bautch-chiropractic-logo.png" },
+  const testimonials = [
+    {
+      quote: "MedVirtual makes running my business easier with HIPAA-compliant VAs. I'm excited for the possibilities!",
+      name: "Samantha Blank",
+      role: "Director at Social Coaching Club",
+      videoUrl: "https://www.youtube.com/watch?v=NgzxEvySJAY",
+      image: "/confident-professional-1.png",
+    },
+    {
+      quote: "MedVirtual has been a lifesaver for staffing emergencies, helping us focus on patient care.",
+      name: "Aaron Johnson",
+      role: "Chiropractor at DC Bautch Chiropractic",
+      videoUrl: "https://www.youtube.com/watch?v=RZ3wZKLsZhk",
+      image: "/confident-professional-2.png",
+    },
+    {
+      quote: "MedVirtual’s team is responsive and makes my job easier. Highly recommend!",
+      name: "Jared Burbidge",
+      role: "Marketing Director at Valencia Periodontics",
+      videoUrl: "https://www.youtube.com/watch?v=NsyfzE9MqqQ",
+      image: "/confident-professional-3.png",
+    },
   ];
 
   return (
@@ -65,7 +79,7 @@ export default function MedVirtualABMLandingPage({
                 <p className={styles.heroSubtitle}>
                   MedVirtual provides virtual staffing solutions tailored for dental practices, reducing costs and enhancing patient care.
                 </p>
-                <div className={styles.heroButtons}>
+                <div className={`${styles.heroButtons} lg:justify-start`}>
                   <Link href="https://cal.com/medvirtual/demo" className={styles.ctaButtonLarge}>
                     Book a Demo <ArrowRight className={styles.ctaIcon} />
                   </Link>
@@ -73,7 +87,7 @@ export default function MedVirtualABMLandingPage({
                     Watch Demo
                   </Link>
                 </div>
-                <div className={styles.statsRow}>
+                <div className={`${styles.statsRow} lg:justify-start`}>
                   <div className={styles.statItem}>
                     <span className={styles.statValue}>1000+</span>
                     <span className={styles.statLabel}>Practices Helped</span>
@@ -98,26 +112,6 @@ export default function MedVirtualABMLandingPage({
                   style={{ objectFit: "cover" }}
                 />
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Trusted By Section */}
-        <section className={styles.trustedSection}>
-          <div className={styles.sectionContainer}>
-            <p className={styles.trustedText}>TRUSTED BY LEADING DENTAL & MEDICAL PRACTICES</p>
-            <div className={styles.logosGrid}>
-              {socialProofCompanies.map((company) => (
-                <div key={company.name} className={styles.logoItem}>
-                  <Image
-                    src={`/images/abm/medvirtual/${company.file}`}
-                    alt={`${company.name} Logo`}
-                    width={120}
-                    height={40}
-                    className={styles.logoImage}
-                  />
-                </div>
-              ))}
             </div>
           </div>
         </section>
@@ -232,7 +226,7 @@ export default function MedVirtualABMLandingPage({
                   <h3 className={styles.cardTitle}>Hiring Process</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  We vet candidates for experience in dental workflows, ensuring you get skilled Medical Billing, Administrative, Marketing, and Bookkeeping specialists.
+                  We vet candidates for experience in dental workflows, ensuring you get skilled specialists.
                 </p>
               </div>
               <div className={styles.managementCard}>
@@ -241,7 +235,7 @@ export default function MedVirtualABMLandingPage({
                   <h3 className={styles.cardTitle}>Enhanced Security</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  Advanced cybersecurity, encrypted workspaces, and HIPAA compliance protect your practice’s sensitive data.
+                  Advanced cybersecurity and HIPAA compliance protect your practice’s sensitive data.
                 </p>
               </div>
               <div className={styles.managementCard}>
@@ -250,7 +244,7 @@ export default function MedVirtualABMLandingPage({
                   <h3 className={styles.cardTitle}>Attendance Management</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  We monitor virtual assistants to ensure they’re focused on your tasks, enhancing security and productivity.
+                  We monitor virtual assistants to ensure they’re focused on your tasks.
                 </p>
               </div>
               <div className={styles.managementCard}>
@@ -259,7 +253,7 @@ export default function MedVirtualABMLandingPage({
                   <h3 className={styles.cardTitle}>Payroll & HR</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  Our team handles payroll and HR, saving you time and ensuring seamless staff management.
+                  Our team handles payroll and HR, saving you time.
                 </p>
               </div>
             </div>
@@ -268,8 +262,6 @@ export default function MedVirtualABMLandingPage({
 
         {/* Interactive Demo Section */}
         <section id="demo" className={styles.demoSection}>
-          <div className={styles.demoBackground1}></div>
-          <div className={styles.demoBackground2}></div>
           <div className={styles.sectionContainer}>
             <div className={styles.demoContent}>
               <div>
@@ -304,7 +296,7 @@ export default function MedVirtualABMLandingPage({
                   />
                   <div className={styles.demoVideoOverlay}>
                     <div className={styles.demoVideoPlayButton}>
-                      <svg className="h-12 w-12 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="h-8 w-8 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
                       </svg>
                     </div>
@@ -325,36 +317,34 @@ export default function MedVirtualABMLandingPage({
               </p>
             </div>
             <div className={styles.testimonialsGrid}>
-              <div className={styles.testimonialCard}>
-                <blockquote className={styles.testimonialQuote}>
-                  "Without Medvirtual, it’s incredibly hard to be a business owner trying to run and provide services—sometimes it feels impossible, especially when starting out. That’s where Medvirtual steps in, providing the network you need. I signed up for their virtual staffing, and I’m so excited about the possibilities a VA will bring to my business. Each VA is HIPAA-compliant, ensuring my client information stays safe."
-                </blockquote>
-                <p className={styles.testimonialName}>Samantha Blank</p>
-                <p className={styles.testimonialRole}>Director at Social Coaching Club</p>
-                <Link href="https://www.youtube.com/watch?v=NgzxEvySJAY" className={styles.testimonialLink} target="_blank" rel="noopener noreferrer">
-                  Watch Full Testimonial
-                </Link>
-              </div>
-              <div className={styles.testimonialCard}>
-                <blockquote className={styles.testimonialQuote}>
-                  "We've been using Medvirtual for almost half a year, and it's been very handy at our East Clinic and second location. Especially when staff have had to call in or had a family emergency, it’s helped us in a pinch, allowing us to focus on seeing patients."
-                </blockquote>
-                <p className={styles.testimonialName}>Aaron Johnson</p>
-                <p className={styles.testimonialRole}>Chiropractor at DC Bautch Chiropractic</p>
-                <Link href="https://www.youtube.com/watch?v=RZ3wZKLsZhk" className={styles.testimonialLink} target="_blank" rel="noopener noreferrer">
-                  Watch Full Testimonial
-                </Link>
-              </div>
-              <div className={styles.testimonialCard}>
-                <blockquote className={styles.testimonialQuote}>
-                  "Working with Medvirtual has been a game-changer for us. The team is responsive, communicative, and delivers high-quality content that makes my job 10 times easier. Highly recommend!"
-                </blockquote>
-                <p className={styles.testimonialName}>Jared Burbidge</p>
-                <p className={styles.testimonialRole}>Marketing Director at Valencia Periodontics</p>
-                <Link href="https://www.youtube.com/watch?v=NsyfzE9MqqQ" className={styles.testimonialLink} target="_blank" rel="noopener noreferrer">
-                  Watch Full Testimonial
-                </Link>
-              </div>
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className={styles.testimonialCard}>
+                  <Link href={testimonial.videoUrl} target="_blank" rel="noopener noreferrer">
+                    <div className={styles.testimonialVideo}>
+                      <div className={styles.testimonialVideoWrapper}>
+                        <Image
+                          src={testimonial.image}
+                          alt={`${testimonial.name} Testimonial`}
+                          fill
+                          className={styles.testimonialVideoImage}
+                        />
+                        <div className={styles.testimonialVideoOverlay}>
+                          <div className={styles.testimonialVideoPlayButton}>
+                            <svg className="h-6 w-6 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                  <blockquote className={styles.testimonialQuote}>
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <p className={styles.testimonialName}>{testimonial.name}</p>
+                  <p className={styles.testimonialRole}>{testimonial.role}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -373,42 +363,42 @@ export default function MedVirtualABMLandingPage({
                 <Shield className={styles.benefitIcon} />
                 <h3 className={styles.benefitTitle}>HIPAA Compliant</h3>
                 <p className={styles.benefitDescription}>
-                  Bank-level encryption ensures all patient data is protected and fully HIPAA compliant.
+                  Bank-level encryption ensures all patient data is protected.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <CreditCard className={styles.benefitIcon} />
                 <h3 className={styles.benefitTitle}>Cost Savings</h3>
                 <p className={styles.benefitDescription}>
-                  Reduce staffing costs by up to 40% while improving efficiency and patient satisfaction.
+                  Reduce staffing costs by up to 40% while improving efficiency.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <ArrowRight className={styles.benefitIcon} />
                 <h3 className={styles.benefitTitle}>Scalability</h3>
                 <p className={styles.benefitDescription}>
-                  Scale your virtual assistant team as your practice grows, without the headaches of hiring.
+                  Scale your team as your practice grows, without hiring headaches.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <Users className={styles.benefitIcon} />
                 <h3 className={styles.benefitTitle}>Patient Experience</h3>
                 <p className={styles.benefitDescription}>
-                  Enhance patient satisfaction with timely communication and personalized care.
+                  Enhance patient satisfaction with timely communication.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <Calendar className={styles.benefitIcon} />
                 <h3 className={styles.benefitTitle}>Time Efficiency</h3>
                 <p className={styles.benefitDescription}>
-                  Reclaim up to 30 hours per week for your team to focus on patient care, not admin tasks.
+                  Reclaim up to 30 hours per week for patient care.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <BarChart3 className={styles.benefitIcon} />
                 <h3 className={styles.benefitTitle}>Data Insights</h3>
                 <p className={styles.benefitDescription}>
-                  Gain insights into your practice’s performance with detailed analytics and reporting.
+                  Gain insights with detailed analytics and reporting.
                 </p>
               </div>
             </div>
