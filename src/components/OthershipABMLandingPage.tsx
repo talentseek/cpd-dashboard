@@ -224,7 +224,7 @@ export default function OthershipABMLandingPage({
                   <div className={styles.stat}>92%</div>
                   <div className={styles.logoWrapper}>
                     <Image
-                      src="/images/abm/othership/socitm-logo-concept.png"
+                      src="/images/abm/othership/socitm-logo.svg"
                       alt="SOCITM"
                       width={96}
                       height={48}
