@@ -21,9 +21,9 @@ export default function OthershipABMLandingPage({
 
   const socialProofCompanies = [
     ...caseStudyCompanies.map(company => ({ name: company.name, file: company.file })),
-    { name: "Google", file: "google-logo.png" },
-    { name: "Microsoft", file: "microsoft-logo.png" },
-    { name: "Slack", file: "slack-logo.png" },
+    { name: "Deliveroo", file: "deliveroo-logo.png" },
+    { name: "Indeed", file: "indeed-logo.png" },
+    { name: "NHS", file: "nhs-logo.png" },
   ];
 
   return (
@@ -35,8 +35,8 @@ export default function OthershipABMLandingPage({
             <Image
               src="/images/abm/othership/logo.png"
               alt="Othership Logo"
-              width={90}
-              height={37}
+              width={100}
+              height={41}
               className={styles.logoImage}
             />
           </div>
@@ -297,8 +297,8 @@ export default function OthershipABMLandingPage({
               <Image
                 src="/images/abm/othership/logo.png"
                 alt="Othership Logo"
-                width={60}
-                height={25}
+                width={90}
+                height={31}
                 className={styles.logoImage}
               />
               <p className={styles.footerText}>
