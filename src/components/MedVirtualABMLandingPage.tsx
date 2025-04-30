@@ -89,7 +89,7 @@ export default function MedVirtualABMLandingPage({
               </div>
               <div className={styles.heroImage}>
                 <Image
-                  src="/dental-hero-image.png"
+                  src="/images/abm/medvirtual/dental-assistant-dashboard.png"
                   alt="Dental Practice Workflow"
                   fill
                   style={{ objectFit: "cover" }}
