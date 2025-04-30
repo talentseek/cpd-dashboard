@@ -21,11 +21,10 @@ export default function OthershipABMLandingPage({
             <Image
               src="/images/abm/othership/logo.png"
               alt="Othership Logo"
-              width={24}
-              height={24}
+              width={80}
+              height={33}
               className={styles.logoImage}
             />
-            <span className={styles.logoText}>Othership</span>
           </div>
           <nav className={styles.nav}>
             <Link href="#problems" className={styles.navLink}>
@@ -38,7 +37,7 @@ export default function OthershipABMLandingPage({
               Case Studies
             </Link>
           </nav>
-          <Link href="https://cal.com/othership/demo" className={styles.ctaButton}>
+          <Link href="https://cal.com/cole-othership.com/30min" className={styles.ctaButton}>
             Book a Demo
           </Link>
         </div>
@@ -58,7 +57,7 @@ export default function OthershipABMLandingPage({
                   Othership&apos;s Hybrid Solutions Cut Costs, Streamline Workspaces, and Boost Team Collaboration.
                 </p>
                 <div className={styles.heroButtons}>
-                  <Link href="https://cal.com/othership/demo" className={styles.ctaButtonLarge}>
+                  <Link href="https://cal.com/cole-othership.com/30min" className={styles.ctaButtonLarge}>
                     Book a Demo
                     <ArrowRight className={styles.ctaIcon} />
                   </Link>
@@ -127,7 +126,7 @@ export default function OthershipABMLandingPage({
               <div className={styles.sectionHeaderInner}>
                 <h2 className={styles.sectionTitle}>Our Comprehensive Solution</h2>
                 <p className={styles.sectionSubtitle}>
-                  Othership blends a global workspace network with smart software—Workplace Scheduler, desk booking, and more—to make hybrid work seamless for {company}.
+                  Othership&apos;s blends a global workspace network with smart software—Workplace Scheduler, desk booking, and more—to make hybrid work seamless for {company}.
                 </p>
               </div>
             </div>
@@ -293,14 +292,14 @@ export default function OthershipABMLandingPage({
             <div className={styles.ctaContent}>
               <div className={styles.ctaText}>
                 <h2 className={styles.ctaTitle}>
-                  {firstName}, Ready to Transform {company}’s Hybrid Workspace?
+                  {firstName}, Ready to Transform {company}&apos;s Hybrid Workspace?
                 </h2>
                 <p className={styles.ctaSubtitle}>
                   Schedule a personalized demo to see how our solution can address your specific challenges.
                 </p>
               </div>
               <div className={styles.ctaButtons}>
-                <Link href="https://cal.com/othership/demo" className={styles.ctaButtonSecondary}>
+                <Link href="https://cal.com/cole-othership.com/30min" className={styles.ctaButtonSecondary}>
                   Book a Demo
                   <ArrowRight className={styles.ctaIcon} />
                 </Link>
@@ -318,8 +317,8 @@ export default function OthershipABMLandingPage({
               <Image
                 src="/images/abm/othership/logo.png"
                 alt="Othership Logo"
-                width={20}
-                height={20}
+                width={60}
+                height={25}
                 className={styles.logoImage}
               />
               <p className={styles.footerText}>
