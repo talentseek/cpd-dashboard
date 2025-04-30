@@ -18,7 +18,13 @@ export default function OthershipABMLandingPage({
       <header className={styles.header}>
         <div className={styles.headerContainer}>
           <div className={styles.logo}>
-            <Building2 className={styles.logoIcon} />
+            <Image
+              src="/images/abm/othership/logo.png"
+              alt="Othership Logo"
+              width={24}
+              height={24}
+              className={styles.logoImage}
+            />
             <span className={styles.logoText}>Othership</span>
           </div>
           <nav className={styles.nav}>
@@ -52,7 +58,7 @@ export default function OthershipABMLandingPage({
                   Othership&apos;s Hybrid Solutions Cut Costs, Streamline Workspaces, and Boost Team Collaboration.
                 </p>
                 <div className={styles.heroButtons}>
-                  <Link href="https://cal.com/othership/demo" className={styles.ctaButton}>
+                  <Link href="https://cal.com/othership/demo" className={styles.ctaButtonLarge}>
                     Book a Demo
                     <ArrowRight className={styles.ctaIcon} />
                   </Link>
@@ -75,10 +81,12 @@ export default function OthershipABMLandingPage({
         <section id="problems" className={styles.problemsSection}>
           <div className={styles.sectionContainer}>
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>The Challenges of Hybrid Work</h2>
-              <p className={styles.sectionSubtitle}>
-                High office costs, scattered teams, and scheduling nightmares? Companies like {company} deserve a better way to manage hybrid work.
-              </p>
+              <div className={styles.sectionHeaderInner}>
+                <h2 className={styles.sectionTitle}>The Challenges of Hybrid Work</h2>
+                <p className={styles.sectionSubtitle}>
+                  High office costs, scattered teams, and scheduling nightmares? Companies like {company} deserve a better way to manage hybrid work.
+                </p>
+              </div>
             </div>
             <div className={styles.problemsGrid}>
               <div className={styles.problemCard}>
@@ -116,10 +124,12 @@ export default function OthershipABMLandingPage({
         <section id="solutions" className={styles.solutionsSection}>
           <div className={styles.sectionContainer}>
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>Our Comprehensive Solution</h2>
-              <p className={styles.sectionSubtitle}>
-                Othership blends a global workspace network with smart software—Workplace Scheduler, desk booking, and more—to make hybrid work seamless for {company}.
-              </p>
+              <div className={styles.sectionHeaderInner}>
+                <h2 className={styles.sectionTitle}>Our Comprehensive Solution</h2>
+                <p className={styles.sectionSubtitle}>
+                  Othership blends a global workspace network with smart software—Workplace Scheduler, desk booking, and more—to make hybrid work seamless for {company}.
+                </p>
+              </div>
             </div>
             <div className={styles.solutionsGrid}>
               <div className={styles.solutionItem}>
@@ -184,10 +194,12 @@ export default function OthershipABMLandingPage({
         <section id="case-studies" className={styles.caseStudiesSection}>
           <div className={styles.sectionContainer}>
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>Real Results from Real Clients</h2>
-              <p className={styles.sectionSubtitle}>
-                See how organizations like {company} have transformed their hybrid work environments.
-              </p>
+              <div className={styles.sectionHeaderInner}>
+                <h2 className={styles.sectionTitle}>Real Results from Real Clients</h2>
+                <p className={styles.sectionSubtitle}>
+                  See how organizations like {company} have transformed their hybrid work environments.
+                </p>
+              </div>
             </div>
             <div className={styles.caseStudiesGrid}>
               <div className={styles.caseStudyCard}>
@@ -252,10 +264,12 @@ export default function OthershipABMLandingPage({
         <section className={styles.socialProofSection}>
           <div className={styles.sectionContainer}>
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>Trusted by Industry Leaders</h2>
-              <p className={styles.sectionSubtitle}>
-                Join hundreds of forward-thinking organizations already using our solution.
-              </p>
+              <div className={styles.sectionHeaderInner}>
+                <h2 className={styles.sectionTitle}>Trusted by Industry Leaders</h2>
+                <p className={styles.sectionSubtitle}>
+                  Join hundreds of forward-thinking organizations already using our solution.
+                </p>
+              </div>
             </div>
             <div className={styles.logosGrid}>
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -286,7 +300,7 @@ export default function OthershipABMLandingPage({
                 </p>
               </div>
               <div className={styles.ctaButtons}>
-                <Link href="https://cal.com/othership/demo" className={styles.ctaButton}>
+                <Link href="https://cal.com/othership/demo" className={styles.ctaButtonSecondary}>
                   Book a Demo
                   <ArrowRight className={styles.ctaIcon} />
                 </Link>
@@ -301,7 +315,13 @@ export default function OthershipABMLandingPage({
         <div className={styles.footerContainer}>
           <div className={styles.footerContent}>
             <div className={styles.footerLogo}>
-              <Building2 className={styles.logoIcon} />
+              <Image
+                src="/images/abm/othership/logo.png"
+                alt="Othership Logo"
+                width={20}
+                height={20}
+                className={styles.logoImage}
+              />
               <p className={styles.footerText}>
                 © {new Date().getFullYear()} Othership. All rights reserved.
               </p>

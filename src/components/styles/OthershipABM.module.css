@@ -3,7 +3,8 @@
 .container {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header */
@@ -12,22 +13,19 @@
   top: 0;
   z-index: 50;
   width: 100%;
-  border-bottom: 1px solid #e2e8f0;
-  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid hsl(var(--border));
+  background-color: hsl(var(--background) / 0.95);
   backdrop-filter: blur(10px);
-  height: 4rem;
-  display: flex;
-  align-items: center;
 }
 
 .headerContainer {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  height: 100%;
+  justify-content: space-between;
+  height: 4rem;
 }
 
 .logo {
@@ -36,7 +34,7 @@
   gap: 0.5rem;
 }
 
-.logoIcon {
+.logoImage {
   width: 1.5rem;
   height: 1.5rem;
 }
@@ -44,6 +42,7 @@
 .logoText {
   font-size: 1.25rem;
   font-weight: 700;
+  color: hsl(var(--foreground));
 }
 
 .nav {
@@ -60,28 +59,63 @@
 .navLink {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #4a5568;
-  transition: color 0.3s ease;
+  color: hsl(var(--foreground));
+  transition: color 0.2s ease;
 }
 
 .navLink:hover {
-  color: #15c39a;
+  color: hsl(var(--primary));
 }
 
 .ctaButton {
-  background-color: #15c39a;
-  color: #ffffff;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: background-color 0.3s ease;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: background-color 0.2s ease;
 }
 
 .ctaButton:hover {
-  background-color: #12a781;
+  background-color: hsl(var(--primary) / 0.9);
+}
+
+.ctaButtonLarge {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 0.5rem 2rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.ctaButtonLarge:hover {
+  background-color: hsl(var(--primary) / 0.9);
+}
+
+.ctaButtonSecondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  padding: 0.5rem 2rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.ctaButtonSecondary:hover {
+  background-color: hsl(var(--secondary) / 0.9);
 }
 
 .ctaIcon {
@@ -96,19 +130,27 @@
 
 /* Hero Section */
 .heroSection {
-  padding: 5rem 0;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 @media (min-width: 768px) {
   .heroSection {
-    padding: 7rem 0;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
   }
 }
 
 .sectionContainer {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .sectionContainer {
+    padding: 0 1.5rem;
+  }
 }
 
 .heroContent {
@@ -125,14 +167,16 @@
 }
 
 .heroText {
-  space-y: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .heroTitle {
   font-size: 2.25rem;
   font-weight: 700;
-  line-height: 1.2;
-  color: #1a202c;
+  line-height: 1.1;
+  color: hsl(var(--foreground));
 }
 
 @media (min-width: 640px) {
@@ -149,13 +193,19 @@
 
 .heroSubtitle {
   font-size: 1.25rem;
-  color: #718096;
+  color: hsl(var(--muted-foreground));
+}
+
+@media (min-width: 768px) {
+  .heroSubtitle {
+    font-size: 1.5rem;
+    line-height: 1.5;
+  }
 }
 
 @media (min-width: 1024px) {
   .heroSubtitle {
     font-size: 1.25rem;
-    line-height: 1.5;
   }
 }
 
@@ -169,6 +219,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding-top: 1rem;
 }
 
 @media (min-width: 400px) {
@@ -191,7 +242,7 @@
 /* Problems Section */
 .problemsSection {
   padding: 4rem 0;
-  background-color: #f7fafc;
+  background-color: hsl(var(--muted) / 0.5);
 }
 
 @media (min-width: 768px) {
@@ -205,16 +256,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  space-y: 1rem;
-  text-align: center;
   margin-bottom: 3rem;
+}
+
+.sectionHeaderInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
 }
 
 .sectionTitle {
   font-size: 1.875rem;
   font-weight: 700;
-  line-height: 1.2;
-  color: #1a202c;
+  line-height: 1.1;
+  color: hsl(var(--foreground));
 }
 
 @media (min-width: 640px) {
@@ -232,7 +288,7 @@
 .sectionSubtitle {
   max-width: 56rem;
   font-size: 1rem;
-  color: #718096;
+  color: hsl(var(--muted-foreground));
 }
 
 @media (min-width: 768px) {
@@ -263,11 +319,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  space-y: 0.75rem;
-  border: 1px solid #e2e8f0;
+  gap: 0.75rem;
+  border: 1px solid hsl(var(--border));
   border-radius: 0.5rem;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .cardIcon {
@@ -277,24 +333,24 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: rgba(21, 195, 154, 0.1);
+  background-color: hsl(var(--primary) / 0.1);
 }
 
 .icon {
   width: 1.5rem;
   height: 1.5rem;
-  color: #15c39a;
+  color: hsl(var(--primary));
 }
 
 .cardTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1a202c;
+  color: hsl(var(--foreground));
 }
 
 .cardDescription {
   font-size: 1rem;
-  color: #718096;
+  color: hsl(var(--muted-foreground));
 }
 
 /* Solutions Section */
@@ -329,7 +385,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  space-y: 0.75rem;
+  gap: 0.75rem;
 }
 
 .itemIcon {
@@ -339,24 +395,24 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: rgba(21, 195, 154, 0.1);
+  background-color: hsl(var(--primary) / 0.1);
 }
 
 .itemTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1a202c;
+  color: hsl(var(--foreground));
 }
 
 .itemDescription {
   font-size: 1rem;
-  color: #718096;
+  color: hsl(var(--muted-foreground));
 }
 
 /* Case Studies Section */
 .caseStudiesSection {
   padding: 4rem 0;
-  background-color: #f7fafc;
+  background-color: hsl(var(--muted) / 0.5);
 }
 
 @media (min-width: 768px) {
@@ -386,11 +442,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  space-y: 0.75rem;
-  border: 1px solid #e2e8f0;
+  gap: 0.75rem;
+  border: 1px solid hsl(var(--border));
   border-radius: 0.5rem;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .cardHeader {
@@ -404,7 +460,7 @@
 .stat {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #15c39a;
+  color: hsl(var(--primary));
 }
 
 .logoWrapper {
@@ -467,8 +523,8 @@
 /* Final CTA Section */
 .ctaSection {
   padding: 4rem 0;
-  background-color: #15c39a;
-  color: #ffffff;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
 }
 
 @media (min-width: 768px) {
@@ -490,13 +546,15 @@
 }
 
 .ctaText {
-  space-y: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .ctaTitle {
   font-size: 1.875rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 @media (min-width: 640px) {
@@ -513,7 +571,7 @@
 
 .ctaSubtitle {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: hsl(var(--primary-foreground) / 0.8);
 }
 
 @media (min-width: 768px) {
@@ -541,18 +599,9 @@
   }
 }
 
-.ctaButton {
-  background-color: #ffffff;
-  color: #15c39a;
-}
-
-.ctaButton:hover {
-  background-color: #f7fafc;
-}
-
 /* Footer */
 .footer {
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid hsl(var(--border));
   padding: 1.5rem 0;
 }
 
@@ -563,9 +612,9 @@
 }
 
 .footerContainer {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -599,9 +648,14 @@
   gap: 0.5rem;
 }
 
+.logoImage {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
 .footerText {
   font-size: 0.875rem;
-  color: #718096;
+  color: hsl(var(--muted-foreground));
 }
 
 .footerLinks {
@@ -611,11 +665,11 @@
 
 .footerLink {
   font-size: 0.875rem;
-  color: #718096;
+  color: hsl(var(--muted-foreground));
   padding: 0.5rem 0;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 .footerLink:hover {
-  color: #15c39a;
+  color: hsl(var(--primary));
 }
