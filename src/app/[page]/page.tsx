@@ -16,6 +16,7 @@ import MailMonitorLandingPage from '@/components/MailMonitorLandingPage'; // Cus
 import AdasightLandingPage from '@/components/AdasightLandingPage'; // Custom Adasight template
 import FreightRollABMLandingPage from '@/components/FreightRollABMLandingPage'; // Custom FreightRoll template
 import OthershipABMLandingPage from '@/components/OthershipABMLandingPage'; // Custom Othership template
+import MedVirtualABMLandingPage from '@/components/MedVirtualABMLandingPage'; // Custom MedVirtual template
 import { Metadata } from 'next';
 import { parseLandingPageURL, normalizeString } from '@/utils/urlHelpers';
 import TrackVisit from '@/components/TrackVisit';
@@ -34,17 +35,31 @@ function constructFullUrl(relativePath: string): string {
 async function fetchClientByHost(host: string) {
   console.log('DEBUG: Looking for client with subdomain =', host);
 
-  const { data: client, error } = await supabase
-    .from('clients')
-    .select('*')
-    .eq('subdomain', host)
-    .single();
+  // Check for full host vs. subdomain-only
+  const possibleSubdomains = [host, host.split('.')[0]]; // e.g., ['medvirtual.costperdemo.com', 'medvirtual']
+  let client = null;
 
-  if (error) {
-    console.error('Error fetching client by subdomain:', error);
-    return null;
+  for (const subdomain of possibleSubdomains) {
+    const { data, error } = await supabase
+      .from('clients')
+      .select('*')
+      .eq('subdomain', subdomain)
+      .single();
+
+    if (error) {
+      console.error(`Error fetching client for subdomain "${subdomain}":`, error);
+      continue;
+    }
+    if (data) {
+      client = data;
+      console.log('DEBUG: Found client =', client);
+      break;
+    }
   }
-  console.log('DEBUG: Found client =', client);
+
+  if (!client) {
+    console.error('No client found for any subdomain variations:', possibleSubdomains);
+  }
   return client;
 }
 
@@ -65,7 +80,7 @@ async function fetchLeadDataForClient(
     .ilike('last_name', `${surnameInitial}%`);
 
   if (error || !leads || leads.length === 0) {
-    console.error('Error or no leads found =>', error);
+    console.error('Error or no leads found =>', error || 'No leads returned');
     return null;
   }
 
@@ -84,6 +99,7 @@ async function fetchLeadDataForClient(
 
 // ============ 3) Fetch client content from client_content
 async function fetchClientData(clientId: number) {
+  console.log('DEBUG: Fetching client content for clientId =', clientId);
   const { data: clientData, error: clientDataError } = await supabase
     .from('client_content')
     .select('*')
@@ -93,6 +109,7 @@ async function fetchClientData(clientId: number) {
   if (clientDataError) {
     console.error('Error fetching client content data:', clientDataError);
   }
+  console.log('DEBUG: Client content data =', clientData);
   return clientData || null;
 }
 
@@ -103,6 +120,7 @@ export const revalidate = 604800; // 7 days in seconds
 export const generateMetadata = async ({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> => {
   const { page } = await params;
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
+  console.log('DEBUG: Parsed URL params =>', { page, firstName, surnameInitial, companyName });
   const headersList = await headers();
   const host = headersList.get('host') ?? '';
   console.log('DEBUG: generateMetadata => host =', host);
@@ -165,6 +183,7 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
 
   // Normalize landing_page_template value for comparison
   const template = client.landing_page_template?.toLowerCase().trim();
+  console.log('DEBUG: Normalized template =', template);
 
   // Conditionally set robots meta tag to noindex for the embryonic template
   const robots = template === "embryonic" ? "noindex" : undefined;
@@ -193,6 +212,7 @@ export const generateMetadata = async ({ params }: { params: Promise<{ page: str
 export default async function Page({ params }: { params: Promise<{ page: string }> }) {
   const { page } = await params;
   const { firstName, surnameInitial, companyName } = parseLandingPageURL(page);
+  console.log('DEBUG: Page => Parsed URL params =', { page, firstName, surnameInitial, companyName });
   const headersList = await headers();
   const host = headersList.get('host') ?? '';
   console.log('DEBUG: Page => host =', host);
@@ -225,8 +245,10 @@ export default async function Page({ params }: { params: Promise<{ page: string 
 
   // Normalize landing_page_template value for comparison
   const template = client.landing_page_template?.toLowerCase().trim();
+  console.log('DEBUG: Page => landing_page_type =', client.landing_page_type, 'template =', template);
 
   if (client.landing_page_type === "custom") {
+    console.log('DEBUG: Rendering custom template:', template);
     if (template === "proforecast") {
       return (
         <>
@@ -375,9 +397,23 @@ export default async function Page({ params }: { params: Promise<{ page: string 
         </>
       );
     }
+    if (template === "medvirtual") {
+      console.log('DEBUG: Rendering MedVirtualABMLandingPage for', { firstName: replacements.first_name, company: replacements.company });
+      return (
+        <>
+          <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
+          <MedVirtualABMLandingPage
+            firstName={replacements.first_name}
+            company={replacements.company}
+          />
+        </>
+      );
+    }
+    console.log('DEBUG: No matching custom template found, falling back to default');
   }
 
   // Otherwise, render the default ABM landing page
+  console.log('DEBUG: Rendering default AbmLandingPage');
   return (
     <>
       <TrackVisit clientId={leadData.client_id} leadId={leadData.id} />
