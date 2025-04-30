@@ -38,16 +38,16 @@ export default function MedVirtualABMLandingPage({
   ];
 
   return (
-    <div className={styles.container}>
+    <div>
       {/* Header */}
-      <header className={styles.header}>
+      <header className={`${styles.header} ${styles.fullWidth}`}>
         <div className={styles.headerContainer}>
           <div className={styles.logo}>
             <div className={styles.logoImage}>
-              <div style={{ position: "relative", height: "2rem", width: "2rem" }}>
-                <div style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "linear-gradient(to bottom right, #2dd4bf, #06b6d4)" }}></div>
+              <div style={{ position: "relative", height: "1.5rem", width: "1.5rem" }}>
+                <div style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "#14b8a6" }}></div>
                 <div style={{ position: "absolute", inset: "0.25rem", borderRadius: "9999px", background: "white" }}></div>
-                <div style={{ position: "absolute", inset: "0.5rem", borderRadius: "9999px", background: "linear-gradient(to bottom right, #2dd4bf, #06b6d4)" }}></div>
+                <div style={{ position: "absolute", inset: "0.5rem", borderRadius: "9999px", background: "#14b8a6" }}></div>
               </div>
             </div>
             <span className={styles.logoText}>MedVirtual</span>
@@ -65,9 +65,8 @@ export default function MedVirtualABMLandingPage({
       {/* Main Content */}
       <main className={styles.main}>
         {/* Hero Section */}
-        <section className={styles.heroSection}>
-          <div className={styles.heroBackground}></div>
-          <div className={styles.sectionContainer}>
+        <section className={`${styles.heroSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <div className={styles.heroContent}>
               <div className={styles.heroText}>
                 <div className={styles.badge}>
@@ -87,22 +86,6 @@ export default function MedVirtualABMLandingPage({
                     Watch Demo
                   </Link>
                 </div>
-                <div className={`${styles.statsRow} lg:justify-start`}>
-                  <div className={styles.statItem}>
-                    <span className={styles.statValue}>1000+</span>
-                    <span className={styles.statLabel}>Practices Helped</span>
-                  </div>
-                  <div className={styles.divider}></div>
-                  <div className={styles.statItem}>
-                    <span className={styles.statValue}>1500+</span>
-                    <span className={styles.statLabel}>Assistants Placed</span>
-                  </div>
-                  <div className={styles.divider}></div>
-                  <div className={styles.statItem}>
-                    <span className={styles.statValue}>95%</span>
-                    <span className={styles.statLabel}>Client Retention</span>
-                  </div>
-                </div>
               </div>
               <div className={styles.heroImage}>
                 <Image
@@ -117,8 +100,8 @@ export default function MedVirtualABMLandingPage({
         </section>
 
         {/* Stats Section */}
-        <section className={styles.statsSection}>
-          <div className={styles.sectionContainer}>
+        <section className={`${styles.statsSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <div className={styles.statsGrid}>
               <div className={styles.statCard}>
                 <h3 className={styles.statTitle}>Trusted by 1000+ Practices</h3>
@@ -143,8 +126,8 @@ export default function MedVirtualABMLandingPage({
         </section>
 
         {/* Features Section */}
-        <section id="features" className={styles.featuresSection}>
-          <div className={styles.sectionContainer}>
+        <section id="features" className={`${styles.featuresSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Tailored Virtual Assistants for Dental Practices</h2>
               <p className={styles.sectionSubtitle}>
@@ -152,58 +135,58 @@ export default function MedVirtualABMLandingPage({
               </p>
             </div>
             <div className={styles.featuresGrid}>
-              <div className={styles.managementCard}>
+              <div className={styles.featureCard}>
                 <div className={styles.cardHeader}>
                   <span className={styles.iconWrapper}><Calendar className={styles.cardIcon} /></span>
                   <h3 className={styles.cardTitle}>Intelligent Scheduling</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  Administrative Assistants reduce no-shows by 80% and optimize your calendar for maximum efficiency.
+                  Reduce no-shows and optimize your calendar for efficiency.
                 </p>
               </div>
-              <div className={styles.managementCard}>
+              <div className={styles.featureCard}>
                 <div className={styles.cardHeader}>
                   <span className={styles.iconWrapper}><CreditCard className={styles.cardIcon} /></span>
                   <h3 className={styles.cardTitle}>Automated Billing</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  Medical Billing specialists streamline insurance verification, claims processing, and patient payments.
+                  Streamline insurance verification and patient payments.
                 </p>
               </div>
-              <div className={styles.managementCard}>
+              <div className={styles.featureCard}>
                 <div className={styles.cardHeader}>
                   <span className={styles.iconWrapper}><MessageSquare className={styles.cardIcon} /></span>
                   <h3 className={styles.cardTitle}>Patient Follow-ups</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  Administrative Assistants handle personalized follow-ups, improving patient outcomes and satisfaction.
+                  Handle personalized follow-ups to improve patient outcomes.
                 </p>
               </div>
-              <div className={styles.managementCard}>
+              <div className={styles.featureCard}>
                 <div className={styles.cardHeader}>
                   <span className={styles.iconWrapper}><Shield className={styles.cardIcon} /></span>
                   <h3 className={styles.cardTitle}>HIPAA Compliant</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  All virtual assistants are trained in HIPAA protocols, ensuring your practice’s data is secure.
+                  Ensure your practice’s data is secure with trained assistants.
                 </p>
               </div>
-              <div className={styles.managementCard}>
+              <div className={styles.featureCard}>
                 <div className={styles.cardHeader}>
                   <span className={styles.iconWrapper}><Users className={styles.cardIcon} /></span>
                   <h3 className={styles.cardTitle}>Marketing Support</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  Marketing Experts enhance your online presence, attracting more patients to your practice.
+                  Enhance your online presence to attract more patients.
                 </p>
               </div>
-              <div className={styles.managementCard}>
+              <div className={styles.featureCard}>
                 <div className={styles.cardHeader}>
                   <span className={styles.iconWrapper}><BarChart3 className={styles.cardIcon} /></span>
                   <h3 className={styles.cardTitle}>Bookkeeping Efficiency</h3>
                 </div>
                 <p className={styles.cardDescription}>
-                  Bookkeeping Specialists manage your finances, reducing overhead and ensuring accuracy.
+                  Manage your finances to reduce overhead and ensure accuracy.
                 </p>
               </div>
             </div>
@@ -211,8 +194,8 @@ export default function MedVirtualABMLandingPage({
         </section>
 
         {/* Virtual Staff Management Section */}
-        <section id="management" className={styles.managementSection}>
-          <div className={styles.sectionContainer}>
+        <section id="management" className={`${styles.managementSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Comprehensive Virtual Staff Management</h2>
               <p className={styles.sectionSubtitle}>
@@ -261,8 +244,8 @@ export default function MedVirtualABMLandingPage({
         </section>
 
         {/* Interactive Demo Section */}
-        <section id="demo" className={styles.demoSection}>
-          <div className={styles.sectionContainer}>
+        <section id="demo" className={`${styles.demoSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <div className={styles.demoContent}>
               <div>
                 <h2 className={styles.demoText}>See MedVirtual in Action</h2>
@@ -296,7 +279,7 @@ export default function MedVirtualABMLandingPage({
                   />
                   <div className={styles.demoVideoOverlay}>
                     <div className={styles.demoVideoPlayButton}>
-                      <svg className="h-8 w-8 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="h-6 w-6 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
                       </svg>
                     </div>
@@ -308,8 +291,8 @@ export default function MedVirtualABMLandingPage({
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className={styles.testimonialsSection}>
-          <div className={styles.sectionContainer}>
+        <section id="testimonials" className={`${styles.testimonialsSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Hear from Medical Professionals</h2>
               <p className={styles.sectionSubtitle}>
@@ -330,7 +313,7 @@ export default function MedVirtualABMLandingPage({
                         />
                         <div className={styles.testimonialVideoOverlay}>
                           <div className={styles.testimonialVideoPlayButton}>
-                            <svg className="h-6 w-6 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg className="h-5 w-5 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
                             </svg>
                           </div>
@@ -350,8 +333,8 @@ export default function MedVirtualABMLandingPage({
         </section>
 
         {/* Benefits Section */}
-        <section id="benefits" className={styles.benefitsSection}>
-          <div className={styles.sectionContainer}>
+        <section id="benefits" className={`${styles.benefitsSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Why Dental Practices Choose MedVirtual</h2>
               <p className={styles.sectionSubtitle}>
@@ -406,8 +389,8 @@ export default function MedVirtualABMLandingPage({
         </section>
 
         {/* CTA Section */}
-        <section id="contact" className={styles.ctaSection}>
-          <div className={styles.sectionContainer}>
+        <section id="contact" className={`${styles.ctaSection} ${styles.fullWidth}`}>
+          <div className={styles.container}>
             <h2 className={styles.ctaTitle}>
               {firstName}, Ready to Transform {company} with MedVirtual?
             </h2>
@@ -422,24 +405,26 @@ export default function MedVirtualABMLandingPage({
       </main>
 
       {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContainer}>
-          <div className={styles.footerLogo}>
-            <div className={styles.logoImage} style={{ position: "relative", height: "2rem", width: "2rem" }}>
-              <div style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "linear-gradient(to bottom right, #2dd4bf, #06b6d4)" }}></div>
-              <div style={{ position: "absolute", inset: "0.25rem", borderRadius: "9999px", background: "#111827" }}></div>
-              <div style={{ position: "absolute", inset: "0.5rem", borderRadius: "9999px", background: "linear-gradient(to bottom right, #2dd4bf, #06b6d4)" }}></div>
+      <footer className={`${styles.footer} ${styles.fullWidth}`}>
+        <div className={styles.container}>
+          <div className={styles.footerContainer}>
+            <div className={styles.footerLogo}>
+              <div className={styles.logoImage} style={{ position: "relative", height: "1.5rem", width: "1.5rem" }}>
+                <div style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "#14b8a6" }}></div>
+                <div style={{ position: "absolute", inset: "0.25rem", borderRadius: "9999px", background: "#111827" }}></div>
+                <div style={{ position: "absolute", inset: "0.5rem", borderRadius: "9999px", background: "#14b8a6" }}></div>
+              </div>
+              <span className={styles.footerLogoText}>MedVirtual</span>
             </div>
-            <span className={styles.footerLogoText}>MedVirtual</span>
+            <div className={styles.footerLinks}>
+              <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
+              <Link href="/terms" className={styles.footerLink}>Terms of Service</Link>
+              <Link href="/contact" className={styles.footerLink}>Contact</Link>
+            </div>
           </div>
-          <div className={styles.footerLinks}>
-            <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
-            <Link href="/terms" className={styles.footerLink}>Terms of Service</Link>
-            <Link href="/contact" className={styles.footerLink}>Contact</Link>
+          <div className={styles.footerText}>
+            <p>© {new Date().getFullYear()} MedVirtual. All rights reserved.</p>
           </div>
-        </div>
-        <div className={styles.footerText}>
-          <p>© {new Date().getFullYear()} MedVirtual. All rights reserved.</p>
         </div>
       </footer>
     </div>
