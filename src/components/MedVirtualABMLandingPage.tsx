@@ -19,27 +19,24 @@ export default function MedVirtualABMLandingPage({
       quote: "MedVirtual makes running my business easier with HIPAA-compliant VAs. I'm excited for the possibilities!",
       name: "Samantha Blank",
       role: "Director at Social Coaching Club",
+      image: "/images/abm/medvirtual/samantha.jpeg",
       videoUrl: "https://www.youtube.com/watch?v=NgzxEvySJAY",
     },
     {
       quote: "MedVirtual has been a lifesaver for staffing emergencies, helping us focus on patient care.",
       name: "Aaron Johnson",
       role: "Chiropractor at DC Bautch Chiropractic",
+      image: "/images/abm/medvirtual/aaron.avif",
       videoUrl: "https://www.youtube.com/watch?v=RZ3wZKLsZhk",
     },
     {
       quote: "MedVirtual’s team is responsive and makes my job easier. Highly recommend!",
       name: "Jared Burbidge",
       role: "Marketing Director at Valencia Periodontics",
+      image: "/images/abm/medvirtual/jared.jpeg",
       videoUrl: "https://www.youtube.com/watch?v=NsyfzE9MqqQ",
     },
   ];
-
-  // Function to extract video ID from YouTube URL and construct thumbnail URL
-  const getYouTubeThumbnail = (videoUrl: string) => {
-    const videoId = videoUrl.split("v=")[1]?.split("&")[0]; // Extract video ID from URL
-    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : "";
-  };
 
   return (
     <div className={styles.container}>
@@ -56,7 +53,7 @@ export default function MedVirtualABMLandingPage({
             </div>
             <span className={styles.logoText}>MedVirtual</span>
           </div>
-          <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
+           <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
             Book a Demo
           </Link>
         </div>
@@ -297,7 +294,7 @@ export default function MedVirtualABMLandingPage({
                 <div key={index} className={styles.testimonialCard}>
                   <Link href={testimonial.videoUrl} className={styles.testimonialImage}>
                     <Image
-                      src={getYouTubeThumbnail(testimonial.videoUrl)}
+                      src={testimonial.image}
                       alt={`${testimonial.name} Testimonial`}
                       fill
                       className={styles.image}
