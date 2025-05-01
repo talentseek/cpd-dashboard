@@ -20,18 +20,21 @@ export default function MedVirtualABMLandingPage({
       name: "Samantha Blank",
       role: "Director at Social Coaching Club",
       image: "/images/abm/medvirtual/confident-professional-1.png",
+      videoUrl: "https://example.com/samantha-blank-testimonial", // Replace with actual video URL
     },
     {
       quote: "MedVirtual has been a lifesaver for staffing emergencies, helping us focus on patient care.",
       name: "Aaron Johnson",
       role: "Chiropractor at DC Bautch Chiropractic",
       image: "/images/abm/medvirtual/confident-professional-2.png",
+      videoUrl: "https://example.com/aaron-johnson-testimonial", // Replace with actual video URL
     },
     {
       quote: "MedVirtual’s team is responsive and makes my job easier. Highly recommend!",
       name: "Jared Burbidge",
       role: "Marketing Director at Valencia Periodontics",
       image: "/images/abm/medvirtual/confident-professional-3.png",
+      videoUrl: "https://example.com/jared-burbidge-testimonial", // Replace with actual video URL
     },
   ];
 
@@ -251,24 +254,26 @@ export default function MedVirtualABMLandingPage({
                 </p>
               </div>
             </div>
-            <ul className={styles.demoList}>
-              {[
-                "Scheduling a new patient appointment",
-                "Processing insurance verification",
-                "Sending automated reminders",
-                "Managing post-treatment follow-ups",
-              ].map((item, i) => (
-                <li key={i} className={styles.demoListItem}>
-                  <CheckCircle2 className={styles.demoListIcon} />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className={styles.heroButtons}>
-              <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButtonLarge}>
-                Request Full Demo
-                <ArrowRight className={styles.ctaIcon} />
-              </Link>
+            <div className={styles.demoContent}>
+              <ul className={styles.demoList}>
+                {[
+                  "Scheduling a new patient appointment",
+                  "Processing insurance verification",
+                  "Sending automated reminders",
+                  "Managing post-treatment follow-ups",
+                ].map((item, i) => (
+                  <li key={i} className={styles.demoListItem}>
+                    <CheckCircle2 className={styles.demoListIcon} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.heroButtons}>
+                <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButtonContrast}>
+                  Request Full Demo
+                  <ArrowRight className={styles.ctaIcon} />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -287,14 +292,14 @@ export default function MedVirtualABMLandingPage({
             <div className={styles.testimonialsGrid}>
               {testimonials.map((testimonial, index) => (
                 <div key={index} className={styles.testimonialCard}>
-                  <div className={styles.testimonialImage}>
+                  <Link href={testimonial.videoUrl} className={styles.testimonialImage}>
                     <Image
                       src={testimonial.image}
                       alt={`${testimonial.name} Testimonial`}
                       fill
                       className={styles.image}
                     />
-                  </div>
+                  </Link>
                   <blockquote className={styles.testimonialQuote}>
                     "{testimonial.quote}"
                   </blockquote>
@@ -377,7 +382,7 @@ export default function MedVirtualABMLandingPage({
                 </p>
               </div>
               <div className={styles.ctaButtons}>
-                <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButtonSecondary}>
+                <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButtonContrast}>
                   Book a Demo
                   <ArrowRight className={styles.ctaIcon} />
                 </Link>
