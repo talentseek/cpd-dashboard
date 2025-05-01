@@ -44,16 +44,15 @@ export default function MedVirtualABMLandingPage({
       <header className={styles.header}>
         <div className={styles.headerContainer}>
           <div className={styles.logo}>
-            <div className={styles.logoImage}>
-              <div style={{ position: "relative", height: "2rem", width: "2rem" }}>
-                <div style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "#14b8a6" }}></div>
-                <div style={{ position: "absolute", inset: "0.25rem", borderRadius: "9999px", background: "white" }}></div>
-                <div style={{ position: "absolute", inset: "0.5rem", borderRadius: "9999px", background: "#14b8a6" }}></div>
-              </div>
-            </div>
-            <span className={styles.logoText}>MedVirtual</span>
+            <Image
+              src="/images/abm/medvirtual/logo.svg"
+              alt="MedVirtual Logo"
+              width={120}
+              height={32}
+              className={styles.logoImage}
+            />
           </div>
-           <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
+          <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
             Book a Demo
           </Link>
         </div>
@@ -397,7 +396,13 @@ export default function MedVirtualABMLandingPage({
         <div className={styles.footerContainer}>
           <div className={styles.footerContent}>
             <div className={styles.footerLogo}>
-              <span className={styles.footerLogoText}>MedVirtual</span>
+              <Image
+                src="/images/abm/medvirtual/logo.svg"
+                alt="MedVirtual Logo"
+                width={120}
+                height={32}
+                className={styles.logoImage}
+              />
               <p className={styles.footerText}>
                 © {new Date().getFullYear()} MedVirtual. All rights reserved.
               </p>
