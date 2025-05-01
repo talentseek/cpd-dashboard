@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Calendar, CreditCard, Shield, Users, MessageSquare, BarChart3, CheckCircle2 } from "lucide-react";
+import { Calendar, CreditCard, Shield, Users, MessageSquare, BarChart3, CheckCircle2, ArrowRight } from "lucide-react";
 import styles from "@/components/styles/MedVirtualABM.module.css";
 
 interface MedVirtualABMLandingPageProps {
@@ -10,29 +10,26 @@ interface MedVirtualABMLandingPageProps {
 }
 
 export default function MedVirtualABMLandingPage({
-  firstName = "Alex",
-  company = "BrightSmile Dental",
+  firstName = "Lisa",
+  company = "MedAssent DDS",
 }: MedVirtualABMLandingPageProps) {
   const testimonials = [
     {
       quote: "MedVirtual makes running my business easier with HIPAA-compliant VAs. I'm excited for the possibilities!",
       name: "Samantha Blank",
       role: "Director at Social Coaching Club",
-      videoUrl: "https://www.youtube.com/watch?v=NgzxEvySJAY",
       image: "/confident-professional-1.png",
     },
     {
       quote: "MedVirtual has been a lifesaver for staffing emergencies, helping us focus on patient care.",
       name: "Aaron Johnson",
       role: "Chiropractor at DC Bautch Chiropractic",
-      videoUrl: "https://www.youtube.com/watch?v=RZ3wZKLsZhk",
       image: "/confident-professional-2.png",
     },
     {
       quote: "MedVirtual’s team is responsive and makes my job easier. Highly recommend!",
       name: "Jared Burbidge",
       role: "Marketing Director at Valencia Periodontics",
-      videoUrl: "https://www.youtube.com/watch?v=NsyfzE9MqqQ",
       image: "/confident-professional-3.png",
     },
   ];
@@ -41,10 +38,10 @@ export default function MedVirtualABMLandingPage({
     <div>
       {/* Header */}
       <header className={`${styles.header} ${styles.fullWidth}`}>
-        <div className={styles.headerContainer}>
+        <div className={`${styles.headerContainer} ${styles.container}`}>
           <div className={styles.logo}>
             <div className={styles.logoImage}>
-              <div style={{ position: "relative", height: "1.5rem", width: "1.5rem" }}>
+              <div style={{ position: "relative", height: "2rem", width: "2rem" }}>
                 <div style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "#14b8a6" }}></div>
                 <div style={{ position: "absolute", inset: "0.25rem", borderRadius: "9999px", background: "white" }}></div>
                 <div style={{ position: "absolute", inset: "0.5rem", borderRadius: "9999px", background: "#14b8a6" }}></div>
@@ -52,13 +49,9 @@ export default function MedVirtualABMLandingPage({
             </div>
             <span className={styles.logoText}>MedVirtual</span>
           </div>
-          <nav className={styles.nav}>
-            <Link href="#features" className={styles.navLink}>Features</Link>
-            <Link href="#testimonials" className={styles.navLink}>Testimonials</Link>
-            <Link href="#benefits" className={styles.navLink}>Benefits</Link>
-            <Link href="#management" className={styles.navLink}>Staff Management</Link>
-          </nav>
-          <Link href="https://cal.com/medvirtual/demo" className={styles.ctaButton}>Book a Demo</Link>
+          <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
+            Book a Demo
+          </Link>
         </div>
       </header>
 
@@ -66,35 +59,28 @@ export default function MedVirtualABMLandingPage({
       <main className={styles.main}>
         {/* Hero Section */}
         <section className={`${styles.heroSection} ${styles.fullWidth}`}>
-          <div className={styles.container}>
-            <div className={styles.heroContent}>
-              <div className={styles.heroText}>
-                <div className={styles.badge}>
-                  <span style={{ marginRight: "0.25rem" }}>✨</span> HIPAA-Compliant Virtual Staffing
-                </div>
-                <h1 className={styles.heroTitle}>
-                  {firstName}, Is Administrative Overload Holding {company} Back?
-                </h1>
-                <p className={styles.heroSubtitle}>
-                  MedVirtual provides virtual staffing solutions tailored for dental practices, reducing costs and enhancing patient care.
-                </p>
-                <div className={`${styles.heroButtons} lg:justify-start`}>
-                  <Link href="https://cal.com/medvirtual/demo" className={styles.ctaButtonLarge}>
-                    Book a Demo <ArrowRight className={styles.ctaIcon} />
-                  </Link>
-                  <Link href="#demo" className={styles.ctaButtonOutline}>
-                    Watch Demo
-                  </Link>
-                </div>
+          <div className={`${styles.container} ${styles.heroContent}`}>
+            <div className={styles.heroText}>
+              <div className={styles.badge}>
+                <span style={{ marginRight: "0.25rem" }}>✨</span> HIPAA-Compliant Virtual Staffing
               </div>
-              <div className={styles.heroImage}>
-                <Image
-                  src="/images/abm/medvirtual/dental-assistant-dashboard.png"
-                  alt="Dental Practice Workflow"
-                  fill
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+              <h1 className={styles.heroTitle}>
+                {firstName}, Is Administrative Overload Holding {company} Back?
+              </h1>
+              <p className={styles.heroSubtitle}>
+                MedVirtual provides virtual staffing solutions tailored for dental practices, reducing costs and enhancing patient care.
+              </p>
+              <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
+                Book a Demo
+              </Link>
+            </div>
+            <div className={styles.heroImage}>
+              <Image
+                src="/images/abm/medvirtual/dental-assistant-dashboard.png"
+                alt="Dental Practice Workflow"
+                fill
+                style={{ objectFit: "cover" }}
+              />
             </div>
           </div>
         </section>
@@ -243,50 +229,29 @@ export default function MedVirtualABMLandingPage({
           </div>
         </section>
 
-        {/* Interactive Demo Section */}
+        {/* Interactive Demo Section (Banner) */}
         <section id="demo" className={`${styles.demoSection} ${styles.fullWidth}`}>
           <div className={styles.container}>
-            <div className={styles.demoContent}>
-              <div>
-                <h2 className={styles.demoText}>See MedVirtual in Action</h2>
-                <p className={styles.demoSubtitle}>
-                  Watch how our virtual assistants manage dental practice tasks in real-time.
-                </p>
-                <ul className={styles.demoList}>
-                  {[
-                    "Scheduling a new patient appointment",
-                    "Processing insurance verification",
-                    "Sending automated reminders",
-                    "Managing post-treatment follow-ups",
-                  ].map((item, i) => (
-                    <li key={i} className={styles.demoListItem}>
-                      <CheckCircle2 className={styles.demoListIcon} />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="https://cal.com/medvirtual/demo" className={styles.ctaButtonLarge}>
-                  Request Full Demo
-                </Link>
-              </div>
-              <div className={styles.demoVideo}>
-                <div className={styles.demoVideoWrapper}>
-                  <Image
-                    src="/dental-software-assistant.png"
-                    alt="MedVirtual Demo"
-                    fill
-                    className={styles.demoVideoImage}
-                  />
-                  <div className={styles.demoVideoOverlay}>
-                    <div className={styles.demoVideoPlayButton}>
-                      <svg className="h-6 w-6 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h2 className={styles.demoText}>See MedVirtual in Action</h2>
+            <p className={styles.demoSubtitle}>
+              Watch how our virtual assistants manage dental practice tasks in real-time.
+            </p>
+            <ul className={styles.demoList}>
+              {[
+                "Scheduling a new patient appointment",
+                "Processing insurance verification",
+                "Sending automated reminders",
+                "Managing post-treatment follow-ups",
+              ].map((item, i) => (
+                <li key={i} className={styles.demoListItem}>
+                  <CheckCircle2 className={styles.demoListIcon} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
+              Request Full Demo
+            </Link>
           </div>
         </section>
 
@@ -302,25 +267,13 @@ export default function MedVirtualABMLandingPage({
             <div className={styles.testimonialsGrid}>
               {testimonials.map((testimonial, index) => (
                 <div key={index} className={styles.testimonialCard}>
-                  <Link href={testimonial.videoUrl} target="_blank" rel="noopener noreferrer">
-                    <div className={styles.testimonialVideo}>
-                      <div className={styles.testimonialVideoWrapper}>
-                        <Image
-                          src={testimonial.image}
-                          alt={`${testimonial.name} Testimonial`}
-                          fill
-                          className={styles.testimonialVideoImage}
-                        />
-                        <div className={styles.testimonialVideoOverlay}>
-                          <div className={styles.testimonialVideoPlayButton}>
-                            <svg className="h-5 w-5 text-teal-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
+                  <div className={styles.testimonialImage}>
+                    <Image
+                      src={testimonial.image}
+                      alt={`${testimonial.name} Testimonial`}
+                      fill
+                    />
+                  </div>
                   <blockquote className={styles.testimonialQuote}>
                     "{testimonial.quote}"
                   </blockquote>
@@ -397,8 +350,8 @@ export default function MedVirtualABMLandingPage({
             <p className={styles.ctaSubtitle}>
               Schedule a personalized demo to see how our virtual assistants can support your dental practice.
             </p>
-            <Link href="https://cal.com/medvirtual/demo" className={styles.ctaButtonSecondary}>
-              Book a Demo <ArrowRight className={styles.ctaIcon} />
+            <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
+              Book a Demo
             </Link>
           </div>
         </section>
@@ -406,25 +359,18 @@ export default function MedVirtualABMLandingPage({
 
       {/* Footer */}
       <footer className={`${styles.footer} ${styles.fullWidth}`}>
-        <div className={styles.container}>
-          <div className={styles.footerContainer}>
-            <div className={styles.footerLogo}>
-              <div className={styles.logoImage} style={{ position: "relative", height: "1.5rem", width: "1.5rem" }}>
-                <div style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "#14b8a6" }}></div>
-                <div style={{ position: "absolute", inset: "0.25rem", borderRadius: "9999px", background: "#111827" }}></div>
-                <div style={{ position: "absolute", inset: "0.5rem", borderRadius: "9999px", background: "#14b8a6" }}></div>
-              </div>
-              <span className={styles.footerLogoText}>MedVirtual</span>
-            </div>
-            <div className={styles.footerLinks}>
-              <Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link>
-              <Link href="/terms" className={styles.footerLink}>Terms of Service</Link>
-              <Link href="/contact" className={styles.footerLink}>Contact</Link>
-            </div>
+        <div className={`${styles.container} ${styles.footerContainer}`}>
+          <div className={styles.footerLogo}>
+            <span className={styles.footerLogoText}>MedVirtual</span>
           </div>
-          <div className={styles.footerText}>
-            <p>© {new Date().getFullYear()} MedVirtual. All rights reserved.</p>
+          <div>
+            <Link href="https://www.medvirtual.ai/privacy-policy" className={styles.footerLink}>
+              Privacy Policy
+            </Link>
           </div>
+        </div>
+        <div className={`${styles.container} ${styles.footerText}`}>
+          <p>© {new Date().getFullYear()} MedVirtual. All rights reserved.</p>
         </div>
       </footer>
     </div>
