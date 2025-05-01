@@ -33,8 +33,7 @@
 }
 
 .logoImage {
-  width: 2rem;
-  height: 2rem;
+  /* Removed fixed width and height to allow Image component to control size */
 }
 
 .logoText {
@@ -760,6 +759,7 @@
 
 .footerLogo {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
 }

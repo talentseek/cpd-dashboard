@@ -47,9 +47,10 @@ export default function MedVirtualABMLandingPage({
             <Image
               src="/images/abm/medvirtual/logo.svg"
               alt="MedVirtual Logo"
-              width={120}
-              height={32}
+              width={180}
+              height={48}
               className={styles.logoImage}
+              style={{ objectFit: "contain" }}
             />
           </div>
           <Link href="https://meetings.hubspot.com/call-scheduling/medvirtual" className={styles.ctaButton}>
@@ -399,9 +400,10 @@ export default function MedVirtualABMLandingPage({
               <Image
                 src="/images/abm/medvirtual/logo.svg"
                 alt="MedVirtual Logo"
-                width={120}
-                height={32}
+                width={180}
+                height={48}
                 className={styles.logoImage}
+                style={{ objectFit: "contain" }}
               />
               <p className={styles.footerText}>
                 © {new Date().getFullYear()} MedVirtual. All rights reserved.
