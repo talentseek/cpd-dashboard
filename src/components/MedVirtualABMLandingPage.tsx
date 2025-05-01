@@ -19,24 +19,27 @@ export default function MedVirtualABMLandingPage({
       quote: "MedVirtual makes running my business easier with HIPAA-compliant VAs. I'm excited for the possibilities!",
       name: "Samantha Blank",
       role: "Director at Social Coaching Club",
-      image: "/images/abm/medvirtual/confident-professional-1.png",
-      videoUrl: "https://example.com/samantha-blank-testimonial", // Replace with actual video URL
+      videoUrl: "https://www.youtube.com/watch?v=NgzxEvySJAY",
     },
     {
       quote: "MedVirtual has been a lifesaver for staffing emergencies, helping us focus on patient care.",
       name: "Aaron Johnson",
       role: "Chiropractor at DC Bautch Chiropractic",
-      image: "/images/abm/medvirtual/confident-professional-2.png",
-      videoUrl: "https://example.com/aaron-johnson-testimonial", // Replace with actual video URL
+      videoUrl: "https://www.youtube.com/watch?v=RZ3wZKLsZhk",
     },
     {
       quote: "MedVirtual’s team is responsive and makes my job easier. Highly recommend!",
       name: "Jared Burbidge",
       role: "Marketing Director at Valencia Periodontics",
-      image: "/images/abm/medvirtual/confident-professional-3.png",
-      videoUrl: "https://example.com/jared-burbidge-testimonial", // Replace with actual video URL
+      videoUrl: "https://www.youtube.com/watch?v=NsyfzE9MqqQ",
     },
   ];
+
+  // Function to extract video ID from YouTube URL and construct thumbnail URL
+  const getYouTubeThumbnail = (videoUrl: string) => {
+    const videoId = videoUrl.split("v=")[1]?.split("&")[0]; // Extract video ID from URL
+    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : "";
+  };
 
   return (
     <div className={styles.container}>
@@ -294,7 +297,7 @@ export default function MedVirtualABMLandingPage({
                 <div key={index} className={styles.testimonialCard}>
                   <Link href={testimonial.videoUrl} className={styles.testimonialImage}>
                     <Image
-                      src={testimonial.image}
+                      src={getYouTubeThumbnail(testimonial.videoUrl)}
                       alt={`${testimonial.name} Testimonial`}
                       fill
                       className={styles.image}
