@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, CreditCard, Shield, Users, MessageSquare, BarChart3, CheckCircle2, ArrowRight } from "lucide-react";
