@@ -108,7 +108,7 @@ export default function OthershipABMLandingPage({
                 </div>
                 <h3 className={styles.cardTitle}>Unpredictable Costs</h3>
                 <p className={styles.cardDescription}>
-                  Fluctuating office usage leads to inefficient space utilization and wasted resources, draining budgets for growing startups.
+                  Fluctuating office usage leads to inefficient space utilization and wasted resources, draining budgets for growing companies.
                 </p>
               </div>
               <div className={styles.problemCard}>
